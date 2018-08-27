@@ -21,7 +21,7 @@
  * @ingroup themeable
  */
 ?>
-<div class="filterbar__pre_swiper">
+<div class="filterbar__primary">
   <div class="filterbar__item filterbar__item--label">
     <i class="icon icon-investigation"></i> Filter
   </div>
@@ -33,8 +33,8 @@
     ?>
   </div>
 </div>
-<div class="filterbar__swiper">
-  <div class="filterbar__swiper__inner">
+<div class="filterbar__secondary">
+  <div class="filterbar__secondary__inner">
     <?php for ($i = 1; $i < count($children); $i++): ?>
     <?php if (!in_array($children[$i], ['submit', 'form_id', 'form_build_id', 'form_token'])): ?>
     <?php

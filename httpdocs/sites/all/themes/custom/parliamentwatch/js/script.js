@@ -1791,12 +1791,12 @@
    */
   Drupal.behaviors.filterBar = {
     attach: function () {
-      var filterBarSwiper = $('.filterbar__swiper');
+      var filterBarSwiper = $('.filterbar__secondary');
       var filterBarInner = $('.filterbar .filterbar__inner');
 
       function filterBarSwiperSize() {
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
-        var filterBarOffsetLeft = $('.filterbar__pre_swiper').outerWidth();
+        var filterBarOffsetLeft = $('.filterbar__primary').outerWidth();
         var filterBarOffsetRightValue = filterBarOffsetRight;
         var filterBarOffsetLeftValue = filterBarOffsetLeft;
 
@@ -1816,12 +1816,12 @@
           .css('padding-left', filterBarOffsetLeftValue + 'px');
       }
 
-      var mySwiper = new Swiper('.filterbar__swiper', {
+      var mySwiper = new Swiper('.filterbar__secondary', {
         freeMode: false,
         resistance: true,
         resistanceRatio: 0.5,
         slideClass: 'filterbar__item',
-        wrapperClass: 'filterbar__swiper__inner',
+        wrapperClass: 'filterbar__secondary__inner',
         speed: 400,
         slidesPerView: 'auto',
         simulateTouch: true,
@@ -1837,7 +1837,7 @@
         }
       });
 
-      $('.filterbar__swiper .filterbar__item--dropdown .dropdown__trigger').on("click", function () {
+      $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on("click", function () {
         // var index = $(this).index();
         // mySwiper.slideTo(index, 300);
         $('.dropdown__list').removeClass('dropdown__list--open');

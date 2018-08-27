@@ -31,7 +31,7 @@
   position: relative;
   @include grid-container();
 }
-.filterbar__pre_swiper {
+.filterbar__primary {
   position: absolute;
   left: 0;
   top: 0;
@@ -67,7 +67,7 @@
     clear: both;
   }
 }
-.filterbar__swiper {
+.filterbar__secondary {
   position: relative;
   @include grid-container();
   .filterbar__item {
@@ -113,7 +113,7 @@
     }
   }
 }
-.filterbar__swiper__inner {
+.filterbar__secondary__inner {
   width: 100%;
   height: 100%;
 
@@ -415,7 +415,7 @@ _:-ms-fullscreen,
 
 /* Filterbar: Disabled */
 
-.filterbar--disabled .filterbar__swiper {
+.filterbar--disabled .filterbar__secondary {
   pointer-events: none;
 }
 .filterbar--disabled .filterbar__item {
