@@ -2066,28 +2066,27 @@
    */
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
-      var keyValue = $('#edit-keys').val();
-
       $('.tile-wrapper').addClass('loading-overlay');
-      $('form[data-ajax-target] .form__item__control').change(function (event) {
-        var newKeyValue = $('#edit-keys').val();
-        if (keyValue != newKeyValue) {
-          window.location = '?keys=' + newKeyValue;
-        } else {
-          event.preventDefault();
-          addLoadingAnimation($('.tile-wrapper'));
-          var path = $(this).parents('form').attr('action');
-          var search = $(this).parents('form').serialize();
-          var target = $(this).parents('form').data('ajax-target');
-          var url = path + '?' + search;
-          var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
+      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
+        event.preventDefault();
+        addLoadingAnimation($('.tile-wrapper'));
+        var path = $(this).parents('form').attr('action');
+        var search = $(this).parents('form').serialize();
+        var target = $(this).parents('form').data('ajax-target');
+        var url = path + '?' + search;
+        var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
 
-          $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
-            Drupal.attachBehaviors(target, {url: url});
-            removeLoadingAnimation($('.tile-wrapper'));
-          });
-        }
+        $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
+          Drupal.attachBehaviors(target, {url: url});
+          removeLoadingAnimation($('.tile-wrapper'));
+        });
       });
+      $('form[data-ajax-target]').submit(function (event) {
+        var keyValue = $('#edit-keys').val();
+        window.location = '?keys=' + keyValue;
+        event.preventDefault();
+      });
+
       $('a[data-ajax-target]').click(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));
