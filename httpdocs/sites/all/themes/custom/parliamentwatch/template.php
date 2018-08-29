@@ -21,16 +21,6 @@ function parliamentwatch_theme(&$existing, $type, $theme, $path) {
 }
 
 /**
- * Implements hook_menu_link_alter().
- *
- * Hides tabs for login and password pages.
- */
-function parliamentwatch_menu_alter(&$items) {
-  $items['user/login']['type'] = MENU_CALLBACK;
-  $items['user/password']['type'] = MENU_CALLBACK;
-}
-
-/**
  * Implements hook_form_alter().
  */
 function parliamentwatch_form_alter(&$form, &$form_state, $form_id) {
@@ -144,6 +134,10 @@ function parliamentwatch_page_alter(&$page) {
 function parliamentwatch_preprocess_page(&$variables) {
   if ($GLOBALS['theme_key'] == 'parliamentwatch') {
     drupal_add_library('system', 'jquery.cookie');
+  }
+
+  if (menu_get_item()['tab_root'] == 'user') {
+    $variables['tabs']['#primary'] = '';
   }
 }
 
