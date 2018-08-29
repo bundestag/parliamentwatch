@@ -2071,7 +2071,7 @@
       $('.tile-wrapper').addClass('loading-overlay');
       $('form[data-ajax-target] .form__item__control').change(function (event) {
         var newKeyValue = $('#edit-keys').val();
-        if(keyValue != newKeyValue) {
+        if (keyValue != newKeyValue) {
           window.location = '?keys=' + newKeyValue;
         } else {
           event.preventDefault();
