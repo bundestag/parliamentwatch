@@ -125,18 +125,6 @@ function pw_globals_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function pw_globals_form_user_login_alter(&$form, &$form_state) {
-  $form['help'] = [
-    '#prefix' => '<p>',
-    '#suffix' => '</p>',
-    '#markup' => t('If you are a politician you can log in and edit your profile.'),
-    '#weight' => -1,
-  ];
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
 function pw_globals_form_pw_globals_politician_search_form_alter(&$form, &$form_state) {
   $form['form_build_id']['#access'] = FALSE;
   $form['form_token']['#access'] = FALSE;
