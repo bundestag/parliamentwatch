@@ -1793,6 +1793,55 @@
     attach: function () {
       var filterBarSwiper = $('.filterbar__secondary');
       var filterBarInner = $('.filterbar .filterbar__inner');
+      var filterBarActive = false;
+
+      function filterBarCreate() {
+        var mySwiper = new Swiper('.filterbar__secondary', {
+          freeMode: false,
+          resistance: true,
+          resistanceRatio: 0.5,
+          slideClass: 'filterbar__item',
+          wrapperClass: 'filterbar__secondary__inner',
+          speed: 400,
+          slidesPerView: 'auto',
+          simulateTouch: true,
+          nextButton: filterBarSwiper.find('.swiper-button-next'),
+          prevButton: filterBarSwiper.find('.swiper-button-prev'),
+          onInit: function (swiper) {
+            filterBarSwiperSize();
+            swiper.update();
+            filterBarActive = true;
+          },
+          onDestroy: function (swiper) {
+            filterBarInner
+              .css('padding-right', '')
+              .css('padding-left', '');
+            filterBarActive = false;
+            filterBarWait();
+          },
+          onAfterResize: function (swiper) {
+            if (windowWidth >= breakpointMMin) {
+              filterBarSwiperSize();
+              swiper.update();
+            } else {
+              swiper.destroy(false, true);
+            }
+          }
+        });
+      }
+
+      function filterBarWait() {
+        var windowResize = debounce(function () {
+          windowWidth = window.innerWidth;
+
+          if (windowWidth >= breakpointMMin && !filterBarActive) {
+            filterBarCreate();
+          }
+        }, 150);
+
+        // Event-Listener
+        window.addEventListener('resize', windowResize);
+      }
 
       function filterBarSwiperSize() {
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
@@ -1816,28 +1865,13 @@
           .css('padding-left', filterBarOffsetLeftValue + 'px');
       }
 
-      var mySwiper = new Swiper('.filterbar__secondary', {
-        freeMode: false,
-        resistance: true,
-        resistanceRatio: 0.5,
-        slideClass: 'filterbar__item',
-        wrapperClass: 'filterbar__secondary__inner',
-        speed: 400,
-        slidesPerView: 'auto',
-        simulateTouch: true,
-        nextButton: filterBarSwiper.find('.swiper-button-next'),
-        prevButton: filterBarSwiper.find('.swiper-button-prev'),
-        onInit: function (swiper) {
-          filterBarSwiperSize();
-          swiper.update();
-        },
-        onAfterResize: function (swiper) {
-          filterBarSwiperSize();
-          swiper.update();
-        }
-      });
+      if (windowWidth >= breakpointMMin) {
+        filterBarCreate();
+      } else {
+        filterBarWait();
+      }
 
-      $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on("click", function () {
+      $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on('click', function () {
         // var index = $(this).index();
         // mySwiper.slideTo(index, 300);
         $('.dropdown__list').removeClass('dropdown__list--open');
