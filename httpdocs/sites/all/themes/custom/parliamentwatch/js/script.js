@@ -1880,9 +1880,10 @@
         filterBarWait();
       }
 
-      $('[data-filterbar-trigger]').on('click', function () {
-        $filterbar.addClass('filterbar--expanded');
-        $('body').addClass('block-scrolling');
+      $('[data-filterbar-trigger]').on('click', function (event) {
+        $filterbar.toggleClass('filterbar--expanded');
+        $('body').toggleClass('block-scrolling');
+        event.preventDefault();
       });
 
       $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on('click', function () {

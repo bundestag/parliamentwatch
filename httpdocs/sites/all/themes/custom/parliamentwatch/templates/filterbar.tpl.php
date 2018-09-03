@@ -39,8 +39,13 @@
   </div>
 </div>
 <div class="filterbar__secondary">
+  <div class="filterbar__heading">
+    <div class="option-title">
+      <h2><?php print t('Filter results'); ?></h2>
+      <a class="btn" href="#" data-filterbar-trigger><?php print t('Apply'); ?></a>
+    </div>
+  </div>
   <div class="filterbar__secondary__inner">
-    <h2 class="filterbar__heading"><?php print t('Filter results'); ?></h2>
     <?php for ($i = 1; $i < count($children); $i++): ?>
     <?php if (!in_array($children[$i], ['submit', 'form_id', 'form_build_id', 'form_token'])): ?>
     <?php
