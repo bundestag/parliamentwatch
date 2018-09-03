@@ -469,24 +469,30 @@ _:-ms-fullscreen,
     height: 100vh;
     position: fixed;
     overflow-y: scroll;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
     top: 0;
     left: 0;
     z-index: 9999999;
     background: $white;
-    padding: $space-large $space-large 0;
+    padding-top: $space-large;
     &__inner {
+      height: auto;
       flex-direction: column;
       box-sizing: border-box;
     }
   }
   .filterbar__item {
-    padding: $space 0;
+    padding: $space;
     &:not(:last-child) {
       border-bottom: 1px solid $darkBeige;
     }
+    &:first-child {
+      margin-top: $space;
+      border-top: 1px solid $darkBeige;
+    }
     &:last-child {
-      padding-bottom: $space-large
+      padding-bottom: $space-large;
     }
     &--dropdown {
       z-index: auto;
