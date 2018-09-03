@@ -975,7 +975,7 @@
             maximumSelectionLength: 1,
             multiple: true
           });
-        } else if ($(this).parents('.filterbar--expanded').length > 0) {
+        } else if ($(this).parents('.filterbar__secondary').length > 0) {
           $(this).select2({
             minimumResultsForSearch: 20,
             placeholder: 'Bitte wählen',
