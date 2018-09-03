@@ -2116,20 +2116,33 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
-        event.preventDefault();
-        addLoadingAnimation($('.tile-wrapper'));
-        var path = $(this).parents('form').attr('action');
-        var search = $(this).parents('form').serialize();
-        var target = $(this).parents('form').data('ajax-target');
+
+      function loadResults($form) {
+        var path = $form.attr('action');
+        var search = $form.serialize();
+        var target = $form.data('ajax-target');
         var url = path + '?' + search;
         var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
+
+        addLoadingAnimation($('.tile-wrapper'));
 
         $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
           Drupal.attachBehaviors(target, {url: url});
           removeLoadingAnimation($('.tile-wrapper'));
         });
+      }
+
+      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
+        if ($(this).parents('.filterbar--expanded').length === 0) {
+          loadResults($(this).parents('form'));
+        } else {
+          $('[data-filterbar-trigger]').one('click', function (event) {
+            loadResults($(this).parents('form'));
+          });
+        }
+        event.preventDefault();
       });
+
       $('form[data-ajax-target]').submit(function (event) {
         var keyValue = $('#edit-keys').val();
         window.location = '?keys=' + keyValue;
