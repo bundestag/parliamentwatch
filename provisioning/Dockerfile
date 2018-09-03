@@ -44,8 +44,5 @@ COPY provisioning/etc/drush/* /etc/drush/
 COPY provisioning/drush.phar /usr/local/bin/drush
 RUN chmod +x /usr/local/bin/drush
 WORKDIR /srv/abgeordnetenwatch.de
-COPY src /srv/abgeordnetenwatch.de/src
-RUN cd src && npm install
-VOLUME /srv/abgeordnetenwatch.de
 ENTRYPOINT ["provisioning/docker-entrypoint.sh"]
 CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

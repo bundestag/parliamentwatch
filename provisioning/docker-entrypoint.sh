@@ -10,6 +10,7 @@ fi
 chmod -R u+w httpdocs/sites/default
 cp provisioning/settings.php httpdocs/sites/default/
 cd src
+npm install
 node_modules/.bin/grunt build
 cd -
 
