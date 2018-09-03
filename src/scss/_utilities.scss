@@ -620,6 +620,12 @@ textarea {
   }
 }
 
+/* Block scrolling */
+
+.block-scrolling {
+  overflow: hidden;
+}
+
 /* Loading overlay */
 
 .loading-overlay {

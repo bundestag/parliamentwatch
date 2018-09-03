@@ -1819,6 +1819,7 @@
             swiper.update();
             filterBarActive = true;
             $filterbar.removeClass('filterbar--expanded');
+            $('body').removeClass('block-scrolling');
           },
           onDestroy: function (swiper) {
             $filterBarInner
@@ -1881,6 +1882,7 @@
 
       $('[data-filterbar-trigger]').on('click', function () {
         $filterbar.addClass('filterbar--expanded');
+        $('body').addClass('block-scrolling');
       });
 
       $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on('click', function () {
