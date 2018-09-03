@@ -32,14 +32,15 @@
       print render($form['submit']);
     ?>
   </div>
-  <div class="filterbar__toggle">
-    <button class="btn" type="button" role="button">
+  <div class="filterbar__trigger">
+    <button class="btn" type="button" role="button" data-filterbar-trigger>
       <i class="icon icon-investigation"></i> <span><?php print t('Show filters'); ?></span>
     </button>
   </div>
 </div>
 <div class="filterbar__secondary">
   <div class="filterbar__secondary__inner">
+    <h2 class="filterbar__heading"><?php print t('Filter results'); ?></h2>
     <?php for ($i = 1; $i < count($children); $i++): ?>
     <?php if (!in_array($children[$i], ['submit', 'form_id', 'form_build_id', 'form_token'])): ?>
     <?php

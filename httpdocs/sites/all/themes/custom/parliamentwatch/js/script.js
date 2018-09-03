@@ -975,6 +975,12 @@
             maximumSelectionLength: 1,
             multiple: true
           });
+        } else if ($(this).parents('.filterbar--expanded').length > 0) {
+          $(this).select2({
+            minimumResultsForSearch: 20,
+            placeholder: 'Bitte wählen',
+            dropdownParent: $('.filterbar__secondary')
+          });
         } else {
           $(this).select2({
             minimumResultsForSearch: 20,
@@ -1791,8 +1797,9 @@
    */
   Drupal.behaviors.filterBar = {
     attach: function () {
-      var filterBarSwiper = $('.filterbar__secondary');
-      var filterBarInner = $('.filterbar .filterbar__inner');
+      var $filterbar = $('.filterbar');
+      var $filterBarSwiper = $('.filterbar__secondary');
+      var $filterBarInner = $('.filterbar .filterbar__inner');
       var filterBarActive = false;
 
       function filterBarCreate() {
@@ -1805,15 +1812,16 @@
           speed: 400,
           slidesPerView: 'auto',
           simulateTouch: true,
-          nextButton: filterBarSwiper.find('.swiper-button-next'),
-          prevButton: filterBarSwiper.find('.swiper-button-prev'),
+          nextButton: $filterBarSwiper.find('.swiper-button-next'),
+          prevButton: $filterBarSwiper.find('.swiper-button-prev'),
           onInit: function (swiper) {
             filterBarSwiperSize();
             swiper.update();
             filterBarActive = true;
+            $filterbar.removeClass('filterbar--expanded');
           },
           onDestroy: function (swiper) {
-            filterBarInner
+            $filterBarInner
               .css('padding-right', '')
               .css('padding-left', '');
             filterBarActive = false;
@@ -1860,7 +1868,7 @@
         else {
           filterBarOffsetRightValue = 0;
         }
-        filterBarInner
+        $filterBarInner
           .css('padding-right', filterBarOffsetRightValue + 'px')
           .css('padding-left', filterBarOffsetLeftValue + 'px');
       }
@@ -1870,6 +1878,10 @@
       } else {
         filterBarWait();
       }
+
+      $('[data-filterbar-trigger]').on('click', function () {
+        $filterbar.addClass('filterbar--expanded');
+      });
 
       $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on('click', function () {
         // var index = $(this).index();
