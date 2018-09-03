@@ -2,7 +2,6 @@
 * Filterbar
 */
 .filterbar {
-  min-height: 60px;
   margin-bottom: -1px;
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
@@ -28,30 +27,37 @@
   display: none;
 }
 .filterbar__inner {
+  min-height: 60px;
   position: relative;
   @include grid-container();
 }
 .filterbar__primary {
+  min-height: 60px;
+  width: 100%;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 9;
   padding-left: $space;
+  padding-right: ($space-large + $space) + 2 * $space-small;
   overflow: hidden;
   display: inline-block;
   @include grid-container();
+  @include breakpoint($breakpoint-s-min) {
+    padding-right: $space;
+  }
+  @include breakpoint($breakpoint-m-min) {
+    width: auto;
+    padding-right: 0;
+  }
   .filterbar__item {
     cursor: default;
     flex: 1;
   }
   .filterbar__item--input {
-    width: 150px;
+    width: 100%;
     flex-grow: 10;
-    @include breakpoint($breakpoint-xs-min) {
-      width: 200px;
-    }
-    @include breakpoint($breakpoint-m-min) {
+    @include breakpoint($breakpoint-s-min) {
       width: 310px;
     }
   }
@@ -66,10 +72,61 @@
     width: 100%;
     clear: both;
   }
+  .btn {
+    right: $space-xsmall;
+    top: $space-xsmall;
+    bottom: $space-xsmall;
+    background: $white;
+    padding: $space-xsmall $space-xsmall-mobile;
+    color: $mediumGray;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    border-color: $darkBeige;
+    width: $space-large + $space;
+    &:hover {
+      background: $beige;
+    }
+  }
 }
+
+.filterbar__toggle {
+  display: inline-block;
+  min-height: 60px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: ($space-large + $space) + $space;
+  @include breakpoint($breakpoint-s-min) {
+    right: auto;
+    left: 310px + 2 * $space-small;
+  }
+  @include breakpoint($breakpoint-m-min) {
+    display: none;
+  }
+  .btn {
+    right: auto;
+    @include breakpoint($breakpoint-s-min) {
+      width: auto;
+      padding-left: $space-small;
+      padding-right: $space-small;
+    }
+    span {
+      display: none;
+      @include breakpoint($breakpoint-s-min) {
+        display: inline;
+      }
+    }
+  }
+}
+
 .filterbar__secondary {
-  position: relative;
-  @include grid-container();
+  display: none;
+  @include breakpoint($breakpoint-m-min) {
+    display: block;
+    position: relative;
+    @include grid-container();
+  }
   .filterbar__item {
     float: none;
   }
@@ -133,7 +190,7 @@
 }
 .filterbar__item--label {
   display: none;
-  @include breakpoint($breakpoint-s-min) {
+  @include breakpoint($breakpoint-m-min) {
     display: block;
     font-weight: 600;
     white-space: nowrap;
@@ -177,21 +234,7 @@
     }
   }
   .btn {
-    right: $space-xsmall;
-    top: $space-xsmall;
-    bottom: $space-xsmall;
-    background: $white;
-    padding: $space-xsmall $space-xsmall-mobile;
-    color: $mediumGray;
     text-indent: calc(100% + #{$space-xsmall-mobile});
-    overflow: hidden;
-    white-space: nowrap;
-    position: absolute;
-    border-color: $darkBeige;
-    width: $space-large + $space;
-    &:hover {
-      background: $beige;
-    }
     &:after {
       content: '\e901';
       position: absolute;
@@ -358,11 +401,8 @@ _:-ms-fullscreen,
   background: $white;
   @include grid-container();
   @include breakpoint($breakpoint-s-min) {
-    right: $space-small;
-    display: block;
-  }
-  @include breakpoint($breakpoint-m-min) {
     right: $space;
+    display: block;
   }
   &:after {
     content: '';
@@ -418,7 +458,8 @@ _:-ms-fullscreen,
 .filterbar--disabled .filterbar__secondary {
   pointer-events: none;
 }
-.filterbar--disabled .filterbar__item {
+.filterbar--disabled .filterbar__item,
+.filterbar--disabled .btn {
   opacity: .3;
   pointer-events: none;
 }

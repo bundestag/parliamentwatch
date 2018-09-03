@@ -23,7 +23,7 @@
 ?>
 <div class="filterbar__primary">
   <div class="filterbar__item filterbar__item--label">
-    <i class="icon icon-investigation"></i> Filter
+    <i class="icon icon-investigation"></i> <?php print t('Filter'); ?>
   </div>
   <div class="filterbar__item filterbar__item--input">
     <?php
@@ -31,6 +31,11 @@
       print render($form[$children[0]]);
       print render($form['submit']);
     ?>
+  </div>
+  <div class="filterbar__toggle">
+    <button class="btn" type="button" role="button">
+      <i class="icon icon-investigation"></i> <span><?php print t('Show filters'); ?></span>
+    </button>
   </div>
 </div>
 <div class="filterbar__secondary">
