@@ -2116,7 +2116,7 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      $('form[data-ajax-target] .form__item__control').change(function (event) {
+      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));
         var path = $(this).parents('form').attr('action');
@@ -2130,6 +2130,12 @@
           removeLoadingAnimation($('.tile-wrapper'));
         });
       });
+      $('form[data-ajax-target]').submit(function (event) {
+        var keyValue = $('#edit-keys').val();
+        window.location = '?keys=' + keyValue;
+        event.preventDefault();
+      });
+
       $('a[data-ajax-target]').click(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));

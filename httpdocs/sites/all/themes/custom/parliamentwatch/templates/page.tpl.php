@@ -101,10 +101,7 @@
   <main id="content">
     <a id="main-content"></a>
     <?php print $messages; ?>
-
-
-    <?php global $user; ?>
-    <?php if ($tabs): ?><?php if($user->uid || arg(0) != 'user'): ?><div class="tabs tabs--admin"><?php print render($tabs); ?></div><?php endif; ?><?php endif; ?>
+    <?php if ($tabs): ?><div class="tabs tabs--admin"><?php print render($tabs); ?></div><?php endif; ?>
     <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
     <?php if ($page['intro_primary']): ?>
       <?php if($user->uid || arg(0) != 'user'): ?>

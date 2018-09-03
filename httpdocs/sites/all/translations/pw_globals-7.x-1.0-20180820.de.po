@@ -1470,8 +1470,8 @@ msgstr "Die folgenden Parteien sind derzeit noch nicht im Parlament:"
 #: sites/all/themes/custom/parliamentwatch/templates/dialogues-stats.tpl.php:67;85
 msgid "<span>@party</span> (1 candidate)"
 msgid_plural "<span>@party</span> (@count candidates)"
-msgstr[0] "<span>@party</span> (1 Kandierende/r)"
-msgstr[1] "<span>@party</span> (@count Kandierende)"
+msgstr[0] "<span>@party</span> (1 Kandidierende/r)"
+msgstr[1] "<span>@party</span> (@count Kandidierende)"
 
 #: sites/all/themes/custom/parliamentwatch/templates/dialogues-stats.tpl.php:69;87
 msgid "<span>@party</span> (1 deputy)"

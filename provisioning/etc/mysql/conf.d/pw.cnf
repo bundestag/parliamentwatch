@@ -1,5 +1,9 @@
 [mysqld]
-innodb_buffer_pool_size = 1536M
+innodb_buffer_pool_size = 1260M
+innodb_buffer_pool_instances = 1
 innodb_large_prefix = 1
+innodb_log_file_size = 160M
 innodb_sort_buffer_size = 64M
+key_buffer_size = 10M
+max_connections = 10
 myisam_sort_buffer_size = 64K
