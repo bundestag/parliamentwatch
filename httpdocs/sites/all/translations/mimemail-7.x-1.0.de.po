@@ -1,10 +1,10 @@
 # German translation of Mime Mail (7.x-1.0)
-# Copyright (c) 2017 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Mime Mail (7.x-1.0)\n"
-"POT-Creation-Date: 2017-05-14 15:48+0000\n"
+"POT-Creation-Date: 2018-08-13 22:43+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -96,6 +96,6 @@ msgstr "Wählen Sie die Rollen aus, deren Benutzer diese E-Mail erhalten."
 msgid "Example modules"
 msgstr "Beispiel Modul"
 msgid "Reply to"
-msgstr "Antworte an"
+msgstr "Antwort an"
 msgid "E-mail format"
 msgstr "E-Mail Format"

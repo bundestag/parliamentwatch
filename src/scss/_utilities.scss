@@ -59,6 +59,7 @@ textarea {
 .link-icon {
   color: $darkGray;
   font-weight: 600;
+  transition: color 300ms ease;
   .icon {
     color: $orange;
     display: inline-block;
@@ -67,6 +68,9 @@ textarea {
     font-size: .7em;
     position: relative;
     top: -.2em;
+  }
+  &:hover {
+    color: $orange;
   }
 }
 
@@ -490,76 +494,6 @@ textarea {
       letter-spacing: -1px;
       &:before {
         content: '\e805 \e805';
-      }
-    }
-  }
-}
-
-
-/* info-Block */
-
-.info-block {
-  padding-top: $space;
-  padding-bottom: $space;
-  @include container();
-  @include breakpoint($breakpoint-s-min) {
-    padding-top: $space-large;
-    padding-bottom: $space-large;
-  }
-  @include breakpoint($breakpoint-xl-min) {
-    padding-top: ($space-large + $space-xsmall);
-    padding-bottom: ($space-large + $space-xsmall);
-  }
-  dl {
-    @include grid-column(12);
-    @include breakpoint($breakpoint-s-min) {
-      @include grid-column(8);
-
-      border-right: 1px solid $darkBeige;
-    }
-    dt {
-      font-weight: 500;
-      padding-top: $space-xsmall-mobile;
-      padding-bottom: $space-xsmall-mobile;
-      @include text-overflow();
-      @include breakpoint($breakpoint-xs-min) {
-        width: 50%;
-      }
-    }
-    dd {
-      padding-top: $space-xsmall-mobile;
-      padding-bottom: $space-xsmall-mobile;
-      @include breakpoint($breakpoint-xs-min) {
-        margin-left: 50%;
-      }
-      small {
-        display: block;
-      }
-    }
-  }
-
-  ul {
-    margin: $space 0 0 0;
-    padding: $space 0 $space-small 0;
-    border-top: 1px solid $darkBeige;
-    @include grid-column(12);
-    @include grid-container();
-
-    @include breakpoint($breakpoint-s-min) {
-      @include grid-column(4);
-      border-top: 0;
-      margin-top: 0;
-      padding-top: 0;
-    }
-    @include breakpoint($breakpoint-m-min) {
-      padding-left: 20px;
-    }
-    li {
-      margin: 0;
-      width: auto;
-      float: none;
-      a:after {
-        content: '';
       }
     }
   }

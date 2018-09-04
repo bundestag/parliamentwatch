@@ -1,0 +1,48 @@
+/**
+* Login
+*/
+
+.form--user-pass,
+.form--user-login {
+  background: $beige;
+  position: relative;
+  top: $space;
+  padding-bottom: $space-xsmall;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 420px;
+  @include breakpoint($breakpoint-s-min) {
+    top: $space-large;
+    margin-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-l-min) {
+    top: $space-large * 2;
+    margin-bottom: $space-large * 2;
+  }
+  h1 {
+    padding: $space;
+    border-bottom: 1px solid $white;
+  }
+  > p {
+    padding: 0 $space;
+  }
+  .form__item {
+    padding: 0 $space;
+  }
+  .form__item--back-link,
+  .form__item--request-password {
+    border-top: 1px solid $white;
+    padding-top: $space;
+    font-size: .8em;
+    > a {
+      display: block;
+      text-align: center;
+    }
+  }
+  .form__item--back-link > a {
+    text-align: left;
+  }
+  .btn {
+    @include button--block();
+  }
+}

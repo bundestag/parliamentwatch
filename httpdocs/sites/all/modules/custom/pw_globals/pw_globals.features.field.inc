@@ -52,7 +52,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -131,7 +130,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -212,7 +210,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -232,7 +229,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -258,7 +254,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'smart_trim',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -289,7 +284,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -388,7 +382,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'medium',
             'linked_field' => array(
@@ -410,7 +403,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'width_medium',
             'linked_field' => array(
@@ -521,7 +513,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -541,7 +532,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -668,7 +658,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'long',
             'fromto' => 'both',
             'linked_field' => array(
@@ -771,7 +760,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'square_small',
             'linked_field' => array(
@@ -793,7 +781,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'square_small',
             'linked_field' => array(
@@ -902,7 +889,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -922,7 +908,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1063,7 +1048,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1083,7 +1067,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1183,7 +1166,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => '',
             'linked_field' => array(
@@ -1291,7 +1273,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1311,7 +1292,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1447,7 +1427,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => '',
             'linked_field' => array(
@@ -1559,7 +1538,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'link',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1659,7 +1637,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1741,7 +1718,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1819,7 +1795,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2002,6 +1977,7 @@ function pw_globals_field_default_fields() {
             ),
           ),
         ),
+        'exclude_cv' => FALSE,
         'linkit' => array(
           'button_text' => 'Suchen',
           'enable' => 0,
@@ -2072,7 +2048,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2159,7 +2134,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2242,7 +2216,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2329,7 +2302,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2416,7 +2388,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2559,7 +2530,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2640,7 +2610,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2785,7 +2754,6 @@ function pw_globals_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -2871,7 +2839,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -2998,7 +2965,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'link',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -3058,133 +3024,6 @@ function pw_globals_field_default_fields() {
     ),
   );
 
-  // Exported field: 'taxonomy_term-parliaments-field_parliament_constit_rename'.
-  $fields['taxonomy_term-parliaments-field_parliament_constit_rename'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_parliament_constit_rename',
-      'field_permissions' => array(
-        'type' => '0',
-      ),
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'max_length' => '100',
-      ),
-      'translatable' => '0',
-      'type' => 'text',
-    ),
-    'field_instance' => array(
-      'bundle' => 'parliaments',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => 'rename constituency like from Wahlkreis to Stimmkreis.',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'module' => 'text',
-          'settings' => array(
-            'field_delimiter' => '',
-            'linked_field' => array(
-              'advanced' => array(
-                'class' => '',
-                'rel' => '',
-                'target' => '',
-                'text' => '',
-                'title' => '',
-              ),
-              'destination' => '',
-              'linked' => 0,
-            ),
-          ),
-          'type' => 'text_default',
-          'weight' => '6',
-        ),
-      ),
-      'ds_extras_field_template' => '',
-      'entity_type' => 'taxonomy_term',
-      'exclude_cv' => 0,
-      'field_name' => 'field_parliament_constit_rename',
-      'label' => 'Constituency Rename',
-      'required' => 0,
-      'settings' => array(
-        'better_formats' => array(
-          'allowed_formats' => array(
-            'copyright' => 'copyright',
-            'filtered_html' => 'filtered_html',
-            'full_html' => 'full_html',
-            'html_mail' => 'html_mail',
-            'managed_content' => 'managed_content',
-            'php_code' => 'php_code',
-            'plain_text' => 'plain_text',
-          ),
-          'allowed_formats_toggle' => 0,
-          'default_order_toggle' => 0,
-          'default_order_wrapper' => array(
-            'formats' => array(
-              'copyright' => array(
-                'weight' => '0',
-              ),
-              'filtered_html' => array(
-                'weight' => '-9',
-              ),
-              'full_html' => array(
-                'weight' => '-8',
-              ),
-              'html_mail' => array(
-                'weight' => '0',
-              ),
-              'managed_content' => array(
-                'weight' => '-10',
-              ),
-              'php_code' => array(
-                'weight' => '-6',
-              ),
-              'plain_text' => array(
-                'weight' => '-7',
-              ),
-            ),
-          ),
-        ),
-        'exclude_cv' => FALSE,
-        'linkit' => array(
-          'button_text' => 'Search',
-          'enable' => 0,
-          'profile' => '',
-        ),
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'maxlength_js' => 0,
-          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '9',
-      ),
-    ),
-  );
-
   // Exported field: 'taxonomy_term-parliaments-field_parliament_election'.
   $fields['taxonomy_term-parliaments-field_parliament_election'] = array(
     'field_config' => array(
@@ -3227,7 +3066,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'long',
             'fromto' => 'both',
             'linked_field' => array(
@@ -3331,7 +3169,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'list',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -3365,136 +3202,6 @@ function pw_globals_field_default_fields() {
         ),
         'type' => 'options_select',
         'weight' => '6',
-      ),
-    ),
-  );
-
-  // Exported field: 'taxonomy_term-parliaments-field_parliament_list_rename'.
-  $fields['taxonomy_term-parliaments-field_parliament_list_rename'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_parliament_list_rename',
-      'field_permissions' => array(
-        'type' => '0',
-      ),
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'max_length' => '100',
-      ),
-      'translatable' => '0',
-      'type' => 'text',
-    ),
-    'field_instance' => array(
-      'bundle' => 'parliaments',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(
-            'field_delimiter' => '',
-            'linked_field' => array(
-              'advanced' => array(
-                'class' => '',
-                'rel' => '',
-                'target' => '',
-                'text' => '',
-                'title' => '',
-              ),
-              'destination' => '',
-              'linked' => 0,
-            ),
-          ),
-          'type' => 'text_default',
-          'weight' => 10,
-        ),
-      ),
-      'ds_extras_field_template' => '',
-      'entity_type' => 'taxonomy_term',
-      'field_name' => 'field_parliament_list_rename',
-      'label' => 'List Rename',
-      'required' => 0,
-      'settings' => array(
-        'better_formats' => array(
-          'allowed_formats' => array(
-            'copyright' => 'copyright',
-            'filtered_html' => 'filtered_html',
-            'full_html' => 'full_html',
-            'html_mail' => 'html_mail',
-            'managed_content' => 'managed_content',
-            'newsletter' => 'newsletter',
-            'php_code' => 'php_code',
-            'plain_text' => 'plain_text',
-          ),
-          'allowed_formats_toggle' => 0,
-          'default_order_toggle' => 0,
-          'default_order_wrapper' => array(
-            'formats' => array(
-              'copyright' => array(
-                'weight' => '0',
-              ),
-              'filtered_html' => array(
-                'weight' => '-9',
-              ),
-              'full_html' => array(
-                'weight' => '-8',
-              ),
-              'html_mail' => array(
-                'weight' => '0',
-              ),
-              'managed_content' => array(
-                'weight' => '-10',
-              ),
-              'newsletter' => array(
-                'weight' => '0',
-              ),
-              'php_code' => array(
-                'weight' => '-6',
-              ),
-              'plain_text' => array(
-                'weight' => '-7',
-              ),
-            ),
-          ),
-        ),
-        'exclude_cv' => FALSE,
-        'linkit' => array(
-          'button_text' => 'Suche',
-          'enable' => 0,
-          'profile' => '',
-        ),
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'maxlength_js' => 0,
-          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '12',
       ),
     ),
   );
@@ -3553,7 +3260,6 @@ function pw_globals_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -3639,7 +3345,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -3718,7 +3423,6 @@ function pw_globals_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'long',
             'fromto' => 'both',
             'linked_field' => array(
@@ -3744,7 +3448,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'long',
             'fromto' => 'both',
             'linked_field' => array(
@@ -3834,7 +3537,6 @@ function pw_globals_field_default_fields() {
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -3924,7 +3626,6 @@ function pw_globals_field_default_fields() {
           'label' => 'above',
           'module' => 'list',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -3973,7 +3674,6 @@ function pw_globals_field_default_fields() {
   t('Bitte im Format "Titel Vorname Nachname" eingeben.');
   t('Body');
   t('Comment');
-  t('Constituency Rename');
   t('Contributer');
   t('Dargestellte Metriken');
   t('Election');
@@ -3983,7 +3683,6 @@ function pw_globals_field_default_fields() {
   t('Footer');
   t('Icon Class');
   t('Kandidaten-Check');
-  t('List Rename');
   t('Number');
   t('Parliament');
   t('Patron');
@@ -4001,7 +3700,6 @@ function pw_globals_field_default_fields() {
   t('Zielformat ist quadratisch als klassisches Schulterstück bzw. Büste.');
   t('Zitat');
   t('constituency number or similar identifier ');
-  t('rename constituency like from Wahlkreis to Stimmkreis.');
 
   return $fields;
 }

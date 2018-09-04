@@ -1,10 +1,10 @@
-# German translation of Universally Unique IDentifier (7.x-1.2)
+# German translation of Universally Unique IDentifier (7.x-1.0-alpha3)
 # Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Universally Unique IDentifier (7.x-1.2)\n"
-"POT-Creation-Date: 2018-07-19 09:43+0000\n"
+"Project-Id-Version: Universally Unique IDentifier (7.x-1.0-alpha3)\n"
+"POT-Creation-Date: 2018-08-13 13:38+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -14,10 +14,8 @@ msgstr ""
 
 msgid "Features"
 msgstr "Features"
-msgid "Are you sure?"
-msgstr "Möchten Sie das wirklich?"
 msgid "Synchronization"
-msgstr "Synchronisation beginnt."
+msgstr "Synchronisierung"
 msgid "UUID"
 msgstr "UUID"
 msgid "The entity type."

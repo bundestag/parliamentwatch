@@ -395,7 +395,7 @@ function pw_profiles_field_default_fields() {
   $fields['taxonomy_term-committee-field_committee_chairman'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_committee_chairman',
@@ -585,11 +585,11 @@ function pw_profiles_field_default_fields() {
             'public' => 'public',
           ),
           'allowed_types' => array(
-            'audio' => 0,
-            'default' => 0,
-            0 => 0,
             'image' => 'image',
             'video' => 0,
+            0 => 0,
+            'audio' => 0,
+            'default' => 0,
           ),
           'browser_plugins' => array(
             'library' => 0,
@@ -709,7 +709,7 @@ function pw_profiles_field_default_fields() {
   $fields['taxonomy_term-committee-field_committee_vice_chairman'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_committee_vice_chairman',

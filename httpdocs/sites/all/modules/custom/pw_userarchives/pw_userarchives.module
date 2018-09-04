@@ -268,7 +268,15 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       ->fetchCol();
 
     if ($politician_index) {
-      search_api_track_item_insert('user_revision', array_diff($items_to_track_after_update, $tracked_items));
+      try {
+        search_api_track_item_insert('user_revision', array_diff($items_to_track_after_update, $tracked_items));
+      }
+      catch (PDOException $e) {
+        // Due to the recursive call earlier the $tracked_items might be
+        // outdated resulting in duplicate INSERT statements for the same key.
+        watchdog_exception('pw_userarchives', $e);
+      }
+      search_api_track_item_change('user_revision', array_intersect($tracked_items, $items_to_track_after_update));
       search_api_track_item_delete('user_revision', array_diff($tracked_items, $items_to_track_after_update));
     }
   }

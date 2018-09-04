@@ -35,6 +35,12 @@
   -ms-hyphens: auto;
   hyphens: auto;
   @include margin(0 null $space-small);
+  > a {
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
 }
 
 @mixin dark-link() {

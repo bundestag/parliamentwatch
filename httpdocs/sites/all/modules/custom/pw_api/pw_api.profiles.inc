@@ -182,6 +182,7 @@ function pw_api_user_to_array($user, $subsets = array()) {
     // publish private email for authorized users
     if(user_access('access authorized api')){
       $profile['personal']['email'] = $w_user->mail->value();
+      $profile['personal']['email2'] = $w_user->field_user_public_mail->value();
       $profile['personal']['phone'] = $w_user->field_user_phone->value();
       $profile['personal']['mobile'] = $w_user->field_user_mobile->value();
       // load kc theses
@@ -192,9 +193,6 @@ function pw_api_user_to_array($user, $subsets = array()) {
       else {
         $profile['meta']['candidate_match_theses'] = 0;
       }
-    }
-    else{
-      $profile['personal']['email'] = $w_user->field_user_public_mail->value();
     }
 
     $profile['party'] = $w_user->field_user_party->label();

@@ -44,14 +44,21 @@
  * @ingroup themeable
  */
 ?>
-<div class="lp-header <?php print $classes; ?>">
-  <?php print render($title_suffix); ?>
-  <div class="lp-header__left">
-    <i class="icon <?php print $icon_class; ?>"></i>
-  </div>
-  <div class="lp-header__right">
-    <h2><?php print $block->subject; ?></h2>
-    <?php print $content; ?>
-  </div>
-  <div class="lp-header__bg"></div>
+<div class="election-teaser">
+  <a class="election-teaser__col" href="/bayern?pk_campaign=LTW%20Startseite&pk_kwd=BY%20Homepage%20Button">
+    <div class="election-teaser__col__title">
+      <i class="icon icon-de-by"></i>
+      <small>Landtagswahl</small>
+      <span>Bayern</span>
+    </div>
+    <span class="btn btn--small">Zum Wahlportal</span>
+  </a>
+  <span class="election-teaser__col election-teaser__col--soon" data-href="/hessen?pk_campaign=LTW%20Startseite&pk_kwd=HE%20Homepage%20Button">
+    <div class="election-teaser__col__title">
+      <i class="icon icon-de-he"></i>
+      <small>Landtagswahl</small>
+      <span>Hessen</span>
+    </div>
+    <span class="btn btn--small btn--disabled">In kürze verfügbar</span>
+  </span>
 </div>

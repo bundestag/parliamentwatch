@@ -101,18 +101,19 @@
   <main id="content">
     <a id="main-content"></a>
     <?php print $messages; ?>
-
     <?php if ($tabs): ?><div class="tabs tabs--admin"><?php print render($tabs); ?></div><?php endif; ?>
     <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
     <?php if ($page['intro_primary']): ?>
-    <div class="intro">
-      <?php if ($page['intro_secondary']): ?>
-      <div class="intro__left"><?php print render($page['intro_primary']); ?></div>
-      <div class="intro__right"><?php print render($page['intro_secondary']); ?></div>
-      <?php else: ?>
-      <?php print render($page['intro_primary']); ?>
+      <?php if($user->uid || arg(0) != 'user'): ?>
+      <div class="intro">
+        <?php if ($page['intro_secondary']): ?>
+        <div class="intro__left"><?php print render($page['intro_primary']); ?></div>
+        <div class="intro__right"><?php print render($page['intro_secondary']); ?></div>
+        <?php else: ?>
+        <?php print render($page['intro_primary']); ?>
+        <?php endif; ?>
+      </div>
       <?php endif; ?>
-    </div>
     <?php endif; ?>
     <?php print render($page['content']); ?>
     <?php print render($page['content_tabs']); ?>

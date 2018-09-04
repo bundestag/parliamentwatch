@@ -329,7 +329,8 @@
     float: left;
     display: flex;
     flex-shrink: 0;
-    .nav__item__link--abgeordnete:before {
+    .nav__item__link--abgeordnete:before,
+    .nav__item__link--kandidierende:before {
       content: '\e84d';
     }
     .nav__item__link--abstimmungen:before {
@@ -347,6 +348,9 @@
     .nav__item__link--wahlprogramme:before {
       content: '\e900';
       font-size: 1.1em;
+    }
+    .nav__item__link--medienpartner:before {
+      content: '\e831';
     }
   }
   .nav__item__link {

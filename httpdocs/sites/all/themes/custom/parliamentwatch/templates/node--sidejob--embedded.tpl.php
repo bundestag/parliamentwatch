@@ -92,10 +92,10 @@
     <?php print render($content['field_job']); ?>
     <small><?php print render($content['field_topics']); ?></small>
   </td>
-  <td class="sidejob-overview__item__date" data-sort-value="<?php print $field_sidejob_date_start[0]['value'] ?? ''; ?>">
+  <td class="sidejob-overview__item__date" data-sort-value="<?php print ($field_sidejob_date_start[0]['value']) ? $field_sidejob_date_start[0]['value'] :  ''; ?>">
     <?php print render($content['field_sidejob_date']); ?>
   </td>
-  <td class="sidejob-overview__item__level" data-sort-value="<?php print $field_sidejob_classification[0]['value'] ?? 0; ?>">
+  <td class="sidejob-overview__item__level" data-sort-value="<?php print ($field_sidejob_classification[0]['value']) ? $field_sidejob_classification[0]['value'] : 0; ?>">
     <?php if (isset($field_sidejob_classification[0]['value'])): ?>
       <?php print t('level'); ?> <?php print render($content['field_sidejob_classification']); ?>
       <small>

@@ -8,6 +8,8 @@ services:
       MYSQL_USER: drupal
       MYSQL_PASSWORD: drupal
     restart: always
+    ports:
+      - "3307:3306"
     volumes:
       - ./provisioning/etc/mysql/conf.d:/etc/mysql/conf.d
       - ./provisioning/var/backup/mysql:/docker-entrypoint-initdb.d

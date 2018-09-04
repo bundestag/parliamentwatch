@@ -1,10 +1,10 @@
 # German translation of Block Cache Alter (7.x-1.1)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Block Cache Alter (7.x-1.1)\n"
-"POT-Creation-Date: 2016-07-10 06:45+0000\n"
+"POT-Creation-Date: 2018-08-06 00:23+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr "Leistung"
 msgid "Clear cache"
 msgstr "Cache leeren"
 msgid "Cache settings"
-msgstr "Cache einstellen"
+msgstr "Cache-Einstellungen"
 msgid "Cache lifetime"
 msgstr "Minimale Cache-Lebensdauer"
 msgid "Do not cache"

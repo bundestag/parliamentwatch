@@ -275,7 +275,7 @@ return $user->field_user_address[\'und\'][0][\'postal_code\'];',
   $export['gdata_profiles_importer_v2-blank_source_2-username_creator'] = $feeds_tamper;
 
   $feeds_tamper = new stdClass();
-  $feeds_tamper->disabled = TRUE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
   $feeds_tamper->api_version = 2;
   $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_1-username_creator';
   $feeds_tamper->importer = 'gdata_profiles_importer_v2';
@@ -588,6 +588,66 @@ return $user->field_user_address[\'und\'][0][\'postal_code\'];',
   $feeds_tamper->weight = 0;
   $feeds_tamper->description = 'Find replace REGEX';
   $export['gdata_profiles_importer_v2-xpathparser_44-find_replace_regex'] = $feeds_tamper;
+
+  $feeds_tamper = new stdClass();
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->api_version = 2;
+  $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_49-explode';
+  $feeds_tamper->importer = 'gdata_profiles_importer_v2';
+  $feeds_tamper->source = 'xpathparser:49';
+  $feeds_tamper->plugin_id = 'explode';
+  $feeds_tamper->settings = array(
+    'separator' => '|',
+    'limit' => '',
+    'real_separator' => '|',
+  );
+  $feeds_tamper->weight = 1;
+  $feeds_tamper->description = 'Explode';
+  $export['gdata_profiles_importer_v2-xpathparser_49-explode'] = $feeds_tamper;
+
+  $feeds_tamper = new stdClass();
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->api_version = 2;
+  $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_49-rewrite';
+  $feeds_tamper->importer = 'gdata_profiles_importer_v2';
+  $feeds_tamper->source = 'xpathparser:49';
+  $feeds_tamper->plugin_id = 'rewrite';
+  $feeds_tamper->settings = array(
+    'text' => '[xpathparser:45]|[xpathparser:47]|[xpathparser:49]',
+  );
+  $feeds_tamper->weight = 0;
+  $feeds_tamper->description = 'Rewrite';
+  $export['gdata_profiles_importer_v2-xpathparser_49-rewrite'] = $feeds_tamper;
+
+  $feeds_tamper = new stdClass();
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->api_version = 2;
+  $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_50-explode';
+  $feeds_tamper->importer = 'gdata_profiles_importer_v2';
+  $feeds_tamper->source = 'xpathparser:50';
+  $feeds_tamper->plugin_id = 'explode';
+  $feeds_tamper->settings = array(
+    'separator' => '|',
+    'limit' => '',
+    'real_separator' => '|',
+  );
+  $feeds_tamper->weight = 1;
+  $feeds_tamper->description = 'Explode';
+  $export['gdata_profiles_importer_v2-xpathparser_50-explode'] = $feeds_tamper;
+
+  $feeds_tamper = new stdClass();
+  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
+  $feeds_tamper->api_version = 2;
+  $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_50-rewrite';
+  $feeds_tamper->importer = 'gdata_profiles_importer_v2';
+  $feeds_tamper->source = 'xpathparser:50';
+  $feeds_tamper->plugin_id = 'rewrite';
+  $feeds_tamper->settings = array(
+    'text' => '[xpathparser:46]|[xpathparser:48]|[xpathparser:50]',
+  );
+  $feeds_tamper->weight = 0;
+  $feeds_tamper->description = 'Rewrite';
+  $export['gdata_profiles_importer_v2-xpathparser_50-rewrite'] = $feeds_tamper;
 
   $feeds_tamper = new stdClass();
   $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */

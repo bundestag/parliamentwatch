@@ -387,7 +387,7 @@
       if (!$('body').hasClass('blank-theme') || isIE11 == false) {
         var lastScrollTop = 0, delta = 2;
         $(window).scroll(function(event){
-          var scrollPosition = $(this).scrollTop();
+          var scrollPosition = Math.max($(this).scrollTop(), 0);
           if(Math.abs(lastScrollTop - scrollPosition) <= delta)
             return;
 
@@ -457,10 +457,8 @@
         slidesPerView: 'auto',
         resistance: true,
         resistanceRatio: 0.5,
-        navigation: {
-          nextEl: secondLevel.find('.swiper-button-next'),
-          prevEl: secondLevel.find('.swiper-button-prev'),
-        },
+        nextButton: secondLevel.find('.swiper-button-next'),
+        prevButton: secondLevel.find('.swiper-button-prev'),
         onInit: function (swiper) {
           resizeMainNavigation();
           swiper.update();
@@ -873,7 +871,7 @@
 
         // Set initial tab by checking url for hash
         if ($('.tabs__navigation').length && window.location.hash) {
-          $('.tabs__navigation a[href=' + window.location.hash + ']').trigger('click');
+          $('.tabs__navigation a[href="' + window.location.hash + '"]').trigger('click');
         }
 
         $('.tabs__content__content .pager__item a').each(function () {
@@ -893,17 +891,15 @@
   Drupal.behaviors.swiperTile = {
     attach: function () {
       $('.swiper-container--tile').each(function (index, element) {
-        var mySwiper = new Swiper(element, {
+        var $this = $(this);
+        $this.swiper({
           slideClass: 'tile',
           loop: false,
           spaceBetween: 20,
           slidesPerView: 3,
           slidesPerGroup: 3,
-          navigation: {
-            type: 'fraction',
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-          },
+          nextButton: $this.find('.swiper-button-next'),
+          prevButton: $this.find('.swiper-button-prev'),
           breakpoints: {
             550: {
               slidesPerView: 1,
@@ -922,12 +918,15 @@
               slidesPerGroup: 3
             }
           },
-          on: {
-            init: function () {
-              $('.question__question').matchHeight();
-              $('.question__answer').matchHeight();
-              this.update();
-            }
+          onInit: function (swiper) {
+            $('.question__question').matchHeight();
+            $('.question__answer').matchHeight();
+            swiper.update();
+          },
+          onAfterResize: function (swiper) {
+            $('.question__question').matchHeight();
+            $('.question__answer').matchHeight();
+            swiper.update();
           }
         });
 
@@ -1777,10 +1776,8 @@
           slidesPerView: 'auto',
           spaceBetween: 30,
           centeredSlides: true,
-          navigation: {
-            nextEl: $('.poll__timeline .swiper-button-next'),
-            prevEl: $('.poll__timeline .swiper-button-prev')
-          }
+          nextButton: $('.poll__timeline .swiper-button-next'),
+          prevButton: $('.poll__timeline .swiper-button-prev'),
         });
       });
     }
@@ -1821,35 +1818,32 @@
       }
 
       var mySwiper = new Swiper('.filterbar__swiper', {
-        freeMode: true,
+        freeMode: false,
         resistance: true,
         resistanceRatio: 0.5,
         slideClass: 'filterbar__item',
         wrapperClass: 'filterbar__swiper__inner',
         speed: 400,
         slidesPerView: 'auto',
-        navigation: {
-          nextEl: $('.filterbar__swiper .swiper-button-next'),
-          prevEl: $('.filterbar__swiper .swiper-button-prev')
+        simulateTouch: true,
+        nextButton: filterBarSwiper.find('.swiper-button-next'),
+        prevButton: filterBarSwiper.find('.swiper-button-prev'),
+        onInit: function (swiper) {
+          filterBarSwiperSize();
+          swiper.update();
         },
-        on: {
-          init: function () {
-            filterBarSwiperSize();
-            this.update();
-          },
-          resize: function () {
-            filterBarSwiperSize();
-            this.update();
-          }
+        onAfterResize: function (swiper) {
+          filterBarSwiperSize();
+          swiper.update();
         }
       });
 
-      $('.filterbar__swiper .filterbar__item--dropdown').on("click", function () {
+      $('.filterbar__swiper .filterbar__item--dropdown .dropdown__trigger').on("click", function () {
         // var index = $(this).index();
         // mySwiper.slideTo(index, 300);
         $('.dropdown__list').removeClass('dropdown__list--open');
-        if ($(this).children('.dropdown__trigger').hasClass('dropdown__trigger--active')) {
-          $(this).find('.dropdown__list').addClass('dropdown__list--open');
+        if ($(this).hasClass('dropdown__trigger--active')) {
+          $(this).parent('.filterbar__item--dropdown').find('.dropdown__list').addClass('dropdown__list--open');
         }
       });
     }
@@ -1951,10 +1945,8 @@
           speed: 400,
           slidesPerView: 1,
           autoHeight: 1,
-          navigation: {
-            nextEl: candidateCheckSwiper.find('.swiper-button-next'),
-            prevEl: candidateCheckSwiper.find('.swiper-button-prev'),
-          },
+          nextButton: candidateCheckSwiper.find('.swiper-button-next'),
+          prevButton: candidateCheckSwiper.find('.swiper-button-prev'),
           pagination: candidateCheckSwiper.find('.swiper-pagination'),
           paginationType: 'fraction',
           paginationFractionRender: function (swiper, currentClassName, totalClassName) {
@@ -2076,7 +2068,7 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      $('form[data-ajax-target] .form__item__control').change(function (event) {
+      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));
         var path = $(this).parents('form').attr('action');
@@ -2090,6 +2082,12 @@
           removeLoadingAnimation($('.tile-wrapper'));
         });
       });
+      $('form[data-ajax-target]').submit(function (event) {
+        var keyValue = $('#edit-keys').val();
+        window.location = '?keys=' + keyValue;
+        event.preventDefault();
+      });
+
       $('a[data-ajax-target]').click(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));
@@ -2141,9 +2139,10 @@
    */
   Drupal.behaviors.donationForm = {
     attach: function (context, settings) {
-      function pw_donation_form_multiply(){
-        var pw_amount = $('input:radio[name ="submitted[fieldset_donationform_yourdonation][donation_amount]"]:checked').val();
-        var pw_interval = $('input:radio[name ="submitted[fieldset_donationform_yourdonation][donation_frequency]"]:checked').val();
+      $('.webform-component--fieldset-donationform-yourdonation--donation-frequency input[type=radio]').change(function() {
+        var pw_interval = $('input:radio[name="submitted[fieldset_donationform_yourdonation][donation_frequency]"]:checked').val();
+        var pw_amount_label = Drupal.t('Your donation amount');
+        var $pw_amount_active = $('input[name*="donation_amount"]:checked');
 
         pw_interval = pw_interval == 0 ? 1 : pw_interval;
 
@@ -2151,12 +2150,34 @@
         $('#edit-submitted-fieldset-donationform-yourdonation-donation-amount-2 + label').text(pw_interval * 20 + ' €');
         $('#edit-submitted-fieldset-donationform-yourdonation-donation-amount-3 + label').text(pw_interval * 50 + ' €');
         $('#edit-submitted-fieldset-donationform-yourdonation-donation-amount-4 + label').text(pw_interval * 100 + ' €');
-      }
 
-      $('.webform-component--fieldset-donationform-yourdonation--donation-amount, .webform-component--fieldset-donationform-yourdonation--donation-frequency').click(function() {
-        pw_donation_form_multiply();
+        switch (pw_interval) {
+          case '1':
+            pw_amount_label = Drupal.t('Your monthly donation amount');
+            break;
+          case '3':
+            pw_amount_label = Drupal.t('Your quarterly donation amount');
+            break;
+          case '6':
+            pw_amount_label = Drupal.t('Your half-yearly donation amount');
+            break;
+          case '12':
+            pw_amount_label = Drupal.t('Your yearly donation amount');
+            break;
+        }
+
+        $('label[for="edit-submitted-fieldset-donationform-yourdonation-donation-amount"]').contents().filter(function(){
+          return (this.nodeType == 3);
+        }).replaceWith(pw_amount_label + ' ');
+
+        if ($pw_amount_active.length > 0 && $pw_amount_active.val() !== 'free') {
+          $pw_amount_active.get(0).checked = false;
+        }
       });
-      pw_donation_form_multiply();
+
+      $('.webform-component--fieldset-donationform-yourdonation--donation-amount input[type=radio]').change(function() {
+        $('.form__item--submitted-fieldset-donationform-yourdonation-donation-free-amount').find('input').val('');
+      });
     }
   };
 

@@ -929,20 +929,21 @@ $abstimmverhalten-node-item-width: 18px;
     font-family: $font-serif;
     color: $gray;
     bottom: auto;
+    pointer-events: none;
     @include breakpoint($breakpoint-s-min) {
-      top: 150px;
+      top: 140px;
     }
   }
   .swiper-button-prev,
   .swiper-button-next {
     position: absolute;
     margin-top: 0;
-    top: 110px;
+    top: 85px;
     @include breakpoint($breakpoint-s-min) {
       top: 150px;
     }
     @include breakpoint($breakpoint-xl-min) {
-      top: 180px;
+      top: 170px;
     }
     &:before {
       color: $gray;
@@ -1015,14 +1016,14 @@ $abstimmverhalten-node-item-width: 18px;
 }
 .deputy__candidate_check__item__thesis {
   background: $brightBeige;
-  padding: ($space-large) 50px;
+  padding: ($space-large * 2) 50px $space-large;
 
   text-align: center;
   font-family: $font-serif;
   font-size: 1.5em;
   color: $darkGray;
   @include breakpoint($breakpoint-xs-min) {
-    padding: ($space-large * 2) ($space-large * 3);
+    padding: ($space-large * 3) ($space-large * 3) ($space-large * 2);
   }
 }
 .deputy__candidate_check__item__position {

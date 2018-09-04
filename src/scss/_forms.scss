@@ -24,6 +24,13 @@
   font-family: $font-sans-serif;
   font-weight: 300;
   outline: 0;
+  box-shadow: none;
+  border-radius: 0;
+  &[type="text"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
   @include placeholder {
     color: $gray;
   }

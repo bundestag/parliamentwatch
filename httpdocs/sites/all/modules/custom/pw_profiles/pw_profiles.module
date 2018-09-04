@@ -216,7 +216,7 @@ function pw_profiles_form_pw_profiles_street_form_alter(&$form, &$form_state) {
  */
 function pw_profiles_metatag_metatags_view_alter(&$output, $instance, $options) {
   if ($instance == 'user:user') {
-    $canonical_url = 'https://www.abgeordnetenwatch.de/' . user_uri($options['entity'])['path'];
+    $canonical_url = url(user_uri($options['entity'])['path'], ['absolute' => TRUE, 'base_url' => 'https://www.abgeordnetenwatch.de']);
     $output['canonical']['#attached']['drupal_add_html_head'][0][0]['#value'] = $canonical_url;
     $output['canonical']['#attached']['drupal_add_html_head'][0][0]['#attached']['drupal_add_http_header'][0][1] = '<' . $canonical_url .'>; rel=canonical';
   }
@@ -367,10 +367,16 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     }
   }
 
+  if (isset($account->content['field_user_list'])) {
+    if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
+      $account->content['field_user_list']['#title'] = t('List', [], ['context' => 'Bayern']);
+    }
+  }
+
   if (isset($account->content['field_user_election_result'])) {
     if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
       $constituency_context = 'Bayern';
-      $list_context = '';
+      $list_context = 'Bayern';
     }
     elseif (strpos(pw_profiles_parliament($account)->name, 'Baden-Württemberg') === 0) {
       $constituency_context = '';
@@ -504,9 +510,9 @@ function pw_profiles_page($parliament_term, $role_name) {
   }
 
   $response = $q
-    ->sort('has_picture', 'DESC')
     ->sort('number_of_answers', 'DESC')
     ->sort('number_of_questions', 'DESC')
+    ->sort('has_picture', 'DESC')
     ->sort('field_user_lname')
     ->sort('search_api_relevance')
     ->range(pager_find_page() * $limit, $limit)
@@ -743,16 +749,22 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
     '#default_value' => isset($parameters['keys']) ? $parameters['keys'] : '',
     '#attributes' => ['placeholder' => $keys_placeholder],
   ];
+
+  if (strpos($parliament->name, 'Bayern') === 0) {
+    $constituency_title = t('Constituency', [], ['context' => 'Bayern']);
+    $list_title = t('List', [], ['context' => 'Bayern']);
+    $list_position_title = t('List position', [], ['context' => 'Bayern']);
+  }
+  else {
+    $constituency_title = t('Constituency', [], ['context' => '']);
+    $list_title = t('List', [], ['context' => '']);
+    $list_position_title = t('List position', [], ['context' => '']);
+  }
+
   if (count($constituency_values) > 1) {
-    if (strpos($parliament->name, 'Bayern') === 0) {
-      $title = t('Constituency', [], ['context' => 'Bayern']);
-    }
-    else {
-      $title = t('Constituency', [], ['context' => '']);
-    }
     $form['constituency'] = array(
       '#type' => 'select',
-      '#title' => $title,
+      '#title' => $constituency_title,
       '#title_display' => 'invisible',
       '#options' => ['' => t('All')] + _pw_profiles_options($constituency_values),
       '#default_value' => empty($parameters['constituency']) ? '' : $parameters['constituency'],
@@ -762,7 +774,7 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
     if (count($list_values) > 1 && !pw_profiles_filter_disabled('field_user_list_tid', $parliament)) {
       $form['list'] = array(
         '#type' => 'radios',
-        '#title' => isset($parliament->field_parliament_list_rename[LANGUAGE_NONE][0]['value']) ? $parliament->field_parliament_list_rename[LANGUAGE_NONE][0]['value'] : t('List'),
+        '#title' => $list_title,
         '#title_display' => 'invisible',
         '#options' => ['' => t('All')] + _pw_profiles_options($list_values),
         '#default_value' => empty($parameters['list']) ? '' : $parameters['list'],
@@ -1235,3 +1247,4 @@ t('@result % (via constituency)', ['@result' => 0], ['context' => '']);
 t('@result % (via constituency)', ['@result' => 0], ['context' => 'Bayern']);
 t('@result % (via list)', ['@result' => 0], ['context' => '']);
 t('@result % (via list)', ['@result' => 0], ['context' => 'Baden-Württemberg']);
+t('@result % (via list)', ['@result' => 0], ['context' => 'Bayern']);

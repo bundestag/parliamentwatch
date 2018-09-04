@@ -663,3 +663,168 @@
   }
 }
 
+
+/* info-Block */
+
+.info-block {
+  padding-top: $space;
+  padding-bottom: $space;
+  border-bottom: 1px solid $darkBeige;
+  @include container();
+  @include breakpoint($breakpoint-s-min) {
+    padding-top: $space-large;
+    padding-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-xl-min) {
+    padding-top: ($space-large + $space-xsmall);
+    padding-bottom: ($space-large + $space-xsmall);
+  }
+  dl {
+    @include grid-column(12);
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(8);
+
+      border-right: 1px solid $darkBeige;
+    }
+    dt {
+      font-weight: 500;
+      padding-top: $space-xsmall-mobile;
+      padding-bottom: $space-xsmall-mobile;
+      @include text-overflow();
+      @include breakpoint($breakpoint-xs-min) {
+        width: 50%;
+      }
+    }
+    dd {
+      padding-top: $space-xsmall-mobile;
+      padding-bottom: $space-xsmall-mobile;
+      @include breakpoint($breakpoint-xs-min) {
+        margin-left: 50%;
+      }
+      small {
+        display: block;
+      }
+    }
+  }
+
+  .link-list {
+    margin: $space 0 0 0;
+    padding: $space 0 $space-small 0;
+    border-top: 1px solid $darkBeige;
+    @include grid-column(12);
+    @include grid-container();
+
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(4);
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    @include breakpoint($breakpoint-m-min) {
+      padding-left: 20px;
+    }
+    .link-list__item {
+      margin: 0;
+      width: auto;
+      float: none;
+      border-color: $darkBeige;
+      a:after {
+        content: '';
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+}
+
+/* Election-Block */
+
+.election-teaser {
+  display: flex;
+  padding-top: $space-small;
+  padding-bottom: $space-small;
+  border-bottom: 1px solid $darkBeige;
+  flex-wrap: wrap;
+  @include breakpoint($breakpoint-s-min) {
+    flex-wrap: nowrap;
+    padding-top: $space-large;
+    padding-bottom: $space-large;
+  }
+  @include container();
+  .election-teaser__col {
+    flex: 1 auto;
+    position: relative;
+    padding: $space 150px $space $space;
+    width: 100%;
+    transition: background 300ms ease;
+
+    @include breakpoint($breakpoint-s-min) {
+      width: calc('50%' - 20px);
+      margin-right: 20px;
+      border: 1px solid $beige;
+      padding-top: $space-large;
+      padding-bottom: $space-large;
+    }
+    &:last-child {
+      .btn {
+        @include breakpoint($breakpoint-m-min) {
+          right: 20px;
+        }
+      }
+    }
+    .btn {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translate3d(0,-50%,0);
+      @include breakpoint($breakpoint-m-min) {
+        right: 30px;
+      }
+    }
+    &.election-teaser__col--soon {
+      cursor: default;
+      pointer-events: none;
+      .election-teaser__col__title {
+        opacity: .6;
+      }
+    }
+    &:hover {
+      background: $brightBeige;
+      cursor: pointer;
+    }
+  }
+
+  .election-teaser__col__title {
+    font-family: $font-serif;
+    padding-left: 65px;
+    position: relative;
+    .icon {
+      font-size: 50px;
+      position: absolute;
+      width: 50px;
+      text-align: center;
+      left: 0;
+      top: 50%;
+      transform: translate3d(0,-50%,0);
+    }
+    small {
+      color: $darkGray;
+      display: block;
+      font-size: 13px;
+    }
+    span {
+      color: $darkGray;
+      display: block;
+      font-size: 26px;
+    }
+  }
+}
+
+/* Landingpage specific styles */
+
+/* Wahlportal: Bayern */
+
+.page-taxonomy-term-29821 .testimonial.clearfix { display: none; }
+.page-taxonomy-term-29821 .patron-teaser { border-top: 0; }
+

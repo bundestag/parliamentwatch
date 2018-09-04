@@ -1,10 +1,10 @@
 # German translation of Piwik Reports (7.x-3.0-rc1)
-# Copyright (c) 2012 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Piwik Reports (7.x-3.0-rc1)\n"
-"POT-Creation-Date: 2012-09-22 09:23+0000\n"
+"POT-Creation-Date: 2018-08-13 10:04+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "Filter"
 msgid "Downloads"
 msgstr "Downloads"
 msgid "No data available."
-msgstr "Keine Daten vorhanden."
+msgstr "Keine Daten verfügbar."
 msgid "Today"
 msgstr "Heute"
 msgid "Yesterday"

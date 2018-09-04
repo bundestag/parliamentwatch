@@ -1,10 +1,10 @@
 # German translation of Address Field (7.x-1.2)
-# Copyright (c) 2017 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Address Field (7.x-1.2)\n"
-"POT-Creation-Date: 2017-05-02 16:38+0000\n"
+"POT-Creation-Date: 2018-08-14 01:38+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -555,7 +555,9 @@ msgstr "Dynamisches Adressformular"
 msgid "Available countries"
 msgstr "Verfügbare Länder"
 msgid "If no countries are selected, all countries will be available."
-msgstr "Wenn keine Länder ausgewählt sind, werden alle Länder angeboten."
+msgstr ""
+"Wenn keine Länder ausgewählt sind, stehen alle Länder zur "
+"Verfügung."
 msgid "Manage a flexible address field, implementing the xNAL standard."
 msgstr "Eine flexible Adressfeld, implementieren die xNAL Standards."
 msgid "Municipality"

@@ -125,18 +125,6 @@ function pw_globals_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function pw_globals_form_user_login_alter(&$form, &$form_state) {
-  $form['help'] = [
-    '#prefix' => '<p>',
-    '#suffix' => '</p>',
-    '#markup' => t('If you are a politician you can log in and edit your profile.'),
-    '#weight' => -1,
-  ];
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- */
 function pw_globals_form_pw_globals_politician_search_form_alter(&$form, &$form_state) {
   $form['form_build_id']['#access'] = FALSE;
   $form['form_token']['#access'] = FALSE;
@@ -180,6 +168,10 @@ function pw_globals_block_info() {
     'info' => 'Testimonial teaser',
     'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
   ];
+  $blocks['election_teaser'] = [
+    'info' => 'Election teaser',
+    'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
+  ];
   return $blocks;
 }
 
@@ -198,6 +190,8 @@ function pw_globals_block_view($delta = '') {
       return pw_globals_parliament_patron_block();
     case 'testimonial':
       return pw_globals_testimonial_block();
+    case 'election_teaser':
+      return pw_globals_election_teaser_block();
     default:
       return [];
   }
@@ -392,12 +386,18 @@ function pw_globals_politician_search_form_block() {
 
   if (_pw_globals_politician_search_role_condition($term) == 'deputies') {
     $block['subject'] = t('Find your <span>deputy</span>');
+    $teaser = t('Ask your questions to your deputies and find out about voting results and committee memberships.');
   }
   else {
     $block['subject'] = t('Find your <span>candidate</span>');
+    $teaser = t('Ask your questions and find out about your direct candidates for the upcoming elections!', ['@parliament' => $term->name], ['context' => $term->name]);
   }
-  $block['content'] = drupal_get_form('pw_globals_politician_search_form', $term);
-
+  $block['content']['form'] = drupal_get_form('pw_globals_politician_search_form', $term);
+  $block['content']['teaser'] = [
+    '#theme' => 'html_tag',
+    '#tag' => 'p',
+    '#value' => $teaser,
+  ];
   return $block;
 }
 
@@ -441,6 +441,22 @@ function pw_globals_testimonial_block() {
   if (!empty($nodes)) {
     $block['content'] = node_view(reset($nodes),'full');
   }
+  return $block;
+}
+
+/**
+ * Displays election teaser for landing pages.
+ *
+ * The content of the block is defined in the template file.
+ * Beware the $block['content'] cannot be empty, otherwise the block will not be
+ * displayed.
+ * 
+ * @return array
+ *   The block render array.
+ */
+function pw_globals_election_teaser_block() {
+  $block = [];
+  $block['content'] = ' ';
   return $block;
 }
 
@@ -1223,3 +1239,21 @@ function _pw_globals_antispam_prepare_comment_data($comment, $server_vars, $is_t
 
   return $comment_data;
 }
+
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bundestag']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Baden-Württemberg']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bayern']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Berlin']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Brandenburg']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bremen']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Hamburg']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Hessen']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Mecklenburg-Vorpommern']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Niedersachsen']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Nordrhein-Westfalen']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Rheinland-Pfalz']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Saarland']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Sachsen']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Sachsen-Anhalt']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Schleswig-Holstein']);
+t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Thüringen']);
