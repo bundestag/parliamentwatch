@@ -173,6 +173,7 @@
       @include breakpoint($breakpoint-m-min) {
         border-top: 0;
         padding-top: 0;
+        padding-bottom: 0;
         @include grid-column(5, $neat-grid-large-gutter);
         padding-left: $space-large;
       }
