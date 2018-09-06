@@ -799,6 +799,7 @@
             if (this.responseText == "success") {
               newsletter_message.innerHTML = "Anmeldung erfolgreich, sie erhalten eine Email mit Bestätigungslink.";
               newsletter_message.setAttribute('class', 'form__item show form__item--alert form__item--alert-success');
+              _paq.push(['trackGoal', 2]);
             }
             else if (this.responseText == "email_error") {
               newsletter_message.innerHTML = "Ihre Email-Adresse konnte nicht angemeldet werden.";

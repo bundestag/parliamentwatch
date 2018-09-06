@@ -553,12 +553,12 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
 
 
 /* Wells */
-
 .well {
   background: $beige;
   margin: $space 0;
   @include grid-container();
-  .well__left {
+  .well__left,
+  .well__right {
     margin-top: $space;
     margin-bottom: $space;
     @include grid-column(12);

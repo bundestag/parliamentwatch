@@ -109,41 +109,13 @@
     <div class="blog__content__inner">
       <?php print render($content['body']); ?>
       <?php if ($field_blockreference): ?>
-        <div class="well well--tabs">
-          <div class="tabs">
-            <div class="tabs__navigation">
-              <ul class="nav nav--tab">
-                <li class="nav__item nav__item--active"><a href="#unterstuetzen" class="nav__item__link">Unterstützen</a></li>
-                <li class="nav__item"><a href="#informiert-bleiben" class="nav__item__link">Informiert bleiben</a></li>
-              </ul>
-            </div>
-            <div id="unterstuetzen" class="tabs__content tabs__content--active">
-              <?php print render($content['field_blockreference']); ?>
-            </div>
-            <div id="informiert-bleiben" class="tabs__content">
-              <div class="well__left">
-                <h3><?php print t('Stay informed with the parliamentwatch Newsletter') ?></h3>
-                <p><?php print t('Description for the newsletter registration form, embedded in a blog article') ?></p>
-              </div>
-              <form id="newsletter-widget" action="" class="form">
-                <div id="newsletter-widget-message" class="form__item form__item--alert"></div>
-                <div class="form__item">
-                  <label class="form__item__label sr-only">
-                    <?php print t('E-mail adresse') ?>
-                  </label>
-                  <input type="text" id="newsletter-widget-mail" class="form__item__control" placeholder="<?php print t('E-mail adresse') ?>">
-                  <div class="form__item__loader"><i class="icon icon-spinner"></i></div>
-                </div>
-                <div class="form__item">
-                  <button type="submit" id="newsletter-widget-button" class="btn btn--mobile-block">Anfordern</button>
-                </div>
-              </form>
-            </div>
-          </div>
+        <div class="well">
+          <?php print render($content['field_blockreference']); ?>
         </div>
       <?php endif; ?>
     </div>
   </div>
+
   <div class="share">
     <h3><?php print t('Share this blog article with your friends') ?></h3>
     <ul class="share__links">

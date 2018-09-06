@@ -193,9 +193,9 @@
             <div id="newsletter-widget-message" class="form__item form__item--alert"></div>
             <div class="form__item">
               <label class="form__item__label sr-only">
-                <?php print t('E-mail adresse') ?>
+                <?php print t('Email address') ?>
               </label>
-              <input type="text" id="newsletter-widget-mail" class="form__item__control" placeholder="<?php print t('E-mail adresse') ?>">
+              <input type="text" id="newsletter-widget-mail" class="form__item__control" placeholder="<?php print t('Email address') ?>">
               <div class="form__item__loader"><i class="icon icon-spinner"></i></div>
             </div>
             <div class="form__item">
