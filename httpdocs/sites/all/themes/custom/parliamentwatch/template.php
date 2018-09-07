@@ -203,6 +203,10 @@ function parliamentwatch_preprocess_block(&$variables) {
     if (menu_get_object('node')) {
       $variables['classes_array'][] = drupal_html_class('title--' . menu_get_object('node')->type);
     }
+
+    if (menu_get_item()['path'] == 'dialogues/%/%/%') {
+      $variables['theme_hook_suggestions'][] = 'block__pw_globals__title__dialogues';
+    }
   }
 
   if ($variables['block']->module == 'pw_dialogues' && $variables['block']->delta == 'recent') {
