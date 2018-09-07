@@ -205,7 +205,13 @@ function parliamentwatch_preprocess_block(&$variables) {
     }
 
     if (menu_get_item()['path'] == 'dialogues/%/%/%') {
+      $account = $variables['elements']['#account'];
+      $parliament = $variables['elements']['#parliament'];
+      $variables['parliament'] = $parliament->name;
       $variables['theme_hook_suggestions'][] = 'block__pw_globals__title__dialogues';
+      $variables['user_display_name'] = _pw_get_fullname($variables['elements']['#account']);
+      $variables['user_party'] = pw_profiles_party($account)->name;
+      $variables['user_url'] = url(entity_uri('user', $account)['path']);
     }
   }
 
