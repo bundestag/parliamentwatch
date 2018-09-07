@@ -690,6 +690,26 @@ function pw_profiles_parliament($account) {
 }
 
 /**
+ * Returns party term associated with the given account.
+ *
+ * @param object $account
+ *   The account object.
+ *
+ * @return object
+ *   The party term.
+ */
+function pw_profiles_party($account) {
+  $party_term = NULL;
+  $items = field_get_items('user', $account, 'field_user_party');
+
+  if ($items) {
+    $party_term = taxonomy_term_load($items[0]['tid']);
+  }
+
+  return $party_term;
+}
+
+/**
  * Load earlier (or later) revisions of the given account.
  *
  * @param object $account
