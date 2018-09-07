@@ -308,6 +308,29 @@ function pw_userarchives_search_api_alter_callback_info() {
 }
 
 /**
+ * Returns last revision ID matching $uid, $parliament and $role.
+ *
+ * @param $uid
+ *   The user ID.
+ * @param $parliament
+ *   The parliament term.
+ * @param $role
+ *   The politician role: candidate od deputy.
+ *
+ * @return int
+ *   The last revision ID matching the provided criteria.
+ */
+function pw_userarchives_find_revision($uid, $parliament, $role) {
+  $q = db_select('user_archive_cache', 'uac')
+    ->fields('uac', ['vid'])
+    ->condition('uac.uid', $uid)
+    ->condition('uac.parliament_name', $parliament->name)
+    ->condition('uac.user_role', $role)
+    ->orderBy('uac.vid', 'DESC');
+  return $q->execute()->fetchField();
+}
+
+/**
  * Returns requested versions of user objects with all fields attached.
  *
  * @param  $vids
