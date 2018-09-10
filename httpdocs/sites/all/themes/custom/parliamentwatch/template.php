@@ -224,6 +224,21 @@ function parliamentwatch_preprocess_block(&$variables) {
     if (menu_get_object('node')) {
       $variables['classes_array'][] = drupal_html_class('title--' . menu_get_object('node')->type);
     }
+
+    if (menu_get_item()['path'] == 'dialogues/%/%/%') {
+      $account = $variables['elements']['#account'];
+      $parliament = $variables['elements']['#parliament'];
+      $variables['parliament'] = $parliament->name;
+      $variables['theme_hook_suggestions'][] = 'block__pw_globals__title__dialogues';
+      $variables['user_party'] = pw_profiles_party($account)->name;
+      if (_pw_user_has_role($account, 'Candidate')) {
+        $variables['user_role'] = t('Candidate', [], ['context' => pw_profiles_gender($account)]);
+      }
+      elseif (_pw_user_has_role($account, 'Deputy')) {
+        $variables['user_role'] = t('Deputy', [], ['context' => pw_profiles_gender($account)]);
+      }
+      $variables['user_url'] = url(entity_uri('user', $account)['path']);
+    }
   }
 
   if ($variables['block']->module == 'pw_dialogues' && $variables['block']->delta == 'recent') {

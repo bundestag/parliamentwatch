@@ -258,7 +258,7 @@
   padding-top: $space-large;
   margin-bottom: $space-large + $space;
   @include grid-container();
-  h1 {
+  &__title {
     @include h4();
     font-family: $font-sans-serif;
     font-weight: 300;
@@ -302,13 +302,13 @@
   .question__profile_teaser__inner__content {
     position: relative;
     padding-top: $space-xsmall;
-    .question__profile_teaser__inner__content__name {
-      font-size: 1.2em;
+    &__name {
+      @include h4();
+      font-family: $font-serif;
+      font-weight: 300;
+      color: $darkGray;
       display: block;
       margin-bottom: $space-xsmall-mobile;
-    }
-    .party-indicator {
-      display: block;
     }
     .btn {
       clear: both;
@@ -319,6 +319,44 @@
         right: $space;
         top: $space;
         margin: 0;
+      }
+    }
+  }
+}
+
+/* Variant: List view */
+
+.question--list {
+  .question__profile_teaser {
+    padding-top: 0;
+    margin-bottom: 0;
+    &__inner {
+      @include container();
+      .btn {
+        top: $space-xsmall;
+      }
+      &__image {
+        @include image-circle(65px, 65px);
+        display: none;
+        @include breakpoint($breakpoint-m-min) {
+          display: block;
+        }
+      }
+      &__content {
+        padding-top: 0;
+        &__name {
+          @include h1();
+          padding-left: 20px;
+          @include breakpoint($breakpoint-m-min) {
+            padding-left: 0;
+          }
+        }
+        &__subtitle {
+          padding-left: 20px;
+          @include breakpoint($breakpoint-m-min) {
+            padding-left: 0;
+          }
+        }
       }
     }
   }
