@@ -1,10 +1,10 @@
 # German translation of Linked Field (7.x-1.10)
-# Copyright (c) 2014 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Linked Field (7.x-1.10)\n"
-"POT-Creation-Date: 2014-10-02 10:21+0000\n"
+"POT-Creation-Date: 2018-08-29 23:19+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -46,3 +46,7 @@ msgid "Destination: @destination"
 msgstr "Zieladresse: @destination"
 msgid "Text: @text"
 msgstr "Text: @text"
+msgid "Class: <code>@class</code>"
+msgstr "Klasse: <code>@class</code>"
+msgid "Relationship: <code>@rel</code>"
+msgstr "Beziehung: <code>@rel</code>"
