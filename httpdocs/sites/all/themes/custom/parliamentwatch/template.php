@@ -231,6 +231,7 @@ function parliamentwatch_preprocess_block(&$variables) {
       $variables['parliament'] = $parliament->name;
       $variables['theme_hook_suggestions'][] = 'block__pw_globals__title__dialogues';
       $variables['user_party'] = pw_profiles_party($account)->name;
+      $variables['user_picture'] = field_view_field('user', $account, 'field_user_picture', ['label' => 'hidden', 'settings' => ['image_style' => 'square_small']]);
       if (_pw_user_has_role($account, 'Candidate')) {
         $variables['user_role'] = t('Candidate', [], ['context' => pw_profiles_gender($account)]);
       }

@@ -48,7 +48,7 @@
   <div class="question__profile_teaser">
     <div class="question__profile_teaser__inner">
       <div class="question__profile_teaser__inner__image">
-        <img src="/sites/default/files/styles/square_small/public/users/nahles-andrea.jpg" width="150" height="150">
+        <?php print render($user_picture); ?>
       </div>
       <div class="question__profile_teaser__inner__content">
         <h1 class="question__profile_teaser__inner__content__name"><?php print $content; ?></h1>
