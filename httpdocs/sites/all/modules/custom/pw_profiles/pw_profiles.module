@@ -710,6 +710,26 @@ function pw_profiles_party($account) {
 }
 
 /**
+ * Returns gender of the given account.
+ *
+ * @param object $account
+ *   The account object.
+ *
+ * @return string
+ *   The party term.
+ */
+function pw_profiles_gender($account) {
+  $gender = NULL;
+  $items = field_get_items('user', $account, 'field_user_gender');
+
+  if ($items) {
+    $gender = $items[0]['value'];
+  }
+
+  return $gender;
+}
+
+/**
  * Load earlier (or later) revisions of the given account.
  *
  * @param object $account
