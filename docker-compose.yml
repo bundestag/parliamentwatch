@@ -34,6 +34,8 @@ services:
       - solr-data:/opt/solr/server/solr/mycores
   web:
     build:
+      args:
+        - XDEBUG_REMOTE_CONNECT_BACK=$XDEBUG_REMOTE_CONNECT_BACK
       context: .
       dockerfile: provisioning/Dockerfile
       target: development

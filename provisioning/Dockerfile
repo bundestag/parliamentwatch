@@ -10,7 +10,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
 	php-xml \
 	php-zip
 COPY httpdocs /srv/abgeordnetenwatch.de/httpdocs
-COPY provisioning/etc/php/7.0/mods-available/* /etc/php/7.0/mods-available/
 COPY provisioning/etc/apache2/sites-available/* /etc/apache2/sites-available/
 RUN a2enmod \
 	proxy_http \
@@ -39,6 +38,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
 RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 RUN apt-get install -y nodejs
+ARG XDEBUG_REMOTE_CONNECT_BACK=1
+COPY provisioning/etc/php/7.0/mods-available/development.ini /tmp/development.ini
+RUN cat /tmp/development.ini | envsubst | tee /etc/php/7.0/mods-available/development.ini
 RUN phpenmod development
 COPY provisioning/etc/drush/* /etc/drush/
 COPY provisioning/drush.phar /usr/local/bin/drush
