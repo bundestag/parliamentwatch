@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the PW Speech feature.
+ */
+
+include_once 'pw_speech.features.inc';
