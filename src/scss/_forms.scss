@@ -19,7 +19,6 @@
 .form__item__control {
   border: 1px solid $gray;
   display: block;
-  width: 100%;
   padding: $space-xsmall;
   font-family: $font-sans-serif;
   font-weight: 300;
@@ -27,9 +26,8 @@
   box-shadow: none;
   border-radius: 0;
   &[type="text"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
+    width: 100%;
   }
   @include placeholder {
     color: $gray;
@@ -54,11 +52,12 @@
     cursor: pointer;
     position: absolute;
     top: $space-xsmall-mobile;
-    @include appearance(none);
     border-color: $gray;
-    &:checked { border-color: $orange; background-color: $orange; }
+    appearance: none;
     &:focus { outline: none; }
     &:checked {
+      border-color: $orange;
+      background-color: $orange;
       &:after {
         content: '';
         font-family: awfont;
@@ -97,14 +96,15 @@
 .form__item--radio {
   @include grid-container();
   .form-radio {
-    margin-right: $space-xsmall-mobile;
+    margin-right: $space-xsmall;
   }
   .form__item__control {
-    float: left;
-    border: 0;
-    width: auto;
-    margin-right: $space-xsmall-mobile;
-    padding: 0;
+    position: relative;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 0.2em;
+    vertical-align: top;
   }
 }
 
