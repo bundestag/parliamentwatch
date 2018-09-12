@@ -35,7 +35,7 @@ services:
   web:
     build:
       args:
-        - XDEBUG_REMOTE_CONNECT_BACK=$XDEBUG_REMOTE_CONNECT_BACK
+        - XDEBUG_REMOTE_CONNECT_BACK=${XDEBUG_REMOTE_CONNECT_BACK:-0}
       context: .
       dockerfile: provisioning/Dockerfile
       target: development
