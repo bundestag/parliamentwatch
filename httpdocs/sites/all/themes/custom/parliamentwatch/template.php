@@ -288,7 +288,7 @@ function parliamentwatch_preprocess_node(&$variables) {
   $year = sprintf('<span class="date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
   $variables['date'] = sprintf('<span class="date">%s%s%s</span>', $day, $month, $year);
 
-  if (isset($variables['content']['field_teaser_image'][0]['fid'])) {
+  if (isset($variables['field_teaser_image'][0]['fid'])) {
     $variables['content']['field_teaser_image_copyright'] = field_view_field('file', file_load($variables['field_teaser_image'][0]['fid']), 'field_image_copyright', 'default');
   }
 
