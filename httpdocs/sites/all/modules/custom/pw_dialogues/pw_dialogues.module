@@ -581,7 +581,7 @@ function pw_dialogues_recent_block() {
 
   if (!empty($result['node'])) {
     $today = new DateTime();
-    $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+    $election_date = pw_parliaments_election_date($term);
     $before_election = ($today < $election_date) ? 1 : 0;
 
     $nodes = node_load_multiple(array_keys($result['node']));
@@ -700,7 +700,7 @@ function pw_dialogues_by_user_revision_query($account) {
  */
 function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
 
   $q = new EntityFieldQuery();
   $q->entityCondition('entity_type', 'node');
@@ -793,7 +793,7 @@ function pw_dialogues_average_response_time_by_account($account) {
  */
 function pw_dialogues_average_response_time_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -815,7 +815,7 @@ function pw_dialogues_average_response_time_by_parliament($term) {
  */
 function pw_dialogues_answered_questions_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -863,7 +863,7 @@ function pw_dialogues_topics_by_user_revision($account) {
  */
 function pw_dialogues_topics_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -891,7 +891,7 @@ function pw_dialogues_party_ratios_by_parliament($term) {
   ];
 
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $parties_in_previous_parliament = [];

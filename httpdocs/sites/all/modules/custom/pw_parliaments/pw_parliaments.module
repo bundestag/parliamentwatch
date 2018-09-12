@@ -64,6 +64,26 @@ function pw_parliaments_block_list_alter(&$blocks) {
 }
 
 /**
+ * Returns the election date of the given parliament.
+ *
+ * @param object $term
+ *   The parliament term.
+ *
+ * @return DateTime
+ *   The election date.
+ */
+function pw_parliaments_election_date($term) {
+  $date = NULL;
+  $items = field_get_items('taxonomy_term', $term, 'field_parliament_election');
+
+  if ($items) {
+    $date = new DateTime($items[0]['value'], new DateTimeZone($items[0]['timezone']));
+  }
+
+  return $date;
+}
+
+/**
  * Returns the previous iteration of the given parliament
  *
  * @param object $term
