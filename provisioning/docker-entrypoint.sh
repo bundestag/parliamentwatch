@@ -9,8 +9,12 @@ fi
 
 chmod -R u+w httpdocs/sites/default
 cp provisioning/settings.php httpdocs/sites/default/
-cd src
-node_modules/.bin/grunt build
-cd -
+
+if [ ! -d src/node_modules ]; then
+	cd src
+	npm install
+	node_modules/.bin/grunt build
+	cd -
+fi
 
 exec "$@"
