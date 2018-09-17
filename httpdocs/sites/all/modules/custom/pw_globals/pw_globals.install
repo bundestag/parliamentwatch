@@ -342,6 +342,50 @@ function pw_globals_update_7121() {
 }
 
 /**
+ * Set language of blog, poll and committee nodes to German.
+ */
+function pw_globals_update_7122() {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', ['blogpost', 'committee', 'poll']);
+  $q->propertyCondition('language', LANGUAGE_NONE);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    foreach (node_load_multiple(array_keys($result['node'])) as $node) {
+      foreach (field_info_instances('node', $node->type) as $instance) {
+        $field_name = $instance['field_name'];
+        $field = field_info_field($field_name);
+        $previous_language = $node->language;
+
+        // Handle a possible language change: new language values are inserted,
+        // previous ones are deleted.
+        if ($field['translatable'] && $previous_language != 'de') {
+          $node->$field_name['de'] = $node->{$field_name}[$previous_language];
+          $node->$field_name[$previous_language] = [];
+        }
+      }
+      $node->language = 'de';
+      node_save($node);
+    }
+  }
+}
+
+/**
+ * Correct language of some body fields.
+ */
+function pw_globals_update_7123() {
+  $rows_updated = db_update('field_data_body')
+    ->fields(['language' => 'de'])
+    ->condition('language', LANGUAGE_NONE)
+    ->condition('entity_type', 'node')
+    ->condition('bundle', ['blogpost', 'committee', 'poll'])
+    ->execute();
+
+  return t('Corrected body field language of @count nodes.', ['@count' => $rows_updated]);
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block

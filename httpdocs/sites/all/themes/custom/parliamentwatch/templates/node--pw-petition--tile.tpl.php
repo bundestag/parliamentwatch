@@ -83,8 +83,8 @@
 <article id="node-<?php print $node->nid; ?>" class="petition tile <?php print $classes; ?>"<?php print $attributes; ?>>
   <figure class="tile__image">
     <a href="<?php print $node_url; ?>"><?php print render($content['field_teaser_image']); ?></a>
-    <?php if (!empty(trim(render($content['field_teaser_image']['#items'][0]['field_image_copyright']['und'][0]['value'])))): ?>
-      <figcaption class="figcaption-overlay"><span>©&nbsp;<?php print $content['field_teaser_image']['#items'][0]['field_image_copyright']['und'][0]['value']; ?></span></figcaption>
+    <?php if (isset($content['field_teaser_image_copyright'])): ?>
+      <figcaption class="figcaption-overlay"><span>©&nbsp;<?php print render($content['field_teaser_image_copyright']); ?></span></figcaption>
     <?php endif; ?>
   </figure>
 

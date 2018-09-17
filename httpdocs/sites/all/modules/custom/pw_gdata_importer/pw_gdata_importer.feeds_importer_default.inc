@@ -353,7 +353,7 @@ function pw_gdata_importer_feeds_importer_default() {
         'input_format' => 'plain_text',
         'skip_hash_check' => 0,
         'bundle' => 'committee',
-        'language' => 'und',
+        'language' => 'de',
       ),
     ),
     'content_type' => '',
