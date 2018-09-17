@@ -696,29 +696,6 @@ function pw_dialogues_by_user_revision_query($account) {
  * @param object $term
  *   The parliament term.
  *
- * @return EntityFieldQuery
- *   The query object.
- */
-function pw_dialogues_by_parliament_query($term) {
-  $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
-
-  $q = new EntityFieldQuery();
-  $q->entityCondition('entity_type', 'node');
-  $q->entityCondition('bundle', 'dialogue');
-  $q->propertyCondition('status', NODE_PUBLISHED);
-  $q->fieldCondition('field_parliament', 'tid', $term->tid);
-  $q->fieldCondition('field_dialogue_before_election', 'value', ($today < $election_date) ? 1 : 0);
-
-  return $q;
-}
-
-/**
- * Returns query for all questions to politicians in the given parliament.
- *
- * @param object $term
- *   The parliament term.
- *
  * @return SearchApiQuery
  *   The query object.
  *
