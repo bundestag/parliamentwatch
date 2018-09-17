@@ -386,6 +386,19 @@ function pw_globals_update_7123() {
 }
 
 /**
+ * Correct language of some blogpost, committee and poll paths.
+ */
+function pw_globals_update_7124() {
+  $query = "UPDATE {url_alias} ua "
+    . "JOIN {node} n ON ua.source = CONCAT('node/', n.nid) "
+    . "SET ua.language = n.language "
+    . "WHERE n.type IN ('blogpost', 'comittee', 'poll')";
+  $rows_updated = db_query($query, [], ['return' => Database::RETURN_AFFECTED]);
+
+  return t('Corrected path language of @count nodes.', ['@count' => $rows_updated]);
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block
