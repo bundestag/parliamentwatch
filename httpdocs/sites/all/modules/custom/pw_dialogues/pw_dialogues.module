@@ -574,7 +574,7 @@ function pw_dialogues_recent_block() {
     return $block;
   }
 
-  $response = pw_dialogues_by_parliament_solr_query($term)
+  $response = pw_dialogues_by_parliament_query($term)
     ->condition('comment_count', 0, '>')
     ->sort('created', 'DESC')
     ->range(0, 4)
@@ -587,7 +587,7 @@ function pw_dialogues_recent_block() {
 
     $nodes = node_load_multiple(array_keys($response['results']));
     $inline_js = 'window.dialogues = ' . drupal_json_encode(pw_dialogues_topics_by_parliament($term)) . ';';
-    $questions = pw_dialogues_by_parliament_solr_query($term)->execute()['result count'];
+    $questions = pw_dialogues_by_parliament_query($term)->execute()['result count'];
     $answers = pw_dialogues_answered_questions_by_parliament($term);
     $block['content'] = node_view_multiple($nodes, 'tile');
     $block['content']['stats'] = [
@@ -702,7 +702,7 @@ function pw_dialogues_by_user_revision_query($account) {
  * @throws SearchApiException
  *   If the index is unknown or disabled, or some other error was encountered.
  */
-function pw_dialogues_by_parliament_solr_query($term) {
+function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
   $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
 
