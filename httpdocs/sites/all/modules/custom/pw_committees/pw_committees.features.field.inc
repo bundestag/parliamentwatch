@@ -795,7 +795,7 @@ function pw_committees_field_default_fields() {
   $fields['node-committee-field_committee_chairman'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_committee_chairman',
@@ -1893,7 +1893,7 @@ function pw_committees_field_default_fields() {
   $fields['node-committee-field_committee_vice_chairman'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_committee_vice_chairman',
