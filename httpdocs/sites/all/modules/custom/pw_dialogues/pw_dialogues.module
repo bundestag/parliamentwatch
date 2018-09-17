@@ -574,19 +574,20 @@ function pw_dialogues_recent_block() {
     return $block;
   }
 
-  $result = pw_dialogues_by_parliament_query($term)
-    ->propertyOrderBy('created', 'DESC')
+  $response = pw_dialogues_by_parliament_solr_query($term)
+    ->condition('comment_count', 0, '>')
+    ->sort('created', 'DESC')
     ->range(0, 4)
     ->execute();
 
-  if (!empty($result['node'])) {
+  if ($response['result count'] > 0) {
     $today = new DateTime();
     $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
     $before_election = ($today < $election_date) ? 1 : 0;
 
-    $nodes = node_load_multiple(array_keys($result['node']));
+    $nodes = node_load_multiple(array_keys($response['results']));
     $inline_js = 'window.dialogues = ' . drupal_json_encode(pw_dialogues_topics_by_parliament($term)) . ';';
-    $questions = pw_dialogues_by_parliament_query($term)->count()->execute();
+    $questions = pw_dialogues_by_parliament_solr_query($term)->execute()['result count'];
     $answers = pw_dialogues_answered_questions_by_parliament($term);
     $block['content'] = node_view_multiple($nodes, 'tile');
     $block['content']['stats'] = [
@@ -708,6 +709,31 @@ function pw_dialogues_by_parliament_query($term) {
   $q->propertyCondition('status', NODE_PUBLISHED);
   $q->fieldCondition('field_parliament', 'tid', $term->tid);
   $q->fieldCondition('field_dialogue_before_election', 'value', ($today < $election_date) ? 1 : 0);
+
+  return $q;
+}
+
+/**
+ * Returns query for all questions to politicians in the given parliament.
+ *
+ * @param object $term
+ *   The parliament term.
+ *
+ * @return SearchApiQuery
+ *   The query object.
+ *
+ * @throws SearchApiException
+ *   If the index is unknown or disabled, or some other error was encountered.
+ */
+function pw_dialogues_by_parliament_solr_query($term) {
+  $today = new DateTime();
+  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+
+  $q = search_api_query('node_index')
+    ->condition('type', 'dialogue')
+    ->condition('status', NODE_PUBLISHED)
+    ->condition('field_parliament', $term->tid)
+    ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
 
   return $q;
 }
