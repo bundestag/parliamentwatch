@@ -399,6 +399,29 @@ function pw_globals_update_7124() {
 }
 
 /**
+ * Update paths of committees and polls.
+ */
+function pw_globals_update_7125() {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', ['committee', 'poll']);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    $trans = db_transaction();
+    try {
+      variable_set('pathauto_update_action', 2);
+      pathauto_node_update_alias_multiple(array_keys($result['node']), 'bulkupdate', ['force' => TRUE]);
+      variable_set('pathauto_update_action', 0);
+    }
+    catch (PDOException $e) {
+      $trans->rollback();
+      watchdog_exception('pw_globals', $e);
+    }
+  }
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block
