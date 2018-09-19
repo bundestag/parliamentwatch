@@ -952,7 +952,7 @@ function parliamentwatch_item_list__politician_dropdown($variables) {
   if (!empty($items)) {
     $first = array_shift($items);
 
-    $output = '<div class="dropdown dropdown--default dropdown--hover" data-feature-hint-id="profile-archive-history" data-feature-hint-content="' . t("Switch here between the profiles of the politician.") . '">';
+    $output = '<div class="dropdown dropdown--default dropdown--hover">';
     $output .= '<span>' . check_plain($first['title']) . '</span>';
     $output .= '<ul class="dropdown__list">';
 

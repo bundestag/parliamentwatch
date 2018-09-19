@@ -495,40 +495,6 @@
   };
 
   /**
-   * Attaches the archive indicator tooltip behavior.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   *   Triggers the Sidebar.
-   */
-
-  Drupal.behaviors.archiveIndicatorHint = {
-    attach: function (context) {
-      if (!$.cookie('archiveHint')) {
-        var d = new Date();
-        var month = d.getMonth()+1;
-
-        if (month < 10) {
-          // add hint (initially hidden)
-          $('<div class="header__subnav__archive-hint"><p>' + Drupal.t("<strong>Now</strong> you can switch between the legislatures.") + '</p><i class="icon icon-close"></i></div>').insertAfter('.header__subnav__archive');
-
-          // show hint
-          setTimeout(function () {
-            $('.header__subnav__archive-hint').addClass('header__subnav__archive-hint--in');
-          }, 200);
-
-          // close hint
-          $('.header__subnav__archive-hint .icon-close').click(function () {
-            $('.header__subnav__archive-hint').removeClass('header__subnav__archive-hint--in');
-            $.cookie('archiveHint', 1, {expires: 100, path: '/' });
-          });
-        }
-      }
-    }
-  };
-
-  /**
    * Attaches the feature hint behavior.
    *
    * @type {Drupal~behavior}
