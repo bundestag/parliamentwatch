@@ -1774,13 +1774,15 @@ msgstr "Abstimmungsverhalten von insgesamt %count Abgeordneten."
 
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--newsletter-subscription.tpl.php:48
 msgid "Do not miss any information!"
-msgstr ""
+msgstr "Keine Infos mehr verpassen!"
 
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--newsletter-subscription.tpl.php:49
 msgid ""
 "Exciting stories and research on additional income, party donations and "
 "lobbying - stay up to date!"
 msgstr ""
+"Spannende Geschichten und Recherchen zu Nebeneinkünften, Parteispenden und "
+"Lobbyismus - bleiben Sie auf dem Laufenden!"
 
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--newsletter-subscription.tpl.php:61
 msgid "Request"

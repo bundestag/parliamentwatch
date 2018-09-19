@@ -386,6 +386,42 @@ function pw_globals_update_7123() {
 }
 
 /**
+ * Correct language of some blogpost, committee and poll paths.
+ */
+function pw_globals_update_7124() {
+  $query = "UPDATE {url_alias} ua "
+    . "JOIN {node} n ON ua.source = CONCAT('node/', n.nid) "
+    . "SET ua.language = n.language "
+    . "WHERE n.type IN ('blogpost', 'comittee', 'poll')";
+  $rows_updated = db_query($query, [], ['return' => Database::RETURN_AFFECTED]);
+
+  return t('Corrected path language of @count nodes.', ['@count' => $rows_updated]);
+}
+
+/**
+ * Update paths of committees and polls.
+ */
+function pw_globals_update_7125() {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', ['committee', 'poll']);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    $trans = db_transaction();
+    try {
+      variable_set('pathauto_update_action', 2);
+      pathauto_node_update_alias_multiple(array_keys($result['node']), 'bulkupdate', ['force' => TRUE]);
+      variable_set('pathauto_update_action', 0);
+    }
+    catch (PDOException $e) {
+      $trans->rollback();
+      watchdog_exception('pw_globals', $e);
+    }
+  }
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block
