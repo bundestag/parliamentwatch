@@ -25,6 +25,7 @@
   outline: 0;
   box-shadow: none;
   border-radius: 0;
+  &[type="email"],
   &[type="text"] {
     appearance: none;
     width: 100%;
@@ -171,6 +172,7 @@
 
 textarea.form__item__control {
   min-height: 200px;
+  width: 100%;
   resize: vertical;
 }
 .form__item--textarea {

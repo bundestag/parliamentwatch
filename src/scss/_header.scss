@@ -303,6 +303,7 @@
   .header__bottom__inner {
     position: relative;
     display: flex;
+    width: 100%;
     @include grid-container();
     @include breakpoint($breakpoint-m-min) {
       @include container-regular();
