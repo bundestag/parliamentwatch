@@ -1477,7 +1477,7 @@ msgstr ""
 #: sites/all/themes/custom/parliamentwatch/templates/page.tpl.php:196;198
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--newsletter-subscription.tpl.php:55;57
 msgid "Email address"
-msgstr ""
+msgstr "E-Mail-Adresse"
 
 #: sites/all/themes/custom/parliamentwatch/templates/page.tpl.php:207
 msgid ""
@@ -1786,7 +1786,7 @@ msgstr ""
 
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--newsletter-subscription.tpl.php:61
 msgid "Request"
-msgstr ""
+msgstr "Anfordern"
 
 #: sites/all/themes/custom/parliamentwatch/templates/block--pw-blog--recent-blogposts.tpl.php:51
 msgid "Blog overview"
