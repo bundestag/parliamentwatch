@@ -422,6 +422,13 @@ function pw_globals_update_7125() {
 }
 
 /**
+ * Disable EU Cookie Compliance module.
+ */
+function  pw_globals_update_7126() {
+  module_disable(['eu_cookie_compliance']);
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block
