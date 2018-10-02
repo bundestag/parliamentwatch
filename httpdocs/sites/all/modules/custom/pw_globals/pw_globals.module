@@ -470,7 +470,7 @@ function pw_globals_politician_search_form($form, &$form_state, $parliament_term
   $form['#method'] = 'get';
 
   if (strpos($parliament_term->name, 'EU') === 0) {
-    $placeholder = t('Enter a locality or name');
+    $placeholder = t('Enter name');
   }
   else {
     $placeholder = t('Enter a postal code, locality or name');
