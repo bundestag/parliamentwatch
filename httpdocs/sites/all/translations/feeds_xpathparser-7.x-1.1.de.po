@@ -1,10 +1,10 @@
 # German translation of Feeds XPath Parser (7.x-1.1)
-# Copyright (c) 2015 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Feeds XPath Parser (7.x-1.1)\n"
-"POT-Creation-Date: 2015-07-05 06:44+0000\n"
+"POT-Creation-Date: 2018-09-26 12:31+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 msgid "here"
 msgstr "hier"
 msgid "Feeds"
-msgstr "Newsfeeds"
+msgstr "Feeds"
 msgid "Context"
 msgstr "Kontext"
 msgid "Debug Options"

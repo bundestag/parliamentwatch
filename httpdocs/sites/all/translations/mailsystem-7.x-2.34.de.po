@@ -1,10 +1,10 @@
 # German translation of Mail System (7.x-2.34)
-# Copyright (c) 2017 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Mail System (7.x-2.34)\n"
-"POT-Creation-Date: 2017-06-04 23:14+0000\n"
+"POT-Creation-Date: 2018-10-01 09:19+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Die Klasse %class implementiert nicht das Interface %interface."
 msgid "Mail System Settings"
 msgstr "Mailsystem-Einstellungen"
 msgid "Mail System"
-msgstr "Mailsystem"
+msgstr "Mail System"
 msgid "Configure per-module Mail System settings."
 msgstr "Konfigurieren Sie modulspezifische Mailsystem-Einstellungen."
 msgid ""

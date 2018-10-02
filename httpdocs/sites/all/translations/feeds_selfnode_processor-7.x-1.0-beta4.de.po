@@ -1,10 +1,10 @@
 # German translation of Feeds Self Node Processor (7.x-1.0-beta4)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Feeds Self Node Processor (7.x-1.0-beta4)\n"
-"POT-Creation-Date: 2016-03-16 11:09+0000\n"
+"POT-Creation-Date: 2018-09-26 11:15+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid "Feeds"
-msgstr "Newsfeeds"
+msgstr "Feeds"
 msgid "Import on create"
 msgstr "Beim Erstellen importieren"
