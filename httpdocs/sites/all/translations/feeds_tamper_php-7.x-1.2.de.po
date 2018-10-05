@@ -1,10 +1,10 @@
 # German translation of Feeds Tamper PHP (7.x-1.2)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Feeds Tamper PHP (7.x-1.2)\n"
-"POT-Creation-Date: 2016-01-31 16:45+0000\n"
+"POT-Creation-Date: 2018-09-26 12:58+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -13,6 +13,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid "Feeds"
-msgstr "Newsfeeds"
+msgstr "Feeds"
 msgid "PHP code"
 msgstr "PHP-Code"
