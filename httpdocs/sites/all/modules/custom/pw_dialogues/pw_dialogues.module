@@ -388,20 +388,12 @@ function pw_dialogues_page_title($parliament_term, $role_name, $uid = NULL) {
  * Page callback: Displays questions and answers for the given parliament.
  */
 function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
-  $limit = 12;
-  $q = search_api_query('node_index');
-  $q->condition('type', 'dialogue');
-  $q->condition('field_parliament', $parliament_term->tid);
-
-  if ($role_name == 'candidates') {
-    $q->condition('field_dialogue_before_election',1);
-  }
-  elseif ($role_name == 'deputies') {
-    $q->condition('field_dialogue_before_election',0);
-  }
-  else {
+  if (!in_array($role_name, ['candidates', 'deputies'])) {
     return MENU_NOT_FOUND;
   }
+
+  $limit = 12;
+  $q = pw_dialogues_base_search_query($parliament_term, $role_name);
 
   if (isset($uid)) {
     $q->condition('field_dialogue_recipient', $uid);
@@ -1010,4 +1002,30 @@ function pw_dialogues_to_array($node) {
     'topic' => isset($topic) ? $topic->name : NULL,
   ];
   return $data;
+}
+
+/**
+ * Returns a query object for fetching dialogues.
+ *
+ * @param type $parliament_term
+ *   The parliament term.
+ * @param type $role_name
+ *   The role (candidates or deputies).
+ *
+ * @return SearchApiQuery
+ *   The search query object.
+ */
+function pw_dialogues_base_search_query($parliament_term, $role_name) {
+  $q = search_api_query('node_index');
+  $q->condition('type', 'dialogue');
+  $q->condition('field_parliament', $parliament_term->tid);
+
+  if ($role_name == 'candidates') {
+    $q->condition('field_dialogue_before_election',1);
+  }
+  elseif ($role_name == 'deputies') {
+    $q->condition('field_dialogue_before_election',0);
+  }
+
+  return $q;
 }
