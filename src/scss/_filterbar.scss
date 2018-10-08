@@ -459,7 +459,7 @@ _:-ms-fullscreen,
   }
 }
 
-/* Filterbar: Expanded */
+/* Filterbar: expanded */
 
 .filterbar--expanded {
   z-index: auto;
@@ -536,7 +536,7 @@ _:-ms-fullscreen,
   }
 }
 
-/* Filterbar: Disabled */
+/* Filterbar: disabled */
 
 .filterbar--disabled .filterbar__secondary {
   pointer-events: none;
@@ -551,6 +551,17 @@ _:-ms-fullscreen,
   border-color: #f5f4f2;
   &:before {
     color: #e6e6e6;
+  }
+}
+
+/* Filterbar: empty */
+
+.filterbar--empty {
+  .filterbar__primary {
+    padding-right: $space-xsmall;
+    .filterbar__item--input {
+      border-right: 0;
+    }
   }
 }
 

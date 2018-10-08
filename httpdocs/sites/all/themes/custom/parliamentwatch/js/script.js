@@ -2116,6 +2116,7 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
+      hideIfEmpty();
 
       function loadResults($form) {
         var path = $form.attr('action');
@@ -2129,11 +2130,22 @@
         $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
           Drupal.attachBehaviors(target, {url: url});
           removeLoadingAnimation($('.tile-wrapper'));
+          hideIfEmpty();
         });
       }
 
+      function hideIfEmpty() {
+        if (!$('.filterbar__secondary .filterbar__item').length) {
+          $('.filterbar').addClass('filterbar--empty');
+          $('.filterbar__trigger').hide();
+        } else {
+          $('.filterbar').removeClass('filterbar--empty');
+          $('.filterbar__trigger').show();
+        }
+      }
+
       $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
-        if ($(this).parents('.filterbar--expanded').length === 0) {
+        if (!$(this).parents('.filterbar--expanded').length) {
           loadResults($(this).parents('form'));
         } else {
           $('[data-filterbar-submit]').one('click', function (event) {
