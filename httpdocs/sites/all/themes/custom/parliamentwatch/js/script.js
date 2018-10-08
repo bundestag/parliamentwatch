@@ -975,11 +975,11 @@
             maximumSelectionLength: 1,
             multiple: true
           });
-        } else if ($(this).parents('.filterbar__secondary').length > 0) {
+        } else if ($(this).parents('.filterbar__secondary').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
             placeholder: 'Bitte wählen',
-            dropdownParent: $('.filterbar__secondary')
+            dropdownParent: $('.filterbar__secondary__inner')
           });
         } else {
           $(this).select2({
