@@ -9,6 +9,43 @@
  */
 function pw_search_api_default_search_api_index() {
   $items = array();
+  $items['dialogue_index'] = entity_import('search_api_index', '{
+    "name" : "Dialogue index",
+    "machine_name" : "dialogue_index",
+    "description" : null,
+    "server" : "solr",
+    "item_type" : "node",
+    "options" : {
+      "datasource" : { "bundles" : [ "dialogue" ] },
+      "index_directly" : 0,
+      "cron_limit" : "50",
+      "fields" : {
+        "changed" : { "type" : "date" },
+        "comment_count" : { "type" : "integer" },
+        "comments" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "comment" },
+        "comments:field_dialogue_comment_body:value" : { "type" : "list\\u003Ctext\\u003E" },
+        "created" : { "type" : "date" },
+        "field_dialogue_before_election" : { "type" : "boolean" },
+        "field_dialogue_id" : { "type" : "integer" },
+        "field_dialogue_message_id" : { "type" : "integer" },
+        "field_dialogue_message_type" : { "type" : "string" },
+        "field_dialogue_recipient" : { "type" : "integer", "entity_type" : "user" },
+        "field_dialogue_sender_name" : { "type" : "text" },
+        "field_dialogue_topic" : { "type" : "integer", "entity_type" : "taxonomy_term" },
+        "field_dialogue_topic:name" : { "type" : "text" },
+        "field_dialogue_topic:url" : { "type" : "uri" },
+        "field_parliament" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
+        "nid" : { "type" : "integer" },
+        "search_api_language" : { "type" : "string" },
+        "status" : { "type" : "integer" },
+        "title" : { "type" : "text" },
+        "url" : { "type" : "uri" },
+        "vid" : { "type" : "integer" }
+      }
+    },
+    "enabled" : "1",
+    "read_only" : "0"
+  }');
   $items['node_index'] = entity_import('search_api_index', '{
     "name" : "Node Index",
     "machine_name" : "node_index",
@@ -102,7 +139,6 @@ function pw_search_api_default_search_api_index() {
           "type" : "list\\u003Clist\\u003Clist\\u003Clist\\u003Cinteger\\u003E\\u003E\\u003E\\u003E",
           "entity_type" : "taxonomy_term"
         },
-        "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : { "type" : "list\\u003Clist\\u003Clist\\u003Ctext\\u003E\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_election" : { "type" : "list\\u003Clist\\u003Clist\\u003Cdate\\u003E\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_filter_disabled" : { "type" : "list\\u003Clist\\u003Clist\\u003Clist\\u003Cstring\\u003E\\u003E\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_constituency_area_codes:field_premium_profile_price" : { "type" : "list\\u003Clist\\u003Clist\\u003Cinteger\\u003E\\u003E\\u003E" },
@@ -136,7 +172,6 @@ function pw_search_api_default_search_api_index() {
           "type" : "list\\u003Clist\\u003Clist\\u003Cinteger\\u003E\\u003E\\u003E",
           "entity_type" : "taxonomy_term"
         },
-        "field_politician:field_user_constituency:field_parliament_constit_rename" : { "type" : "list\\u003Clist\\u003Ctext\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_parliament_election" : { "type" : "list\\u003Clist\\u003Cdate\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_parliament_filter_disabled" : { "type" : "list\\u003Clist\\u003Clist\\u003Cstring\\u003E\\u003E\\u003E" },
         "field_politician:field_user_constituency:field_premium_profile_price" : { "type" : "list\\u003Clist\\u003Cinteger\\u003E\\u003E" },

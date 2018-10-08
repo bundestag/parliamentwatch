@@ -710,8 +710,7 @@ function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
   $election_date = pw_parliaments_election_date($term);
 
-  $q = search_api_query('node_index')
-    ->condition('type', 'dialogue')
+  $q = search_api_query('dialogue_index')
     ->condition('status', NODE_PUBLISHED)
     ->condition('field_parliament', $term->tid)
     ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
@@ -1016,8 +1015,7 @@ function pw_dialogues_to_array($node) {
  *   The search query object.
  */
 function pw_dialogues_base_search_query($parliament_term, $role_name) {
-  $q = search_api_query('node_index');
-  $q->condition('type', 'dialogue');
+  $q = search_api_query('dialogue_index');
   $q->condition('field_parliament', $parliament_term->tid);
 
   if ($role_name == 'candidates') {
