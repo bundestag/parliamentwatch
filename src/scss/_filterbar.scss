@@ -51,7 +51,7 @@
     padding-right: 0;
   }
   .filterbar__item {
-    cursor: default;
+    cursor: default !important;
     flex: 1;
   }
   .filterbar__item--input {
