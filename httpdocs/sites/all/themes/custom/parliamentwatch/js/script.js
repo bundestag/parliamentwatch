@@ -1880,7 +1880,7 @@
         filterBarWait();
       }
 
-      $('[data-filterbar-trigger]').on('click', function (event) {
+      $('[data-filterbar-toggle], [data-filterbar-submit]').on('click', function (event) {
         $filterbar.toggleClass('filterbar--expanded');
         $('body').toggleClass('block-scrolling');
         event.preventDefault();
@@ -2136,7 +2136,7 @@
         if ($(this).parents('.filterbar--expanded').length === 0) {
           loadResults($(this).parents('form'));
         } else {
-          $('[data-filterbar-trigger]').one('click', function (event) {
+          $('[data-filterbar-submit]').one('click', function (event) {
             loadResults($(this).parents('form'));
           });
         }

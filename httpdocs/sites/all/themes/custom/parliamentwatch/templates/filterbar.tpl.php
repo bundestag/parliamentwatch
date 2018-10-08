@@ -33,7 +33,7 @@
     ?>
   </div>
   <div class="filterbar__trigger">
-    <button class="btn" type="button" role="button" data-filterbar-trigger>
+    <button class="btn" type="button" role="button" data-filterbar-toggle>
       <i class="icon icon-investigation"></i> <span><?php print t('Show filters'); ?></span>
     </button>
   </div>
@@ -42,7 +42,8 @@
   <div class="filterbar__heading">
     <div class="option-title">
       <h2><?php print t('Filter results'); ?></h2>
-      <a class="btn" href="#" data-filterbar-trigger><?php print t('Apply'); ?></a>
+      <a class="btn" href="#" data-filterbar-submit><?php print t('Apply'); ?></a>
+      <a class="btn btn--transparent" href="#" data-filterbar-toggle><?php print t('Close'); ?></a>
     </div>
   </div>
   <div class="filterbar__secondary__inner">

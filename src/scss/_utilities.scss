@@ -107,6 +107,13 @@ textarea {
       float: right;
     }
   }
+  .btn + .btn {
+    margin-top: $space-small;
+    @include breakpoint($breakpoint-xs-min) {
+      margin-top: 0;
+      margin-right: $space-small;
+    }
+  }
 }
 
 /* Tag-Styling */
