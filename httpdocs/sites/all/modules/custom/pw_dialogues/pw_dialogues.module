@@ -442,6 +442,10 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     $q->filter($f);
   }
 
+  if (isset(drupal_get_query_parameters()['has-reply'])) {
+    $q->condition('comment_count', 0, '>');
+  }
+
   if (isset(drupal_get_query_parameters()['keys'])) {
     $q->keys(drupal_get_query_parameters()['keys']);
   }
@@ -566,6 +570,12 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
       '#dropdown' => TRUE,
     );
   }
+
+  $form['has-reply'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Has reply'),
+    '#default_value' => isset($parameters['has-reply']) ? 1 : 0,
+  ];
 
   $form['submit'] = array(
     '#type' => 'submit',
