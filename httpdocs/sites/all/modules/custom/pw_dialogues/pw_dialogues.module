@@ -56,6 +56,32 @@ function pw_dialogues_menu() {
 }
 
 /**
+ * Implements hook_page_delivery_callback_alter().
+ *
+ * In order to ensure caching mechanisms store a distinct copy for AJAX
+ * responses the parameter ajax needs to be present. For caches evaluating Vary
+ * headers one would usually add Vary: X-Requested-With to the HTTP headers.
+ * Drupal's internal page cache uses only the request URI as an identifier
+ * though.
+ */
+function pw_dialogues_page_delivery_callback_alter(&$callback) {
+  if (!isset(drupal_get_query_parameters()['ajax'])) {
+    return;
+  }
+
+  if (menu_get_item()['page_callback'] != 'pw_dialogues_page') {
+    return;
+  }
+
+  // jQuery sets a HTTP_X_REQUESTED_WITH header of 'XMLHttpRequest'.
+  // If a page would normally be delivered as an html page, and it is called
+  // from jQuery, deliver it instead as an Ajax response.
+  if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && $callback == 'drupal_deliver_html_page') {
+    $callback = 'pw_globals_deliver_ajax_page';
+  }
+}
+
+/**
  * Implements hook_token_info_alter().
  */
 function pw_dialogues_token_info_alter(&$data) {
@@ -370,6 +396,15 @@ function pw_dialogues_query_ignore_standard_replies_alter(QueryAlterableInterfac
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function pw_dialogues_form_pw_dialogues_filters_form_alter(&$form, &$form_state) {
+  $form['form_build_id']['#access'] = FALSE;
+  $form['form_token']['#access'] = FALSE;
+  $form['form_id']['#access'] = FALSE;
+}
+
+/**
  * Title callback: Sets the title for the dialogues page.
  */
 function pw_dialogues_page_title($parliament_term, $role_name, $uid = NULL) {
@@ -399,11 +434,16 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     $q->condition('field_dialogue_recipient', $uid);
   }
 
-  if (isset(drupal_get_query_parameters()['keywords'])) {
-    $f = $q->createFilter('OR');
-    $f->condition('body:value', drupal_get_query_parameters()['keywords']);
-    $f->condition('comments:field_dialogue_comment_body:value', drupal_get_query_parameters()['keywords']);
+  if (isset(drupal_get_query_parameters()['topic'])) {
+    $f = new SearchApiQueryFilter('OR', ['facet:field_dialogue_topic']);
+    foreach (drupal_get_query_parameters()['topic'] as $party) {
+      $f->condition('field_dialogue_topic', $party);
+    }
     $q->filter($f);
+  }
+
+  if (isset(drupal_get_query_parameters()['keys'])) {
+    $q->keys(drupal_get_query_parameters()['keys']);
   }
 
   $response = $q
@@ -411,21 +451,19 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     ->range(pager_find_page() * $limit, $limit)
     ->execute();
 
-  if ($response['result count'] > 0) {
-    pager_default_initialize($response['result count'], $limit);
-    $build = node_view_multiple(node_load_multiple(array_keys($response['results'])), 'tile');
-    $build['#theme_wrappers'] = ['container__tiles'];
-    $build['nodes']['#modifier'] = 'qa';
-    $build['pager'] = [
-      '#theme' => 'pager',
-      '#weight' => 5,
-    ];
-  }
-  else {
-    $build = [
-      '#markup' => t('Sorry, there are no results matching your query.'),
-    ];
-  }
+  pager_default_initialize($response['result count'], $limit);
+
+  $build = node_view_multiple(node_load_multiple(array_keys($response['results'])), 'tile');
+  $build['nodes']['#theme_wrappers'] = ['container__tiles'];
+  $build['nodes']['pager'] = [
+    '#theme' => 'pager',
+    '#weight' => 5,
+  ];
+  $build['filters'] = drupal_get_form('pw_dialogues_filters_form', $response['search_api_facets']);
+  $build['filters']['#theme_wrappers'][] = 'container__filterbar';
+  $build['filters']['#weight'] = -5;
+  $build['#theme_wrappers'] = ['container'];
+  $build['#attributes'] = ['id' => 'ajax'];
 
   return $build;
 }
@@ -496,6 +534,45 @@ function pw_dialogues_triggered_import() {
 
   _pw_send_debug_mail('Import ' . $return_value . ': ' . request_uri(), $debug_message);
   print $return_value;
+}
+
+/**
+ * Form constructor for the profile filters form.
+ */
+function pw_dialogues_filters_form($form, &$form_state, $facets) {
+  $parameters = drupal_get_query_parameters();
+  $topic_values = _pw_profiles_facet_values($facets['field_dialogue_topic']);
+
+  $form['#method'] = 'get';
+  $form['#action'] = url(current_path());
+  $form['#attributes']['data-ajax-target'] = '#ajax';
+  $form['#theme'] = 'filterbar';
+  $form['keys'] = [
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#title_display' => 'invisible',
+    '#default_value' => isset($parameters['keys']) ? $parameters['keys'] : '',
+    '#attributes' => ['placeholder' => t('Search')],
+  ];
+
+  if (count($topic_values) > 1) {
+    $form['topic'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Filter by topic'),
+      '#title_display' => 'invisible',
+      '#options' => _pw_dialogues_options($topic_values),
+      '#multiple' => TRUE,
+      '#default_value' => empty($parameters['topic']) ? [] : $parameters['topic'],
+      '#dropdown' => TRUE,
+    );
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Filter profiles'),
+  );
+
+  return $form;
 }
 
 /**
@@ -1015,7 +1092,7 @@ function pw_dialogues_to_array($node) {
  *   The search query object.
  */
 function pw_dialogues_base_search_query($parliament_term, $role_name) {
-  $q = search_api_query('dialogue_index');
+  $q = search_api_query('dialogue_index', ['search_api_facets' => _pw_dialogues_facets()]);
   $q->condition('field_parliament', $parliament_term->tid);
 
   if ($role_name == 'candidates') {
@@ -1026,4 +1103,41 @@ function pw_dialogues_base_search_query($parliament_term, $role_name) {
   }
 
   return $q;
+}
+
+/**
+ * Returns taxonomy term options for the given term IDs.
+ *
+ * @param array $values
+ *   An array of taxonomy term IDs
+ *
+ * @return array
+ *   An array of taxonomy term names keyed by term ID.
+ */
+function _pw_dialogues_options(array $values) {
+  static $terms = [];
+
+  if (empty($terms)) {
+    $terms = db_select('taxonomy_term_data', 't')
+      ->fields('t', ['tid', 'name'])
+      ->condition('vid', 26)
+      ->execute()
+      ->fetchAllKeyed();
+    natsort($terms);
+  }
+
+  return array_intersect_key($terms, array_flip($values));
+}
+
+/**
+ * Returns list of facets for the dialogues page.
+ *
+ * @return array
+ *   An associative array to be used as facets option for a query.
+ */
+function _pw_dialogues_facets() {
+  $common = ['limit' => -1, 'min_count' => 1, 'missing' => TRUE, 'operator' => 'or'];
+  return [
+    'field_dialogue_topic' => ['field' => 'field_dialogue_topic'] + $common,
+  ];
 }
