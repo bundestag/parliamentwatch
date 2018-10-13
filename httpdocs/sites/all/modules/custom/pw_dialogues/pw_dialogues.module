@@ -442,6 +442,14 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     $q->filter($f);
   }
 
+  if (isset(drupal_get_query_parameters()['date'][0])) {
+    $q->condition('created', drupal_get_query_parameters()['date'][0], '>=');
+  }
+
+  if (isset(drupal_get_query_parameters()['date'][1])) {
+    $q->condition('created', drupal_get_query_parameters()['date'][1], '<');
+  }
+
   if (isset(drupal_get_query_parameters()['has-reply'])) {
     $q->condition('comment_count', 0, '>');
   }
@@ -570,6 +578,15 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
       '#dropdown' => TRUE,
     );
   }
+
+  $form['date'] = [
+    '#type' => 'interval',
+    '#title' => t('Filter by date'),
+    '#title_display' => 'invisible',
+    '#default_value' => empty($parameters['date']) ? [] : $parameters['date'],
+    '#attributes' => ['type' => 'date'],
+    '#dropdown' => TRUE,
+  ];
 
   $form['has-reply'] = [
     '#type' => 'checkbox',
