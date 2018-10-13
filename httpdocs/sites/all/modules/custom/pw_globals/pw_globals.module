@@ -145,6 +145,17 @@ function pw_globals_comment_presave($comment) {
 }
 
 /**
+ * Implements hook_element_info().
+ */
+function pw_globals_element_info() {
+  $types['interval'] = array(
+    '#input' => TRUE,
+    '#process' => ['pw_globals_process_interval'],
+  );
+  return $types;
+}
+
+/**
  * Implements hook_block_info().
  */
 function pw_globals_block_info() {
@@ -651,6 +662,32 @@ function pw_globals_comment_is_spam($comment, $server_vars) {
   }
 
   return ($response->data == 'false') ? FALSE : TRUE;
+}
+
+/**
+ * Processes an interval element.
+ */
+function pw_globals_process_interval($element) {
+  $element['#tree'] = TRUE;
+  $weight = 0;
+
+  if (!isset($element['#default_value'])) {
+    $element['#default_value'] = [];
+  }
+
+  foreach ([0 => t('Start'), 1 => t('End')] as $key => $title) {
+    $weight += 0.001;
+
+    $element[$key] = [
+      '#type' => 'textfield',
+      '#title' => $title,
+      '#default_value' => isset($element['#default_value'][$key]) ? $element['#default_value'][$key] : '',
+      '#attributes' => $element['#attributes'],
+      '#weight' => $weight,
+    ];
+  }
+
+  return $element;
 }
 
 /**
