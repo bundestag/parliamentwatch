@@ -24,6 +24,7 @@ function pw_search_api_default_search_api_index() {
         "comment_count" : { "type" : "integer" },
         "comments" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "comment" },
         "comments:field_dialogue_comment_body:value" : { "type" : "list\\u003Ctext\\u003E" },
+        "comments:field_dialogue_is_standard_reply" : { "type" : "list\\u003Cboolean\\u003E" },
         "created" : { "type" : "date" },
         "field_dialogue_before_election" : { "type" : "boolean" },
         "field_dialogue_id" : { "type" : "integer" },
