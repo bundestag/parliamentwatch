@@ -50,13 +50,13 @@
     <?php for ($i = 1; $i < count($children); $i++): ?>
     <?php if (!in_array($children[$i], ['submit', 'form_id', 'form_build_id', 'form_token'])): ?>
     <?php
-      if ($form[$children[$i]]['#dropdown']) {
+      if (!empty($form[$children[$i]]['#dropdown'])) {
         $classes = 'filterbar__item--dropdown dropdown';
       }
       elseif ($form[$children[$i]]['#type'] == 'select') {
         $classes = 'filterbar__item--select';
       }
-      elseif ($form[$children[$i]]['#type'] == 'checkboxes') {
+      elseif (strpos($form[$children[$i]]['#type'], 'checkbox') == 0) {
         $classes = 'filterbar__item--checkbox';
       }
 
@@ -65,7 +65,7 @@
       }
     ?>
     <div class="filterbar__item <?php print $classes; ?>">
-      <?php if ($form[$children[$i]]['#dropdown']): ?>
+      <?php if (!empty($form[$children[$i]]['#dropdown'])): ?>
       <div class="dropdown__trigger">
         <?php print $form[$children[$i]]['#title'] ?>
         <?php if (!empty($form[$children[$i]]['#default_value'])): ?>
