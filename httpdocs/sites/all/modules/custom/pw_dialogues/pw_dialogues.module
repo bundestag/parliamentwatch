@@ -384,6 +384,12 @@ function pw_dialogues_theme() {
       ],
       'template' => 'dialogues-stats',
     ],
+    'dialogue_search_summary' => [
+      'variables' => [
+        'response' => NULL,
+        'filters' => NULL,
+      ],
+    ],
   ];
 }
 
@@ -471,9 +477,16 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
 
   $build = node_view_multiple(node_load_multiple(array_keys($response['results'])), 'tile');
   $build['nodes']['#theme_wrappers'] = ['container__tiles'];
+  $build['nodes']['#sorted'] = FALSE;
+  $build['nodes']['summary'] = [
+    '#theme' => 'dialogue_search_summary',
+    '#response' => $response,
+    '#filters' => drupal_get_query_parameters(),
+    '#weight' => -1,
+  ];
   $build['nodes']['pager'] = [
     '#theme' => 'pager',
-    '#weight' => 5,
+    '#weight' => $limit,
   ];
   $build['filters'] = drupal_get_form('pw_dialogues_filters_form', $response['search_api_facets']);
   $build['filters']['#theme_wrappers'][] = 'container__filterbar';
@@ -1142,6 +1155,43 @@ function pw_dialogues_base_search_query($parliament_term, $role_name) {
   }
 
   return $q;
+}
+
+/**
+ * Returns HTML for a summary of the search result.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - response
+ *   - role_name
+ *   - filters
+ *
+ * @return string
+ *   The summary of the search result.
+ */
+function theme_dialogue_search_summary($variables) {
+  $output = '';
+  $link_options = ['attributes' => ['data-ajax-target' => '#ajax']];
+
+  $options['@count'] = $variables['response']['result count'];
+  $options['@data-ajax-target'] = $link_options['attributes']['data-ajax-target'];
+
+  $output .= '<p>';
+
+  $output .= format_plural($variables['response']['result count'], 'Found 1 question', 'Found @count questions');
+
+  if (!empty($variables['filters']['keys'])) {
+    $options['!keys'] = l(check_plain($variables['filters']['keys']), current_path(), $link_options + ['query' => _pw_profiles_reject_filter($variables['filters'], 'keys')]);
+    $output .= t(', matching: !keys', $options);
+  }
+
+  if (!empty(array_filter($variables['filters']))) {
+    $output .= ' ' . l(t('Reset all filters'), current_path(), $link_options);
+  }
+
+  $output .= '</p>';
+
+  return $output;
 }
 
 /**
