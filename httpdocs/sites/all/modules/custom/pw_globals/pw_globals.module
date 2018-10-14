@@ -674,6 +674,9 @@ function pw_globals_process_interval($element) {
   if (!isset($element['#default_value'])) {
     $element['#default_value'] = [];
   }
+  else {
+    $element['#default_value'] = array_filter($element['#default_value']);
+  }
 
   foreach ([0 => t('Start'), 1 => t('End')] as $key => $title) {
     $weight += 0.001;
@@ -681,7 +684,7 @@ function pw_globals_process_interval($element) {
     $element[$key] = [
       '#type' => 'textfield',
       '#title' => $title,
-      '#default_value' => isset($element['#default_value'][$key]) ? $element['#default_value'][$key] : '',
+      '#default_value' => isset($element['#default_value'][$key]) ? $element['#default_value'][$key] : NULL,
       '#attributes' => $element['#attributes'],
       '#weight' => $weight,
     ];
