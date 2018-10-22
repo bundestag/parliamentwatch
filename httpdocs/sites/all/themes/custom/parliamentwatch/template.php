@@ -281,6 +281,7 @@ function parliamentwatch_preprocess_node(&$variables) {
     drupal_html_class('node-' . $variables['type']),
   ];
   $variables['classes_array'] = array_diff($variables['classes_array'], $exclude_classes);
+  $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['type'] . '__' . $variables['view_mode'];
 
   $day = sprintf('<span class="date__day">%s</span>', format_date($node->created, 'custom', 'j'));
