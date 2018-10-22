@@ -706,6 +706,10 @@ function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
   $election_date = pw_parliaments_election_date($term);
 
+  $server = search_api_index_load('node_index')->server();
+  $server->options['excerpt'] = FALSE;
+  $server->options['retrieve_data'] = FALSE;
+
   $q = search_api_query('node_index')
     ->condition('type', 'dialogue')
     ->condition('status', NODE_PUBLISHED)
