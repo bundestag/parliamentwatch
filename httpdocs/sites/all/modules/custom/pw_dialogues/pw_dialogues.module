@@ -574,6 +574,14 @@ function pw_dialogues_recent_block() {
     return $block;
   }
 
+  $server = search_api_index_load('node_index')->server();
+  $excerpt = $server->options['excerpt'];
+  $retrieve_data = $server->options['retrieve_data'];
+
+  // Temporarily override options to avoid performance and memory problems.
+  $server->options['excerpt'] = FALSE;
+  $server->options['retrieve_data'] = FALSE;
+
   $response = pw_dialogues_by_parliament_query($term)
     ->condition('comment_count', 0, '>')
     ->sort('created', 'DESC')
@@ -605,6 +613,10 @@ function pw_dialogues_recent_block() {
       'type' => 'inline',
     ];
   }
+
+  // Restore original solr server options.
+  $server->options['excerpt'] = $excerpt;
+  $server->options['retrieve_data'] = $retrieve_data;
 
   return $block;
 }
