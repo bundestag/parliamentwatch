@@ -281,6 +281,7 @@ function pw_globals_taxonomy_term_page($term) {
     if ($nids) {
       $nodes = node_load_multiple($nids);
       $build = node_view_multiple($nodes, 'teaser');
+      $build['#theme_wrappers'] = ['container__overview'];
       $build['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,

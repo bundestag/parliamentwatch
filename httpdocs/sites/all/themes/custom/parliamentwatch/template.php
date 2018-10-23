@@ -664,6 +664,22 @@ function parliamentwatch_container__small_tiles($variables) {
 }
 
 /**
+ * Overrides theme_container() for teaser overview.
+ */
+function parliamentwatch_container__overview($variables) {
+  $element = $variables['element'];
+  // Ensure #attributes is set.
+  $element += ['#attributes' => []];
+  $element['#attributes']['class'][] = 'overview';
+
+  if (isset($element['#modifier'])) {
+    $element['#attributes']['class'][] = drupal_html_class('overview--' . $element['#modifier']);
+  }
+
+  return '<div ' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</div>';
+}
+
+/**
  * Overrides theme_container() for timeline.
  */
 function parliamentwatch_container__timeline($variables) {
