@@ -61,3 +61,6 @@ src/package-lock.json
 
 # Ignore translation templates
 *.pot
+
+# Ignore IDE files
+.idea
