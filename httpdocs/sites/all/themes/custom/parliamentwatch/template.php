@@ -316,6 +316,17 @@ function parliamentwatch_preprocess_node(&$variables) {
     $variables['user_picture'] = field_view_field('user', $account, 'field_user_picture', ['label' => 'hidden', 'settings' => ['image_style' => 'square_medium']]);
   }
 
+  // for sidejobs on profile pages set the activity
+  if ($variables['type'] == 'sidejob' && $variables['view_mode'] == 'embedded') {
+    $node_entity_wrapper = entity_metadata_wrapper('node', $node);
+    $variables['activity'] = drupal_render($variables["content"]["field_job"]);
+    $job_category = $node_entity_wrapper->field_sidejob_job_category->value();
+
+    // show value of field_sidejob_classification as activity when set to tid = 29231
+    if (is_object($job_category) && isset($job_category->tid) && $job_category->tid == 29231) {
+      $variables['activity'] = t('Financial share');
+    }
+  }
 }
 
 /**
