@@ -616,7 +616,7 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
     '#title' => t('Filter by date'),
     '#title_display' => 'invisible',
     '#default_value' => empty($parameters['date']) ? [] : $parameters['date'],
-    '#attributes' => ['type' => 'date'],
+    '#attributes' => ['type' => 'date', 'placeholder' => t('yyyy-mm-dd')],
     '#dropdown' => TRUE,
   ];
 
