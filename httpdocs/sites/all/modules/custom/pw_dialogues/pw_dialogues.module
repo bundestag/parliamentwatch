@@ -449,8 +449,15 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
   }
 
   if (!empty(drupal_get_query_parameters()['date'][0]) && !empty(drupal_get_query_parameters()['date'][1])) {
-    $q->condition('created', drupal_get_query_parameters()['date'][0], '>=');
-    $q->condition('created', drupal_get_query_parameters()['date'][1], '<');
+    try {
+      $from = new DateTime(drupal_get_query_parameters()['date'][0]);
+      $to = new DateTime(drupal_get_query_parameters()['date'][1]);
+      $q->condition('created', $from->format('Y-m-d'), '>=');
+      $q->condition('created', $to->format('Y-m-d'), '<');
+    }
+    catch (Exception $e) {
+      watchdog_exception('pw_dialogues', $e);
+    }
   }
   elseif (!empty(drupal_get_query_parameters()['date'][0])) {
     try {
