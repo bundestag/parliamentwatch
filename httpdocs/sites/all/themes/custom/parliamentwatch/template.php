@@ -1392,6 +1392,114 @@ function parliamentwatch_profile_search_summary($variables) {
 }
 
 /**
+ * Overrides theme_dialogue_search_summary().
+ */
+function parliamentwatch_dialogue_search_summary($variables) {
+  $output = '';
+  $link_options = [
+    'attributes' => [
+      'class' => ['filter-summary__content__link'],
+      'data-ajax-target' => '#ajax',
+    ],
+  ];
+
+  $options['@count'] = $variables['response']['result count'];
+  $options['@class'] = implode(' ', $link_options['attributes']['class']);
+  $options['@data-ajax-target'] = $link_options['attributes']['data-ajax-target'];
+
+  $output .= '<div class="filter-summary">';
+  $output .= '<div class="filter-summary__content">';
+
+  $summary = format_plural($variables['response']['result count'], '<span>Found 1 question</span>', '<span>Found @count questions</span>', $options);
+  $summary_mobile = format_plural($variables['response']['result count'], 'Found 1 question', 'Found @count questions', $options);
+
+  if (!empty($variables['filters']['topic'])) {
+    $topic_links = '';
+    for ($i = 0; $i < count($variables['filters']['topic']); $i++) {
+      if ($i > 0 && $i < count($variables['filters']['topic']) - 1) {
+        $topic_links .= '<span>, </span>';
+      }
+      elseif ($i > 0 && $i == count($variables['filters']['topic']) - 1) {
+        $topic_links .= t('<span> and </span>');
+      }
+      $value = array_values($variables['filters']['topic'])[$i];
+      $topics_text = _pw_dialogues_options($variables['filters']['topic'])[$value];
+      $topic_links .= l($topics_text, current_path(), $link_options + ['query' => _pw_profiles_reject_filter($variables['filters'], 'topic', $value)]);
+    }
+    $summary .= t("<span> related to </span>!topic_links", ['!topic_links' => $topic_links]);
+  }
+
+  if (!empty($variables['filters']['date'][0]) && !empty($variables['filters']['date'][1])) {
+    $date_url = url(current_path(), ['query' => _pw_profiles_reject_filter($variables['filters'], 'date')]);
+    $date_args = [
+      '@class' => $options['@class'],
+      '@data-ajax-target' => $options['@data-ajax-target'],
+      '@start' => format_date(strtotime($variables['filters']['date'][0]), 'date_only_short'),
+      '@end' => format_date(strtotime($variables['filters']['date'][1]), 'date_only_short'),
+      '!url' => $date_url,
+    ];
+    $summary .= t('<span> between </span><a class="@class" data-ajax-target="@data-ajax-target" href="!url">@start and @end</a>', $date_args);
+  }
+  elseif (!empty($variables['filters']['date'][0])) {
+    $date_url = url(current_path(), ['query' => _pw_profiles_reject_filter($variables['filters'], 'date')]);
+    $date_args = [
+      '@class' => $options['@class'],
+      '@data-ajax-target' => $options['@data-ajax-target'],
+      '@date' => format_date(strtotime($variables['filters']['date'][0]), 'date_only_short'),
+      '!url' => $date_url,
+    ];
+    $summary .= t('<span> on </span><a class="@class" data-ajax-target="@data-ajax-target" href="!url">@date</a>', $date_args);
+  }
+
+  if (!empty($variables['filters']['has-reply'])) {
+    $has_reply_url = url(current_path(), ['query' => _pw_profiles_reject_filter($variables['filters'], 'has-reply')]);
+    $has_reply_args = [
+      '@class' => $options['@class'],
+      '@data-ajax-target' => $options['@data-ajax-target'],
+      '!url' => $has_reply_url
+    ];
+    $summary .= t('<span> having been </span><a class="@class" data-ajax-target="@data-ajax-target" href="!url">answered</a>', $has_reply_args);
+  }
+
+  if (!empty($variables['filters']['ignore-standard-replies'])) {
+    $ignore_standard_replies_text = t('ignoring standard replies');
+    $summary .= '<span> </span>' . l($ignore_standard_replies_text, current_path(), $link_options + ['query' => _pw_profiles_reject_filter($variables['filters'], 'ignore-standard-replies')]);
+  }
+
+  if (!empty(array_filter($variables['filters']))) {
+    $summary_mobile .= ', ' . t('filtered by:');
+  }
+  else {
+    $summary_mobile .= '.';
+  }
+
+  $output .= '<p class="filter-summary__content--mobile">';
+  $output .= $summary_mobile;
+  $output .= '</p><p>';
+  $output .= $summary;
+
+  if (!empty($variables['filters']['keys'])) {
+    $options['!keys'] = l(check_plain($variables['filters']['keys']), current_path(), $link_options + ['query' => _pw_profiles_reject_filter($variables['filters'], 'keys')]);
+    $output .= t('<span>, matching </span>!keys', $options);
+  }
+
+  $output .= '</p>';
+
+  if (!empty(array_filter($variables['filters']))) {
+    $options = $link_options;
+    $options['html'] = TRUE;
+    $options['attributes']['class'] = ['btn'];
+    $output .= ' ' . l('<i class="icon icon-close"></i>' . t('Reset all filters'), current_path(), $options);
+  }
+
+  $output .= '</div>';
+  $output .= '<p>' . t('<strong>Sorted by:</strong> date of question') . '</p>';
+  $output .= '</div>';
+
+  return $output;
+}
+
+/**
  * Override theme_tablesort_indicator()
  */
 function parliamentwatch_tablesort_indicator($variables) {
