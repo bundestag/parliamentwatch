@@ -2370,10 +2370,22 @@
         });
 
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {
-          $(this.form).submit();
+          var target = this.form;
+
+          if ($(this).is('#edit-keys')) {
+            window.location = '?keys=' + $(this).val() + '#block-pw-vote-poll';
+          } else {
+            if (!$(this).parents('.filterbar--expanded').length) {
+              $(target).submit();
+            } else {
+              $('[data-filterbar-submit]').one('click', function (event) {
+                $(target).submit();
+              });
+            }
+          }
         });
 
-        $('.form--pw-vote-poll-filters').submit(function (event) {
+        $('.form--pw-vote-poll-filters').submit(function (event) { console.log('submit');
           event.preventDefault();
           addLoadingAnimation($('.poll_detail__table'));
 
