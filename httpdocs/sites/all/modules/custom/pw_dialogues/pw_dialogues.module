@@ -118,6 +118,23 @@ function pw_dialogues_block_view($delta) {
 }
 
 /**
+ * Implements hook_block_view_MODULE_DELTA_alter().
+ */
+function pw_dialogues_block_view_pw_globals_title_alter(&$data, $block) {
+  if (menu_get_item()['path'] == 'dialogues/%/%/%') {
+    $parliament = menu_get_object('taxonomy_term');
+    $uid = menu_get_item()['map'][3];
+    $role = (menu_get_item()['map'][2] == 'candidates') ? 'candidate' : 'deputy';
+    $account = user_revision_load($uid, pw_userarchives_find_revision($uid, $parliament, $role));
+    $data['content'] = [
+      '#account' => $account,
+      '#markup' => $data['content'],
+      '#parliament' => $parliament,
+    ];
+  }
+}
+
+/**
  * Implements hook_cron().
  *
  * Imports all dialogues once at night. Normally all dialogues should be
@@ -557,19 +574,28 @@ function pw_dialogues_recent_block() {
     return $block;
   }
 
-  $result = pw_dialogues_by_parliament_query($term)
-    ->propertyOrderBy('created', 'DESC')
+  $server = search_api_index_load('node_index')->server();
+  $excerpt = $server->options['excerpt'];
+  $retrieve_data = $server->options['retrieve_data'];
+
+  // Temporarily override options to avoid performance and memory problems.
+  $server->options['excerpt'] = FALSE;
+  $server->options['retrieve_data'] = FALSE;
+
+  $response = pw_dialogues_by_parliament_query($term)
+    ->condition('comment_count', 0, '>')
+    ->sort('created', 'DESC')
     ->range(0, 4)
     ->execute();
 
-  if (!empty($result['node'])) {
+  if ($response['result count'] > 0) {
     $today = new DateTime();
-    $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+    $election_date = pw_parliaments_election_date($term);
     $before_election = ($today < $election_date) ? 1 : 0;
 
-    $nodes = node_load_multiple(array_keys($result['node']));
+    $nodes = node_load_multiple(array_keys($response['results']));
     $inline_js = 'window.dialogues = ' . drupal_json_encode(pw_dialogues_topics_by_parliament($term)) . ';';
-    $questions = pw_dialogues_by_parliament_query($term)->count()->execute();
+    $questions = pw_dialogues_by_parliament_query($term)->execute()['result count'];
     $answers = pw_dialogues_answered_questions_by_parliament($term);
     $block['content'] = node_view_multiple($nodes, 'tile');
     $block['content']['stats'] = [
@@ -587,6 +613,10 @@ function pw_dialogues_recent_block() {
       'type' => 'inline',
     ];
   }
+
+  // Restore original solr server options.
+  $server->options['excerpt'] = $excerpt;
+  $server->options['retrieve_data'] = $retrieve_data;
 
   return $block;
 }
@@ -678,19 +708,21 @@ function pw_dialogues_by_user_revision_query($account) {
  * @param object $term
  *   The parliament term.
  *
- * @return EntityFieldQuery
+ * @return SearchApiQuery
  *   The query object.
+ *
+ * @throws SearchApiException
+ *   If the index is unknown or disabled, or some other error was encountered.
  */
 function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
 
-  $q = new EntityFieldQuery();
-  $q->entityCondition('entity_type', 'node');
-  $q->entityCondition('bundle', 'dialogue');
-  $q->propertyCondition('status', NODE_PUBLISHED);
-  $q->fieldCondition('field_parliament', 'tid', $term->tid);
-  $q->fieldCondition('field_dialogue_before_election', 'value', ($today < $election_date) ? 1 : 0);
+  $q = search_api_query('node_index')
+    ->condition('type', 'dialogue')
+    ->condition('status', NODE_PUBLISHED)
+    ->condition('field_parliament', $term->tid)
+    ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
 
   return $q;
 }
@@ -776,7 +808,7 @@ function pw_dialogues_average_response_time_by_account($account) {
  */
 function pw_dialogues_average_response_time_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -798,7 +830,7 @@ function pw_dialogues_average_response_time_by_parliament($term) {
  */
 function pw_dialogues_answered_questions_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -846,7 +878,7 @@ function pw_dialogues_topics_by_user_revision($account) {
  */
 function pw_dialogues_topics_by_parliament($term) {
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
@@ -874,7 +906,7 @@ function pw_dialogues_party_ratios_by_parliament($term) {
   ];
 
   $today = new DateTime();
-  $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
+  $election_date = pw_parliaments_election_date($term);
   $before_election = ($today < $election_date) ? 1 : 0;
 
   $parties_in_previous_parliament = [];

@@ -758,15 +758,23 @@
     padding: $space 150px $space $space;
     width: 100%;
     transition: background 300ms ease;
-
     @include breakpoint($breakpoint-s-min) {
-      width: calc('50%' - 20px);
-      margin-right: 20px;
+      width: calc(50% - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
       border: 1px solid $beige;
       padding-top: $space-large;
       padding-bottom: $space-large;
     }
+    &:first-child {
+      @include breakpoint($breakpoint-s-min) {
+        margin-left: 20px;
+      }
+    }
     &:last-child {
+      @include breakpoint($breakpoint-s-min) {
+        margin-right: 20px;
+      }
       .btn {
         @include breakpoint($breakpoint-m-min) {
           right: 20px;
@@ -794,7 +802,6 @@
       cursor: pointer;
     }
   }
-
   .election-teaser__col__title {
     font-family: $font-serif;
     padding-left: 65px;

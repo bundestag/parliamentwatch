@@ -57,7 +57,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -212,7 +211,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -232,7 +230,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -252,7 +249,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'smart_trim',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -283,7 +279,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -304,7 +299,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -331,7 +325,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -352,7 +345,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -482,7 +474,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'blockreference',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -538,34 +529,27 @@ function pw_blog_field_default_fields() {
       'required' => 0,
       'settings' => array(
         'blockreference_modules' => array(
-          'antispam' => 0,
-          'apachesolr_search' => 0,
           'block' => 'block',
           'comment' => 0,
-          'custom_search_blocks' => 0,
-          'delta_blocks' => 0,
-          'devel' => 0,
           'diff' => 0,
-          'ds_extras' => 0,
-          'facetapi' => 0,
-          'featured_content' => 0,
           'locale' => 0,
           'masquerade' => 0,
           'menu' => 0,
           'menu_block' => 0,
           'node' => 0,
           'piwik_reports' => 0,
+          'pw_blog' => 'pw_blog',
+          'pw_committees' => 0,
+          'pw_dialogues' => 0,
+          'pw_globals' => 0,
+          'pw_kandidatencheck' => 0,
           'pw_login_once' => 0,
+          'pw_poll' => 0,
+          'pw_sidejobs' => 0,
           'pw_vote' => 0,
-          'quicktabs' => 0,
           'search' => 0,
-          'search_api_page' => 0,
-          'sharethis' => 0,
-          'submenutree' => 0,
           'system' => 0,
           'tagadelic' => 0,
-          'tb_megamenu' => 0,
-          'text_resize' => 0,
           'user' => 0,
           'user_diff' => 0,
           'views' => 'views',
@@ -577,9 +561,7 @@ function pw_blog_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(
-          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
-        ),
+        'settings' => array(),
         'type' => 'options_select',
         'weight' => '5',
       ),
@@ -664,7 +646,6 @@ function pw_blog_field_default_fields() {
           'label' => 'inline',
           'module' => 'textformatter',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -713,7 +694,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -735,7 +715,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'textformatter',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -848,7 +827,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -880,7 +858,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1145,7 +1122,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'file_entity',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'pw_file_landscape_l',
             'linked_field' => array(
               'advanced' => array(
@@ -1172,7 +1148,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'file_entity',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'pw_file_landscape_l',
             'linked_field' => array(
               'advanced' => array(
@@ -1199,7 +1174,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => 'content',
             'image_style' => 'pw_landscape_l',
             'linked_field' => array(
@@ -1221,7 +1195,6 @@ function pw_blog_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'width_medium',
             'linked_field' => array(

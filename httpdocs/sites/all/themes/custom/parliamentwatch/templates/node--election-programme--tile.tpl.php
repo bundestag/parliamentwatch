@@ -84,8 +84,8 @@
   <?php print render($title_suffix); ?>
   <figure class="tile__image mh-item">
     <?php print render($content['field_teaser_image']); ?>
-    <?php if (!empty(trim(render($content['field_teaser_image']['#items'][0]['field_image_copyright']['und'][0]['value'])))): ?>
-      <figcaption class="figcaption-overlay"><span>©&nbsp;<?php print $content['field_teaser_image']['#items'][0]['field_image_copyright']['und'][0]['value']; ?></span></figcaption>
+    <?php if (isset($content['field_teaser_image_copyright'])): ?>
+      <figcaption class="figcaption-overlay"><span>©&nbsp;<?php print render($content['field_teaser_image_copyright']); ?></span></figcaption>
     <?php endif; ?>
   </figure>
   <div class="tile__content mh-item">

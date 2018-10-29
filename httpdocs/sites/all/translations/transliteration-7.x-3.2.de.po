@@ -1,10 +1,10 @@
 # German translation of Transliteration (7.x-3.2)
-# Copyright (c) 2017 by the German translation team
+# Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Transliteration (7.x-3.2)\n"
-"POT-Creation-Date: 2017-09-24 17:09+0000\n"
+"POT-Creation-Date: 2018-09-05 15:34+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -116,4 +116,4 @@ msgstr ""
 "Kleinschreibung in Dateisystemen zu vermeiden. Es hat keine "
 "Auswirkungen, wenn Transliteration deaktiviert wurde."
 msgid "Convert all characters to US-ASCII"
-msgstr "Konvertiert alle Zeichen nach US-ASCII"
+msgstr "Alle Zeichen in US-ASCII umwandeln"

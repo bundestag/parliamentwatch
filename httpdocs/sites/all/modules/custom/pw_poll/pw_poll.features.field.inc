@@ -57,7 +57,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -194,7 +193,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -220,7 +218,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'smart_trim',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -251,7 +248,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -390,7 +386,6 @@ function pw_poll_field_default_fields() {
           'label' => 'inline',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -410,7 +405,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -430,7 +424,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'shs',
           'settings' => array(
-            'field_delimiter' => '',
             'linked' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -527,7 +520,6 @@ function pw_poll_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -618,7 +610,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'date_only_short',
             'fromto' => 'both',
             'linked_field' => array(
@@ -644,7 +635,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'date_only_short',
             'fromto' => 'both',
             'linked_field' => array(
@@ -670,7 +660,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'date_only_short',
             'fromto' => 'both',
             'linked_field' => array(
@@ -696,7 +685,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(
-            'field_delimiter' => '',
             'format_type' => 'date_only_short',
             'fromto' => 'both',
             'linked_field' => array(
@@ -924,7 +912,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'file_entity',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'default',
             'linked_field' => array(
               'advanced' => array(
@@ -951,7 +938,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'file_entity',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'pw_file_landscape_l',
             'linked_field' => array(
               'advanced' => array(
@@ -972,7 +958,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'width_medium',
             'linked_field' => array(
@@ -1085,7 +1070,6 @@ function pw_poll_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1179,7 +1163,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'list',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1205,7 +1188,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'list',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -1225,7 +1207,6 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'module' => 'list',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',

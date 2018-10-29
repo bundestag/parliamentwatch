@@ -262,7 +262,7 @@ function pw_poll_feeds_importer_default() {
         'bundle' => 'poll',
         'insert_new' => '1',
         'update_non_existent' => 'skip',
-        'language' => 'und',
+        'language' => 'de',
       ),
     ),
     'content_type' => '',

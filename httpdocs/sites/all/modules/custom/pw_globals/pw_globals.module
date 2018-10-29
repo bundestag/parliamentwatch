@@ -436,11 +436,25 @@ function pw_globals_parliament_patron_block() {
  */
 function pw_globals_testimonial_block() {
   $block = [];
-  $type = 'pw_testimonial';
-  $nodes = node_load_multiple([], ['type' => $type, 'promote' => NODE_PROMOTED, 'status' => NODE_PUBLISHED]);
-  if (!empty($nodes)) {
-    $block['content'] = node_view(reset($nodes),'full');
+  $current_month = date('Y-m-01 00:00:00');
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'pw_testimonial')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyCondition('promote', NODE_PROMOTED)
+    ->fieldCondition('field_testimonial_month', 'value', $current_month, '=')
+    ->range(0, 10);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $node_data = reset($result['node']);
+    $testimonial_nid = $node_data->nid;
+    $testimonial_node = node_load($testimonial_nid);
+    if ($testimonial_node) {
+      $block['content'] = node_view($testimonial_node,'full');
+    }
   }
+
   return $block;
 }
 
@@ -470,7 +484,7 @@ function pw_globals_politician_search_form($form, &$form_state, $parliament_term
   $form['#method'] = 'get';
 
   if (strpos($parliament_term->name, 'EU') === 0) {
-    $placeholder = t('Enter a locality or name');
+    $placeholder = t('Enter name');
   }
   else {
     $placeholder = t('Enter a postal code, locality or name');

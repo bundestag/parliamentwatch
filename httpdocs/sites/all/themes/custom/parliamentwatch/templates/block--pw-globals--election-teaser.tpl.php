@@ -53,12 +53,12 @@
     </div>
     <span class="btn btn--small">Zum Wahlportal</span>
   </a>
-  <span class="election-teaser__col election-teaser__col--soon" data-href="/hessen?pk_campaign=LTW%20Startseite&pk_kwd=HE%20Homepage%20Button">
+  <a class="election-teaser__col" href="/hessen?pk_campaign=LTW%20Startseite&pk_kwd=HE%20Homepage%20Button">
     <div class="election-teaser__col__title">
       <i class="icon icon-de-he"></i>
       <small>Landtagswahl</small>
       <span>Hessen</span>
     </div>
-    <span class="btn btn--small btn--disabled">In kürze verfügbar</span>
-  </span>
+    <span class="btn btn--small">Zum Wahlportal</span>
+  </a>
 </div>

@@ -151,8 +151,6 @@
   }
   .deputy__subtitle {
     padding-bottom: $space-large;
-    color: $mediumGray;
-    opacity: .8;
     line-height: 1.3em;
     @include breakpoint($breakpoint-s-min) {
       padding-right: 200px;

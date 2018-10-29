@@ -224,6 +224,22 @@ function parliamentwatch_preprocess_block(&$variables) {
     if (menu_get_object('node')) {
       $variables['classes_array'][] = drupal_html_class('title--' . menu_get_object('node')->type);
     }
+
+    if (menu_get_item()['path'] == 'dialogues/%/%/%') {
+      $account = $variables['elements']['#account'];
+      $parliament = $variables['elements']['#parliament'];
+      $variables['parliament'] = $parliament->name;
+      $variables['theme_hook_suggestions'][] = 'block__pw_globals__title__dialogues';
+      $variables['user_party'] = pw_profiles_party($account)->name;
+      $variables['user_picture'] = field_view_field('user', $account, 'field_user_picture', ['label' => 'hidden', 'settings' => ['image_style' => 'square_small']]);
+      if (_pw_user_has_role($account, 'Candidate')) {
+        $variables['user_role'] = t('Candidate', [], ['context' => pw_profiles_gender($account)]);
+      }
+      elseif (_pw_user_has_role($account, 'Deputy')) {
+        $variables['user_role'] = t('Deputy', [], ['context' => pw_profiles_gender($account)]);
+      }
+      $variables['user_url'] = url(entity_uri('user', $account)['path']);
+    }
   }
 
   if ($variables['block']->module == 'pw_dialogues' && $variables['block']->delta == 'recent') {
@@ -272,7 +288,7 @@ function parliamentwatch_preprocess_node(&$variables) {
   $year = sprintf('<span class="date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
   $variables['date'] = sprintf('<span class="date">%s%s%s</span>', $day, $month, $year);
 
-  if (isset($variables['content']['field_teaser_image'][0]['fid'])) {
+  if (isset($variables['field_teaser_image'][0]['fid'])) {
     $variables['content']['field_teaser_image_copyright'] = field_view_field('file', file_load($variables['field_teaser_image'][0]['fid']), 'field_image_copyright', 'default');
   }
 
@@ -300,6 +316,17 @@ function parliamentwatch_preprocess_node(&$variables) {
     $variables['user_picture'] = field_view_field('user', $account, 'field_user_picture', ['label' => 'hidden', 'settings' => ['image_style' => 'square_medium']]);
   }
 
+  // for sidejobs on profile pages set the activity
+  if ($variables['type'] == 'sidejob' && $variables['view_mode'] == 'embedded') {
+    $node_entity_wrapper = entity_metadata_wrapper('node', $node);
+    $variables['activity'] = drupal_render($variables["content"]["field_job"]);
+    $job_category = $node_entity_wrapper->field_sidejob_job_category->value();
+
+    // show value of field_sidejob_classification as activity when set to tid = 29231
+    if (is_object($job_category) && isset($job_category->tid) && $job_category->tid == 29231) {
+      $variables['activity'] = t('Financial share');
+    }
+  }
 }
 
 /**
@@ -936,7 +963,7 @@ function parliamentwatch_item_list__politician_dropdown($variables) {
   if (!empty($items)) {
     $first = array_shift($items);
 
-    $output = '<div class="dropdown dropdown--default dropdown--hover" data-feature-hint-id="profile-archive-history" data-feature-hint-content="' . t("Switch here between the profiles of the politician.") . '">';
+    $output = '<div class="dropdown dropdown--default dropdown--hover">';
     $output .= '<span>' . check_plain($first['title']) . '</span>';
     $output .= '<ul class="dropdown__list">';
 
