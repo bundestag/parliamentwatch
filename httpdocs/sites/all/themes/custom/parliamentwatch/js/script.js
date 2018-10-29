@@ -2125,12 +2125,6 @@
         }
       });
 
-      $('form[data-ajax-target]').submit(function (event) {
-        var keyValue = $('#edit-keys').val();
-        window.location = '?keys=' + keyValue;
-        event.preventDefault();
-      });
-
       $('a[data-ajax-target]').click(function (event) {
         event.preventDefault();
         addLoadingAnimation($('.tile-wrapper'));
