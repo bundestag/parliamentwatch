@@ -44,12 +44,10 @@
  * @ingroup themeable
  */
 ?>
-<?php
-if (sizeof($items) > 0) {
-  print t('Topics') . ': ';
-  $string_topics = '';
-  foreach ($items as $item) {
-    $string_topics .= ', ' . render($item);
-  }
-  print substr($string_topics, 2);
-}
+<?php if (sizeof($items) > 0): ?>
+  <ul class="tag-list">
+    <?php foreach ($items as $delta => $item): ?>
+      <li><a href="/<?php print drupal_get_path_alias('taxonomy/term/'.$element['#items'][$delta]['tid']); ?>"><?php print render($item); ?></a></li>
+    <?php endforeach; ?>
+  </ul>
+<?php endif; ?>
