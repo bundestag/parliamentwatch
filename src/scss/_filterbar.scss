@@ -515,19 +515,33 @@ _:-ms-fullscreen,
       @include grid-container();
       @include grid-collapse($neat-grid-large-gutter);
       .form__item {
-        border-bottom: 1px solid $brightGray;
         position: relative;
         padding: $space-xsmall 0;
         @include grid-column(12, $neat-grid-large-gutter);
         @include breakpoint($breakpoint-xs-min) {
           @include grid-column(6, $neat-grid-large-gutter);
+          border-bottom: 1px solid $brightGray;
         }
         @include breakpoint($breakpoint-s-min) {
           @include grid-column(4, $neat-grid-large-gutter);
         }
-        &__control {
-          top: $space-xsmall + 3;
+        &:not(:last-child) {
+          border-bottom: 1px solid $brightGray;
         }
+      }
+    }
+    .form-radios .form__item {
+      @include padding($space-xsmall 0 $space-xsmall $space);
+
+      &__control {
+        position: absolute;
+        top: $space-xsmall - 1px;
+        left: 0;
+      }
+    }
+    &--checkboxes .form__item {
+      &__control {
+        top: $space-xsmall + 2px;
       }
     }
   }
