@@ -1429,7 +1429,7 @@ function parliamentwatch_dialogue_search_summary($variables) {
     $summary .= t("<span> related to </span>!topic_links", ['!topic_links' => $topic_links]);
   }
 
-  if (!empty($variables['filters']['date'][0]) && !empty($variables['filters']['date'][1])) {
+  if (!empty($variables['filters']['date'])) {
     $date_url = url(current_path(), ['query' => _pw_profiles_reject_filter($variables['filters'], 'date')]);
     $date_args = [
       '@class' => $options['@class'],
@@ -1439,16 +1439,6 @@ function parliamentwatch_dialogue_search_summary($variables) {
       '!url' => $date_url,
     ];
     $summary .= t('<span> between </span><a class="@class" data-ajax-target="@data-ajax-target" href="!url">@start and @end</a>', $date_args);
-  }
-  elseif (!empty($variables['filters']['date'][0])) {
-    $date_url = url(current_path(), ['query' => _pw_profiles_reject_filter($variables['filters'], 'date')]);
-    $date_args = [
-      '@class' => $options['@class'],
-      '@data-ajax-target' => $options['@data-ajax-target'],
-      '@date' => format_date(strtotime($variables['filters']['date'][0]), 'date_only_short'),
-      '!url' => $date_url,
-    ];
-    $summary .= t('<span> on </span><a class="@class" data-ajax-target="@data-ajax-target" href="!url">@date</a>', $date_args);
   }
 
   if (!empty($variables['filters']['has-reply'])) {

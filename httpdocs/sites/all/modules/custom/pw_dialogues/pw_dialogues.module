@@ -434,53 +434,36 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
   }
 
   $limit = 12;
+  $filters = _pw_dialogues_sanitized_filters(drupal_get_query_parameters());
   $q = pw_dialogues_base_search_query($parliament_term, $role_name);
 
   if (isset($uid)) {
     $q->condition('field_dialogue_recipient', $uid);
   }
 
-  if (isset(drupal_get_query_parameters()['topic'])) {
+  if (isset($filters['topic'])) {
     $f = new SearchApiQueryFilter('OR', ['facet:field_dialogue_topic']);
-    foreach (drupal_get_query_parameters()['topic'] as $party) {
+    foreach ($filters['topic'] as $party) {
       $f->condition('field_dialogue_topic', $party);
     }
     $q->filter($f);
   }
 
-  if (!empty(drupal_get_query_parameters()['date'][0]) && !empty(drupal_get_query_parameters()['date'][1])) {
-    try {
-      $from = new DateTime(drupal_get_query_parameters()['date'][0]);
-      $to = new DateTime(drupal_get_query_parameters()['date'][1]);
-      $q->condition('created', $from->format('Y-m-d'), '>=');
-      $q->condition('created', $to->format('Y-m-d'), '<');
-    }
-    catch (Exception $e) {
-      watchdog_exception('pw_dialogues', $e);
-    }
-  }
-  elseif (!empty(drupal_get_query_parameters()['date'][0])) {
-    try {
-      $date = new DateTime(drupal_get_query_parameters()['date'][0]);
-      $date->add(new DateInterval('P1D'));
-      $q->condition('created', drupal_get_query_parameters()['date'][0], '>=');
-      $q->condition('created', $date->format('Y-m-d'), '<');
-    }
-    catch (Exception $e) {
-      watchdog_exception('pw_dialogues', $e);
-    }
+  if (isset($filters['date'])) {
+    $q->condition('created', $filters['date'][0], '>=');
+    $q->condition('created', $filters['date'][1], '<');
   }
 
-  if (isset(drupal_get_query_parameters()['has-reply'])) {
+  if (isset($filters['has-reply'])) {
     $q->condition('comment_count', 0, '>');
   }
 
-  if (isset(drupal_get_query_parameters()['ignore-standard-replies'])) {
+  if (isset($filters['ignore-standard-replies'])) {
     $q->condition('comments:field_dialogue_is_standard_reply', FALSE);
   }
 
-  if (isset(drupal_get_query_parameters()['keys'])) {
-    $q->keys(drupal_get_query_parameters()['keys']);
+  if (isset($filters['keys'])) {
+    $q->keys($filters['keys']);
   }
 
   $response = $q
@@ -496,7 +479,7 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
   $build['nodes']['summary'] = [
     '#theme' => 'dialogue_search_summary',
     '#response' => $response,
-    '#filters' => drupal_get_query_parameters(),
+    '#filters' => $filters,
     '#weight' => -1,
   ];
   $build['nodes']['pager'] = [
@@ -1244,4 +1227,36 @@ function _pw_dialogues_facets() {
   return [
     'field_dialogue_topic' => ['field' => 'field_dialogue_topic'] + $common,
   ];
+}
+
+/**
+ * Returns a sanitized filter list.
+ *
+ * @param $filters
+ *   The raw filters as obtained by drupal_get_query_parameters.
+ *
+ * @return array
+ */
+function _pw_dialogues_sanitized_filters($filters) {
+  $sanitized_filters = array_filter($filters);
+
+  _pw_profiles_reject_filter($sanitized_filters, 'date');
+
+  try {
+    if (!empty($filters['date'][0]) && !empty($filters['date'][1])) {
+      $from = new DateTime($filters['date'][0]);
+      $to = new DateTime($filters['date'][1]);
+      $sanitized_filters['date'][0] = $from->format('Y-m-d');
+      $sanitized_filters['date'][1] = $to->format('Y-m-d');
+    } elseif (!empty($filters['date'][0])) {
+      $from = new DateTime($filters['date'][0]);
+      $sanitized_filters['date'][0] = $from->format('Y-m-d');
+      $sanitized_filters['date'][1] = $from->add(new DateInterval('P1D'))->format('Y-m-d');
+    }
+  }
+  catch (Exception $e) {
+    watchdog_exception('pw_dialogues', $e);
+  }
+
+  return $sanitized_filters;
 }
