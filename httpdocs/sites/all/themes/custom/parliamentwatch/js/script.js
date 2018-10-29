@@ -2246,7 +2246,6 @@
 
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = $(this).parents('.modal').attr('data-modal-name');
-            console.log(cookieExpires);
             $.cookie(cookieName, '1', {expires: 7, path: '/'});
           }
           event.preventDefault();
@@ -2346,7 +2345,7 @@
           }
         });
 
-        $('.form--pw-vote-poll-filters').submit(function (event) { console.log('submit');
+        $('.form--pw-vote-poll-filters').submit(function (event) {
           event.preventDefault();
           addLoadingAnimation($('.poll_detail__table'));
 
