@@ -2053,6 +2053,7 @@
     attach: function (context) {
       $('.mh-item', context).matchHeight();
       $('.mh-item-nr', context).matchHeight({byRow: false});
+      $.fn.matchHeight._applyDataApi();
     }
   };
 
