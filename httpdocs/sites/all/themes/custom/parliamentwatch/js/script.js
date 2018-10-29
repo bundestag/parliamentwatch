@@ -2118,7 +2118,7 @@
         } else {
           if (!$(this).parents('.filterbar--expanded').length) {
             var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
-            if (dateInputs.length == 2) {
+            if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
               if (dateInputs[0].value === '' || dateInputs[1].value === '') {
                 return;
               }
