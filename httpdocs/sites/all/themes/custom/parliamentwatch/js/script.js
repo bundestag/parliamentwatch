@@ -2144,15 +2144,18 @@
         }
       }
 
-      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
-        if (!$(this).parents('.filterbar--expanded').length) {
-          loadResults($(this).parents('form'));
+      $('form[data-ajax-target] .form__item__control').change(function (event) {
+        if ($(this).is('#edit-keys')) {
+          window.location = '?keys=' + $(this).val();
         } else {
-          $('[data-filterbar-submit]').one('click', function (event) {
+          if (!$(this).parents('.filterbar--expanded').length) {
             loadResults($(this).parents('form'));
-          });
+          } else {
+            $('[data-filterbar-submit]').one('click', function (event) {
+              loadResults($(this).parents('form'));
+            });
+          }
         }
-        event.preventDefault();
       });
 
       $('form[data-ajax-target]').submit(function (event) {
