@@ -107,6 +107,13 @@ textarea {
       float: right;
     }
   }
+  .btn + .btn {
+    margin-top: $space-small;
+    @include breakpoint($breakpoint-xs-min) {
+      margin-top: 0;
+      margin-right: $space-small;
+    }
+  }
 }
 
 /* Tag-Styling */
@@ -618,6 +625,12 @@ textarea {
       font-size: 1.2em;
     }
   }
+}
+
+/* Block scrolling */
+
+.block-scrolling {
+  overflow: hidden;
 }
 
 /* Loading overlay */

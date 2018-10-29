@@ -6,6 +6,15 @@
   @include button($orange, $white, 15px, 12px);
 }
 
+.btn--transparent {
+  background-color: transparent;
+  color: $orange;
+  &:hover {
+    background-color: $orange;
+    color: $white;
+  }
+}
+
 .btn--white {
   @include button($white, $orange, 15px, 12px);
   &:hover {

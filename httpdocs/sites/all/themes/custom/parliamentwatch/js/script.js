@@ -942,6 +942,12 @@
             maximumSelectionLength: 1,
             multiple: true
           });
+        } else if ($(this).parents('.filterbar__secondary').length) {
+          $(this).select2({
+            minimumResultsForSearch: 20,
+            placeholder: 'Bitte wählen',
+            dropdownParent: $('.filterbar__secondary__inner')
+          });
         } else {
           $(this).select2({
             minimumResultsForSearch: 20,
@@ -1758,12 +1764,64 @@
    */
   Drupal.behaviors.filterBar = {
     attach: function () {
-      var filterBarSwiper = $('.filterbar__swiper');
-      var filterBarInner = $('.filterbar .filterbar__inner');
+      var $filterbar = $('.filterbar');
+      var $filterBarSwiper = $('.filterbar__secondary');
+      var $filterBarInner = $('.filterbar .filterbar__inner');
+      var filterBarActive = false;
+
+      function filterBarCreate() {
+        var mySwiper = new Swiper('.filterbar__secondary', {
+          freeMode: false,
+          resistance: true,
+          resistanceRatio: 0.5,
+          slideClass: 'filterbar__item',
+          wrapperClass: 'filterbar__secondary__inner',
+          speed: 400,
+          slidesPerView: 'auto',
+          simulateTouch: true,
+          nextButton: $filterBarSwiper.find('.swiper-button-next'),
+          prevButton: $filterBarSwiper.find('.swiper-button-prev'),
+          onInit: function (swiper) {
+            filterBarSwiperSize();
+            swiper.update();
+            filterBarActive = true;
+            $filterbar.removeClass('filterbar--expanded');
+            $('body').removeClass('block-scrolling');
+          },
+          onDestroy: function (swiper) {
+            $filterBarInner
+              .css('padding-right', '')
+              .css('padding-left', '');
+            filterBarActive = false;
+            filterBarWait();
+          },
+          onAfterResize: function (swiper) {
+            if (windowWidth >= breakpointMMin) {
+              filterBarSwiperSize();
+              swiper.update();
+            } else {
+              swiper.destroy(false, true);
+            }
+          }
+        });
+      }
+
+      function filterBarWait() {
+        var windowResize = debounce(function () {
+          windowWidth = window.innerWidth;
+
+          if (windowWidth >= breakpointMMin && !filterBarActive) {
+            filterBarCreate();
+          }
+        }, 150);
+
+        // Event-Listener
+        window.addEventListener('resize', windowResize);
+      }
 
       function filterBarSwiperSize() {
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
-        var filterBarOffsetLeft = $('.filterbar__pre_swiper').outerWidth();
+        var filterBarOffsetLeft = $('.filterbar__primary').outerWidth();
         var filterBarOffsetRightValue = filterBarOffsetRight;
         var filterBarOffsetLeftValue = filterBarOffsetLeft;
 
@@ -1778,33 +1836,24 @@
         else {
           filterBarOffsetRightValue = 0;
         }
-        filterBarInner
+        $filterBarInner
           .css('padding-right', filterBarOffsetRightValue + 'px')
           .css('padding-left', filterBarOffsetLeftValue + 'px');
       }
 
-      var mySwiper = new Swiper('.filterbar__swiper', {
-        freeMode: false,
-        resistance: true,
-        resistanceRatio: 0.5,
-        slideClass: 'filterbar__item',
-        wrapperClass: 'filterbar__swiper__inner',
-        speed: 400,
-        slidesPerView: 'auto',
-        simulateTouch: true,
-        nextButton: filterBarSwiper.find('.swiper-button-next'),
-        prevButton: filterBarSwiper.find('.swiper-button-prev'),
-        onInit: function (swiper) {
-          filterBarSwiperSize();
-          swiper.update();
-        },
-        onAfterResize: function (swiper) {
-          filterBarSwiperSize();
-          swiper.update();
-        }
+      if (windowWidth >= breakpointMMin) {
+        filterBarCreate();
+      } else {
+        filterBarWait();
+      }
+
+      $('[data-filterbar-toggle], [data-filterbar-submit]').on('click', function (event) {
+        $filterbar.toggleClass('filterbar--expanded');
+        $('body').toggleClass('block-scrolling');
+        event.preventDefault();
       });
 
-      $('.filterbar__swiper .filterbar__item--dropdown .dropdown__trigger').on("click", function () {
+      $('.filterbar__secondary .filterbar__item--dropdown .dropdown__trigger').on('click', function () {
         // var index = $(this).index();
         // mySwiper.slideTo(index, 300);
         $('.dropdown__list').removeClass('dropdown__list--open');
@@ -2034,24 +2083,46 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      $('form[data-ajax-target] .form__item__control:not("#edit-keys")').change(function (event) {
-        event.preventDefault();
-        addLoadingAnimation($('.tile-wrapper'));
-        var path = $(this).parents('form').attr('action');
-        var search = $(this).parents('form').serialize();
-        var target = $(this).parents('form').data('ajax-target');
+      hideIfEmpty();
+
+      function loadResults($form) {
+        var path = $form.attr('action');
+        var search = $form.serialize();
+        var target = $form.data('ajax-target');
         var url = path + '?' + search;
         var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
+
+        addLoadingAnimation($('.tile-wrapper'));
 
         $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
           Drupal.attachBehaviors(target, {url: url});
           removeLoadingAnimation($('.tile-wrapper'));
+          hideIfEmpty();
         });
-      });
-      $('form[data-ajax-target]').submit(function (event) {
-        var keyValue = $('#edit-keys').val();
-        window.location = '?keys=' + keyValue;
-        event.preventDefault();
+      }
+
+      function hideIfEmpty() {
+        if (!$('.filterbar__secondary .filterbar__item').length) {
+          $('.filterbar').addClass('filterbar--empty');
+          $('.filterbar__trigger').hide();
+        } else {
+          $('.filterbar').removeClass('filterbar--empty');
+          $('.filterbar__trigger').show();
+        }
+      }
+
+      $('form[data-ajax-target] .form__item__control').change(function (event) {
+        if ($(this).is('#edit-keys')) {
+          window.location = '?keys=' + $(this).val();
+        } else {
+          if (!$(this).parents('.filterbar--expanded').length) {
+            loadResults($(this).parents('form'));
+          } else {
+            $('[data-filterbar-submit]').one('click', function (event) {
+              loadResults($(this).parents('form'));
+            });
+          }
+        }
       });
 
       $('a[data-ajax-target]').click(function (event) {
@@ -2175,7 +2246,6 @@
 
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = $(this).parents('.modal').attr('data-modal-name');
-            console.log(cookieExpires);
             $.cookie(cookieName, '1', {expires: 7, path: '/'});
           }
           event.preventDefault();
@@ -2260,7 +2330,19 @@
         });
 
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {
-          $(this.form).submit();
+          var target = this.form;
+
+          if ($(this).is('#edit-keys')) {
+            window.location = '?keys=' + $(this).val() + '#block-pw-vote-poll';
+          } else {
+            if (!$(this).parents('.filterbar--expanded').length) {
+              $(target).submit();
+            } else {
+              $('[data-filterbar-submit]').one('click', function (event) {
+                $(target).submit();
+              });
+            }
+          }
         });
 
         $('.form--pw-vote-poll-filters').submit(function (event) {
