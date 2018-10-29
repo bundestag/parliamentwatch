@@ -91,16 +91,18 @@ dl {
 
 /* Tag-list */
 .tag-list {
+  @include clearfix;
   margin: 0;
-  padding: 0;
+  padding: $space-xsmall-mobile 0 0;
   > li {
-    margin: 0 $space-xsmall-mobile 0 0;
+    margin: 0 $space-xsmall-mobile $space-xsmall-mobile 0;
     list-style: none;
     float: left;
     a {
-      padding: 0 $space-xsmall-mobile;
+      padding: 0 $space-xsmall;
+      font-size: .8em;
       @include tag($white, $darkBeige, $mediumGray);
-      &:before {
+      &::before {
         content: '\e840';
         font-family: 'awfont';
         font-size: .8em;
