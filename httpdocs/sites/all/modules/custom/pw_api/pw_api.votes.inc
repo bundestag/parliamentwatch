@@ -145,7 +145,7 @@ function pw_api_poll($parliament, $poll, $subsets = ['votes']) {
     $nid = entity_get_id_by_uuid('node', [$uuid]);
     $node = node_load(array_pop($nid));
   }
-  elseif (is_int($poll)) {
+  elseif (is_numeric($poll)) {
     $node = node_load($poll);
   }
   else {
