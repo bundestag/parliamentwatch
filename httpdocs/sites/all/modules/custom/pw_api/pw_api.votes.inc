@@ -324,6 +324,10 @@ function pw_api_add_votes($parliament_term, $target_node_id, $vote_date){
     $query->orderBy('u_lname.field_user_lname_value');
     $query->orderBy('u_fname.field_user_fname_value');
 
+    // group to avoid doubled entries when there is more than one user revision
+    // Quick and dirty hack for https://jira.parliamentwatch.org/browse/AW-5915
+    $query->groupBy('u.uuid');
+
     // get results
     $result = $query->execute();
 
