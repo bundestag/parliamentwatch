@@ -15,6 +15,11 @@ define('PW_DIALOGUES_INTERVAL', 86400); // one day buffer
  * Implements hook_menu().
  */
 function pw_dialogues_menu() {
+  $items['dialogues'] = [
+    'page callback' => 'pw_dialogues_post',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  ];
   $items['dialogues/%taxonomy_term/%'] = [
     'title callback' => 'pw_dialogues_page_title',
     'title arguments' => [1, 2],
@@ -408,6 +413,50 @@ function pw_dialogues_form_pw_dialogues_filters_form_alter(&$form, &$form_state)
   $form['form_build_id']['#access'] = FALSE;
   $form['form_token']['#access'] = FALSE;
   $form['form_id']['#access'] = FALSE;
+}
+
+/**
+ * Page callback: creates or updates a dialogue node and its comments.
+ */
+function pw_dialogues_post() {
+  if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    drupal_add_http_header('Status', '405 Method Not Allowed');
+    drupal_add_http_header('Allow', 'POST');
+    return;
+  }
+
+  if ($_SERVER['CONTENT_TYPE'] != 'text/xml') {
+    drupal_add_http_header('Status', '415 Unsupported Media Type');
+    return;
+  }
+
+  $doc = new DOMDocument('1.0');
+
+  if (!$doc->load('php://input')) {
+    drupal_add_http_header('Status', '400 Bad Request');
+    return;
+  }
+
+  try {
+    $node = _pw_dialogues_question($doc);
+  }
+  catch (Exception $e) {
+    watchdog_exception('pw_dialogues', $e);
+    drupal_add_http_header('Status', '422 Unprocessable Entity');
+    return;
+  }
+
+  $is_new = empty($node->nid);
+  node_save($node);
+
+  if ($is_new) {
+    drupal_add_http_header('Status', '201 Created');
+    drupal_add_http_header('Location', url(node_uri($node)['path'], ['absolute' => TRUE]));
+  }
+  else {
+    drupal_add_http_header('Status', '303 See Other');
+    drupal_add_http_header('Location', url(node_uri($node)['path'], ['absolute' => TRUE]));
+  }
 }
 
 /**
@@ -1266,4 +1315,121 @@ function _pw_dialogues_sanitized_filters($filters) {
   }
 
   return $sanitized_filters;
+}
+
+/**
+ * Returns a question node populated from the given XML document.
+ *
+ * @param DOMDocument $doc
+ *   The XML received from the Mod-Tool.
+ *
+ * @return object
+ *   The question node.
+ *
+ * @throws Exception
+ *   Throws an exception if the given document cannot be processed.
+ */
+function _pw_dialogues_question(DOMDocument $doc) {
+  $xpath = new DOMXPath($doc);
+  $context_node = $xpath->query('//message[type="question"]')->item(0);
+
+  if (is_null($context_node)) {
+    throw new Exception(t('Invalid dialogue'));
+  }
+
+  $parliament = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(context)', $context_node), 'parliaments'));
+  if (empty($parliament)) {
+    throw new Exception(t('Invalid context'));
+  }
+
+  $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
+  if (empty($topic)) {
+    throw new Exception(t('Invalid topic'));
+  }
+
+  $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(recipient.external_id)', $context_node)]));
+  if (empty($uid)) {
+    throw new Exception(t('Invalid recpient.external_id'));
+  }
+
+  $date = new DateTime($xpath->evaluate('string(inserted_date)', $context_node));
+  $id = $xpath->evaluate('string(id)', $context_node);
+
+  $node = _pw_dialogues_load_or_create_question($id);
+  $node->created = $date->format('U');
+  $node->status = $xpath->evaluate('string(status)', $context_node);
+  $node->title = 'Frage von ' . $xpath->evaluate('string(sender)', $context_node);
+  $node->body = [LANGUAGE_NONE => [0 => [
+    'value' => $xpath->evaluate('string(text)', $context_node),
+    'summary' => $xpath->evaluate('string(keyworded_text)', $context_node),
+  ]]];
+  $node->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
+    'value' => $xpath->evaluate('string(annotation.text)', $context_node),
+  ]]];
+  $node->field_dialogue_before_election = [LANGUAGE_NONE => [0 => [
+    'value' => (int) ($date < pw_parliaments_election_date($parliament[0])),
+  ]]];
+  $node->field_dialogue_id = [LANGUAGE_NONE => [0 => [
+    'value' => $xpath->evaluate('string(//dialogue/@id)'),
+  ]]];
+  $node->field_dialogue_message_id = [LANGUAGE_NONE => [0 => [
+    'value' => $id,
+  ]]];
+  $node->field_dialogue_message_type = [LANGUAGE_NONE => [0 => [
+    'value' => $xpath->evaluate('string(type)', $context_node),
+  ]]];
+  $node->field_dialogue_recipient = [LANGUAGE_NONE => [0 => [
+    'target_id' => $uid[0],
+  ]]];
+  $node->field_dialogue_sender_name = [LANGUAGE_NONE => [0 => [
+    'value'=> $xpath->evaluate('string(sender)', $context_node),
+  ]]];
+  $node->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
+    'tid' => $topic[0]->tid,
+  ]]];
+  $node->field_parliament = [LANGUAGE_NONE => [0 => [
+    'tid' => $parliament[0]->tid,
+  ]]];
+  $node->field_dialogue_documents[LANGUAGE_NONE] = [];
+  foreach ($xpath->query('documents/documents_item', $context_node) as $item) {
+    $node->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
+  }
+  $node->field_dialogue_tags[LANGUAGE_NONE] = [];
+  foreach ($xpath->query('tags/tags_item', $context_node) as $item) {
+    $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
+    if (!empty($term)) {
+      $node->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
+    }
+  };
+
+  return $node;
+}
+
+/**
+ * Returns a fully-populated question or a new node.
+ *
+ * @param $message_id
+ *   The message_id of the question.
+ *
+ * @return object
+ *   The question node.
+ */
+function _pw_dialogues_load_or_create_question($message_id) {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', 'dialogue');
+  $q->fieldCondition('field_dialogue_message_id', 'value', $message_id);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    $node = node_load(key($result['node']));
+  }
+  else {
+    $node = new stdClass();
+    $node->language = LANGUAGE_NONE;
+    $node->type = 'dialogue';
+    node_object_prepare($node);
+  }
+
+  return $node;
 }
