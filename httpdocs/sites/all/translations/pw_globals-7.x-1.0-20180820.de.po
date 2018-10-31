@@ -53,11 +53,11 @@ msgstr "Fragen an @name"
 
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:421
 msgid "Questions to deputies in @parliament"
-msgstr "Fragen an Abgeordnete in @parliament"
+msgstr "Fragen an die Abgeordnete — @parliament"
 
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:424
 msgid "Questions to candidates in @parliament"
-msgstr "Fragen an Kandidierende in @parliament"
+msgstr "Fragen an die Kandidierenden — @parliament (Wahlen)"
 
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:579;582
 #: sites/all/modules/custom/pw_globals/pw_globals.module:518;534
