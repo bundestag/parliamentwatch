@@ -145,7 +145,7 @@ function pw_api_poll($parliament, $poll, $subsets = ['votes']) {
     $nid = entity_get_id_by_uuid('node', [$uuid]);
     $node = node_load(array_pop($nid));
   }
-  elseif (is_int($poll)) {
+  elseif (is_numeric($poll)) {
     $node = node_load($poll);
   }
   else {
@@ -323,6 +323,10 @@ function pw_api_add_votes($parliament_term, $target_node_id, $vote_date){
     $query->orderBy('vote_label');
     $query->orderBy('u_lname.field_user_lname_value');
     $query->orderBy('u_fname.field_user_fname_value');
+
+    // group to avoid doubled entries when there is more than one user revision
+    // Quick and dirty hack for https://jira.parliamentwatch.org/browse/AW-5915
+    $query->groupBy('u.uuid');
 
     // get results
     $result = $query->execute();

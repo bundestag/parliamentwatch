@@ -958,6 +958,13 @@ function _pw_uac_add_conditions(&$query, $conditions = array()) {
     $or_user_retired->condition($alias_uac . '.user_retired', $conditions['date'], '>');
     $or_user_retired->condition($alias_uac . '.user_retired', NULL);
     $query->condition($or_user_retired);
+
+    // get the user revision which was valid on poll date
+    // this means: the user revision which was just updated before the poll
+//    // quick and dirty hack for  https://jira.parliamentwatch.org/browse/AW-5915
+//    $timestamp_poll_date = strtotime( $conditions['date']);
+//    $query->join('user_revision', 'ur', $alias_uac.'.uid = ur.uid AND '.$alias_uac.'.vid = ur.vid' );
+//    $query->condition('ur.timestamp', $timestamp_poll_date , '<=');
   }
 
   // condition roles
