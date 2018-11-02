@@ -439,6 +439,7 @@ function pw_dialogues_post() {
 
   try {
     $node = _pw_dialogues_question($doc);
+    $comments = _pw_dialogues_answers($doc, $node);
   }
   catch (Exception $e) {
     watchdog_exception('pw_dialogues', $e);
@@ -447,7 +448,11 @@ function pw_dialogues_post() {
   }
 
   $is_new = empty($node->nid);
+
   node_save($node);
+  foreach ($comments as $comment) {
+    comment_save($comment);
+  }
 
   if ($is_new) {
     drupal_add_http_header('Status', '201 Created');
@@ -1406,6 +1411,84 @@ function _pw_dialogues_question(DOMDocument $doc) {
 }
 
 /**
+ * Returns answers as comments populated from the given XML document.
+ *
+ * @param DOMDocument $doc
+ *   The XML received from the Mod-Tool.
+ *
+ * @param object
+ *   The question node.
+ *
+ * @return array
+ *   The answers as comments.
+ *
+ * @throws Exception
+ *   Throws an exception if the given document cannot be processed.
+ */
+function _pw_dialogues_answers(DOMDocument $doc, $question) {
+  $xpath = new DOMXPath($doc);
+  $answers = [];
+
+  foreach ($xpath->query('//message[type="answer"]') as $context_node) {
+
+    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
+    if (empty($topic)) {
+      throw new Exception(t('Invalid topic'));
+    }
+
+    $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(sender.external_id)', $context_node)]));
+    if (empty($uid)) {
+      throw new Exception(t('Invalid sender.external_id'));
+    }
+
+    $date = new DateTime($xpath->evaluate('string(inserted_date)', $context_node));
+    $id = $xpath->evaluate('string(id)', $context_node);
+
+    $comment = _pw_dialogues_load_or_create_answer($id, $question);
+    $comment->created = $date->format('U');
+    $comment->status = $xpath->evaluate('string(status)', $context_node);
+    $comment->subject = 'Antwort von ' . $xpath->evaluate('string(sender)', $context_node);
+    $comment->uid = $uid;
+    $comment->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
+      'value' => $xpath->evaluate('string(annotation.text)', $context_node),
+    ]]];
+    $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
+      'value' => $xpath->evaluate('string(text)', $context_node),
+      'summary' => $xpath->evaluate('string(keyworded_text)', $context_node),
+    ]]];
+    $comment->field_dialogue_id = [LANGUAGE_NONE => [0 => [
+      'value' => $xpath->evaluate('string(//dialogue/@id)'),
+    ]]];
+    $comment->field_dialogue_message_id = [LANGUAGE_NONE => [0 => [
+      'value' => $id,
+    ]]];
+    $comment->field_dialogue_message_type = [LANGUAGE_NONE => [0 => [
+      'value' => $xpath->evaluate('string(type)', $context_node),
+    ]]];
+    $comment->field_dialogue_sender_fullname = [LANGUAGE_NONE => [0 => [
+      'value' => $xpath->evaluate('string(sender)', $context_node),
+    ]]];
+    $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
+      'tid' => $topic[0]->tid,
+    ]]];
+    $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
+    foreach ($xpath->query('documents/documents_item', $context_node) as $item) {
+      $comment->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
+    }
+    $comment->field_dialogue_tags[LANGUAGE_NONE] = [];
+    foreach ($xpath->query('tags/tags_item', $context_node) as $item) {
+      $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
+      if (!empty($term)) {
+        $comment->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
+      }
+    };
+    $answers[] = $comment;
+  }
+
+  return $answers;
+}
+
+/**
  * Returns a fully-populated question or a new node.
  *
  * @param $message_id
@@ -1432,4 +1515,35 @@ function _pw_dialogues_load_or_create_question($message_id) {
   }
 
   return $node;
+}
+
+/**
+ * Returns a fully populated answer or a new comment.
+ *
+ * @param $message_id
+ *   The message_id of the answer.
+ *
+ * @param $question
+ *   The question node.
+ *
+ * @return object
+ *   The answer comment.
+ */
+function _pw_dialogues_load_or_create_answer($message_id, $question) {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'comment');
+  $q->entityCondition('bundle', 'comment_node_dialogue');
+  $q->fieldCondition('field_dialogue_message_id', 'value', $message_id);
+  $result = $q->execute();
+
+  if (!empty($result['comment'])) {
+    $comment = comment_load(key($result['comment']));
+    $comment->changed = REQUEST_TIME;
+  }
+  else {
+    $comment = new stdClass();
+    $comment->nid = $question->nid;
+  }
+
+  return $comment;
 }
