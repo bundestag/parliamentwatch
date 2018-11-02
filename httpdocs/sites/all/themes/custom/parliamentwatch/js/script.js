@@ -2053,6 +2053,7 @@
     attach: function (context) {
       $('.mh-item', context).matchHeight();
       $('.mh-item-nr', context).matchHeight({byRow: false});
+      $.fn.matchHeight._applyDataApi();
     }
   };
 
@@ -2116,6 +2117,12 @@
           window.location = '?keys=' + $(this).val();
         } else {
           if (!$(this).parents('.filterbar--expanded').length) {
+            var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
+            if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
+              if (dateInputs[0].value === '' || dateInputs[1].value === '') {
+                return;
+              }
+            }
             loadResults($(this).parents('form'));
           } else {
             $('[data-filterbar-submit]').one('click', function (event) {
@@ -2141,7 +2148,6 @@
   };
 
   /**
-
    * Attaches the AJAX block behavior.
    *
    * @type {Drupal~behavior}

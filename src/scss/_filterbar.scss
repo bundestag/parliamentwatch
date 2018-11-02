@@ -643,6 +643,7 @@ _:-ms-fullscreen,
     overflow: hidden;
     margin-right: $space-xsmall-mobile;
     margin-bottom: -6px;
+    white-space: nowrap;
     transition: background 300ms ease;
     @include breakpoint($breakpoint-s-min) {
       margin-right: 0;
