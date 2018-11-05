@@ -604,15 +604,15 @@ _:-ms-fullscreen,
       }
     }
     .btn {
-      display: none;
-      @include breakpoint($breakpoint-s-min) {
-        display: block;
-        padding: 3px $space-xsmall-mobile;
-        background: $white;
-        color: $darkGray;
-        border-color: $white;
-        font-weight: 300;
-        font-size: .8em;
+      display: block;
+      padding: 3px $space-xsmall-mobile;
+      background: $white;
+      color: $darkGray;
+      border-color: $white;
+      font-weight: 300;
+      font-size: .8em;
+      clear: both;
+      @include breakpoint($breakpoint-xs-min) {
         margin-top: 7px;
         float: right;
       }
@@ -634,20 +634,24 @@ _:-ms-fullscreen,
     }
   }
   .filter-summary__content__link {
+    display: inline-block;
+    vertical-align: top;
+    max-width: calc(100vw - #{2 * $space});
     font-weight: 300;
     color: $darkGray;
     border: 1px solid $darkBeige;
     padding: 2px ($space + $space-xsmall-mobile) 2px $space-xsmall-mobile;
     border-radius: 3px;
     position: relative;
-    overflow: hidden;
+    top: -3px;
     margin-right: $space-xsmall-mobile;
-    margin-bottom: -6px;
+    margin-bottom: $space-xsmall-mobile;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: background 300ms ease;
     @include breakpoint($breakpoint-s-min) {
       margin-right: 0;
-      margin-bottom: -9px;
     }
     &:after {
       content:'\e808';
