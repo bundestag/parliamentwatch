@@ -185,16 +185,9 @@
 .blog__content__inner {
   @include grid-column(12);
 }
-.blog__related {
-  .tabs__content {
-    background: $beige;
-  }
-  .tabs__content__content {
-    padding: $space 0;
-  }
-  /* Hide 3rd Blog-Item for Tablet devices */
-  .blog.tile:nth-child(3) {
-    @include breakpoint($breakpoint-xs-min) { display: none; }
-    @include breakpoint($breakpoint-m-min) { display: block; }
-  }
+.blog-related {
+  padding-top: $space-large * 2;
+  background: $beige;
+  clear: both;
+  @include container();
 }
