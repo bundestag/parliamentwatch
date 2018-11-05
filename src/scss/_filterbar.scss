@@ -634,16 +634,19 @@ _:-ms-fullscreen,
     }
   }
   .filter-summary__content__link {
+    display: inline-block;
+    max-width: calc(100vw - #{2 * $space});
     font-weight: 300;
     color: $darkGray;
     border: 1px solid $darkBeige;
     padding: 2px ($space + $space-xsmall-mobile) 2px $space-xsmall-mobile;
     border-radius: 3px;
     position: relative;
-    overflow: hidden;
     margin-right: $space-xsmall-mobile;
     margin-bottom: -6px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: background 300ms ease;
     @include breakpoint($breakpoint-s-min) {
       margin-right: 0;
