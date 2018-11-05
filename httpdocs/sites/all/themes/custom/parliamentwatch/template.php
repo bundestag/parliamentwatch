@@ -40,7 +40,7 @@ function parliamentwatch_form_user_login_alter(&$form, &$form_state) {
 /**
  * Implements hook_form_FORM_ID_alter().
  */
-function pw_globals_form_user_pass_alter(&$form, &$form_state) {
+function parliamentwatch_form_user_pass_alter(&$form, &$form_state) {
   $form['#theme'] = 'user_pass';
   $form['actions']['submit']['#value'] = t('Reset password');
 }
