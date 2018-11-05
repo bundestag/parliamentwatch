@@ -604,15 +604,15 @@ _:-ms-fullscreen,
       }
     }
     .btn {
-      display: none;
-      @include breakpoint($breakpoint-s-min) {
-        display: block;
-        padding: 3px $space-xsmall-mobile;
-        background: $white;
-        color: $darkGray;
-        border-color: $white;
-        font-weight: 300;
-        font-size: .8em;
+      display: block;
+      padding: 3px $space-xsmall-mobile;
+      background: $white;
+      color: $darkGray;
+      border-color: $white;
+      font-weight: 300;
+      font-size: .8em;
+      clear: both;
+      @include breakpoint($breakpoint-xs-min) {
         margin-top: 7px;
         float: right;
       }
