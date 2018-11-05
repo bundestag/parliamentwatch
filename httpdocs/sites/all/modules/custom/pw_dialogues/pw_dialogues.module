@@ -1347,11 +1347,6 @@ function _pw_dialogues_question(DOMDocument $doc) {
     throw new Exception(t('Invalid context'));
   }
 
-  $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
-  if (empty($topic)) {
-    throw new Exception(t('Invalid topic'));
-  }
-
   $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(recipient.external_id)', $context_node)]));
   if (empty($uid)) {
     throw new Exception(t('Invalid recpient.external_id'));
@@ -1389,9 +1384,6 @@ function _pw_dialogues_question(DOMDocument $doc) {
   $node->field_dialogue_sender_name = [LANGUAGE_NONE => [0 => [
     'value'=> $xpath->evaluate('string(sender)', $context_node),
   ]]];
-  $node->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-    'tid' => $topic[0]->tid,
-  ]]];
   $node->field_parliament = [LANGUAGE_NONE => [0 => [
     'tid' => $parliament[0]->tid,
   ]]];
@@ -1406,6 +1398,12 @@ function _pw_dialogues_question(DOMDocument $doc) {
       $node->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
     }
   };
+  $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
+  if (!empty($topic)) {
+    $node->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
+      'tid' => $topic[0]->tid,
+    ]]];
+  }
 
   return $node;
 }
@@ -1430,12 +1428,6 @@ function _pw_dialogues_answers(DOMDocument $doc, $question) {
   $answers = [];
 
   foreach ($xpath->query('//message[type="answer"]') as $context_node) {
-
-    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
-    if (empty($topic)) {
-      throw new Exception(t('Invalid topic'));
-    }
-
     $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(sender.external_id)', $context_node)]));
     if (empty($uid)) {
       throw new Exception(t('Invalid sender.external_id'));
@@ -1468,9 +1460,6 @@ function _pw_dialogues_answers(DOMDocument $doc, $question) {
     $comment->field_dialogue_sender_fullname = [LANGUAGE_NONE => [0 => [
       'value' => $xpath->evaluate('string(sender)', $context_node),
     ]]];
-    $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-      'tid' => $topic[0]->tid,
-    ]]];
     $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
     foreach ($xpath->query('documents/documents_item', $context_node) as $item) {
       $comment->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
@@ -1482,6 +1471,12 @@ function _pw_dialogues_answers(DOMDocument $doc, $question) {
         $comment->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
       }
     };
+    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
+    if (!empty($topic)) {
+      $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
+        'tid' => $topic[0]->tid,
+      ]]];
+    }
     $answers[] = $comment;
   }
 
