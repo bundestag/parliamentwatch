@@ -98,10 +98,10 @@
    */
   function mapVotes(votes) {
     var map = {
-      'yes': {name: 'Ja', color: '#9fd773', vote_id: 19667},
-      'no': {name: 'Nein', color: '#cc6c5b', vote_id: 19668},
-      'abstain': {name: 'Enthalten', color: '#e2e2e2', vote_id: 19669},
-      'no-show': {name: 'Nicht beteiligt', color: '#a6a6a6', vote_id: 19670}
+      'yes': { name: Drupal.t('Voted yes'), color: '#9fd773', vote_id: 19667 },
+      'no': { name: Drupal.t('Voted no'), color: '#cc6c5b', vote_id: 19668 },
+      'abstain': { name: Drupal.t('Abstained'), color: '#e2e2e2', vote_id: 19669 },
+      'no-show': { name: Drupal.t('Did not vote'), color: '#a6a6a6', vote_id: 19670 }
     };
 
     var data = [];
