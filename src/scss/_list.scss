@@ -95,9 +95,12 @@ dl {
   margin: 0;
   padding: $space-xsmall-mobile 0 0;
   > li {
-    margin: 0 $space-xsmall-mobile $space-xsmall-mobile 0;
     list-style: none;
     float: left;
+    margin: 0 0 $space-xsmall-mobile 0;
+    &:not(:last-child) {
+      margin: 0 $space-xsmall-mobile $space-xsmall-mobile 0;
+    }
     a {
       padding: 0 $space-xsmall;
       font-size: .8em;
