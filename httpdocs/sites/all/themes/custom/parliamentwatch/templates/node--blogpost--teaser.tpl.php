@@ -83,7 +83,7 @@
 
 <div class="overview__teaser">
   <h2 class="h3"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <div class="overview__badge"><?php print t('Blog article') ?></div>
+  <div class="overview__badge"><?php print t('Blog article', [], ['context' => 'badge']) ?></div>
   <?php print render($content['field_blogpost_intro']); ?>
   <p class="overview__date date">
     <span class="date__day"><?php print format_date($created, 'custom', 'j'); ?>.</span>
