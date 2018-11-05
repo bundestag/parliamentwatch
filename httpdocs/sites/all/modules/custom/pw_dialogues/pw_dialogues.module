@@ -419,6 +419,30 @@ function pw_dialogues_form_pw_dialogues_filters_form_alter(&$form, &$form_state)
  * Page callback: creates or updates a dialogue node and its comments.
  */
 function pw_dialogues_post() {
+  if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
+    $credentials = base64_decode(substr($_SERVER['REDIRECT_HTTP_AUTHORIZATION'], 6));
+    list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $credentials, 2);
+  }
+
+  if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
+    drupal_add_http_header('Status', '401 Unauthorized');
+    return;
+  }
+
+  $uid = user_authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+  if (!$uid) {
+    drupal_add_http_header('Status', '401 Unauthorized');
+    return;
+  }
+
+  $GLOBALS['user'] = user_load($uid);
+
+  if (!in_array(user_role_load_by_name('API User')->rid, array_keys($GLOBALS['user']->roles))) {
+    drupal_add_http_header('Status', '403 Forbidden');
+    return;
+  }
+
   if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     drupal_add_http_header('Status', '405 Method Not Allowed');
     drupal_add_http_header('Allow', 'POST');
