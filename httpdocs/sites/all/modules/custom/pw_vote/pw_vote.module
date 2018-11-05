@@ -649,8 +649,8 @@ function pw_vote_poll_filters($form, &$form_state, $facets) {
   ];
 
   $vote_options = [
-    19667 => t('Yes'),
-    19668 => t('No'),
+    19667 => t('Voted yes'),
+    19668 => t('Voted no'),
     19669 => t('Abstained'),
     19670 => t('Did not vote'),
   ];
