@@ -40,7 +40,15 @@ function pw_question_form_form_alter(&$form, &$form_state, $form_id) {
       $body_markup = '<div class="messages messages--warning">' . $field_closed_by_reason[0]['value'] . '</div>';
     }
     elseif (!_pw_is_profile_consultable($account)) {
-      $body_markup = '<div class="messages messages--warning">Die Fragefunktion in diesem Profil wurde geschlossen.</div>';
+
+      // if we are currently in between election and legislature period
+      if (_pw_profile_will_be_consultable_in_future($account)) {
+        $date = _pw_get_formatted_legislature_start_date($parliament);
+        $body_markup = '<div class="messages messages--warning">Die Fragefunktion in diesem Profil wird am '. $date .' zur Verfügung gestellt.</div>';
+      }
+      else {
+        $body_markup = '<div class="messages messages--warning">Die Fragefunktion in diesem Profil wurde geschlossen.</div>';
+      }
     }
 
     // show message

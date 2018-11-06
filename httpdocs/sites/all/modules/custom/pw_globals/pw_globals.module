@@ -772,10 +772,46 @@ function _pw_is_profile_consultable($account) {
   return $profile_consultable;
 }
 
+
+/**
+ * Checks if a politician will be consultable in the future.
+ *
+ * This function returns true when a politician is deputy in a parliament which
+ * will become active in the future due to the second valid date
+ *
+ * @param object $account
+ * Drupal user object of the politican
+ *
+ * @return bool
+ */
+function _pw_profile_will_be_consultable_in_future($account) {
+  $profile_consultable = &drupal_static(__FUNCTION__ . (isset($account->vid) ? $account->vid : ''));
+
+  if (!isset($profile_consultable)) {
+    $profile_consultable = FALSE;
+    $parliament = pw_profiles_parliament($account);
+
+    if (!$parliament) {
+      return FALSE;
+    }
+
+    if (_pw_is_profile_consultable($account)) {
+      return FALSE;
+    }
+
+    if (_pw_user_has_role($account, 'Deputy') && _pw_parliament_status_between_election_and_legislature($parliament)) {
+      return TRUE;
+    }
+
+  }
+
+  return FALSE;
+}
+
 /**
  * Returns TRUE if the given account has the given role, FALSE otherwise.
  *
- * @param type $account
+ * @param object $account
  *   The user object.
  * @param string $role
  *   The role.
@@ -874,6 +910,70 @@ function _pw_is_parliament_active($parliament = FALSE) {
   }
   return FALSE;
 }
+
+
+/**
+ * Check if the parliament is currently in the status between election and
+ * next legislature
+ *
+ * This function returns true when a parliament has two valid dates and the second
+ * is in the future
+ *
+ * @param object $parliament
+ * The parliament taxonomy term
+ *
+ * @return bool
+ */
+function _pw_parliament_status_between_election_and_legislature($parliament) {
+
+  // something went wrong
+  if (!isset($parliament->vocabulary_machine_name) || $parliament->vocabulary_machine_name != 'parliaments') {
+    return FALSE;
+  }
+
+  // if the second valid date is not set yet the status of the parliament is not
+  // between election and legislature
+  if (!isset($parliament->field_parliament_valid[LANGUAGE_NONE][1])) {
+    return FALSE;
+  }
+
+
+  // when two valid dates are set we check if the current date
+  // is between end of first valid date and start of second valid date
+  if (isset($parliament->field_parliament_valid[LANGUAGE_NONE][0]) &&
+      isset($parliament->field_parliament_valid[LANGUAGE_NONE][1])) {
+    $end_of_election = strtotime($parliament->field_parliament_valid[LANGUAGE_NONE][0]['value2']);
+    $start_of_legislation = strtotime($parliament->field_parliament_valid[LANGUAGE_NONE][1]['value']);
+    $current_date = time();
+    return (($current_date >= $end_of_election) && ($current_date < $start_of_legislation));
+
+  }
+
+  return FALSE;
+}
+
+
+/**
+ * Get the date when the legislature of a parliament starts in the format
+ * mm.dd.yyyy
+ *
+ * @param object $parliament
+ * Drupal Term object
+ *
+ * @return string
+ * If no date was found an empty string
+ */
+function _pw_get_formatted_legislature_start_date($parliament) {
+  $date = '';
+
+  if (isset($parliament->field_parliament_valid[LANGUAGE_NONE][1])) {
+    $date = strtotime($parliament->field_parliament_valid[LANGUAGE_NONE][1]['value']);
+    $date = date('d.m.Y');
+  }
+
+  return $date;
+}
+
 
 /**
  * Custom: Checks if a timestamp (date) is between start and end date of a date field
