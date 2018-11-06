@@ -15,7 +15,7 @@ define('PW_DIALOGUES_INTERVAL', 86400); // one day buffer
  * Implements hook_menu().
  */
 function pw_dialogues_menu() {
-  $items['dialogues'] = [
+  $items['api/dialogues'] = [
     'page callback' => 'pw_dialogues_post',
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
