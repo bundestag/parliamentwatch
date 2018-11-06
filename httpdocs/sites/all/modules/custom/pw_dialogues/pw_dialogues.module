@@ -1384,8 +1384,8 @@ function _pw_dialogues_question(DOMDocument $doc) {
   $node->status = $xpath->evaluate('string(status)', $context_node);
   $node->title = 'Frage von ' . $xpath->evaluate('string(sender)', $context_node);
   $node->body = [LANGUAGE_NONE => [0 => [
-    'value' => $xpath->evaluate('string(text)', $context_node),
-    'summary' => $xpath->evaluate('string(keyworded_text)', $context_node),
+    'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
+    'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
   ]]];
   $node->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
     'value' => $xpath->evaluate('string(annotation.text)', $context_node),
@@ -1469,8 +1469,8 @@ function _pw_dialogues_answers(DOMDocument $doc, $question) {
       'value' => $xpath->evaluate('string(annotation.text)', $context_node),
     ]]];
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
-      'value' => $xpath->evaluate('string(text)', $context_node),
-      'summary' => $xpath->evaluate('string(keyworded_text)', $context_node),
+      'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
+      'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
     ]]];
     $comment->field_dialogue_id = [LANGUAGE_NONE => [0 => [
       'value' => $xpath->evaluate('string(//dialogue/@id)'),
