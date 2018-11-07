@@ -1232,10 +1232,15 @@ function _pw_dialogues_facets() {
 /**
  * Returns a sanitized filter list.
  *
- * @param $filters
- *   The raw filters as obtained by drupal_get_query_parameters.
+ * - Removes empty date filters and converts dates to DateTime objects.
+ * - Removes the filter for ignoring standard replies if the
+ *   the reply filter is not set.
+ *
+ * @param array $filters
+ *   The raw filters as obtained from drupal_get_query_parameters.
  *
  * @return array
+ *   The sanitized filters.
  */
 function _pw_dialogues_sanitized_filters($filters) {
   $sanitized_filters = _pw_profiles_reject_filter($filters, 'date');
