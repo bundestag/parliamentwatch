@@ -449,7 +449,7 @@ function pw_dialogues_post() {
     return;
   }
 
-  if ($_SERVER['CONTENT_TYPE'] != 'text/xml') {
+  if (strpos($_SERVER['CONTENT_TYPE'] , 'text/xml') !== 0) {
     drupal_add_http_header('Status', '415 Unsupported Media Type');
     return;
   }
