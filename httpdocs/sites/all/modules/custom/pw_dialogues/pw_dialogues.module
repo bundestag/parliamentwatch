@@ -1238,9 +1238,7 @@ function _pw_dialogues_facets() {
  * @return array
  */
 function _pw_dialogues_sanitized_filters($filters) {
-  $sanitized_filters = array_filter($filters);
-
-  _pw_profiles_reject_filter($sanitized_filters, 'date');
+  $sanitized_filters = _pw_profiles_reject_filter($filters, 'date');
 
   try {
     if (!empty($filters['date'][0]) && !empty($filters['date'][1])) {
