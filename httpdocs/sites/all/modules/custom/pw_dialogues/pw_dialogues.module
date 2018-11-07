@@ -1256,5 +1256,9 @@ function _pw_dialogues_sanitized_filters($filters) {
     watchdog_exception('pw_dialogues', $e);
   }
 
+  if (!isset($sanitized_filters['has-reply']) && isset($sanitized_filters['ignore-standard-replies'])) {
+    unset($sanitized_filters['ignore-standard-replies']);
+  }
+
   return $sanitized_filters;
 }
