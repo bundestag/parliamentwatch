@@ -68,7 +68,7 @@
       <?php if (!empty($form[$children[$i]]['#dropdown'])): ?>
       <div class="dropdown__trigger">
         <?php print $form[$children[$i]]['#title'] ?>
-        <?php if (!empty($form[$children[$i]]['#default_value'])): ?>
+        <?php if (!empty($form[$children[$i]]['#options']) && !empty($form[$children[$i]]['#default_value'])): ?>
         <span class="badge"><?php print count($form[$children[$i]]['#default_value']); ?></span>
         <?php endif; ?>
         <i class="icon icon-arrow-down"></i>
