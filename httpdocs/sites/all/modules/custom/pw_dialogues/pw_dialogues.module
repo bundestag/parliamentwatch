@@ -1232,15 +1232,18 @@ function _pw_dialogues_facets() {
 /**
  * Returns a sanitized filter list.
  *
- * @param $filters
- *   The raw filters as obtained by drupal_get_query_parameters.
+ * - Removes empty date filters and converts dates to DateTime objects.
+ * - Removes the filter for ignoring standard replies if the
+ *   the reply filter is not set.
+ *
+ * @param array $filters
+ *   The raw filters as obtained from drupal_get_query_parameters.
  *
  * @return array
+ *   The sanitized filters.
  */
 function _pw_dialogues_sanitized_filters($filters) {
-  $sanitized_filters = array_filter($filters);
-
-  _pw_profiles_reject_filter($sanitized_filters, 'date');
+  $sanitized_filters = _pw_profiles_reject_filter($filters, 'date');
 
   try {
     if (!empty($filters['date'][0]) && !empty($filters['date'][1])) {
@@ -1256,6 +1259,10 @@ function _pw_dialogues_sanitized_filters($filters) {
   }
   catch (Exception $e) {
     watchdog_exception('pw_dialogues', $e);
+  }
+
+  if (!isset($sanitized_filters['has-reply']) && isset($sanitized_filters['ignore-standard-replies'])) {
+    unset($sanitized_filters['ignore-standard-replies']);
   }
 
   return $sanitized_filters;
