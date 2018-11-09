@@ -83,7 +83,7 @@
 
 <div class="overview__teaser">
   <h2 class="h3"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <div class="overview__subject"><strong><?php print $node->field_parliament['und'][0]['taxonomy_term']->name; ?></strong></div>
+  <div class="overview__subject"><strong><?php print render($content['field_parliament']); ?></strong></div>
   <div class="overview__badge"><?php print t('Poll', [], ['context' => 'badge']); ?></div>
   <?php print render($content['body']); ?>
   <p class="overview__date date">
