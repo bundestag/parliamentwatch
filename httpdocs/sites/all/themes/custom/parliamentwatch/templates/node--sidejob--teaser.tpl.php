@@ -82,10 +82,8 @@
 ?>
 
 <div class="overview__teaser">
-  <h2 class="h3"><a href="<?php print url(entity_uri('user', $node->field_politician['und'][0]['entity'])['path']); ?>#block-pw-sidejobs-profile">Nebentätigkeit von <?php print _pw_get_fullname($node->field_politician['und'][0]['entity']); ?></a></h2>
-  <div class="overview__subject"><strong><?php print $node->field_sidejob_organization['und'][0]['taxonomy_term']->name; ?></strong></div>
+  <h2 class="h3"><?php print render($content['field_politician']); ?></h2>
+  <div class="overview__subject"><strong><?php print render($content['field_sidejob_organization']); ?></strong></div>
   <div class="overview__badge"><?php print t('Sideline job', [], ['context' => 'badge']) ?></div>
-  <p>
-    <?php print $node->field_job['und'][0]['taxonomy_term']->name; ?>
-  </p>
+  <p><?php print render($content['field_job']); ?></p>
 </div>

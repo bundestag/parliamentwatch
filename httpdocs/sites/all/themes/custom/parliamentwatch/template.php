@@ -464,6 +464,11 @@ function parliamentwatch_preprocess_comment(&$variables) {
 function parliamentwatch_preprocess_field(&$variables) {
   $element = $variables['element'];
   $variables['theme_hook_suggestions'][] = 'field__' . $element['#bundle'] . '__' . $element['#view_mode'];
+
+  if ($element['#bundle'] == 'sidejob' && $element['#field_name'] == 'field_politician' && $element['#view_mode'] == 'teaser') {
+    $variables['items'][0]['#label'] = t("@politician's sidejob", ['@politician' => _pw_get_fullname($element[0]['#item']['entity'])]);
+    $variables['items'][0]['#uri']['options']['fragment'] = 'block-pw-sidejobs-profile';
+  }
 }
 
 /**
