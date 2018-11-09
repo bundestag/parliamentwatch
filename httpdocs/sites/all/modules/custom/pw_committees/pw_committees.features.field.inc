@@ -74,7 +74,6 @@ function pw_committees_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -89,7 +88,7 @@ function pw_committees_field_default_fields() {
             'trim_length' => 600,
           ),
           'type' => 'text_summary_or_trimmed',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'tile' => array(
           'label' => 'hidden',
@@ -221,7 +220,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '13',
         ),
         'tile' => array(
           'label' => 'above',
@@ -313,7 +312,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '2',
         ),
         'tile' => array(
           'label' => 'above',
@@ -436,7 +435,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '9',
         ),
         'tile' => array(
           'label' => 'above',
@@ -544,7 +543,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '11',
         ),
         'tile' => array(
           'label' => 'above',
@@ -652,7 +651,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '3',
         ),
         'tile' => array(
           'label' => 'above',
@@ -759,7 +758,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '8',
         ),
         'tile' => array(
           'label' => 'above',
@@ -852,7 +851,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '12',
         ),
         'tile' => array(
           'label' => 'above',
@@ -975,7 +974,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '7',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1082,7 +1081,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '6',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1189,7 +1188,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '5',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1281,7 +1280,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '19',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1404,7 +1403,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '4',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1512,7 +1511,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '10',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1604,7 +1603,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '18',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1727,7 +1726,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '20',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1822,7 +1821,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '17',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1950,7 +1949,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '16',
         ),
         'tile' => array(
           'label' => 'above',
@@ -2064,10 +2063,23 @@ function pw_committees_field_default_fields() {
           'weight' => '1',
         ),
         'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'hidden',
+          'module' => 'taxonomy',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'taxonomy_term_reference_plain',
+          'weight' => '1',
         ),
         'tile' => array(
           'label' => 'above',
@@ -2173,7 +2185,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '15',
         ),
         'tile' => array(
           'label' => 'hidden',
@@ -2312,7 +2324,7 @@ function pw_committees_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '14',
         ),
         'tile' => array(
           'label' => 'above',
