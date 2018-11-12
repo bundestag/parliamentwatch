@@ -1212,11 +1212,7 @@ function pw_sidejobs_field_default_fields() {
     ),
     'field_instance' => array(
       'bundle' => 'sidejob',
-      'default_value' => array(
-        0 => array(
-          'value' => '0',
-        ),
-      ),
+      'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
       'display' => array(
