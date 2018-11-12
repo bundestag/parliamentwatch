@@ -45,7 +45,7 @@
  */
 ?>
 <?php if (sizeof($items) > 0): ?>
-  <?php if ($element['#view_mode'] === 'embedded'): ?>
+  <?php if ($element['#bundle'] === 'sidejob'): ?>
     <?php print t('Topics'); ?>:
     <?php foreach ($items as $delta => $item): ?>
       <?php print render($item); if ($delta < (sizeof($items) - 1)) print ', '; ?>
