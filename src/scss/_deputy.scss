@@ -444,7 +444,7 @@
       margin: $space-xsmall - 3;
       @include tag($orangeBG, $orange, $white);
     }
-    .form__item--checkbox {
+    .form__item--checkbox { // TODO
       @include breakpoint($breakpoint-m-min) {
         text-align: right;
         margin-right: $space-small;
@@ -477,11 +477,11 @@
       margin: 0;
     }
     .form-type-checkbox .form__item__control,
-    .form__item--checkbox .form__item__control {
+    .form__item--checkbox .form__item__control { // TODO
       border-color: $darkGray;
     }
     .form-type-checkbox .form__item__control:checked,
-    .form__item--checkbox .form__item__control:checked {
+    .form__item--checkbox .form__item__control:checked { // TODO
       border-color: $orange;
     }
     .webform-component--option-privacy {
