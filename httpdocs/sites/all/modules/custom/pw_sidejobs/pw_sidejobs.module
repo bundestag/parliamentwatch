@@ -21,7 +21,7 @@ function pw_sidejobs_node_view($node, $view_mode, $langcode) {
     $date_parliament_start = end($field_parliament_valid)['value'];
 
     $node->content['field_sidejob_date'] = '';
-    if (substr($date_parliament_start, 0, 10) == $date[0]->format('Y-m-d') && $income_interval == 0 || $date[0]->format('n') == 1 && $date[0]->format('j') == 1) {
+    if (substr($date_parliament_start, 0, 10) == $date[0]->format('Y-m-d') && $income_interval == 0 && $income_interval !== FALSE || $date[0]->format('n') == 1 && $date[0]->format('j') == 1) {
       $node->content['field_sidejob_date'] = $date[0]->format('Y');
     }
     else {
