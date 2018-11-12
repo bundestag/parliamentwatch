@@ -39,8 +39,46 @@
 
 /* Type: Checkbox */
 
-.form-type-checkbox,
-.form__item--checkbox { // TODO
+.form__item--checkbox {
+  margin-bottom: 0;
+  position: relative;
+  input {
+    display: none;
+  }
+  .form__item__label {
+    display: block;
+    padding-left: $space + $space-xsmall-mobile;
+    &::before {
+      content: "";
+      display: block;
+      width: $space-small - 2px;
+      height: $space-small - 2px;
+      position: absolute;
+      top: 1px;
+      left: 0;
+      border: 1px solid $gray;
+      background-color: $white;
+    }
+  }
+  input:checked + .form__item__label {
+    &::after {
+      content: "\e87a";
+      font-family: awfont;
+      display: block;
+      width: $space-small;
+      height: $space-small;
+      position: absolute;
+      top: 1px;
+      left: 0;
+      font-size: 8px;
+      line-height: $space-small;
+      text-align: center;
+      color: $orange;
+    }
+  }
+}
+
+.form-type-checkbox { // TODO
   margin-bottom: 0;
   position: relative;
   .form__item__label {
