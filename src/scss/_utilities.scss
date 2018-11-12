@@ -99,7 +99,7 @@ textarea {
       margin-bottom: 0;
     }
   }
-  .btn {
+  &__float, .btn {
     @include button--mobile-block();
     clear: both;
     @include breakpoint($breakpoint-xs-min) {

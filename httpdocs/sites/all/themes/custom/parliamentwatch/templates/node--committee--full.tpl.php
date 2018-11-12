@@ -86,6 +86,7 @@
     <h1><?php print render($title); ?></h1>
     <div class="intro__left">
       <?php print render($content['body']); ?>
+      <?php print render($content['field_topics']); ?>
       <?php if (!empty($content['field_committee_url'])): ?>
       <ul class="icon-list">
         <li><?php print render($content['field_committee_url']); ?></li>

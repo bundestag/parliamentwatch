@@ -103,22 +103,22 @@
 .blog__submitted {
   background: $beige;
   padding-top: $space;
-  padding-bottom: $space-small;
+  padding-bottom: $space;
   margin-bottom: $space-large;
   border-bottom: 1px solid $darkBeige;
-  font-size: .8em;
   @include container-small();
   @include breakpoint($breakpoint-m-min) {
-    padding-top: $space-large;
+    padding-top: $space;
     padding-bottom: $space;
   }
 }
 
 .blog__submitted__date {
-  padding-bottom: $space-small;
+  font-size: .8em;
+  padding-top: $space-xsmall-mobile;
   @include grid-column(12);
   @include breakpoint($breakpoint-m-min) {
-    padding-bottom: 0;
+    padding-top: $space-xsmall;
     @include grid-column(5);
   }
 }
@@ -132,10 +132,13 @@
     @include breakpoint($breakpoint-m-min) {
       float: right;
       display: inline-block;
-      margin-top: -3px;
+      margin-right: -$space-xsmall-mobile;
     }
-    > li {
-      margin-bottom: $space-xsmall-mobile;
+    & > li {
+      @include breakpoint($breakpoint-m-min) {
+        float: right;
+        margin: 0 $space-xsmall-mobile $space-xsmall-mobile 0;
+      }
     }
   }
 }
@@ -186,17 +189,9 @@
 .blog__content__inner {
   @include grid-column(12);
 }
-.blog__related {
-  .tabs__content {
-    background: $beige;
-  }
-  .tabs__content__content {
-    padding: $space 0;
-  }
-  /* Hide 3rd Blog-Item for Tablet devices */
-  .blog.tile:nth-child(3) {
-    @include breakpoint($breakpoint-xs-min) { display: none; }
-    @include breakpoint($breakpoint-m-min) { display: block; }
-  }
+.blog-related {
+  padding-top: $space-large * 2;
+  background: $beige;
+  clear: both;
+  @include container();
 }
-

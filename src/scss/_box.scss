@@ -611,3 +611,49 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
     }
   }
 }
+
+/* overview element */
+
+.overview {
+  padding-top: $space-large;
+  padding-bottom: $space-large;
+  background: $beige;
+  @include container();
+
+  &__teaser {
+    padding: $space-large;
+    background: $white;
+    color: $darkGray;
+    position: relative;
+    @include grid-column(12);
+
+    &:not(:first-child) {
+      margin-top: $space;
+    }
+
+    h2 {
+      margin-bottom: $space-xsmall-mobile;
+    }
+
+    p {
+      margin-top: $space;
+    }
+  }
+
+  &__date {
+    font-family: $font-serif;
+    color: $gray;
+  }
+
+  &__badge {
+    font-size: .8em;
+
+    position: absolute;
+    right: $space;
+    top: -3px;
+    padding: ($space-xsmall-mobile + 3) $space-xsmall $space-xsmall-mobile;
+
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);
+    background: $white;
+  }
+}

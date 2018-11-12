@@ -417,7 +417,7 @@ function pw_poll_field_default_fields() {
               'linked' => 0,
             ),
           ),
-          'type' => 'taxonomy_term_reference_link',
+          'type' => 'taxonomy_term_reference_plain',
           'weight' => '2',
         ),
         'tile' => array(
@@ -540,7 +540,7 @@ function pw_poll_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1089,7 +1089,7 @@ function pw_poll_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'tile' => array(
           'label' => 'above',

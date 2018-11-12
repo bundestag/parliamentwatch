@@ -81,14 +81,44 @@
  */
 ?>
 
-<div class="overview__teaser">
-  <h2 class="h3"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <div class="overview__subject"><strong><?php print render($content['field_parliament']); ?></strong></div>
-  <div class="overview__badge"><?php print t('Poll', [], ['context' => 'badge']); ?></div>
-  <?php print render($content['body']); ?>
-  <p class="overview__date date">
-    <span class="date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?>.</span>
-    <span class="date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'F'); ?></span>
+<div class="intro__left">
+  <h1><?php print $title; ?></h1>
+  <div class="intro__date date">
+    <span class="date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?></span>
+    <span class="date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'M'); ?></span>
     <span class="date__year"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'Y'); ?></span>
-  </p>
+  </div>
+  <?php print render(field_get_items('node', $node, 'body')[0]['summary']); ?>
+  <p><a href="#poll-content" class="link-icon" data-localScroll><i class="icon icon-arrow-right"></i> Weiterlesen</a></p>
+  <?php print render($content['field_topics']); ?>
 </div>
+<?php if (isset($result)): ?>
+<div class="intro__right">
+  <div class="poll_overview">
+    <div class="poll_overview__primary">
+      <div class="poll_overview__primary__item">
+        <div class="poll_overview__primary__label"><?php print t('Accepeted') ?></div>
+        <div class="poll_overview__primary__value"><?php print $yays; ?></div>
+      </div>
+      <div class="poll_overview__primary__item">
+        <div class="poll_overview__primary__label"><?php print t('Denied') ?></div>
+        <div class="poll_overview__primary__value"><?php print $nays; ?></div>
+      </div>
+      <i class="icon icon-<?php print ($yays > $nays) ? 'ok' : 'close' ?>"></i>
+    </div>
+    <div class="poll_overview__secondary">
+      <div class="row">
+        <div class="poll_overview__secondary__item">
+          <div class="poll_overview__secondary__label"><?php print t('Abstentions') ?></div>
+          <div class="poll_overview__secondary__value"><?php print $node->result['abstain']; ?></div>
+        </div>
+        <div class="poll_overview__secondary__item">
+          <div class="poll_overview__secondary__label"><?php print t('No show') ?></div>
+          <div class="poll_overview__secondary__value"><?php print $node->result['no-show']; ?></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="poll_overview__info"><i class="icon icon-info"></i> <?php print t('Voting results by a total of %count deputies.', array('%count' => $voterCount )) ?></div>
+</div>
+<?php endif; ?>

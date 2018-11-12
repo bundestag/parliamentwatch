@@ -125,7 +125,7 @@ function pw_poll_intro_block() {
   }
 
   $block['subject'] = t('Poll intro');
-  $block['content'] = node_view($node, 'teaser');
+  $block['content'] = node_view($node, 'intro');
 
   return $block;
 }

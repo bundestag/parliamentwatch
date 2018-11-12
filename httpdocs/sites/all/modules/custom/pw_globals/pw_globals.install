@@ -429,6 +429,29 @@ function  pw_globals_update_7126() {
 }
 
 /**
+ * Update path aliases of topic terms.
+ */
+function pw_globals_update_7127() {
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'taxonomy_term');
+  $q->entityCondition('bundle', 'topics');
+  $result = $q->execute();
+
+  if (!empty($result['taxonomy_term'])) {
+    $trans = db_transaction();
+    try {
+      variable_set('pathauto_update_action', 2);
+      pathauto_taxonomy_term_update_alias_multiple(array_keys($result['taxonomy_term']), 'bulkupdate', ['force' => TRUE]);
+      variable_set('pathauto_update_action', 0);
+    }
+    catch (PDOException $e) {
+      $trans->rollback();
+      watchdog_exception('pw_globals', $e);
+    }
+  }
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block

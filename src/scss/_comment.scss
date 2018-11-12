@@ -21,7 +21,8 @@
     display: block;
   }
 }
-.tabs + .comment-wrapper {
+.tabs + .comment-wrapper,
+.blog-related + .comment-wrapper {
   border-top: 1px solid $white;
 }
 
@@ -129,4 +130,3 @@
     @include box-padded($white);
     box-shadow: 0 5px 10px 0 rgba(0,0,0,.05);
   }
-

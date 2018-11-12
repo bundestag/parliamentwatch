@@ -281,6 +281,7 @@ function parliamentwatch_preprocess_node(&$variables) {
     drupal_html_class('node-' . $variables['type']),
   ];
   $variables['classes_array'] = array_diff($variables['classes_array'], $exclude_classes);
+  $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['type'] . '__' . $variables['view_mode'];
 
   $day = sprintf('<span class="date__day">%s</span>', format_date($node->created, 'custom', 'j'));
@@ -463,6 +464,23 @@ function parliamentwatch_preprocess_comment(&$variables) {
 function parliamentwatch_preprocess_field(&$variables) {
   $element = $variables['element'];
   $variables['theme_hook_suggestions'][] = 'field__' . $element['#bundle'] . '__' . $element['#view_mode'];
+
+  if ($element['#bundle'] == 'sidejob' && $element['#field_name'] == 'field_politician' && $element['#view_mode'] == 'teaser') {
+    $variables['items'][0]['#label'] = t("@politician's sidejob", ['@politician' => _pw_get_fullname($element[0]['#item']['entity'])]);
+    $variables['items'][0]['#uri']['options']['fragment'] = 'block-pw-sidejobs-profile';
+  }
+
+  if ($element['#field_name'] == 'field_topics' && $element['#formatter'] == 'taxonomy_term_reference_link') {
+    foreach ($variables['items'] as &$item) {
+      $item['#options']['attributes']['title'] = t('More contents on the topic “!name”', ['!name' => $item['#title']]);
+    }
+  }
+
+  if ($element['#field_name'] == 'field_blogpost_categories' && $element['#formatter'] == 'taxonomy_term_reference_link') {
+    foreach ($variables['items'] as &$item) {
+      $item['#options']['attributes']['title'] = t('More blog articles from the category “!name”', ['!name' => $item['#title']]);
+    }
+  }
 }
 
 /**
@@ -660,6 +678,22 @@ function parliamentwatch_container__small_tiles($variables) {
   $element['#attributes']['class'] = ['container'];
 
   return '<div class="small-tiles">' . $element['#children'] . '</div>';
+}
+
+/**
+ * Overrides theme_container() for teaser overview.
+ */
+function parliamentwatch_container__overview($variables) {
+  $element = $variables['element'];
+  // Ensure #attributes is set.
+  $element += ['#attributes' => []];
+  $element['#attributes']['class'][] = 'overview';
+
+  if (isset($element['#modifier'])) {
+    $element['#attributes']['class'][] = drupal_html_class('overview--' . $element['#modifier']);
+  }
+
+  return '<div ' . drupal_attributes($element['#attributes']) . '>' . $element['#children'] . '</div>';
 }
 
 /**
