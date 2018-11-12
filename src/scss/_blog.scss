@@ -132,9 +132,13 @@
     @include breakpoint($breakpoint-m-min) {
       float: right;
       display: inline-block;
+      margin-right: -$space-xsmall-mobile;
     }
-    > li {
-      margin-bottom: $space-xsmall-mobile;
+    & > li {
+      @include breakpoint($breakpoint-m-min) {
+        float: right;
+        margin: 0 $space-xsmall-mobile $space-xsmall-mobile 0;
+      }
     }
   }
 }
