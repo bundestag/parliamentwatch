@@ -40,7 +40,7 @@
 /* Type: Checkbox */
 
 .form-type-checkbox,
-.form__item--checkbox {
+.form__item--checkbox { // TODO
   margin-bottom: 0;
   position: relative;
   .form__item__label {
@@ -78,7 +78,7 @@
   }
 }
 
-.form-type-checkbox {
+.form-type-checkbox { // TODO
   padding: $space-xsmall 0;
   padding-left: $space;
   position: relative;
@@ -96,7 +96,7 @@
 
 /* Type: Radio */
 
-.form__item--radio {
+.form__item--radio { // TODO
   @include grid-container();
   .form-radio {
     margin-right: $space-xsmall;
