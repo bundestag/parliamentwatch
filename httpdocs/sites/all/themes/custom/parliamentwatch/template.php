@@ -472,13 +472,13 @@ function parliamentwatch_preprocess_field(&$variables) {
 
   if ($element['#field_name'] == 'field_topics' && $element['#formatter'] == 'taxonomy_term_reference_link') {
     foreach ($variables['items'] as &$item) {
-      $item['#options']['attributes']['title'] = t('More contents on the topic “@name”', ['@name' => $item['#title']]);
+      $item['#options']['attributes']['title'] = t('More contents on the topic “!name”', ['!name' => $item['#title']]);
     }
   }
 
   if ($element['#field_name'] == 'field_blogpost_categories' && $element['#formatter'] == 'taxonomy_term_reference_link') {
     foreach ($variables['items'] as &$item) {
-      $item['#options']['attributes']['title'] = t('More blog articles from the category “@name”', ['@name' => $item['#title']]);
+      $item['#options']['attributes']['title'] = t('More blog articles from the category “!name”', ['!name' => $item['#title']]);
     }
   }
 }
