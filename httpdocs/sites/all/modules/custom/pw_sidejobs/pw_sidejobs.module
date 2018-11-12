@@ -25,7 +25,7 @@ function pw_sidejobs_node_view($node, $view_mode, $langcode) {
       $node->content['field_sidejob_date'] = $date[0]->format('Y');
     }
     else {
-      if ($income_interval == 1) {
+      if ($income_interval == 1 || $income_interval === FALSE) {
         if ($enddate_is_today) {
           $node->content['field_sidejob_date'] = t('since').' '.$date[0]->format('d.m.Y');
         }
@@ -185,8 +185,9 @@ function pw_sidejobs_by_user_revision_query($account) {
  * @param $node
  *   The node of type sidejob.
  *
- * @return int
- *   The interval at which the income is received.
+ * @return int|bool
+ *   The interval at which the income is received. If no interval is set it 
+ * return FALSE
  */
 function pw_sidejobs_interval($node) {
   $items = field_get_items('node', $node, 'field_sidejob_income_interval');
@@ -195,7 +196,7 @@ function pw_sidejobs_interval($node) {
     $interval = $items[0]['value'];
   }
   else {
-    $interval = 0;
+    $interval = FALSE;
   }
 
   return $interval;
@@ -317,7 +318,8 @@ function pw_sidejobs_date($node) {
 
   $date[] = new DateTime(max(array_filter($dates_start)));
 
-  if (pw_sidejobs_interval($node) > 0) {
+  $interval = pw_sidejobs_interval($node);
+  if ($interval === FALSE || $interval > 0) {
     $date[] = new DateTime(min(array_filter($dates_end)));
   }
 
@@ -330,8 +332,8 @@ function pw_sidejobs_date($node) {
  * This number is used to calculate the accumulated income for the applicable
  * date range.
  *
- * @param int $interval
- *   The interval at which income is received.
+ * @param int|bool $interval
+ *   The interval at which income is received. May not be set -> then it is FALSE
  * @param DateTime[] $date
  *   The date or period in which the income is received.
  *
@@ -339,7 +341,7 @@ function pw_sidejobs_date($node) {
  *   The multiplier.
  */
 function pw_sidejobs_multiplier($interval, $date) {
-  if ($interval == 0) {
+  if ($interval == 0 || $interval === FALSE) {
     return 1;
   }
 
