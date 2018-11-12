@@ -284,7 +284,8 @@ function pw_sidejobs_base_income_range($classification) {
  *   The node of type sidejob.
  *
  * @return DateTime[]
- *   An array with one or two DateTime objects.
+ * An array with one or two DateTime objects. The first one is the start date
+ * and the second element (if set) is the end date.
  */
 function pw_sidejobs_date($node) {
   $dates_start = [];
