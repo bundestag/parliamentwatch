@@ -47,7 +47,7 @@
 <?php if (sizeof($items) > 0): ?>
   <ul class="tag-list">
     <?php foreach ($items as $delta => $item): ?>
-      <li><a href="/<?php print drupal_get_path_alias('taxonomy/term/'.$element['#items'][$delta]['tid']); ?>" title="<?php print t('More blog articles from the category “@name”', array('@name' => $element['#items'][$delta]['taxonomy_term']->name)) ?>"><?php print $element['#items'][$delta]['taxonomy_term']->name; ?></a></li>
+      <li><?php print render($item); ?></li>
     <?php endforeach; ?>
   </ul>
 <?php endif; ?>
