@@ -1379,6 +1379,7 @@ function _pw_dialogues_question(DOMDocument $doc) {
   $node->body = [LANGUAGE_NONE => [0 => [
     'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
     'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
+    'format' => 'managed_content',
   ]]];
   $node->field_dialogue_before_election = [LANGUAGE_NONE => [0 => [
     'value' => (int) ($date < pw_parliaments_election_date($parliament[0])),
@@ -1464,6 +1465,7 @@ function _pw_dialogues_answers(DOMDocument $doc, $question) {
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
       'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
       'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
+      'format' => 'managed_content',
     ]]];
     $comment->field_dialogue_id = [LANGUAGE_NONE => [0 => [
       'value' => $xpath->evaluate('string(//dialogue/@id)'),
