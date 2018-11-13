@@ -118,12 +118,6 @@
 
 /* Webform - Spendenformular */
 
-.form--webform-client-form-10508 {
-  .form__item--radios > .form__item__label { // TODO
-    font-weight: 600;
-  }
-}
-
 .form__item--submitted-fieldset-donationform-yourdonation-donation-frequency,
 .form__item--submitted-fieldset-donationform-yourdonation-donation-amount {
   @include grid-container();
