@@ -37,10 +37,21 @@
   }
 }
 
+.form__item--checkboxes,
+.form__item--radios {
+  & > .form__item__label {
+    display: block;
+    margin-bottom: $space-xsmall;
+  }
+}
+
 .form__item--checkbox,
 .form__item--radio {
-  margin-bottom: 0;
   position: relative;
+  margin-bottom: 0;
+  &:not(:last-child) {
+    margin-bottom: $space-xsmall;
+  }
   .form__item__control {
     display: none;
   }
