@@ -33,10 +33,6 @@
     margin-bottom: $space-large;
     line-height: 1.5em;
   }
-  .form-radios { // TODO
-    padding: $space-xsmall 0;
-    @include grid-container();
-  }
   .field-suffix {
     position: absolute;
     right: $space-xsmall;
@@ -133,9 +129,9 @@
   @include grid-container();
 }
 .form-radios > .form__item--submitted-fieldset-donationform-yourdonation-donation-frequency,
-.form-radios > .form__item--submitted-fieldset-donationform-yourdonation-donation-amount { // TODO
+.form-radios > .form__item--submitted-fieldset-donationform-yourdonation-donation-amount {
   float: left;
-  margin-right: $space-small;
+  margin-right: $space;
 }
 .webform-component--fieldset-donationform-yourdata {
   .fieldset-wrapper {
