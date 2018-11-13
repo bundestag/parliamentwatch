@@ -33,6 +33,7 @@ function pw_search_api_default_search_api_index() {
         "field_dialogue_id" : { "type" : "integer" },
         "field_dialogue_message_id" : { "type" : "integer" },
         "field_dialogue_message_type" : { "type" : "string" },
+        "field_dialogue_recipient" : { "type" : "integer", "entity_type" : "user" },
         "field_dialogue_recipient:field_user_fname" : { "type" : "text" },
         "field_dialogue_recipient:field_user_lname" : { "type" : "text" },
         "field_dialogue_recipient:field_user_prefix" : { "type" : "string" },
