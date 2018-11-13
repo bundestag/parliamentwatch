@@ -10,43 +10,74 @@
  * Implements hook_cron()..
  */
 function pw_cron_export_submissions_cron() {
-  export_submissions('petition-unterschreiben');
-  export_submissions('newsletter-subscription');
-  export_submissions('newsletter/abmeldung');
-  export_submissions('ueber-uns/spendenformular');
-  export_submissions('frage-stellen');
-  export_submissions('profilerweiterung-buchen');
-  export_submissions('ueber-uns/aufkleber-bestellen');
+
+  // export submissions of webform spendenformular
+  pw_cron_export_export_submissions(10508);
+  pw_cron_export_delete_submissions(10508, 3);
+
+
+  // export submissions of webform petition-unterschreiben
+  pw_cron_export_export_submissions(10369);
+  pw_cron_export_delete_submissions(10369, 3);
+
+  // export submissions of webform newsletter-subscription
+  pw_cron_export_export_submissions(10380);
+  pw_cron_export_delete_submissions(10380, 16, 3);
+
+  // export submissions of webform kontakt
+  pw_cron_export_delete_submissions(6578, 0);
+
+  // export submissions of webform aufkleber-bestellen
+  pw_cron_export_export_submissions(65995);
+  pw_cron_export_delete_submissions(65995, 0);
+
+  // export submissions of webform spenden-sie-einmalig-oder-fordern-sie-regelmassig
+  pw_cron_export_delete_submissions(104846, 0);
+
+  // export submissions of webform foerderung-verschenken
+  pw_cron_export_delete_submissions(108699, 30);
+
+  // export submissions of webform als-kandidatin-oder-kandidat-auf-abgeordnetenwatchde-eintragen
+  pw_cron_export_delete_submissions(176108, 0);
+
+  // export submissions of webform transparenztasse
+  pw_cron_export_delete_submissions(681042, 30);
+
+  // export submissions of webform newsletter-abmeldung
+  pw_cron_export_export_submissions(111893);
+  pw_cron_export_delete_submissions(111893, 7);
+
+  // export submissions of webform frage-stellen
+  pw_cron_export_export_submissions(10446);
+  pw_cron_export_delete_submissions(10446, 7);
+
 }
 
 
 /**
- * exports submissions of petition webform
+ *  Exports submissions of a webform to files/private
+ *
+ * @param int $nid
+ *   The webform nid.
+ *
  */
-function export_submissions($source){
 
-  // retrieve webform node for subscriptions
-  $internal_path = drupal_lookup_path('source', $source);
+function pw_cron_export_export_submissions($nid){
 
-  if($internal_path && $webform = menu_get_object('node', 1, $internal_path)){
+  if($webform = node_load($nid)){
 
     // load webform module
     module_load_include('inc', 'webform', 'includes/webform.submissions');
 
     // query db for subscribed & confirmed submissions
-    $sql = "SELECT wf_data.sid
-    FROM webform_submitted_data wf_data
-    LEFT OUTER JOIN webform_confirm_email_code wf_email_code ON wf_data.sid = wf_email_code.sid
-    WHERE wf_data.nid = :nid AND wf_data.data = 'subscribed' AND wf_email_code.code IS NULL";
-    $submissions_confirmed = db_query($sql, array(':nid' => $webform->nid))->fetchCol();
+    $submissions_confirmed = db_query("SELECT wf_data.sid FROM webform_submitted_data wf_data LEFT OUTER JOIN webform_confirm_email_code wf_email_code ON wf_data.sid = wf_email_code.sid WHERE wf_data.nid = :nid AND wf_data.data = 'subscribed' AND wf_email_code.code IS NULL", array(':nid' => $webform->nid))
+      ->fetchCol();
 
     if(sizeof($submissions_confirmed) > 0){
 
       // query db to retrieve webform components
-      $sql = "SELECT wf_comp.cid, wf_comp.form_key
-      FROM webform_component wf_comp
-      WHERE wf_comp.nid = :nid";
-      $form_fields = db_query($sql, array(':nid' => $webform->nid))->fetchAllAssoc('cid');
+      $form_fields = db_query("SELECT wf_comp.cid, wf_comp.form_key FROM webform_component wf_comp WHERE wf_comp.nid = :nid", array(':nid' => $webform->nid))
+        ->fetchAllAssoc('cid');
 
       // load submissions
       $submissions = webform_get_submissions(array('sid' => $submissions_confirmed));
@@ -97,14 +128,60 @@ function export_submissions($source){
       }
     }
 
-    // query db for exported submissions, older than 30 days or submissions in general older than 90 days
-    $timestamp_exported = time() - 30 * 86400;
-    $timestamp_other = time() - 90 * 86400;
-    $sql = "SELECT wf_data.sid
-    FROM webform_submitted_data wf_data
-    INNER JOIN webform_submissions wf ON wf_data.sid = wf.sid
-    WHERE wf_data.nid = :nid AND (wf_data.data = 'exported' AND wf.submitted < ".$timestamp_exported." OR wf.submitted < ".$timestamp_other.")";
-    $submissions_to_delete = db_query($sql, array(':nid' => $webform->nid))->fetchCol();
+  }
+}
+
+/**
+ *  Deletes submissions of a webform
+ *
+ * @param int $nid
+ *   The webform nid.
+ *
+ * @param int $delete_general
+ *   Days after submissions should be deleted in general.
+ *
+ * @param int $delete_exported
+ *   Days after exported submissions should be deleted.
+ *
+ */
+
+function pw_cron_export_delete_submissions($nid, $delete_general, $delete_exported=FALSE) {
+
+  if ($webform = node_load($nid)) {
+
+    if (!$delete_exported) {
+      $delete_exported = $delete_general;
+    }
+
+    $timestamp_exported = time() - $delete_exported * 86400;
+    $timestamp_general = time() - $delete_general * 86400;
+
+    // query db for submissions to be deleted
+    $submissions_to_delete = db_query("SELECT wf_data.sid FROM webform_submitted_data wf_data LEFT OUTER JOIN webform_submissions wf ON wf_data.sid = wf.sid WHERE wf_data.nid = :nid AND (wf_data.data = 'exported' AND wf.submitted < ".$timestamp_exported." OR wf.submitted < ".$timestamp_general.")", array(':nid' => $webform->nid));
+
+
+    $q = db_select("webform_submitted_data", "wf_data");
+    $q->addField("wf_data", "sid");
+    $q->leftJoin('webform_submissions', 'wf', 'wf_data.sid = wf.sid');
+    $q->condition('wf_data.nid', $nid);
+    $db_and = db_and()
+      ->condition("wf_data.data", "exported")
+      ->condition("wf.submitted", $timestamp_exported, "<");
+    $db_or = db_or()
+      ->condition('wf.submitted', $timestamp_general, "<")
+      ->condition($db_and);
+    $q->condition($db_or);
+
+    print $q->execute()->rowCount();
+    print " <- ";
+    print $submissions_to_delete->rowCount();
+    print "\n";
+    return TRUE;
+
+    // (wf_data.data = 'exported'
+    // AND wf.submitted < ".$timestamp_exported."
+    // OR wf.submitted < ".$timestamp_general.")
+
     if(sizeof($submissions_to_delete) > 0){
 
       // load submissions
