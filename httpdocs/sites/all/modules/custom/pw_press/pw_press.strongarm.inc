@@ -492,7 +492,7 @@ function pw_press_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'rh_node_redirect_press_article';
-  $strongarm->value = 'about/press';
+  $strongarm->value = 'ueber-uns/presse/pressespiegel';
   $export['rh_node_redirect_press_article'] = $strongarm;
 
   $strongarm = new stdClass();
