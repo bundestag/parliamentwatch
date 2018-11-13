@@ -444,7 +444,7 @@
       margin: $space-xsmall - 3;
       @include tag($orangeBG, $orange, $white);
     }
-    .form__item--checkbox { // TODO
+    .form__item--checkbox {
       @include breakpoint($breakpoint-m-min) {
         text-align: right;
         margin-right: $space-small;
@@ -476,14 +476,6 @@
       background-color: $white;
       margin: 0;
     }
-    .form-type-checkbox .form__item__control,
-    .form__item--checkbox .form__item__control { // TODO
-      border-color: $darkGray;
-    }
-    .form-type-checkbox .form__item__control:checked,
-    .form__item--checkbox .form__item__control:checked { // TODO
-      border-color: $orange;
-    }
     .webform-component--option-privacy {
       padding-top: $space-small;
       padding-bottom: $space;
@@ -505,6 +497,19 @@
     @include grid-container();
     @include grid-collapse();
     position: relative;
+    & > .form__item {
+      @include grid-column(12);
+    }
+    & > .form__item--submitted-firstname,
+    & > .form__item--submitted-lastname,
+    & > .form__item--webform-email,
+    & > .form__item--submitted-option-newsletter,
+    & > .form__item--submitted-residence,
+    & > .form__item--submitted-subject {
+      @include breakpoint($breakpoint-s-min) {
+        @include grid-column(6);
+      }
+    }
     #edit-submitted-pflichtfelder {
       @include breakpoint($breakpoint-m-min) {
         position: absolute;
@@ -516,19 +521,6 @@
       p {
         margin: 0;
       }
-    }
-  }
-  .form__item {
-    @include grid-column(12);
-  }
-  .form__item--submitted-firstname,
-  .form__item--submitted-lastname,
-  .form__item--webform-email,
-  .form__item--submitted-option-newsletter,
-  .form__item--submitted-residence,
-  .form__item--submitted-subject {
-    @include breakpoint($breakpoint-s-min) {
-      @include grid-column(6);
     }
   }
   .form__item--submitted-residence { clear: both; }
