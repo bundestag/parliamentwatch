@@ -64,3 +64,6 @@ src/package-lock.json
 
 # Ignore IDE files
 .idea
+
+# Ignore Mac files
+.DS_Store
