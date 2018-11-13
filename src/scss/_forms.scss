@@ -47,19 +47,21 @@
   .form__item__label {
     display: block;
     padding-left: $space + $space-xsmall-mobile;
+    line-height: 1.5em;
     &::before {
       content: "";
       display: block;
       width: $space-small - 2px;
       height: $space-small - 2px;
       position: absolute;
-      top: 1px;
+      top: 4px;
       left: 0;
       border: 1px solid $gray;
       background-color: $white;
     }
   }
 }
+
 .form__item--checkbox {
   :checked + .form__item__label {
     &::after {
@@ -69,7 +71,7 @@
       width: $space-small;
       height: $space-small;
       position: absolute;
-      top: 1px;
+      top: 4px;
       left: 0;
       font-size: 8px;
       line-height: $space-small;
@@ -92,11 +94,11 @@
       display: block;
       width: $space-small - 8px;
       height: $space-small - 8px;
+      position: absolute;
+      top: 8px;
+      left: 4px;
       border-radius: 50%;
       background-color: $orange;
-      position: absolute;
-      top: 5px;
-      left: 4px;
     }
   }
 }
