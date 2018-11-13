@@ -1,10 +1,10 @@
-# German translation of Services (7.x-3.14)
+# German translation of Services (7.x-3.11)
 # Copyright (c) 2018 by the German translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Services (7.x-3.14)\n"
-"POT-Creation-Date: 2018-09-29 15:38+0000\n"
+"Project-Id-Version: Services (7.x-3.11)\n"
+"POT-Creation-Date: 2018-11-08 15:42+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Index"
 msgid "Server"
 msgstr "Server"
 msgid "services"
-msgstr "Services"
+msgstr "Dienste"
 msgid "Services"
 msgstr "Dienste"
 msgid "Expand"

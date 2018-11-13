@@ -21,9 +21,9 @@
  * @ingroup themeable
  */
 ?>
-<div class="filterbar__pre_swiper">
+<div class="filterbar__primary">
   <div class="filterbar__item filterbar__item--label">
-    <i class="icon icon-investigation"></i> Filter
+    <i class="icon icon-investigation"></i> <?php print t('Filter'); ?>
   </div>
   <div class="filterbar__item filterbar__item--input">
     <?php
@@ -32,19 +32,31 @@
       print render($form['submit']);
     ?>
   </div>
+  <div class="filterbar__trigger">
+    <button class="btn" type="button" role="button" data-filterbar-toggle>
+      <i class="icon icon-investigation"></i> <span><?php print t('Show filters'); ?></span>
+    </button>
+  </div>
 </div>
-<div class="filterbar__swiper">
-  <div class="filterbar__swiper__inner">
+<div class="filterbar__secondary">
+  <div class="filterbar__heading">
+    <div class="option-title">
+      <h2><?php print t('Filter results'); ?></h2>
+      <a class="btn" href="#" data-filterbar-submit><?php print t('Apply'); ?></a>
+      <a class="btn btn--transparent" href="#" data-filterbar-toggle><?php print t('Close'); ?></a>
+    </div>
+  </div>
+  <div class="filterbar__secondary__inner">
     <?php for ($i = 1; $i < count($children); $i++): ?>
     <?php if (!in_array($children[$i], ['submit', 'form_id', 'form_build_id', 'form_token'])): ?>
     <?php
-      if ($form[$children[$i]]['#dropdown']) {
+      if (!empty($form[$children[$i]]['#dropdown'])) {
         $classes = 'filterbar__item--dropdown dropdown';
       }
       elseif ($form[$children[$i]]['#type'] == 'select') {
         $classes = 'filterbar__item--select';
       }
-      elseif ($form[$children[$i]]['#type'] == 'checkboxes') {
+      elseif (strpos($form[$children[$i]]['#type'], 'checkbox') == 0) {
         $classes = 'filterbar__item--checkbox';
       }
 
@@ -53,10 +65,10 @@
       }
     ?>
     <div class="filterbar__item <?php print $classes; ?>">
-      <?php if ($form[$children[$i]]['#dropdown']): ?>
+      <?php if (!empty($form[$children[$i]]['#dropdown'])): ?>
       <div class="dropdown__trigger">
         <?php print $form[$children[$i]]['#title'] ?>
-        <?php if (!empty($form[$children[$i]]['#default_value'])): ?>
+        <?php if (!empty($form[$children[$i]]['#options']) && !empty($form[$children[$i]]['#default_value'])): ?>
         <span class="badge"><?php print count($form[$children[$i]]['#default_value']); ?></span>
         <?php endif; ?>
         <i class="icon icon-arrow-down"></i>

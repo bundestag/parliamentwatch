@@ -53,7 +53,7 @@
       <div class="question__profile_teaser__inner__content">
         <h1 class="question__profile_teaser__inner__content__name"><?php print $content; ?></h1>
         <div class="question__profile_teaser__inner__content__subtitle">
-          <span class="party-indicator party-indicator--spd"><?php print $user_party ?> | <span><?php print $user_role; ?> <?php print $parliament; ?>
+          <span class="party-indicator party-indicator--<?php print drupal_html_class($user_party); ?>"><?php print $user_party; ?> | <span><?php print $user_role; ?> <?php print $parliament; ?>
         </div>
         <a href="<?php print $user_url; ?>" class="btn btn--mobile-block"><?php print t('Open profile'); ?></a>
       </div>

@@ -2,7 +2,6 @@
 * Filterbar
 */
 .filterbar {
-  min-height: 60px;
   margin-bottom: -1px;
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
@@ -28,30 +27,37 @@
   display: none;
 }
 .filterbar__inner {
+  min-height: 60px;
   position: relative;
   @include grid-container();
 }
-.filterbar__pre_swiper {
+.filterbar__primary {
+  min-height: 60px;
+  width: 100%;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 9;
   padding-left: $space;
+  padding-right: ($space-large + $space) + 2 * $space-small;
   overflow: hidden;
   display: inline-block;
   @include grid-container();
+  @include breakpoint($breakpoint-s-min) {
+    padding-right: $space;
+  }
+  @include breakpoint($breakpoint-m-min) {
+    width: auto;
+    padding-right: 0;
+  }
   .filterbar__item {
-    cursor: default;
+    cursor: default !important;
     flex: 1;
   }
   .filterbar__item--input {
-    width: 150px;
+    width: 100%;
     flex-grow: 10;
-    @include breakpoint($breakpoint-xs-min) {
-      width: 200px;
-    }
-    @include breakpoint($breakpoint-m-min) {
+    @include breakpoint($breakpoint-s-min) {
       width: 310px;
     }
   }
@@ -66,10 +72,31 @@
     width: 100%;
     clear: both;
   }
+  .btn {
+    right: $space-xsmall;
+    top: $space-xsmall;
+    bottom: $space-xsmall;
+    background: $white;
+    padding: $space-xsmall $space-xsmall-mobile;
+    color: $mediumGray;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    border-color: $darkBeige;
+    width: $space-large + $space;
+    &:hover {
+      background: $beige;
+    }
+  }
 }
-.filterbar__swiper {
-  position: relative;
-  @include grid-container();
+
+.filterbar__secondary {
+  display: none;
+  @include breakpoint($breakpoint-m-min) {
+    display: block;
+    position: relative;
+    @include grid-container();
+  }
   .filterbar__item {
     float: none;
   }
@@ -102,7 +129,6 @@
   }
 
   // Initialized
-
   &.swiper-container-horizontal {
     .filterbar__item:last-child {
       border-right: 0;
@@ -113,7 +139,7 @@
     }
   }
 }
-.filterbar__swiper__inner {
+.filterbar__secondary__inner {
   width: 100%;
   height: 100%;
 
@@ -122,211 +148,41 @@
   transition-property: transform;
   box-sizing: content-box;
 }
-.filterbar__item {
-  float: left;
-  color: $mediumGray;
-  background: $white;
-  cursor: pointer;
-  .form__item {
-    margin-bottom: 0;
-  }
-}
-.filterbar__item--label {
-  display: none;
+
+.filterbar__trigger {
+  display: inline-block;
+  min-height: 60px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: ($space-large + $space) + $space;
   @include breakpoint($breakpoint-s-min) {
-    display: block;
-    font-weight: 600;
-    white-space: nowrap;
-    float: left;
-    padding-top: $space;
-    padding-bottom: $space;
-    padding-right: $space-small;
-    position: relative;
-    z-index: 9;
+    right: auto;
+    left: 310px + 2 * $space-small;
   }
-}
-
-.filterbar__item--active {
-  color: $black;
-}
-
-.filterbar__item--input {
-  padding: $space-xsmall $space-large $space-xsmall 0;
-  padding-right: $space-large + $space + $space-xsmall;
-  position: relative;
-  border-right: 1px solid $darkBeige;
-  z-index: 9;
-  @include grid-container();
-  .select2 {
-    width: 100px !important;
-    @include breakpoint($breakpoint-xs-min) {
-      width: 120px !important;
-    }
-    @include breakpoint($breakpoint-s-min) {
-      width: 210px !important;
-    }
-  }
-  .form__item__control {
-    float: left;
-    border-color: $darkBeige;
-    border-right: 0;
-    height: $space * 2;
-    line-height: normal;
-    @include breakpoint($breakpoint-s-min) {
-      display: block;
-    }
+  @include breakpoint($breakpoint-m-min) {
+    display: none;
   }
   .btn {
-    right: $space-xsmall;
-    top: $space-xsmall;
-    bottom: $space-xsmall;
-    background: $white;
-    padding: $space-xsmall $space-xsmall-mobile;
-    color: $mediumGray;
-    text-indent: calc(100% + #{$space-xsmall-mobile});
-    overflow: hidden;
-    white-space: nowrap;
-    position: absolute;
-    border-color: $darkBeige;
-    width: $space-large + $space;
-    &:hover {
-      background: $beige;
-    }
-    &:after {
-      content: '\e901';
-      position: absolute;
-      left: 0;
-      right: 0;
-      text-indent: 0;
-
-      font-family: 'awfont';
-    }
-  }
-}
-_:-ms-fullscreen,
-:root .filterbar__item--input .btn {
-  text-indent: 999px;
-}
-
-
-.filterbar__item--dropdown {
-  border-right: 1px solid $darkBeige;
-  white-space: nowrap;
-  .dropdown__trigger {
-    padding: $space $space;
-    display: block;
-    color: $mediumGray;
-    line-height: $space - 1;
-    @include breakpoint($breakpoint-l-min) {
-      line-height: $space;
-    }
-    .badge {
-      display: inline-block;
-      background: $orangeBG;
-      color: $white;
-      min-width: 14px;
-      min-height: 14px;
-      font-size: .7em;
-      line-height: 14px;
-      font-weight: 600;
-      margin: 0 $space-xsmall-mobile;
-      border-radius: 7px;
-      padding: 0 4px;
-    }
-    .icon {
-      font-size: .7em;
-      position: relative;
-      top: -1px;
-      margin-left: 3px;
-      color: $mediumGray;
-    }
-  }
-  .dropdown__list {
-    top: 100%;
-    position: absolute;
-    border-top: 1px solid $darkBeige;
-    background: $white;
-    padding: $space;
-    box-shadow: 0 6px 10px rgba(0,0,0,.1);
-    transform: translate(-50%, $space);
-    width: 300px;
+    right: auto;
     @include breakpoint($breakpoint-s-min) {
-      width: 710px;
-      left: 50%;
+      width: auto;
+      padding-left: $space-small;
+      padding-right: $space-small;
     }
-
-    // Dropdown display
-
-    .form__item--checkboxes,
-    .form-radios {
-      @include grid-container();
-      @include grid-collapse($neat-grid-large-gutter);
-      .form__item {
-        border-bottom: 1px solid $brightGray;
-        position: relative;
-        @include grid-column(6, $neat-grid-large-gutter);
-        @include padding($space-xsmall-mobile 0 $space-xsmall-mobile $space);
-        @include breakpoint($breakpoint-s-min) {
-          @include grid-column(4, $neat-grid-large-gutter);
-        }
-      }
-      .form__item__control,
-      .form-radio {
-        position: absolute;
-        left: 0;
-        top: $space-xsmall + 1;
-      }
-      .form__item__label {
-        @include text-overflow();
-        padding: $space-xsmall-mobile 0;
-        margin-left: 0;
-      }
-    }
-    .form__item--checkboxes .form__item__control {
-      top: $space-xsmall + 3;
-    }
-  }
-}
-.filterbar__item--dropdown.dropdown--open .dropdown__list {
-  transform: translate(-50%, 0);
-}
-.filterbar__item--checkbox {
-  border-right: 1px solid $darkBeige;
-  padding: $space $space;
-  white-space: nowrap;
-  @include grid-container();
-  .form__item--checkbox {
-    display: inline-block;
-    label {
-      margin-right: $space;
-      &:last-child {
-        margin-right: 0;
+    span {
+      display: none;
+      @include breakpoint($breakpoint-s-min) {
+        display: inline;
       }
     }
   }
+}
+
+.filterbar__item {
+  color: $mediumGray;
   .form__item {
-    margin-right: $space-small;
-    @include grid-container();
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-.filterbar__item--select {
-  padding: $space-xsmall;
-  position: relative;
-  border-right: 1px solid $darkBeige;
-  z-index: 9;
-  @include grid-container();
-  .select2 {
-    width: 100px !important;
-    @include breakpoint($breakpoint-xs-min) {
-      width: 120px !important;
-    }
-    @include breakpoint($breakpoint-s-min) {
-      width: 170px !important;
-    }
+    margin-bottom: 0;
   }
   .select2-container--default .select2-selection--single {
     border-color: $darkBeige;
@@ -334,13 +190,206 @@ _:-ms-fullscreen,
   .select2-container .select2-selection--single .select2-selection__arrow {
     border-color: $darkBeige;
   }
-  .form__item__control {
-    display: none;
-    float: left;
-    border-color: $darkBeige;
-    border-right: 0;
-    @include breakpoint($breakpoint-s-min) {
-      display: block;
+  &--active {
+    color: $black;
+  }
+}
+
+_:-ms-fullscreen,
+:root .filterbar__item--input .btn {
+  text-indent: 999px;
+}
+
+.filterbar {
+  &:not(&--expanded) {
+    .filterbar__heading {
+      display: none;
+    }
+    .filterbar__item {
+      float: left;
+      background: $white;
+      cursor: pointer;
+      &--label {
+        display: none;
+        @include breakpoint($breakpoint-m-min) {
+          display: block;
+          font-weight: 600;
+          white-space: nowrap;
+          float: left;
+          padding-top: $space;
+          padding-bottom: $space;
+          padding-right: $space-small;
+          position: relative;
+          z-index: 9;
+        }
+      }
+      &--input {
+        padding: $space-xsmall $space-large $space-xsmall 0;
+        padding-right: $space-large + $space + $space-xsmall;
+        position: relative;
+        border-right: 1px solid $darkBeige;
+        z-index: 9;
+        @include grid-container();
+        .select2 {
+          width: 100px !important;
+          @include breakpoint($breakpoint-xs-min) {
+            width: 120px !important;
+          }
+          @include breakpoint($breakpoint-s-min) {
+            width: 210px !important;
+          }
+        }
+        .form__item__control {
+          float: left;
+          border-color: $darkBeige;
+          border-right: 0;
+          height: $space * 2;
+          line-height: normal;
+          @include breakpoint($breakpoint-s-min) {
+            display: block;
+          }
+        }
+        .btn {
+          text-indent: calc(100% + #{$space-xsmall-mobile});
+          &:after {
+            content: '\e901';
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-indent: 0;
+
+            font-family: 'awfont';
+          }
+        }
+      }
+      &--dropdown {
+        border-right: 1px solid $darkBeige;
+        white-space: nowrap;
+        .dropdown__trigger {
+          padding: $space $space;
+          display: block;
+          color: $mediumGray;
+          line-height: $space - 1;
+          @include breakpoint($breakpoint-l-min) {
+            line-height: $space;
+          }
+          .badge {
+            display: inline-block;
+            background: $orangeBG;
+            color: $white;
+            min-width: 14px;
+            min-height: 14px;
+            font-size: .7em;
+            line-height: 14px;
+            font-weight: 600;
+            margin: 0 $space-xsmall-mobile;
+            border-radius: 7px;
+            padding: 0 4px;
+          }
+          .icon {
+            font-size: .7em;
+            position: relative;
+            top: -1px;
+            margin-left: 3px;
+            color: $mediumGray;
+          }
+        }
+        .dropdown__list {
+          top: 100%;
+          position: absolute;
+          border-top: 1px solid $darkBeige;
+          background: $white;
+          padding: $space;
+          box-shadow: 0 6px 10px rgba(0,0,0,.1);
+          transform: translate(-50%, $space);
+          width: 710px;
+          left: 50%;
+
+          // Dropdown display
+
+          .form__item--checkboxes,
+          .form-radios {
+            @include grid-container();
+            @include grid-collapse($neat-grid-large-gutter);
+            .form__item {
+              border-bottom: 1px solid $brightGray;
+              position: relative;
+              @include grid-column(12, $neat-grid-large-gutter);
+              @include padding($space-xsmall-mobile 0 $space-xsmall-mobile $space);
+              @include breakpoint($breakpoint-xs-min) {
+                @include grid-column(6, $neat-grid-large-gutter);
+              }
+              @include breakpoint($breakpoint-s-min) {
+                @include grid-column(4, $neat-grid-large-gutter);
+              }
+            }
+            .form__item__control,
+            .form-radio {
+              position: absolute;
+              left: 0;
+              top: $space-xsmall + 1;
+            }
+            .form__item__label {
+              @include text-overflow();
+              padding: $space-xsmall-mobile 0;
+              margin-left: 0;
+            }
+          }
+          .form__item--checkboxes .form__item__control {
+            top: $space-xsmall + 3;
+          }
+        }
+        &.dropdown--open .dropdown__list {
+          transform: translate(-50%, 0);
+        }
+      }
+      &--checkbox {
+        border-right: 1px solid $darkBeige;
+        padding: $space $space;
+        white-space: nowrap;
+        @include grid-container();
+        .form__item--checkbox {
+          display: inline-block;
+          label {
+            margin-right: $space;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+        .form__item {
+          margin-right: $space-small;
+          @include grid-container();
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+      &--select {
+        padding: $space-xsmall;
+        position: relative;
+        border-right: 1px solid $darkBeige;
+        z-index: 9;
+        @include grid-container();
+        .select2 {
+          width: 100px !important;
+          @include breakpoint($breakpoint-xs-min) {
+            width: 120px !important;
+          }
+          @include breakpoint($breakpoint-s-min) {
+            width: 170px !important;
+          }
+        }
+        .form__item__control {
+          display: none;
+          float: left;
+          border-color: $darkBeige;
+          border-right: 0;
+          @include breakpoint($breakpoint-s-min) {
+            display: block;
+          }
+        }
+      }
     }
   }
 }
@@ -358,11 +407,8 @@ _:-ms-fullscreen,
   background: $white;
   @include grid-container();
   @include breakpoint($breakpoint-s-min) {
-    right: $space-small;
-    display: block;
-  }
-  @include breakpoint($breakpoint-m-min) {
     right: $space;
+    display: block;
   }
   &:after {
     content: '';
@@ -413,12 +459,105 @@ _:-ms-fullscreen,
   }
 }
 
-/* Filterbar: Disabled */
+/* Filterbar: expanded */
 
-.filterbar--disabled .filterbar__swiper {
+.filterbar--expanded {
+  z-index: auto;
+  .filterbar__secondary {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    background: $white;
+    padding-top: $space-large;
+    &__inner {
+      height: auto;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+    }
+  }
+  .filterbar__item {
+    padding: $space;
+    &:not(:last-child) {
+      border-bottom: 1px solid $darkBeige;
+    }
+    &:first-child {
+      margin-top: $space;
+      border-top: 1px solid $darkBeige;
+    }
+    &:last-child {
+      padding-bottom: $space-large;
+    }
+    &--dropdown {
+      z-index: auto;
+      .dropdown__list {
+        position: static;
+        display: block;
+      }
+    }
+    .dropdown__trigger {
+      display: none;
+    }
+  }
+  .form__item {
+    &__label {
+      @include text-overflow();
+    }
+    &--checkboxes,
+    .form-radios {
+      @include grid-container();
+      @include grid-collapse($neat-grid-large-gutter);
+      .form__item {
+        position: relative;
+        padding: $space-xsmall 0;
+        @include grid-column(12, $neat-grid-large-gutter);
+        @include breakpoint($breakpoint-xs-min) {
+          @include grid-column(6, $neat-grid-large-gutter);
+          border-bottom: 1px solid $brightGray;
+        }
+        @include breakpoint($breakpoint-s-min) {
+          @include grid-column(4, $neat-grid-large-gutter);
+        }
+        &:not(:last-child) {
+          border-bottom: 1px solid $brightGray;
+        }
+      }
+    }
+    .form-radios .form__item {
+      @include padding($space-xsmall 0 $space-xsmall $space);
+
+      &__control {
+        position: absolute;
+        top: $space-xsmall - 1px;
+        left: 0;
+      }
+    }
+    &--checkboxes .form__item {
+      &__control {
+        top: $space-xsmall + 2px;
+      }
+    }
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+}
+
+/* Filterbar: disabled */
+
+.filterbar--disabled .filterbar__secondary {
   pointer-events: none;
 }
-.filterbar--disabled .filterbar__item {
+.filterbar--disabled .filterbar__item,
+.filterbar--disabled .btn {
   opacity: .3;
   pointer-events: none;
 }
@@ -427,6 +566,17 @@ _:-ms-fullscreen,
   border-color: #f5f4f2;
   &:before {
     color: #e6e6e6;
+  }
+}
+
+/* Filterbar: empty */
+
+.filterbar--empty {
+  .filterbar__primary {
+    padding-right: $space-xsmall;
+    .filterbar__item--input {
+      border-right: 0;
+    }
   }
 }
 
@@ -454,15 +604,15 @@ _:-ms-fullscreen,
       }
     }
     .btn {
-      display: none;
-      @include breakpoint($breakpoint-s-min) {
-        display: block;
-        padding: 3px $space-xsmall-mobile;
-        background: $white;
-        color: $darkGray;
-        border-color: $white;
-        font-weight: 300;
-        font-size: .8em;
+      display: block;
+      padding: 3px $space-xsmall-mobile;
+      background: $white;
+      color: $darkGray;
+      border-color: $white;
+      font-weight: 300;
+      font-size: .8em;
+      clear: both;
+      @include breakpoint($breakpoint-xs-min) {
         margin-top: 7px;
         float: right;
       }
@@ -484,19 +634,24 @@ _:-ms-fullscreen,
     }
   }
   .filter-summary__content__link {
+    display: inline-block;
+    vertical-align: top;
+    max-width: calc(100vw - #{2 * $space});
     font-weight: 300;
     color: $darkGray;
     border: 1px solid $darkBeige;
     padding: 2px ($space + $space-xsmall-mobile) 2px $space-xsmall-mobile;
     border-radius: 3px;
     position: relative;
-    overflow: hidden;
+    top: -3px;
     margin-right: $space-xsmall-mobile;
-    margin-bottom: -6px;
+    margin-bottom: $space-xsmall-mobile;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     transition: background 300ms ease;
     @include breakpoint($breakpoint-s-min) {
       margin-right: 0;
-      margin-bottom: -9px;
     }
     &:after {
       content:'\e808';

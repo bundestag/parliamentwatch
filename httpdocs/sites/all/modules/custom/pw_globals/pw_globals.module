@@ -145,6 +145,17 @@ function pw_globals_comment_presave($comment) {
 }
 
 /**
+ * Implements hook_element_info().
+ */
+function pw_globals_element_info() {
+  $types['interval'] = array(
+    '#input' => TRUE,
+    '#process' => ['pw_globals_process_interval'],
+  );
+  return $types;
+}
+
+/**
  * Implements hook_block_info().
  */
 function pw_globals_block_info() {
@@ -269,8 +280,13 @@ function pw_globals_taxonomy_term_page($term) {
 
     if ($nids) {
       $nodes = node_load_multiple($nids);
-      $build = node_view_multiple($nodes, 'tile');
-      $build['#theme_wrappers'] = ['container__tiles'];
+      if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
+        $build = node_view_multiple($nodes, 'tile');
+        $build['#theme_wrappers'] = ['container__tiles'];
+      } else {
+        $build = node_view_multiple($nodes, 'teaser');
+        $build['#theme_wrappers'] = ['container__overview'];
+      }
       $build['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,
@@ -436,11 +452,25 @@ function pw_globals_parliament_patron_block() {
  */
 function pw_globals_testimonial_block() {
   $block = [];
-  $type = 'pw_testimonial';
-  $nodes = node_load_multiple([], ['type' => $type, 'promote' => NODE_PROMOTED, 'status' => NODE_PUBLISHED]);
-  if (!empty($nodes)) {
-    $block['content'] = node_view(reset($nodes),'full');
+  $current_month = date('Y-m-01 00:00:00');
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'pw_testimonial')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->propertyCondition('promote', NODE_PROMOTED)
+    ->fieldCondition('field_testimonial_month', 'value', $current_month, '=')
+    ->range(0, 10);
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $node_data = reset($result['node']);
+    $testimonial_nid = $node_data->nid;
+    $testimonial_node = node_load($testimonial_nid);
+    if ($testimonial_node) {
+      $block['content'] = node_view($testimonial_node,'full');
+    }
   }
+
   return $block;
 }
 
@@ -450,7 +480,7 @@ function pw_globals_testimonial_block() {
  * The content of the block is defined in the template file.
  * Beware the $block['content'] cannot be empty, otherwise the block will not be
  * displayed.
- * 
+ *
  * @return array
  *   The block render array.
  */
@@ -637,6 +667,35 @@ function pw_globals_comment_is_spam($comment, $server_vars) {
   }
 
   return ($response->data == 'false') ? FALSE : TRUE;
+}
+
+/**
+ * Processes an interval element.
+ */
+function pw_globals_process_interval($element) {
+  $element['#tree'] = TRUE;
+  $weight = 0;
+
+  if (!isset($element['#default_value'])) {
+    $element['#default_value'] = [];
+  }
+  else {
+    $element['#default_value'] = array_filter($element['#default_value']);
+  }
+
+  foreach ([0 => t('Start'), 1 => t('End')] as $key => $title) {
+    $weight += 0.001;
+
+    $element[$key] = [
+      '#type' => 'textfield',
+      '#title' => $title,
+      '#default_value' => isset($element['#default_value'][$key]) ? $element['#default_value'][$key] : NULL,
+      '#attributes' => $element['#attributes'],
+      '#weight' => $weight,
+    ];
+  }
+
+  return $element;
 }
 
 /**
@@ -944,6 +1003,13 @@ function _pw_uac_add_conditions(&$query, $conditions = array()) {
     $or_user_retired->condition($alias_uac . '.user_retired', $conditions['date'], '>');
     $or_user_retired->condition($alias_uac . '.user_retired', NULL);
     $query->condition($or_user_retired);
+
+    // get the user revision which was valid on poll date
+    // this means: the user revision which was just updated before the poll
+//    // quick and dirty hack for  https://jira.parliamentwatch.org/browse/AW-5915
+//    $timestamp_poll_date = strtotime( $conditions['date']);
+//    $query->join('user_revision', 'ur', $alias_uac.'.uid = ur.uid AND '.$alias_uac.'.vid = ur.vid' );
+//    $query->condition('ur.timestamp', $timestamp_poll_date , '<=');
   }
 
   // condition roles

@@ -245,7 +245,7 @@ function pw_press_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
-  $handler->display->display_options['path'] = 'about/press';
+  $handler->display->display_options['path'] = 'ueber-uns/presse/pressespiegel';
 
   /* Display: Teaser */
   $handler = $view->new_display('block', 'Teaser', 'teaser');

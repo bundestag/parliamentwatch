@@ -277,18 +277,6 @@ return $user->field_user_address[\'und\'][0][\'postal_code\'];',
   $feeds_tamper = new stdClass();
   $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
   $feeds_tamper->api_version = 2;
-  $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_1-username_creator';
-  $feeds_tamper->importer = 'gdata_profiles_importer_v2';
-  $feeds_tamper->source = 'xpathparser:1';
-  $feeds_tamper->plugin_id = 'username_creator';
-  $feeds_tamper->settings = array();
-  $feeds_tamper->weight = 0;
-  $feeds_tamper->description = 'Username Creator & Validator';
-  $export['gdata_profiles_importer_v2-xpathparser_1-username_creator'] = $feeds_tamper;
-
-  $feeds_tamper = new stdClass();
-  $feeds_tamper->disabled = FALSE; /* Edit this to true to make a default feeds_tamper disabled initially */
-  $feeds_tamper->api_version = 2;
   $feeds_tamper->id = 'gdata_profiles_importer_v2-xpathparser_14-find_replace_regex';
   $feeds_tamper->importer = 'gdata_profiles_importer_v2';
   $feeds_tamper->source = 'xpathparser:14';

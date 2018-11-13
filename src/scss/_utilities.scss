@@ -99,12 +99,19 @@ textarea {
       margin-bottom: 0;
     }
   }
-  .btn {
+  &__float, .btn {
     @include button--mobile-block();
     clear: both;
     @include breakpoint($breakpoint-xs-min) {
       clear: none;
       float: right;
+    }
+  }
+  .btn + .btn {
+    margin-top: $space-small;
+    @include breakpoint($breakpoint-xs-min) {
+      margin-top: 0;
+      margin-right: $space-small;
     }
   }
 }
@@ -618,6 +625,12 @@ textarea {
       font-size: 1.2em;
     }
   }
+}
+
+/* Block scrolling */
+
+.block-scrolling {
+  overflow: hidden;
 }
 
 /* Loading overlay */

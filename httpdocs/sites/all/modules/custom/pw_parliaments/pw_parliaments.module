@@ -158,9 +158,8 @@ function pw_parliaments_successors($term) {
   $next = pw_parliaments_next($term);
 
   if (isset($next)) {
-    $successors = pw_parliaments_successors($next);
-    $successors[] = $next;
+    $successors = array_merge([$next], pw_parliaments_successors($next));
   }
 
-  return array_reverse($successors);
+  return $successors;
 }

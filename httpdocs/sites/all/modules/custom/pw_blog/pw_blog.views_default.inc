@@ -45,6 +45,7 @@ function pw_blog_views_default_views() {
   $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = 'zurück';
   $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
@@ -307,7 +308,7 @@ function pw_blog_views_default_views() {
     t('Absteigend'),
     t('Elemente pro Seite'),
     t('- Alle -'),
-    t('Offset'),
+    t('Versatz'),
     t('« erste Seite'),
     t('zurück'),
     t('weiter'),

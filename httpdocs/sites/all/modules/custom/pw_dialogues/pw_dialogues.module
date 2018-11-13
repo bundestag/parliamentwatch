@@ -56,6 +56,32 @@ function pw_dialogues_menu() {
 }
 
 /**
+ * Implements hook_page_delivery_callback_alter().
+ *
+ * In order to ensure caching mechanisms store a distinct copy for AJAX
+ * responses the parameter ajax needs to be present. For caches evaluating Vary
+ * headers one would usually add Vary: X-Requested-With to the HTTP headers.
+ * Drupal's internal page cache uses only the request URI as an identifier
+ * though.
+ */
+function pw_dialogues_page_delivery_callback_alter(&$callback) {
+  if (!isset(drupal_get_query_parameters()['ajax'])) {
+    return;
+  }
+
+  if (menu_get_item()['page_callback'] != 'pw_dialogues_page') {
+    return;
+  }
+
+  // jQuery sets a HTTP_X_REQUESTED_WITH header of 'XMLHttpRequest'.
+  // If a page would normally be delivered as an html page, and it is called
+  // from jQuery, deliver it instead as an Ajax response.
+  if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' && $callback == 'drupal_deliver_html_page') {
+    $callback = 'pw_globals_deliver_ajax_page';
+  }
+}
+
+/**
  * Implements hook_token_info_alter().
  */
 function pw_dialogues_token_info_alter(&$data) {
@@ -358,6 +384,12 @@ function pw_dialogues_theme() {
       ],
       'template' => 'dialogues-stats',
     ],
+    'dialogue_search_summary' => [
+      'variables' => [
+        'response' => NULL,
+        'filters' => NULL,
+      ],
+    ],
   ];
 }
 
@@ -367,6 +399,15 @@ function pw_dialogues_theme() {
 function pw_dialogues_query_ignore_standard_replies_alter(QueryAlterableInterface $query) {
   $query->join('field_data_field_dialogue_is_standard_reply', 's', 'c.cid = s.entity_id');
   $query->condition('s.field_dialogue_is_standard_reply_value', 0);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function pw_dialogues_form_pw_dialogues_filters_form_alter(&$form, &$form_state) {
+  $form['form_build_id']['#access'] = FALSE;
+  $form['form_token']['#access'] = FALSE;
+  $form['form_id']['#access'] = FALSE;
 }
 
 /**
@@ -388,30 +429,41 @@ function pw_dialogues_page_title($parliament_term, $role_name, $uid = NULL) {
  * Page callback: Displays questions and answers for the given parliament.
  */
 function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
-  $limit = 12;
-  $q = search_api_query('node_index');
-  $q->condition('type', 'dialogue');
-  $q->condition('field_parliament', $parliament_term->tid);
-
-  if ($role_name == 'candidates') {
-    $q->condition('field_dialogue_before_election',1);
-  }
-  elseif ($role_name == 'deputies') {
-    $q->condition('field_dialogue_before_election',0);
-  }
-  else {
+  if (!in_array($role_name, ['candidates', 'deputies'])) {
     return MENU_NOT_FOUND;
   }
+
+  $limit = 12;
+  $filters = _pw_dialogues_sanitized_filters(drupal_get_query_parameters());
+  $q = pw_dialogues_base_search_query($parliament_term, $role_name);
 
   if (isset($uid)) {
     $q->condition('field_dialogue_recipient', $uid);
   }
 
-  if (isset(drupal_get_query_parameters()['keywords'])) {
-    $f = $q->createFilter('OR');
-    $f->condition('body:value', drupal_get_query_parameters()['keywords']);
-    $f->condition('comments:field_dialogue_comment_body:value', drupal_get_query_parameters()['keywords']);
+  if (isset($filters['topic'])) {
+    $f = new SearchApiQueryFilter('OR', ['facet:field_dialogue_topic']);
+    foreach ($filters['topic'] as $party) {
+      $f->condition('field_dialogue_topic', $party);
+    }
     $q->filter($f);
+  }
+
+  if (isset($filters['date'])) {
+    $q->condition('created', $filters['date'][0], '>=');
+    $q->condition('created', $filters['date'][1], '<');
+  }
+
+  if (isset($filters['has-reply'])) {
+    $q->condition('comment_count', 0, '>');
+  }
+
+  if (isset($filters['ignore-standard-replies'])) {
+    $q->condition('comments:field_dialogue_is_standard_reply', FALSE);
+  }
+
+  if (isset($filters['keys'])) {
+    $q->keys($filters['keys']);
   }
 
   $response = $q
@@ -419,21 +471,26 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     ->range(pager_find_page() * $limit, $limit)
     ->execute();
 
-  if ($response['result count'] > 0) {
-    pager_default_initialize($response['result count'], $limit);
-    $build = node_view_multiple(node_load_multiple(array_keys($response['results'])), 'tile');
-    $build['#theme_wrappers'] = ['container__tiles'];
-    $build['nodes']['#modifier'] = 'qa';
-    $build['pager'] = [
-      '#theme' => 'pager',
-      '#weight' => 5,
-    ];
-  }
-  else {
-    $build = [
-      '#markup' => t('Sorry, there are no results matching your query.'),
-    ];
-  }
+  pager_default_initialize($response['result count'], $limit);
+
+  $build = node_view_multiple(node_load_multiple(array_keys($response['results'])), 'tile');
+  $build['nodes']['#theme_wrappers'] = ['container__tiles'];
+  $build['nodes']['#sorted'] = FALSE;
+  $build['nodes']['summary'] = [
+    '#theme' => 'dialogue_search_summary',
+    '#response' => $response,
+    '#filters' => $filters,
+    '#weight' => -1,
+  ];
+  $build['nodes']['pager'] = [
+    '#theme' => 'pager',
+    '#weight' => $limit,
+  ];
+  $build['filters'] = drupal_get_form('pw_dialogues_filters_form', $response['search_api_facets']);
+  $build['filters']['#theme_wrappers'][] = 'container__filterbar';
+  $build['filters']['#weight'] = -5;
+  $build['#theme_wrappers'] = ['container'];
+  $build['#attributes'] = ['id' => 'ajax'];
 
   return $build;
 }
@@ -504,6 +561,68 @@ function pw_dialogues_triggered_import() {
 
   _pw_send_debug_mail('Import ' . $return_value . ': ' . request_uri(), $debug_message);
   print $return_value;
+}
+
+/**
+ * Form constructor for the profile filters form.
+ */
+function pw_dialogues_filters_form($form, &$form_state, $facets) {
+  $parameters = drupal_get_query_parameters();
+  $topic_values = _pw_profiles_facet_values($facets['field_dialogue_topic']);
+
+  $form['#method'] = 'get';
+  $form['#action'] = url(current_path());
+  $form['#attributes']['data-ajax-target'] = '#ajax';
+  $form['#theme'] = 'filterbar';
+  $form['keys'] = [
+    '#type' => 'textfield',
+    '#title' => t('Search'),
+    '#title_display' => 'invisible',
+    '#default_value' => isset($parameters['keys']) ? $parameters['keys'] : '',
+    '#attributes' => ['placeholder' => t('Search')],
+  ];
+
+  if (count($topic_values) > 1) {
+    $form['topic'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Filter by topic'),
+      '#title_display' => 'invisible',
+      '#options' => _pw_dialogues_options($topic_values),
+      '#multiple' => TRUE,
+      '#default_value' => empty($parameters['topic']) ? [] : $parameters['topic'],
+      '#dropdown' => TRUE,
+    );
+  }
+
+  $form['date'] = [
+    '#type' => 'interval',
+    '#title' => t('Filter by date'),
+    '#title_display' => 'invisible',
+    '#default_value' => empty($parameters['date']) ? [] : $parameters['date'],
+    '#attributes' => ['type' => 'date', 'placeholder' => t('yyyy-mm-dd')],
+    '#dropdown' => TRUE,
+  ];
+
+  $form['has-reply'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Has reply'),
+    '#default_value' => isset($parameters['has-reply']) ? 1 : 0,
+  ];
+
+  if (isset($parameters['has-reply'])) {
+    $form['ignore-standard-replies'] = [
+      '#type' => 'checkbox',
+      '#title' => t('Ignore standard replies'),
+      '#default_value' => isset($parameters['ignore-standard-replies']) ? 1 : 0,
+    ];
+  }
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Filter profiles'),
+  );
+
+  return $form;
 }
 
 /**
@@ -718,8 +837,7 @@ function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
   $election_date = pw_parliaments_election_date($term);
 
-  $q = search_api_query('node_index')
-    ->condition('type', 'dialogue')
+  $q = search_api_query('dialogue_index')
     ->condition('status', NODE_PUBLISHED)
     ->condition('field_parliament', $term->tid)
     ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
@@ -1010,4 +1128,142 @@ function pw_dialogues_to_array($node) {
     'topic' => isset($topic) ? $topic->name : NULL,
   ];
   return $data;
+}
+
+/**
+ * Returns a query object for fetching dialogues.
+ *
+ * @param type $parliament_term
+ *   The parliament term.
+ * @param type $role_name
+ *   The role (candidates or deputies).
+ *
+ * @return SearchApiQuery
+ *   The search query object.
+ */
+function pw_dialogues_base_search_query($parliament_term, $role_name) {
+  $q = search_api_query('dialogue_index', ['search_api_facets' => _pw_dialogues_facets()]);
+  $q->condition('field_parliament', $parliament_term->tid);
+
+  if ($role_name == 'candidates') {
+    $q->condition('field_dialogue_before_election',1);
+  }
+  elseif ($role_name == 'deputies') {
+    $q->condition('field_dialogue_before_election',0);
+  }
+
+  return $q;
+}
+
+/**
+ * Returns HTML for a summary of the search result.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - response
+ *   - role_name
+ *   - filters
+ *
+ * @return string
+ *   The summary of the search result.
+ */
+function theme_dialogue_search_summary($variables) {
+  $output = '';
+  $link_options = ['attributes' => ['data-ajax-target' => '#ajax']];
+
+  $options['@count'] = $variables['response']['result count'];
+  $options['@data-ajax-target'] = $link_options['attributes']['data-ajax-target'];
+
+  $output .= '<p>';
+
+  $output .= format_plural($variables['response']['result count'], 'Found 1 question', 'Found @count questions');
+
+  if (!empty($variables['filters']['keys'])) {
+    $options['!keys'] = l(check_plain($variables['filters']['keys']), current_path(), $link_options + ['query' => _pw_profiles_reject_filter($variables['filters'], 'keys')]);
+    $output .= t(', matching: !keys', $options);
+  }
+
+  if (!empty(array_filter($variables['filters']))) {
+    $output .= ' ' . l(t('Reset all filters'), current_path(), $link_options);
+  }
+
+  $output .= '</p>';
+
+  return $output;
+}
+
+/**
+ * Returns taxonomy term options for the given term IDs.
+ *
+ * @param array $values
+ *   An array of taxonomy term IDs
+ *
+ * @return array
+ *   An array of taxonomy term names keyed by term ID.
+ */
+function _pw_dialogues_options(array $values) {
+  static $terms = [];
+
+  if (empty($terms)) {
+    $terms = db_select('taxonomy_term_data', 't')
+      ->fields('t', ['tid', 'name'])
+      ->condition('vid', 26)
+      ->execute()
+      ->fetchAllKeyed();
+    natsort($terms);
+  }
+
+  return array_intersect_key($terms, array_flip($values));
+}
+
+/**
+ * Returns list of facets for the dialogues page.
+ *
+ * @return array
+ *   An associative array to be used as facets option for a query.
+ */
+function _pw_dialogues_facets() {
+  $common = ['limit' => -1, 'min_count' => 1, 'missing' => TRUE, 'operator' => 'or'];
+  return [
+    'field_dialogue_topic' => ['field' => 'field_dialogue_topic'] + $common,
+  ];
+}
+
+/**
+ * Returns a sanitized filter list.
+ *
+ * - Removes empty date filters and converts dates to DateTime objects.
+ * - Removes the filter for ignoring standard replies if the
+ *   the reply filter is not set.
+ *
+ * @param array $filters
+ *   The raw filters as obtained from drupal_get_query_parameters.
+ *
+ * @return array
+ *   The sanitized filters.
+ */
+function _pw_dialogues_sanitized_filters($filters) {
+  $sanitized_filters = _pw_profiles_reject_filter($filters, 'date');
+
+  try {
+    if (!empty($filters['date'][0]) && !empty($filters['date'][1])) {
+      $from = new DateTime($filters['date'][0]);
+      $to = new DateTime($filters['date'][1]);
+      $sanitized_filters['date'][0] = $from->format('Y-m-d');
+      $sanitized_filters['date'][1] = $to->format('Y-m-d');
+    } elseif (!empty($filters['date'][0])) {
+      $from = new DateTime($filters['date'][0]);
+      $sanitized_filters['date'][0] = $from->format('Y-m-d');
+      $sanitized_filters['date'][1] = $from->add(new DateInterval('P1D'))->format('Y-m-d');
+    }
+  }
+  catch (Exception $e) {
+    watchdog_exception('pw_dialogues', $e);
+  }
+
+  if (!isset($sanitized_filters['has-reply']) && isset($sanitized_filters['ignore-standard-replies'])) {
+    unset($sanitized_filters['ignore-standard-replies']);
+  }
+
+  return $sanitized_filters;
 }

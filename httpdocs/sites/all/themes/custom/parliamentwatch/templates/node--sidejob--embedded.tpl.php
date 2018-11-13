@@ -89,7 +89,7 @@
     print render($title_suffix); ?>
   </td>
   <td class="sidejob-overview__item__activity" data-sort-value="<?php print trim(render($content['field_job'])); ?>">
-    <?php print render($content['field_job']); ?>
+    <?php print $activity; ?>
     <small><?php print render($content['field_topics']); ?></small>
   </td>
   <td class="sidejob-overview__item__date" data-sort-value="<?php print ($field_sidejob_date_start[0]['value']) ? $field_sidejob_date_start[0]['value'] :  ''; ?>">
