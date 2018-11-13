@@ -400,7 +400,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_votes_label" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : true,
@@ -408,7 +407,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : true
             }
@@ -451,7 +449,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_votes_label" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : true,
@@ -459,7 +456,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : true
             },
@@ -504,7 +500,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_votes_label" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : true,
@@ -512,7 +507,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : true
             }
@@ -555,7 +549,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_votes_label" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : true,
@@ -563,7 +556,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : true
             },
@@ -608,7 +600,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_votes_label" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : true,
@@ -616,7 +607,6 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : true,
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : true,
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : true
             },
@@ -646,13 +636,11 @@ function pw_search_api_default_search_api_index() {
               "field_politician:field_user_constituency:field_constituency_area_codes:description" : "field_politician:field_user_constituency:field_constituency_area_codes:description",
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor" : "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_ac_descriptor",
               "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr" : "field_politician:field_user_constituency:field_constituency_area_codes:field_constituency_nr",
-              "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename" : "field_politician:field_user_constituency:field_constituency_area_codes:field_parliament_constit_rename",
               "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname" : "field_politician:field_user_constituency:field_constituency_area_codes:field_pw_kc_votes_classname",
               "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label" : "field_politician:field_user_constituency:field_constituency_area_codes:field_votes_label",
               "field_politician:field_user_constituency:field_constituency_area_codes:name" : "field_politician:field_user_constituency:field_constituency_area_codes:name",
               "field_politician:field_user_constituency:field_constituency_area_codes:uuid" : "field_politician:field_user_constituency:field_constituency_area_codes:uuid",
               "field_politician:field_user_constituency:field_constituency_nr" : "field_politician:field_user_constituency:field_constituency_nr",
-              "field_politician:field_user_constituency:field_parliament_constit_rename" : "field_politician:field_user_constituency:field_parliament_constit_rename",
               "field_politician:field_user_constituency:field_pw_kc_votes_classname" : "field_politician:field_user_constituency:field_pw_kc_votes_classname",
               "field_politician:field_user_constituency:field_votes_label" : "field_politician:field_user_constituency:field_votes_label",
               "field_politician:field_user_constituency:name" : "field_politician:field_user_constituency:name",
