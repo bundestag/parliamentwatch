@@ -49,6 +49,8 @@ function pw_api_petitions($parliament) {
       $status = field_get_items('node', $node, 'field_petition_status');
       $petitions['petition_'.$target_node_id]['status'] = $status[0]['value'];
       $petitions['petition_'.$target_node_id]['url'] = url('node/'.$node->nid, array('absolute' => TRUE));
+      $signings = field_get_items('node', $node, 'field_petition_signings');
+      $petitions['petition_'.$target_node_id]['signings'] = $signings[0]['value'];
       if($status[0]['value'] == 'passed_parliament'){
 
         // add voting behaviour

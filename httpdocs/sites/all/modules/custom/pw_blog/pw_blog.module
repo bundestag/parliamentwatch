@@ -108,6 +108,7 @@ function pw_blog_related_blogposts_block() {
 
   $block = [
     'subject' => t('Related blog posts'),
+    'categories' => field_view_field('node', $node, 'field_blogpost_categories'),
   ];
 
   $items = field_get_items('node', $node, 'field_topics');

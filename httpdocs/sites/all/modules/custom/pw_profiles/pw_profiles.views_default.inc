@@ -45,6 +45,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options'] = '5, 10, 20, 50, 100';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = TRUE;
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle anzeigen -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
   $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
@@ -163,7 +164,7 @@ function pw_profiles_views_default_views() {
   );
   /* Feld: Stapelverarbeitungen: Benutzer */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
-  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'users';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_user';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
   $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
@@ -217,7 +218,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['field_user_constituency']['table'] = 'field_data_field_user_constituency';
   $handler->display->display_options['fields']['field_user_constituency']['field'] = 'field_user_constituency';
   $handler->display->display_options['fields']['field_user_constituency']['delta_offset'] = '0';
-  /* Feld: Benutzer: Adresse - Ort (z.B. Stadt) */
+  /* Feld: Benutzer: Adresse - Ort (z. B. Stadt) */
   $handler->display->display_options['fields']['field_user_address_locality']['id'] = 'field_user_address_locality';
   $handler->display->display_options['fields']['field_user_address_locality']['table'] = 'field_data_field_user_address';
   $handler->display->display_options['fields']['field_user_address_locality']['field'] = 'field_user_address_locality';
@@ -412,7 +413,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['filters']['field_user_constituency_tid']['reduce_duplicates'] = TRUE;
   $handler->display->display_options['filters']['field_user_constituency_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_constituency_tid']['vocabulary'] = 'constituency';
-  /* Filterkriterium: Benutzer: Adresse - Ort (z.B. Stadt) */
+  /* Filterkriterium: Benutzer: Adresse - Ort (z. B. Stadt) */
   $handler->display->display_options['filters']['field_user_address_locality']['id'] = 'field_user_address_locality';
   $handler->display->display_options['filters']['field_user_address_locality']['table'] = 'field_data_field_user_address';
   $handler->display->display_options['filters']['field_user_address_locality']['field'] = 'field_user_address_locality';
@@ -555,7 +556,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Feld: Stapelverarbeitungen: Benutzer */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
-  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'users';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_user';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
   $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
@@ -624,7 +625,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['field_user_constituency']['table'] = 'field_data_field_user_constituency';
   $handler->display->display_options['fields']['field_user_constituency']['field'] = 'field_user_constituency';
   $handler->display->display_options['fields']['field_user_constituency']['delta_offset'] = '0';
-  /* Feld: Benutzer: Adresse - Ort (z.B. Stadt) */
+  /* Feld: Benutzer: Adresse - Ort (z. B. Stadt) */
   $handler->display->display_options['fields']['field_user_address_locality']['id'] = 'field_user_address_locality';
   $handler->display->display_options['fields']['field_user_address_locality']['table'] = 'field_data_field_user_address';
   $handler->display->display_options['fields']['field_user_address_locality']['field'] = 'field_user_address_locality';
@@ -802,7 +803,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['filters']['field_user_constituency_tid']['reduce_duplicates'] = TRUE;
   $handler->display->display_options['filters']['field_user_constituency_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_constituency_tid']['vocabulary'] = 'constituency';
-  /* Filterkriterium: Benutzer: Adresse - Ort (z.B. Stadt) */
+  /* Filterkriterium: Benutzer: Adresse - Ort (z. B. Stadt) */
   $handler->display->display_options['filters']['field_user_address_locality']['id'] = 'field_user_address_locality';
   $handler->display->display_options['filters']['field_user_address_locality']['table'] = 'field_data_field_user_address';
   $handler->display->display_options['filters']['field_user_address_locality']['field'] = 'field_user_address_locality';
@@ -841,12 +842,12 @@ function pw_profiles_views_default_views() {
     t('Absteigend'),
     t('Politiker pro Seite'),
     t('- Alle anzeigen -'),
-    t('Offset'),
+    t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
     t('weiter'),
     t('letzte Seite »'),
-    t('- Wählen Sie eine Aufgabe -'),
+    t('Bitte auswählen'),
     t('Name'),
     t('E-Mail'),
     t('Partei'),

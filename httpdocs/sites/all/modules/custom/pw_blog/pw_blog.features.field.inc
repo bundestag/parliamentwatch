@@ -614,7 +614,7 @@ function pw_blog_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'hidden',
-          'module' => 'textformatter',
+          'module' => 'taxonomy',
           'settings' => array(
             'linked_field' => array(
               'advanced' => array(
@@ -627,20 +627,9 @@ function pw_blog_field_default_fields() {
               'destination' => '',
               'linked' => 0,
             ),
-            'textformatter_class' => 'tag-list',
-            'textformatter_comma_and' => 0,
-            'textformatter_comma_full_stop' => 0,
-            'textformatter_comma_override' => 0,
-            'textformatter_comma_tag' => 'div',
-            'textformatter_contrib' => array(),
-            'textformatter_separator_custom' => '',
-            'textformatter_separator_custom_class' => 'textformatter-separator',
-            'textformatter_separator_custom_tag' => 'span',
-            'textformatter_term_plain' => 0,
-            'textformatter_type' => 'ul',
           ),
-          'type' => 'textformatter_list',
-          'weight' => '3',
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '2',
         ),
         'full' => array(
           'label' => 'inline',
@@ -1015,7 +1004,7 @@ function pw_blog_field_default_fields() {
             ),
           ),
           'type' => 'entityreference_label',
-          'weight' => '11',
+          'weight' => '7',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1311,9 +1300,22 @@ function pw_blog_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '10',
+          'module' => 'taxonomy',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '3',
         ),
         'tile' => array(
           'label' => 'above',

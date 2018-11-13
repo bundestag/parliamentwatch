@@ -45,16 +45,9 @@
  */
 ?>
 <?php if (sizeof($items) > 0): ?>
-  <?php if ($element['#bundle'] === 'sidejob'): ?>
-    <?php print t('Topics'); ?>:
+  <ul class="tag-list">
     <?php foreach ($items as $delta => $item): ?>
-      <?php print render($item); if ($delta < (sizeof($items) - 1)) print ', '; ?>
+      <li><?php print render($item); ?></li>
     <?php endforeach; ?>
-  <?php else: ?>
-    <ul class="tag-list">
-      <?php foreach ($items as $delta => $item): ?>
-        <li><?php print render($item); ?></li>
-      <?php endforeach; ?>
-    </ul>
-  <?php endif; ?>
+  </ul>
 <?php endif; ?>

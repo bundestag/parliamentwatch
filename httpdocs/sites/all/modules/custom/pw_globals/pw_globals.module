@@ -280,8 +280,13 @@ function pw_globals_taxonomy_term_page($term) {
 
     if ($nids) {
       $nodes = node_load_multiple($nids);
-      $build = node_view_multiple($nodes, 'tile');
-      $build['#theme_wrappers'] = ['container__tiles'];
+      if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
+        $build = node_view_multiple($nodes, 'tile');
+        $build['#theme_wrappers'] = ['container__tiles'];
+      } else {
+        $build = node_view_multiple($nodes, 'teaser');
+        $build['#theme_wrappers'] = ['container__overview'];
+      }
       $build['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,
@@ -475,7 +480,7 @@ function pw_globals_testimonial_block() {
  * The content of the block is defined in the template file.
  * Beware the $block['content'] cannot be empty, otherwise the block will not be
  * displayed.
- * 
+ *
  * @return array
  *   The block render array.
  */

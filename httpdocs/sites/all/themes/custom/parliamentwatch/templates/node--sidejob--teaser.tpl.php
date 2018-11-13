@@ -82,13 +82,8 @@
 ?>
 
 <div class="overview__teaser">
-  <h2 class="h3"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-  <div class="overview__subject"><strong><?php print render($content['field_parliament']); ?></strong></div>
-  <div class="overview__badge"><?php print t('Poll', [], ['context' => 'badge']); ?></div>
-  <?php print render($content['body']); ?>
-  <p class="overview__date date">
-    <span class="date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?>.</span>
-    <span class="date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'F'); ?></span>
-    <span class="date__year"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'Y'); ?></span>
-  </p>
+  <h2 class="h3"><?php print render($content['field_politician']); ?></h2>
+  <div class="overview__subject"><strong><?php print render($content['field_sidejob_organization']); ?></strong></div>
+  <div class="overview__badge"><?php print t('Sideline job', [], ['context' => 'badge']) ?></div>
+  <p><?php print render($content['field_job']); ?></p>
 </div>
