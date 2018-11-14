@@ -89,6 +89,16 @@ function pw_globals_update_7105() {
 }
 
 /**
+ * Disable obsolete modules.
+ */
+function pw_globals_update_7106() {
+  $modules = [
+    'piwik',
+  ];
+  module_disable($modules);
+}
+
+/**
  * Reorganise main menu.
  */
 function pw_globals_update_7106() {
