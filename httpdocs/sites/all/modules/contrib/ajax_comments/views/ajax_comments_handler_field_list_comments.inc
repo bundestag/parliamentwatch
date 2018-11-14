@@ -26,14 +26,28 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
     );
     parent::options_form($form, $form_state);
   }
-  
+
+  function pre_render(&$values) {
+    parent::pre_render($values);
+
+    // Load necessary AJAX libraries.
+    drupal_add_js(drupal_get_path('module', 'ajax_comments') . '/ajax_comments.js');
+    drupal_add_library('system', 'drupal.ajax');
+    if (module_exists('ajax_comments_nodejs')) {
+      foreach ($values as $node) {
+        nodejs_send_content_channel_token('ajax_comments_nodejs_' . $node->nid);
+      }
+      drupal_add_js(drupal_get_path('module', 'ajax_comments_nodejs') . '/nodejs.ajaxcomments.js', array('type' => 'file'));
+      drupal_add_css(drupal_get_path('module', 'ajax_comments_nodejs') .'/ajax_comments_nodejs.css', array('type' => 'file'));
+    }
+  }
 
   /**
    * Render the list of comments
    * modified to add the ajax_comments wrapper and the add comment form option.
    */
   function render($values) {
-    if (user_access('post comments') && $node = $this->get_value($values)) {
+    if ($node = $this->get_value($values)) {
       // Init with dummy Comment. For explanation look at ajax_comments_process_node().
       $result = array('comments' => array('dummyComment' => array(
         '#prefix' => '<div class="ajax-comment-wrapper ajax-comment-dummy-comment" style="display:none">',
@@ -49,7 +63,7 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
         user_access('administer comments')) {
         $mode = variable_get('comment_default_mode_' . $node->type, COMMENT_MODE_THREADED);
         $comments_per_page = variable_get('comment_default_per_page_' . $node->type, 150);
-        if ($cids = $this->comment_get_thread($node, $mode, $comments_per_page)) {
+        if ($cids = comment_get_thread($node, $mode, $comments_per_page)) {
           $comments = comment_load_multiple($cids);
           comment_prepare_thread($comments);
           $build = comment_view_multiple($comments, $node);
@@ -76,31 +90,5 @@ class ajax_comments_handler_field_list_comments extends views_handler_field_enti
       );
       return $result;
     }
-  }
-
-  /* 
-   * We need to fetch this in our own method since Drupal doesn't seeem
-   * to support nested pagers 
-   */
-  function comment_get_thread($node, $mode, $comments_per_page = 150) {
-    $query = db_select('comment', 'c');
-    $query->addField('c', 'cid');
-    $query
-      ->condition('c.nid', $node->nid)
-      ->addTag('node_access')
-      ->addTag('comment_filter')
-      ->addMetaData('node', $node);
-      //->limit(0,$comments_per_page);
-    if (!user_access('administer comments')) {
-      $query->condition('c.status', COMMENT_PUBLISHED);
-    }
-    if ($mode === COMMENT_MODE_FLAT) {
-      $query->orderBy('c.cid', 'ASC');
-    }
-    
-
-    $cids = $query->execute()->fetchCol();
-
-    return $cids;
   }
 }
