@@ -9,7 +9,7 @@
  * Implements hook_preprocess_node()
  */
 function ajax_comments_nodejs_process_node(&$variables) {
-  if (isset($variables['content']['comments']) && $variables['node']->comment == COMMENT_NODE_OPEN && ajax_comments_node_type_active($variables['node']->type, $variables['elements']['#view_mode'])) {
+  if ($variables['node']->comment == COMMENT_NODE_OPEN && ajax_comments_node_type_active($variables['node']->type)) {
     // Enable channel for current node.
     nodejs_send_content_channel_token('ajax_comments_nodejs_' . $variables['node']->nid);
     drupal_add_js(drupal_get_path('module', 'ajax_comments_nodejs') . '/nodejs.ajaxcomments.js', array('type' => 'file'));
@@ -111,13 +111,7 @@ function _ajax_comments_nodejs_view_added($cid) {
          * 1 - Older first
          * 2 - Newer first
          */
-        $sort = 1;
-        if (module_exists('comment_goodness')) {
-          $sort = variable_get('comment_default_sorting_' . $node->type, comment_goodness_OLDER_FIRST);
-        }
-        else if (module_exists('comment_sort_created')) {
-          $sort = variable_get('comment_sort_created_order_' . $node->type) == COMMENT_SORT_CREATED_OLDER_FIRST ? 1 : 2;
-        }
+        $sort = _ajax_comments_get_comment_sort_order($node);
         $mode = variable_get('comment_default_mode_' . $node->type, COMMENT_MODE_THREADED);
         if ($mode == COMMENT_MODE_THREADED && $comment->pid > 0) {
           // Reply in threaded mode
