@@ -74,7 +74,15 @@ class shs_handler_filter_entityreference extends views_handler_filter_numeric {
     $field = field_info_field($this->definition['field_name']);
     $handler = entityreference_get_selection_handler($field);
     $referencable_entities = $handler->getReferencableEntities();
-    $vocabulary_names = empty($field['settings']['handler_settings']['target_bundles']) ? array() : $field['settings']['handler_settings']['target_bundles'];
+    $vocabulary_names = array();
+    if ('views' === $field['settings']['handler']) {
+      $view_settings = $field['settings']['handler_settings']['view'];
+      // Try to load vocabularies from view filter.
+      $vocabulary_names = _shs_entityreference_views_get_vocabularies($view_settings['view_name'], $view_settings['display_name']);
+    }
+    else {
+      $vocabulary_names = empty($field['settings']['handler_settings']['target_bundles']) ? array() : $field['settings']['handler_settings']['target_bundles'];
+    }
     $vocabularies = array();
     foreach ($vocabulary_names as $vocabulary_name) {
       if (($vocabulary = taxonomy_vocabulary_machine_name_load($vocabulary_name)) !== FALSE) {
@@ -127,6 +135,18 @@ class shs_handler_filter_entityreference extends views_handler_filter_numeric {
     if (!empty($this->options['exposed']) && !empty($this->options['expose']['required'])) {
       $element_settings['required'] = TRUE;
     }
+    // Allowing other modules to add settings for shs.
+    if (!empty($this->options['expose']['shs'])) {
+      $element_settings = array_merge($element_settings, $this->options['expose']['shs']);
+    }
+
+    $vocabulary_identifier = array(
+      'field_name' => $field['field_name'],
+    );
+    if (count($vocabularies) == 1) {
+      // Get ID from first (and only) vocabulary.
+      $vocabulary_identifier = $vocabularies[0]->vid;
+    }
 
     // Generate a random hash to avoid merging of settings by drupal_add_js.
     // This is necessary until http://drupal.org/node/208611 lands for D7.
@@ -136,9 +156,7 @@ class shs_handler_filter_entityreference extends views_handler_filter_numeric {
       'shs' => array(
         $identifier => array(
           $js_hash => array(
-            'vid' => array(
-              'field_name' => $field['field_name'],
-            ),
+            'vid' => $vocabulary_identifier,
             'settings' => $element_settings,
             'default_value' => $default_value,
             'parents' => $parents,
