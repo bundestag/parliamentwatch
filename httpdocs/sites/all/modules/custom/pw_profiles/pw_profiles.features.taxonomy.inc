@@ -9,14 +9,6 @@
  */
 function pw_profiles_taxonomy_default_vocabularies() {
   return array(
-    'committee' => array(
-      'name' => 'Committee',
-      'machine_name' => 'committee',
-      'description' => '',
-      'hierarchy' => '0',
-      'module' => 'taxonomy',
-      'weight' => '0',
-    ),
     'list_position' => array(
       'name' => 'List Position',
       'machine_name' => 'list_position',
