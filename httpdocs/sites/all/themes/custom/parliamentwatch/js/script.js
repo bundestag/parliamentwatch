@@ -115,6 +115,33 @@
   }
 
   /**
+   * Deletes the long time Matomo cookies (_pk_id and _pk_rev).
+   *
+   * Using Matomo's deleteCookie does not work because it cannot figure out the
+   * correct domain when cookies are already disabled.
+   */
+  (function deleteMatomoCookies(domain) {
+    var cookieDomain = '.' + domain;
+    var options = {path: '/', domain: cookieDomain};
+    var cookies = ['_pk_id', '_pk_ref'];
+
+    for (var i = 0; i < cookies.length; i++) {
+      var name = '';
+
+      if (cookieDomain === '.stage.abgeordnetenwatch.de') {
+        name = cookies[i] + '.1.a126';
+      }
+      else if (cookieDomain === '.abgeordnetenwatch.de') {
+        name = cookies[i] + '.1.4157';
+      }
+
+      if ($.cookie(name, options) !== undefined) {
+        $.cookie(name, null, options);
+      }
+    }
+  })(document.domain);
+
+  /**
    * Returns dialogue statistics ready for D3.
    *
    * @returns {Array}
