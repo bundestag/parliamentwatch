@@ -15,9 +15,9 @@ function pw_cron_export_submissions_cron() {
   $default_delete = 30;
 
   // query for all webforms
-  $webform_nids = db_select("node", "n")
-    ->fields("n",  ["nid"])
-    ->condition("type", "webform")
+  $webform_nids = db_select('node', 'n')
+    ->fields('n',  ['nid'])
+    ->condition('type', 'webform')
     ->execute()
     ->fetchCol();
   foreach ($webform_nids as $nid) {
