@@ -3,8 +3,8 @@ description = Adds Piwik reports to Drupal reports section.
 core = 7.x
 package = Statistics
 
-; Information added by Drupal.org packaging script on 2018-09-25
-version = "7.x-3.1"
+; Information added by Drupal.org packaging script on 2018-10-25
+version = "7.x-4.0"
 core = "7.x"
 project = "piwik_reports"
-datestamp = "1537914790"
+datestamp = "1540487584"
