@@ -128,11 +128,6 @@
           <i class="icon icon-twitter"></i> <span>tweet</span>
         </a>
       </li>
-      <li class="share__links__item share__links__item--google">
-        <a class="share__links__item__link" href="https://plus.google.com/share?url=https://www.abgeordnetenwatch.de<?php print $node_url; ?>" target="_blank">
-          <i class="icon icon-google-plus"></i> <span>+1</span>
-        </a>
-      </li>
       <li class="share__links__item share__links__item--whatsapp">
         <a class="share__links__item__link" href="whatsapp://send" target="_blank" data-text="<?php print t('Take a look at this poll:');?>" data-href="https://www.abgeordnetenwatch.de<?php print $node_url; ?>">
           <i class="icon icon-whatsapp"></i> <span>WhatsApp</span>

@@ -291,13 +291,10 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
     display: none;
   }
 }
-
 .tile__share__list__item--facebook a .icon { background: #3953a1; }
 .tile__share__list__item--twitter a .icon { background: #25b7f9; }
-.tile__share__list__item--google-plus a .icon { background: #fa3f15; }
 .tile__share__list__item--whatsapp a .icon { background: #29d871; }
 .tile__share__list__item--mail a .icon { background: $gray; font-size: .6em; }
-
 
 
 .tile__share:hover {

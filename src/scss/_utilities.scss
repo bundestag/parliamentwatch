@@ -165,7 +165,7 @@ textarea {
     @include h4();
     font-family: $font-sans-serif;
     padding-left: $space;
-    @include breakpoint($breakpoint-m-min) {
+    @include breakpoint($breakpoint-xs-min) {
       margin: 0;
       float: left;
       line-height: 34px;
@@ -173,7 +173,7 @@ textarea {
   }
   .share__links {
     padding-left: $space;
-    @include breakpoint($breakpoint-m-min) {
+    @include breakpoint($breakpoint-xs-min) {
       padding-right: $space;
       padding-left: 0;
       float: right;
@@ -232,10 +232,6 @@ textarea {
 .share__links__item--twitter .share__links__item__link {
   background: #55c5fb;
   &:hover, .icon { background: #25b7f9; }
-}
-.share__links__item--google .share__links__item__link {
-  background: #f96f56;
-  &:hover, .icon { background: #fa3f15; }
 }
 .share__links__item--whatsapp .share__links__item__link {
   background: #71e9a3;
