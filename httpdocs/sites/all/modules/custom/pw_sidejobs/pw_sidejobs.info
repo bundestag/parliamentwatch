@@ -78,8 +78,4 @@ features[variable][] = rh_node_redirect_sidejob
 features[variable][] = xmlsitemap_settings_taxonomy_term_job_categories
 features[views_view][] = pw_list_politician_entities
 files[] = pw_sidejobs.test
-<<<<<<< HEAD
-mtime = 1539674493
-=======
 mtime = 1540827835
->>>>>>> develop
