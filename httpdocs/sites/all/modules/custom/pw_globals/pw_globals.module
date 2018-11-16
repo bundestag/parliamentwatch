@@ -799,7 +799,7 @@ function _pw_profile_will_be_consultable($account) {
       return FALSE;
     }
 
-    if (_pw_user_has_role($account, 'Deputy') && _pw_parliament_status_between_election_and_legislature($parliament)) {
+    if (_pw_user_has_role($account, 'Politician') && _pw_parliament_status_between_election_and_legislature($parliament)) {
       return TRUE;
     }
 
