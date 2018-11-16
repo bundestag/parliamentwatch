@@ -436,9 +436,9 @@ function pw_dialogues_post() {
     return;
   }
 
-  $GLOBALS['user'] = user_load($uid);
+  $account = user_load($uid);
 
-  if (!in_array(user_role_load_by_name('API User')->rid, array_keys($GLOBALS['user']->roles))) {
+  if (!in_array(user_role_load_by_name('API User')->rid, array_keys($account->roles))) {
     drupal_add_http_header('Status', '403 Forbidden');
     return;
   }
@@ -462,7 +462,7 @@ function pw_dialogues_post() {
   }
 
   try {
-    $node = _pw_dialogues_question($doc);
+    $node = _pw_dialogues_question($doc, $account);
     $comments = _pw_dialogues_answers($doc, $node);
   }
   catch (Exception $e) {
@@ -1369,7 +1369,7 @@ function _pw_dialogues_sanitized_filters($filters) {
  * @throws Exception
  *   Throws an exception if the given document cannot be processed.
  */
-function _pw_dialogues_question(DOMDocument $doc) {
+function _pw_dialogues_question(DOMDocument $doc, $account) {
   $xpath = new DOMXPath($doc);
   $context_node = $xpath->query('//message[type="question"]')->item(0);
 
@@ -1394,6 +1394,7 @@ function _pw_dialogues_question(DOMDocument $doc) {
   $node->created = $date->format('U');
   $node->status = $xpath->evaluate('string(status)', $context_node);
   $node->title = 'Frage von ' . $xpath->evaluate('string(sender)', $context_node);
+  $node->uid = $account->uid;
   $node->body = [LANGUAGE_NONE => [0 => [
     'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
     'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
