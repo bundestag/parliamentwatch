@@ -784,7 +784,7 @@ function _pw_is_profile_consultable($account) {
  *
  * @return bool
  */
-function _pw_profile_will_be_consultable_in_future($account) {
+function _pw_profile_will_be_consultable($account) {
   $profile_consultable = &drupal_static(__FUNCTION__ . (isset($account->vid) ? $account->vid : ''));
 
   if (!isset($profile_consultable)) {
