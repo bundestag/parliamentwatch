@@ -967,8 +967,8 @@ function _pw_get_formatted_legislature_start_date($parliament) {
   $date = '';
 
   if (isset($parliament->field_parliament_valid[LANGUAGE_NONE][1])) {
-    $date = strtotime($parliament->field_parliament_valid[LANGUAGE_NONE][1]['value']);
-    $date = date('d.m.Y');
+    $date_timestamp = strtotime($parliament->field_parliament_valid[LANGUAGE_NONE][1]['value']);
+    $date = format_date($date_timestamp, 'date_only_short');
   }
 
   return $date;
