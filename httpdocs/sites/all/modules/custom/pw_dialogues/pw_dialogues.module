@@ -472,10 +472,21 @@ function pw_dialogues_post() {
   }
 
   $is_new = empty($node->nid);
+  $transaction = db_transaction();
 
-  node_save($node);
-  foreach ($comments as $comment) {
-    comment_save($comment);
+  try {
+    node_save($node);
+    foreach ($comments as $comment) {
+      comment_save($comment);
+    }
+  }
+  catch (Exception $e) {
+    $transaction->rollback();
+    // At this point all checks for client side errors have passed and any
+    // remaining problem is assumed to be a server issue. node_save() and
+    // comment_save() take care of logging the exception.
+    drupal_add_http_header('Status', '500 Internal Server Error');
+    return;
   }
 
   if ($is_new) {
