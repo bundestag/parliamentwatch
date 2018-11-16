@@ -10,10 +10,6 @@
  * Update all sidejobs with no classification: these sidejobs should not
  * have an "Income interval" set.
  *
- * @param array $sandbox
- *  An array for storing data during batch process
- *
- * @throws \Exception
  */
 function pw_sidejobs_update_7001(&$sandbox) {
   if (!isset($sandbox['progress'])) {
