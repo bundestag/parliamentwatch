@@ -775,7 +775,7 @@ function _pw_is_profile_consultable($account) {
  * will become active in the future due to the second valid date
  *
  * @param object $account
- * Drupal user object of the politican
+ *  Drupal user object of the politican
  *
  * @return bool
  */
@@ -915,7 +915,7 @@ function _pw_is_parliament_active($parliament = FALSE) {
  * is in the future
  *
  * @param object $parliament
- * The parliament taxonomy term
+ *  The parliament taxonomy term
  *
  * @return bool
  */
@@ -953,10 +953,10 @@ function _pw_parliament_status_between_election_and_legislature($parliament) {
  * mm.dd.yyyy
  *
  * @param object $parliament
- * Drupal Term object
+ *  Drupal Term object
  *
  * @return string
- * If no date was found an empty string
+ *  If no date was found an empty string
  */
 function _pw_get_formatted_legislature_start_date($parliament) {
   $date = '';
@@ -972,8 +972,10 @@ function _pw_get_formatted_legislature_start_date($parliament) {
 
 /**
  * Custom: Checks if a timestamp (date) is between start and end date of a date field
+ *
  * @param array $date_field
  *   date field with start and end date as value and value2
+ * 
  * @return boolean
  */
 function _pw_is_between_dates($date_field, $timestamp = FALSE) {
