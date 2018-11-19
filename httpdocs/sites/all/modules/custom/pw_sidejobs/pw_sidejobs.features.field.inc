@@ -427,6 +427,10 @@ function pw_sidejobs_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
+            'colorbox_node_classes' => '',
+            'colorbox_node_height' => '600',
+            'colorbox_node_link' => FALSE,
+            'colorbox_node_width' => '600',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
