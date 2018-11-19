@@ -965,7 +965,8 @@ function pw_dialogues_answers($node) {
  * @param object $parliament_term
  *   The parliament term.
  * @param bool $before_election
- *   Whether dialogues before or after the election should be included.
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
  *
  * @return SelectQuery
  *   The query object.
@@ -1050,7 +1051,7 @@ function pw_dialogues_answered_questions_by_parliament($term, $before_election) 
 /**
  * Returns number of questions by topic for the given user.
  *
- * @param type $account
+ * @param object $account
  *   The account object.
  *
  * @return array
