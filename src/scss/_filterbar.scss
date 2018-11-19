@@ -308,35 +308,24 @@ _:-ms-fullscreen,
           // Dropdown display
 
           .form__item--checkboxes,
-          .form-radios {
+          .form__item--radios {
             @include grid-container();
             @include grid-collapse($neat-grid-large-gutter);
             .form__item {
               border-bottom: 1px solid $brightGray;
-              position: relative;
+              margin-top: $space-xsmall;
+              padding-bottom: $space-xsmall;
               @include grid-column(12, $neat-grid-large-gutter);
-              @include padding($space-xsmall-mobile 0 $space-xsmall-mobile $space);
               @include breakpoint($breakpoint-xs-min) {
                 @include grid-column(6, $neat-grid-large-gutter);
               }
               @include breakpoint($breakpoint-s-min) {
                 @include grid-column(4, $neat-grid-large-gutter);
               }
+              &__label {
+                @include text-overflow();
+              }
             }
-            .form__item__control,
-            .form-radio {
-              position: absolute;
-              left: 0;
-              top: $space-xsmall + 1;
-            }
-            .form__item__label {
-              @include text-overflow();
-              padding: $space-xsmall-mobile 0;
-              margin-left: 0;
-            }
-          }
-          .form__item--checkboxes .form__item__control {
-            top: $space-xsmall + 3;
           }
         }
         &.dropdown--open .dropdown__list {
@@ -347,19 +336,9 @@ _:-ms-fullscreen,
         border-right: 1px solid $darkBeige;
         padding: $space $space;
         white-space: nowrap;
-        @include grid-container();
-        .form__item--checkbox {
-          display: inline-block;
-          label {
-            margin-right: $space;
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-        }
         .form__item {
+          display: inline-block;
           margin-right: $space-small;
-          @include grid-container();
           &:last-child {
             margin-right: 0;
           }
@@ -511,12 +490,12 @@ _:-ms-fullscreen,
       @include text-overflow();
     }
     &--checkboxes,
-    .form-radios {
+    &--radios {
       @include grid-container();
       @include grid-collapse($neat-grid-large-gutter);
       .form__item {
-        position: relative;
-        padding: $space-xsmall 0;
+        margin-top: $space-xsmall;
+        padding-bottom: $space-xsmall;
         @include grid-column(12, $neat-grid-large-gutter);
         @include breakpoint($breakpoint-xs-min) {
           @include grid-column(6, $neat-grid-large-gutter);
@@ -528,20 +507,6 @@ _:-ms-fullscreen,
         &:not(:last-child) {
           border-bottom: 1px solid $brightGray;
         }
-      }
-    }
-    .form-radios .form__item {
-      @include padding($space-xsmall 0 $space-xsmall $space);
-
-      &__control {
-        position: absolute;
-        top: $space-xsmall - 1px;
-        left: 0;
-      }
-    }
-    &--checkboxes .form__item {
-      &__control {
-        top: $space-xsmall + 2px;
       }
     }
   }
