@@ -334,8 +334,11 @@ _:-ms-fullscreen,
       }
       &--checkbox {
         border-right: 1px solid $darkBeige;
-        padding: $space $space;
+        padding: ($space - 1) $space;
         white-space: nowrap;
+        @include breakpoint($breakpoint-l-min) {
+          padding: ($space - 2) $space;
+        }
         .form__item {
           display: inline-block;
           margin-right: $space-small;
