@@ -160,7 +160,15 @@ function pw_export_submissions($nid){
 function pw_delete_submissions($nid, $delete_general, $delete_exported=FALSE) {
 
   if (!$delete_exported) {
-    $delete_exported = $delete_general;
+      // calculate timestamps for database query
+  if ($delete_exported) {
+    $timestamp_exported = time() - $delete_exported * 86400;
+  }
+  else {
+    $timestamp_exported = time() - $delete_general * 86400;
+  }
+
+  $timestamp_general = time() - $delete_general * 86400;
   }
 
   $timestamp_exported = time() - $delete_exported * 86400;
