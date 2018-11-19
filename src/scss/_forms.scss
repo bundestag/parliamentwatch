@@ -115,60 +115,6 @@
   }
 }
 
-.form-type-checkbox { // TODO
-  margin-bottom: 0;
-  position: relative;
-  .form__item__label {
-    display: block;
-    margin-left: $space;
-  }
-  .form__item__control {
-    display: inline-block;
-    padding: 0;
-    width: $space-small-mobile;
-    height: $space-small-mobile;
-    cursor: pointer;
-    position: absolute;
-    top: $space-xsmall-mobile;
-    border-color: $gray;
-    appearance: none;
-    &:focus { outline: none; }
-    &:checked {
-      border-color: $orange;
-      background-color: $orange;
-      &:after {
-        content: '';
-        font-family: awfont;
-        font-size: 5px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        line-height: 9px;
-        text-align: center;
-        color: $white;
-      }
-    }
-  }
-}
-
-.form-type-checkbox { // TODO
-  padding: $space-xsmall 0;
-  padding-left: $space;
-  position: relative;
-  .form__item__label {
-    padding: 0;
-  }
-  .form__item__control {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    margin: 0;
-    transform: translate(0,-50%);
-  }
-}
-
 .form__item--alert {
   display: none;
   position: relative;
