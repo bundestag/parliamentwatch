@@ -27,6 +27,11 @@ function ajax_comments_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  // Special-casing for EditLimit Module.
+  if (module_exists('edit_limit')) {
+    $items['ajax_comment/%comment/edit']['access callback'] = 'edit_limit_comment_access';
+  }
+
   $items['ajax_comment/%/delete'] = array(
     'page callback' => 'ajax_comments_delete',
     'page arguments' => array(1),
@@ -34,6 +39,12 @@ function ajax_comments_menu() {
     'delivery callback' => 'ajax_deliver',
     'type' => MENU_CALLBACK,
   );
+
+  // Special-casing for comment_goodness Module
+  if (module_exists('comment_goodness')) {
+    $items['ajax_comment/%/delete']['access arguments'] = array(1);
+    $items['ajax_comment/%/delete']['access callback'] = 'comment_goodness_delete_comment_access';
+  }
 
   // Special-casing for CommentAccess Module
   if (module_exists('commentaccess')) {
@@ -222,6 +233,8 @@ function ajax_comments_form_comment_form_alter(&$form, &$form_state, $form_id) {
 
   $form['actions'] = ajax_pre_render_element($form['actions']);
 
+  // HACK, stop ctools from modifying us in node_comment_form.inc
+  $form_state['ctools comment alter'] = FALSE;
 }
 
 /**
@@ -373,7 +386,7 @@ function ajax_comments_submit_js($form, &$form_state) {
       }
     }
 
-    if (!variable_get('ajax_comments_disable_scroll', 0) && empty($mode)) {
+    if (!variable_get('ajax_comments_disable_scroll', 0)) {
       $commands[] = array('command' => 'ajaxCommentsScrollToElement', 'selector' => '.comment-wrapper-' . $comment->cid);
     }
   }
@@ -532,6 +545,18 @@ function ajax_comments_preprocess_comment(&$variables) {
  */
 function ajax_comments_preprocess_comment_wrapper(&$variables) {
   $variables['classes_array'][] = 'comment-wrapper-nid-' . $variables['node']->nid;
+
+  if (empty($variables['content']['comments']) && $variables['node']->comment == COMMENT_NODE_OPEN && ajax_comments_node_type_active($variables['node']->type)) {
+    /**
+     * A little HACK for adding dummy comment which give us right point to place first comment on the page.
+     */
+    $variables['content']['comments']['dummyComment'] = array(
+      '#prefix' => '<div class="ajax-comment-wrapper ajax-comment-dummy-comment" style="display:none">',
+      '#type' => 'item',
+      '#markup' => '',
+      '#suffix' => '</div>',
+    );
+  }
 }
 
 /**
@@ -789,30 +814,6 @@ function theme_ajax_comments_notify_text($vars = array()) {
 }
 
 /**
- * Implements hook_process_node().
- * We use prorcess instead preprocess just because views overwrite $variables['content']['comments'] when display comments is enabled
- */
-function ajax_comments_process_node(&$variables) {
-  if (isset($variables['content']['comments']) && $variables['node']->comment == COMMENT_NODE_OPEN && ajax_comments_node_type_active($variables['node']->type)) {
-    /**
-     * A little HACK for always run comment-wrapper.tpl.php and comment.tpl.php also when we have no comments.
-     * This is give us always have a right div layout on the page and
-     * dummy comment give us right point to place first comment on the page.
-     */
-    if (empty($variables['content']['comments'])) {
-      $variables['content']['comments']['#node'] = $variables['node'];
-      $variables['content']['comments']['#theme'] = 'comment_wrapper__node_' . $variables['node']->type;
-    }
-    $variables['content']['comments']['comments']['dummyComment'] = array(
-      '#prefix' => '<div class="ajax-comment-wrapper ajax-comment-dummy-comment" style="display:none">',
-      '#type' => 'item',
-      '#markup' => '',
-      '#suffix' => '</div>',
-    );
-  }
-}
-
-/**
  * Returns comment sort order.
  *
  * comment_goodnes module and comment_sort_created compatibility:
@@ -828,6 +829,9 @@ function _ajax_comments_get_comment_sort_order($node) {
     }
     else if (module_exists('comment_sort_created')) {
       $result = variable_get('comment_sort_created_order_' . $node->type) == COMMENT_SORT_CREATED_OLDER_FIRST ? 1 : 2;
+    }
+    else if (module_exists('sort_comments')) {
+      $result = variable_get('comment_default_sorting_' . $node->type, SORT_COMMENTS_OLDER_FIRST);
     }
   }
   return $result;

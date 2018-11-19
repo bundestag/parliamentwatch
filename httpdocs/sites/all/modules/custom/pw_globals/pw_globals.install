@@ -452,6 +452,16 @@ function pw_globals_update_7127() {
 }
 
 /**
+ * Disable obsolete modules.
+ */
+function pw_globals_update_7128() {
+  $modules = [
+    'piwik',
+  ];
+  module_disable($modules);
+}
+
+/**
  * Adds a new menu block.
  *
  * @param array $block
