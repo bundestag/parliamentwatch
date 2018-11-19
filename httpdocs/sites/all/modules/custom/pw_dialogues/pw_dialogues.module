@@ -925,11 +925,12 @@ function pw_dialogues_by_user_revision_query($account) {
 function pw_dialogues_by_parliament_query($term) {
   $today = new DateTime();
   $election_date = pw_parliaments_election_date($term);
+  $before_election = ($today < $election_date) ? 1 : 0;
 
   $q = search_api_query('dialogue_index')
     ->condition('status', NODE_PUBLISHED)
     ->condition('field_parliament', $term->tid)
-    ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
+    ->condition('field_dialogue_before_election', $before_election);
 
   return $q;
 }
