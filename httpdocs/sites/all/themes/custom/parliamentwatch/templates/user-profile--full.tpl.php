@@ -85,7 +85,11 @@
             <?php if (isset($field_user_died[0]['value']) && $field_user_died[0]['value'] == '1'): ?>
               <?php print t('This person died'); ?>
             <?php elseif (isset($field_user_retired)): ?>
-              <?php print t('This person left this parliament'); ?>
+              <?php if (isset($field_user_retired_reason)) : ?>
+                <?php print t('Reason for withdrawal:') .' '. $field_user_retired_reason; ?>
+              <?php else : ?>
+                <?php print t('This person left this parliament'); ?>
+              <?php endif; ?>
             <?php endif; ?>
             <?php if (isset($user_profile['field_user_question_form_closed'])): ?>
               <?php print render($user_profile['field_user_question_form_closed']); ?>
@@ -149,7 +153,8 @@
         <?php endif; ?>
         <?php if (isset($field_user_died[0]['value']) && $field_user_died[0]['value'] == '1' && !empty($user_profile['field_user_retired'])): ?>
           <dt class="dl__dt"><?php print $user_profile['field_user_died']['#title']; ?></dt>
-          <dd class="dl__dd"><?php print $user_profile['field_user_retired'][0]['#markup']; ?></dd>
+          <dd class="dl__dd"><?php print $user_profile['field_user_retired'][0]['#markup']; ?>
+          </dd>
         <?php endif; ?>
         <?php if (!empty($user_profile['field_user_address']['#items'][0]['locality'])): ?>
           <dt class="dl__dt"><?php print t('Wohnort') ?></dt>
@@ -188,7 +193,10 @@
           <dd class="dl__dd">
             <?php print $user_profile['field_user_parliament'][0]['#markup']; ?>
             <?php if (!empty($user_profile['field_user_retired']) && (!isset($field_user_died[0]['value']) || $field_user_died[0]['value'] == '0')): ?>
-              <p><small><?php print t('Retired on %date', array('%date' => drupal_html_to_text($user_profile['field_user_retired'][0]['#markup']))); ?></small></p>
+              <p><small><?php print t('Retired on %date', array('%date' => drupal_html_to_text($user_profile['field_user_retired'][0]['#markup']))); ?></small>
+                <?php if (isset($field_user_retired_reason)) : ?>
+                    <small>. Grund: <?php print $field_user_retired_reason; ?></small>
+                <?php endif; ?></p>
             <?php endif; ?>
           </dd>
         <?php endif; ?>
