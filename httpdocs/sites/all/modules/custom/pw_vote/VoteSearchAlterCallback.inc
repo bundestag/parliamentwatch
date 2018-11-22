@@ -118,6 +118,7 @@ class VoteSearchAlterCallback extends SearchApiAbstractAlterCallback {
     $poll = node_load($item->field_vote_node[LANGUAGE_NONE][0]['target_id']);
     $parliament = pw_globals_parliament($item);
     $uid = $item->field_vote_user[LANGUAGE_NONE][0]['target_id'];
+    $poll_date = strtotime($poll->field_poll_date[LANGUAGE_NONE][0]['value']);
 
     $q = db_select('user_archive_cache', 'uac');
     $q->fields('uac', ['vid'])
@@ -125,7 +126,14 @@ class VoteSearchAlterCallback extends SearchApiAbstractAlterCallback {
       ->condition('uac.uid', $uid)
       ->condition('uac.user_role', 'deputy')
       ->condition('uac.parliament_name', $parliament->name)
-      ->condition('uac.timestamp', strtotime($poll->field_poll_date[LANGUAGE_NONE][0]['value']), '<');
+    $or_user_joined = db_or();
+    $or_user_joined->condition('uac.user_joined', $poll_date, '<');
+    $or_user_joined->condition('uac.user_joined', NULL);
+    $q->condition($or_user_joined);
+    $or_user_retired = db_or();
+    $or_user_retired->condition('uac.user_retired', $poll_date, '>');
+    $or_user_retired->condition('uac.user_retired', NULL);
+    $q->condition($or_user_retired);
 
     return user_revision_load($uid, $q->execute()->fetchField());
   }
