@@ -1,0 +1,6 @@
+name = PW Embed Media
+description = Offers a widget for a data privacy respecting way of embedding media
+core = 7.x
+package = PW Modules
+version = 7.x-1.0-20181120
+dependencies[] = xautoload

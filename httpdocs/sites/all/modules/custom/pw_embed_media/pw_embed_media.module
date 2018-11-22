@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Main module file for PW Embed Media
+ */
+
+
+function pw_embed_media_theme() {
+  return array(
+    'pw_embed_media_widget' => array(
+      'variables' => array('embed_code' => ''),
+      'template' => 'pw-embed-media-widget',
+      'path' => drupal_get_path('module', 'pw_embed_media') .'/templates',
+      'file' => 'pw_media_embed.theme.inc'
+    )
+);
+}
+
+
+function pw_embed_media_form_alter(&$form, &$form_state) {
+
+  $form['neues_element'] = array(
+    '#theme' => 'pw_embed_media_widget',
+    '#embed_code' =>'<div>Aber halle</div>'
+  );
+}
