@@ -125,7 +125,7 @@ class VoteSearchAlterCallback extends SearchApiAbstractAlterCallback {
       ->orderBy('uac.timestamp', 'DESC')
       ->condition('uac.uid', $uid)
       ->condition('uac.user_role', 'deputy')
-      ->condition('uac.parliament_name', $parliament->name)
+      ->condition('uac.parliament_name', $parliament->name);
     $or_user_joined = db_or();
     $or_user_joined->condition('uac.user_joined', $poll_date, '<');
     $or_user_joined->condition('uac.user_joined', NULL);
