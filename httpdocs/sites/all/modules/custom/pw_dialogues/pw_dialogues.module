@@ -792,7 +792,8 @@ function pw_dialogues_recent_block() {
 
   $today = new DateTime();
   $election_date = pw_parliaments_election_date($term);
-  $before_election = ($today < $election_date) ? 1 : 0;
+  $start_date = pw_parliaments_start_date($term);
+  $before_election = ($today < max($election_date, $start_date)) ? 1 : 0;
 
   $response = pw_dialogues_by_parliament_query($term, $before_election)
     ->condition('comment_count', 0, '>')
