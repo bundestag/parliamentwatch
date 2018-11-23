@@ -151,7 +151,7 @@ function pw_poll_timeline_block() {
   $result = $q->execute();
 
   if (empty($result['node'])) {
-    return block;
+    return $block;
   }
 
   $nodes = node_load_multiple(array_keys($result['node']));
