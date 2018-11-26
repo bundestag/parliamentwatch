@@ -936,6 +936,27 @@ function pw_dialogues_by_parliament_query($term, $before_election) {
 }
 
 /**
+ * Returns whether the question has been posted before the election.
+ *
+ * @param $node
+ *   The dialogue node.
+ *
+ * @return bool
+ *   TRUE if the question has been posted before the election, FALSE otherwise.
+ */
+function pw_dialogues_before_election($node) {
+  $before_election = NULL;
+
+  $items = field_get_items('node', $node, 'field_dialogue_before_election');
+
+  if ($items) {
+    $before_election = (bool) $items[0]['value'];
+  }
+
+  return $before_election;
+}
+
+/**
  * Returns the answers to the given question.
  *
  * @param object $node
