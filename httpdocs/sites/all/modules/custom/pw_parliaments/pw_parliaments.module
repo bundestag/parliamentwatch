@@ -84,6 +84,30 @@ function pw_parliaments_election_date($term) {
 }
 
 /**
+ * Returns the start date of the legislative period (Wahlperiode).
+ *
+ * It is assumed that the value of the second item of field_parliament_valid
+ * holds the start date of the legislative period. This assumption might not
+ * be accurate, but the value is used for this purpose nevertheless.
+ *
+ * @param $term
+ *   The parliament term.
+ *
+ * @return DateTime
+ *   The start date of the legislative period.
+ */
+function pw_parliaments_start_date($term) {
+  $date = NULL;
+
+  $items = field_get_items('taxonomy_term', $term, 'field_parliament_valid');
+  if (is_array($items) && count($items == 2)) {
+    $date = new DateTime($items[1]['value'], new DateTimeZone($items[1]['timezone']));
+  }
+
+  return $date;
+}
+
+/**
  * Returns the previous iteration of the given parliament
  *
  * @param object $term
