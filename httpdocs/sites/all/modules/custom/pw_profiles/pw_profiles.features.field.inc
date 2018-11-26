@@ -4521,7 +4521,7 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
       'bundle' => 'user',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'If a reason is defined the text of this field will be displayed on the user\'s profile page when a retirement date is set. Otherwise any text in this field will be ignored.',
+      'description' => 'Wenn ein Datum bei "Parlament verlassen" gesetzt ist, wird dieser Text auf dem Politiker-Profil ausgegeben. Wenn das datum nicht gesetzt ist, wird der Text hier ignoriert.',
       'display' => array(
         'default' => array(
           'label' => 'above',
@@ -4552,7 +4552,7 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
       'entity_type' => 'user',
       'exclude_cv' => 0,
       'field_name' => 'field_user_retired_reason',
-      'label' => 'Reason for retirement',
+      'label' => 'Grund für Ausscheiden aus dem Parlament',
       'required' => 0,
       'settings' => array(
         'better_formats' => array(
@@ -4718,10 +4718,10 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
   t('Fraktion');
   t('Geburtstag');
   t('Geschlecht');
+  t('Grund für Ausscheiden aus dem Parlament');
   t('Hier können Sie beliebige Links ergänzen, die in Ihrem Profil öffentlich angezeigt werden sollen.');
   t('Hier können Sie ein Foto für Ihr Profil hochladen. Klicken Sie dazu auf "Auswählen", suchen Sie dann eine Bilddatei von Ihrem Computer aus und klicken Sie auf "Abschicken".');
   t('Hier können Sie einen Freitext über Ihre Person eintragen, z.B. eine Biographie oder einen Lebenslauf. Der Text wird in Ihrem Profil veröffentlicht.');
-  t('If a reason is defined the text of this field will be displayed on the user\'s profile page when a retirement date is set. Otherwise any text in this field will be ignored.');
   t('If this field is filled, question form will be closed and content of this field will be shown to visitor.');
   t('Kinder');
   t('Last name');
@@ -4739,7 +4739,6 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
   t('Position');
   t('Profile picture');
   t('Pseudonym');
-  t('Reason for retirement');
   t('Roles (revisionable)');
   t('Telefon');
   t('Telefon (mobil)');
@@ -4750,6 +4749,7 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
   t('Wahlkreis');
   t('Wahlkreis gewonnen');
   t('Wahlkreisergebnis');
+  t('Wenn ein Datum bei "Parlament verlassen" gesetzt ist, wird dieser Text auf dem Politiker-Profil ausgegeben. Wenn das datum nicht gesetzt ist, wird der Text hier ignoriert.');
   t('Wählen Sie hier Ihren Listenplatz aus.');
   t('direkt gewählt');
   t('eingezogen über Liste');
