@@ -372,11 +372,21 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     $path = 'profiles/' . $variables['field_user_parliament'][0]['tid'] . '/deputies';
   }
 
-  if (isset($variables['field_user_party']) && $variables['elements']['#view_mode'] == 'full' && isset($path)) {
-    $text = $variables['field_user_party'][0]['taxonomy_term']->name;
-    $options = ['query' => ['party[]' => $variables['field_user_party'][0]['tid']]];
+  if ($variables['elements']['#view_mode'] == 'full' && isset($path)) {
+    if (isset($variables['field_user_party'])) {
+      $text = $variables['field_user_party'][0]['taxonomy_term']->name;
+      $options = ['query' => ['party[]' => $variables['field_user_party'][0]['tid']]];
 
-    $variables['user_profile']['field_user_party'][0]['#markup'] = l($text, $path, $options);
+      $variables['user_profile']['field_user_party'][0]['#markup'] = l($text, $path, $options);
+    }
+    else {
+      $variables['user_profile']['field_user_party'][0]['#markup'] = 'parteilos';
+    }
+
+  }
+
+  if (isset($account->field_user_retired_reason) && !empty($account->field_user_retired_reason)) {
+    $variables['field_user_retired_reason'] = $account->field_user_retired_reason["und"][0]["safe_value"];
   }
 
   if (isset($variables['field_user_constituency']) && $variables['elements']['#view_mode'] == 'full' && isset($path)) {

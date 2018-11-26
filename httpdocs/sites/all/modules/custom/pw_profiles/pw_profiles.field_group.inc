@@ -55,11 +55,10 @@ function pw_profiles_field_group_info() {
       1 => 'field_user_roles_for_view_mode_s',
       2 => 'field_user_data_url',
       3 => 'ckeditor',
-      4 => 'piwik',
-      5 => 'redirect',
-      6 => 'timezone',
-      7 => 'xmlsitemap',
-      8 => 'locale',
+      4 => 'redirect',
+      5 => 'timezone',
+      6 => 'xmlsitemap',
+      7 => 'locale',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -97,6 +96,7 @@ function pw_profiles_field_group_info() {
       7 => 'field_user_fraction',
       8 => 'field_user_joined',
       9 => 'field_user_retired',
+      10 => 'field_user_retired_reason',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

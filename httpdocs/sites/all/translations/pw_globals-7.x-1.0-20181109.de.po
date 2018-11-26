@@ -1640,6 +1640,10 @@ msgstr "Wohnort"
 msgid "Retired on %date"
 msgstr "Ausgeschieden am %date"
 
+#: sites/all/themes/custom/parliamentwatch/templates/user-profile--full.tpl.php:89
+msgid "Reason for withdrawal:"
+msgstr "Grund für Ausscheiden:"
+
 #: sites/all/themes/custom/parliamentwatch/templates/user-profile--full.tpl.php:212
 msgid ""
 "At the Kandidaten-Check all candidates can take position on relevant topics "
