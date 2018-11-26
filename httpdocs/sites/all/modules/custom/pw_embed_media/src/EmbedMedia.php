@@ -12,13 +12,24 @@ namespace Drupal\pw_embed_media;
  */
 class EmbedMedia {
 
-  protected $embedCode;
+  /**
+   * @var string
+   * The HTML which should be embedded
+   */
+  protected $rawEmbedCode = '';
+
+
+  /**
+   * @var string
+   * The HTML which can savely be embedded into JavaScript
+   */
+  protected $preparedEmbedCode = NULL;
 
   protected $id;
 
 
-  public function __construct($embed_code) {
-    $this->embedCode = $embed_code;
+  public function __construct($raw_embed_code) {
+    $this->rawEmbedCode = $raw_embed_code;
     $this->generateId();
   }
 
@@ -39,7 +50,7 @@ class EmbedMedia {
     $settings = array(
       'pw_embed_media' => array(
         'widgets' => array(
-          $this->getId() => $this->embedCode
+          $this->getId() => $this->getPrepapredEmbedCode()
         )
       )
     );
@@ -51,7 +62,35 @@ class EmbedMedia {
   }
 
 
-  public function getEmbedCode() {
-    return $this->embedCode;
+  public function getRawEmbedCode() {
+    return $this->rawEmbedCode;
+  }
+
+
+  /**
+   * @return string
+   *
+   */
+  public function getPrepapredEmbedCode() {
+    if ($this->preparedEmbedCode === NULL) {
+      $this->preparedEmbedCode = $this->prepareEmbdeCode($this->getRawEmbedCode());
+    }
+
+    return $this->preparedEmbedCode;
+  }
+
+
+  /**
+   * Prepares a string with HTML for use in JavaScript. There it can be dedcode by
+   * decodeURIComponent()
+   *
+   * @see https://stackoverflow.com/a/442949/1636688
+   *
+   * @param $string
+   *
+   * @return string
+   */
+  public function prepareEmbdeCode($string) {
+    return rawurlencode($this->getRawEmbedCode());
   }
 }

@@ -26,6 +26,6 @@
     var getEmbedMediaMarkup = function(embedMediaContainer) {
         var controlCheckbox = embedMediaContainer.find('.js-embed-media-control'),
             mediaWidgetId = controlCheckbox.attr('id');
-        return Drupal.settings.pw_embed_media.widgets[mediaWidgetId];
+        return decodeURIComponent(Drupal.settings.pw_embed_media.widgets[mediaWidgetId]);
     };
 })(jQuery);
