@@ -497,7 +497,7 @@ function parliamentwatch_preprocess_field(&$variables) {
     $role_name = pw_dialogues_before_election($element['#object']) ? 'candidates' : 'deputies';
     foreach ($variables['items'] as &$item) {
       $item['#href'] = url("dialogues/$parliament->tid/$role_name");
-      $item['#title'] = '#' . $item['#title'];
+      $item['#title'] = '# ' . $item['#title'];
       $item['#options']['query'] = ['topic' => [$item['#options']['entity']->tid]];
       $item['#options']['attributes']['title'] = t('More contents on the topic “!name”', ['!name' => $item['#title']]);
       $item['#options']['attributes']['class'][] = 'question__meta__tag';
