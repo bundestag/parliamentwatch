@@ -1125,7 +1125,7 @@ function pw_dialogues_topics_by_parliament($term, $before_election) {
  *
  * @param object $term
  *   The parliament term.
- * @param bool$before_election
+ * @param bool $before_election
  *   A boolean indicating whether the dialogues before or after the election
  *   should be loaded.
  *
