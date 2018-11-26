@@ -385,6 +385,10 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
 
   }
 
+  if (isset($account->field_user_retired_reason) && !empty($account->field_user_retired_reason)) {
+    $variables['field_user_retired_reason'] = $account->field_user_retired_reason["und"][0]["safe_value"];
+  }
+
   if (isset($variables['field_user_constituency']) && $variables['elements']['#view_mode'] == 'full' && isset($path)) {
     $placeholders = [
       '@number' => $variables['field_user_constituency'][0]['taxonomy_term']->field_constituency_nr['und'][0]['value'],
