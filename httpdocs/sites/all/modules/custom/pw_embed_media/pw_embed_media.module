@@ -19,9 +19,8 @@ function pw_embed_media_theme() {
 
 
 function pw_embed_media_form_alter(&$form, &$form_state) {
-
   $form['neues_element'] = array(
     '#theme' => 'pw_embed_media_widget',
-    '#embed_code' =>'<div>Aber halle</div>'
+    '#embed_code' =>'<blockquote class="twitter-tweet" data-lang="de"><p lang="de" dir="ltr">Mehr abgeordnetenwatch:<br><br>Blog 📇: <a href="https://t.co/GGQDrzcw49">https://t.co/GGQDrzcw49</a><br><br>Newsletter 📰: <a href="https://t.co/f6Kkq0ByqB">https://t.co/f6Kkq0ByqB</a><br><br>Facebook-Kanal 👍: <a href="https://t.co/JteMNLROwo">https://t.co/JteMNLROwo</a></p>&mdash; abgeordnetenwatch.de (@a_watch) <a href="https://twitter.com/a_watch/status/777902286341308416?ref_src=twsrc%5Etfw">19. September 2016</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>'
   );
 }
