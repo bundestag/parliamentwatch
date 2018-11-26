@@ -491,6 +491,20 @@ function parliamentwatch_preprocess_field(&$variables) {
       $item['#options']['attributes']['title'] = t('More blog articles from the category “!name”', ['!name' => $item['#title']]);
     }
   }
+
+  if ($element['#field_name'] == 'field_dialogue_topic') {
+    $parliament = pw_globals_parliament($element['#object']);
+    $role_name = pw_dialogues_before_election($element['#object']) ? 'candidates' : 'deputies';
+    foreach ($variables['items'] as &$item) {
+      $item['#href'] = url("dialogues/$parliament->tid/$role_name");
+      $item['#title'] = '#' . $item['#title'];
+      $item['#options']['query'] = ['topic' => [$item['#options']['entity']->tid]];
+      $item['#options']['attributes']['title'] = t('More contents on the topic “!name”', ['!name' => $item['#title']]);
+      $item['#options']['attributes']['class'][] = 'question__meta__tag';
+      $item['#options']['attributes']['class'][] = 'tile__meta__tag';
+    }
+  }
+
 }
 
 /**
