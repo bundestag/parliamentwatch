@@ -77,6 +77,9 @@ function pw_profiles_strongarm() {
         'rabbit_hole' => array(
           'weight' => '0',
         ),
+        'matomo' => array(
+          'weight' => '3',
+        ),
       ),
       'display' => array(
         'summary' => array(
