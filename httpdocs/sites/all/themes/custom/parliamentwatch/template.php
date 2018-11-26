@@ -534,7 +534,7 @@ function parliamentwatch_addressfield_formatter__linear($vars) {
     $locality = $loc['locality'];
   }
   if (!empty($loc['postal_code'])) {
-    $out[] = $loc['postal_code'].' '.$locality;
+    $out[] = $loc['postal_code'] . ' ' . $locality;
   }
   if ($loc['country'] != addressfield_tokens_default_country() && $country_name = _addressfield_tokens_country($loc['country'])) {
     $out[] = $country_name;
