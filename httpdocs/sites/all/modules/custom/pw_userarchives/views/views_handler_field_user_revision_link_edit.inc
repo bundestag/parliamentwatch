@@ -29,11 +29,19 @@ class views_handler_field_user_revision_link_edit extends views_handler_field_us
     if (!$this->access()) {
       return;
     }
-
     $text = !empty($this->options['text']) ? $this->options['text'] : t('edit');
     $this->options['alter']['make_link'] = TRUE;
-    $this->options['alter']['path'] = "user/" . $values->{$this->aliases['uid']}
-      . "/revisions/" . $values->{$this->aliases['vid']} . "/edit";
+
+    $account = $values->_field_data["vid"]["entity"];
+    if ($account->vid == $values->{$this->aliases['vid']}) {
+      $path =  "user/" . $values->{$this->aliases['uid']} . "/edit";
+    }
+    else {
+      $path = "user/" . $values->{$this->aliases['uid']}
+        . "/revisions/" . $values->{$this->aliases['vid']} . "/edit";
+    }
+
+    $this->options['alter']['path'] = $path;
     $this->options['alter']['query'] = drupal_get_destination();
 
     return $text;
