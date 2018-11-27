@@ -117,6 +117,16 @@ function pw_userarchives_views_data() {
     )
   );
 
+
+  $data['user_archive_cache']['link_to_public_profile'] = array(
+    'field' => array(
+      'title' => t('Link to public profile'),
+      'help' => t('Link to the public profile - may be the archived version of a profile'),
+      'handler' => 'views_handler_field_user_archive_profile_link'
+    )
+  );
+
+
   return $data;
 }
 

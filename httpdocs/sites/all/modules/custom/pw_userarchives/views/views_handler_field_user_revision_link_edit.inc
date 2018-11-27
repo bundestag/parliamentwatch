@@ -37,8 +37,7 @@ class views_handler_field_user_revision_link_edit extends views_handler_field_us
       $path =  "user/" . $values->{$this->aliases['uid']} . "/edit";
     }
     else {
-      $path = "user/" . $values->{$this->aliases['uid']}
-        . "/revisions/" . $values->{$this->aliases['vid']} . "/edit";
+      $path = "user/" . $values->{$this->aliases['uid']} . "/revisions/" . $values->{$this->aliases['vid']} . "/edit";
     }
 
     $this->options['alter']['path'] = $path;
