@@ -28,6 +28,23 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
   pw_userarchives_cron($account->uid, $reset_actual_profile);
 }
 
+
+/**
+ * implements hook_user_revision_delete
+ *
+ * Delete a user revision which my be stored in user archive table
+ * when an user revision gets deleted
+ *
+ * @param $revision
+ */
+function pw_userarchives_user_revision_delete($revision) {
+  db_delete('user_archive_cache')
+    ->condition('uid', $revision->uid)
+    ->condition('vid', $revision->vid)
+    ->execute();
+}
+
+
 /**
  * Implements hook_cron().
  *
