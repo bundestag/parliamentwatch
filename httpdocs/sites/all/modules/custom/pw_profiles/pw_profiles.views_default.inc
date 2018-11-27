@@ -872,5 +872,407 @@ function pw_profiles_views_default_views() {
   );
   $export['politicians'] = $view;
 
+  $view = new view();
+  $view->name = 'pw_admin_user_revisionen';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'user_revision';
+  $view->human_name = 'PW Admin User Revisionen';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'PW Admin User Revisionen';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    51622513 => '51622513',
+  );
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '30';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'vid' => 'vid',
+    'timestamp' => 'timestamp',
+    'field_user_parliament-revision_id' => 'field_user_parliament-revision_id',
+    'field_user_party-revision_id' => 'field_user_party-revision_id',
+    'field_user_fraction-revision_id' => 'field_user_fraction-revision_id',
+    'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
+    'edit_revision_1' => 'edit_revision_1',
+    'revert_revision' => 'revert_revision',
+    'delete_revision' => 'delete_revision',
+    'user_role' => 'user_role',
+    'fraction_name' => 'fraction_name',
+    'parliament_name' => 'parliament_name',
+    'nothing' => 'nothing',
+    'ctools_dropdown' => 'ctools_dropdown',
+  );
+  $handler->display->display_options['style_options']['default'] = 'vid';
+  $handler->display->display_options['style_options']['info'] = array(
+    'vid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'timestamp' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_parliament-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_party-revision_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fraction-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_constituency-revision_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_revision_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'revert_revision' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'delete_revision' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'user_role' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'fraction_name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'parliament_name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'ctools_dropdown' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Feld: User revision: Vid */
+  $handler->display->display_options['fields']['vid']['id'] = 'vid';
+  $handler->display->display_options['fields']['vid']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['vid']['field'] = 'vid';
+  /* Feld: User revision: Erstellungsdatum */
+  $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
+  $handler->display->display_options['fields']['timestamp']['date_format'] = 'long';
+  $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
+  /* Feld: Benutzer (Historische Daten): Parlament */
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['field'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Partei */
+  $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['field'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_party-revision_id']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Fraktion */
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['id'] = 'field_user_fraction-revision_id';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['table'] = 'field_revision_field_user_fraction';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['field'] = 'field_user_fraction-revision_id';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Wahlkreis */
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
+  /* Feld: User revision: ‚Bearbeiten‘-Link */
+  $handler->display->display_options['fields']['edit_revision_1']['id'] = 'edit_revision_1';
+  $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['edit_revision_1']['field'] = 'edit_revision';
+  $handler->display->display_options['fields']['edit_revision_1']['exclude'] = TRUE;
+  /* Feld: User revision: ‚Zurück‘-Link */
+  $handler->display->display_options['fields']['revert_revision']['id'] = 'revert_revision';
+  $handler->display->display_options['fields']['revert_revision']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['revert_revision']['field'] = 'revert_revision';
+  $handler->display->display_options['fields']['revert_revision']['exclude'] = TRUE;
+  /* Feld: User revision: Link löschen */
+  $handler->display->display_options['fields']['delete_revision']['id'] = 'delete_revision';
+  $handler->display->display_options['fields']['delete_revision']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['delete_revision']['field'] = 'delete_revision';
+  $handler->display->display_options['fields']['delete_revision']['exclude'] = TRUE;
+  /* Feld: PW User archive: Benutzerrolle */
+  $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
+  $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['fields']['user_role']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['user_role']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['user_role']['alter']['text'] = '<li>[user_role]</li>';
+  /* Feld: PW User archive: Fraction name */
+  $handler->display->display_options['fields']['fraction_name']['id'] = 'fraction_name';
+  $handler->display->display_options['fields']['fraction_name']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['fraction_name']['field'] = 'fraction_name';
+  $handler->display->display_options['fields']['fraction_name']['label'] = 'Fraktion';
+  $handler->display->display_options['fields']['fraction_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['fraction_name']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['fraction_name']['alter']['text'] = '<li>[fraction_name]</li>';
+  $handler->display->display_options['fields']['fraction_name']['element_label_colon'] = FALSE;
+  /* Feld: PW User archive: Parliament name */
+  $handler->display->display_options['fields']['parliament_name']['id'] = 'parliament_name';
+  $handler->display->display_options['fields']['parliament_name']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['parliament_name']['field'] = 'parliament_name';
+  $handler->display->display_options['fields']['parliament_name']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['parliament_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['parliament_name']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['parliament_name']['alter']['text'] = '<li>[parliament_name]</li>';
+  $handler->display->display_options['fields']['parliament_name']['element_label_colon'] = FALSE;
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Öffentliches Profil';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '<ul>
+[user_role]
+[fraction_name]
+[parliament_name]
+</ul>';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Optionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'edit_revision_1' => 'edit_revision_1',
+    'revert_revision' => 'revert_revision',
+    'delete_revision' => 'delete_revision',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
+  /* Kontextfilter: Benutzer: Uid */
+  $handler->display->display_options['arguments']['uid']['id'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['table'] = 'users';
+  $handler->display->display_options['arguments']['uid']['field'] = 'uid';
+  $handler->display->display_options['arguments']['uid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['uid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['uid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['uid']['title'] = 'Revisionen für %1';
+  $handler->display->display_options['arguments']['uid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['uid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['uid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['uid']['summary_options']['items_per_page'] = '25';
+  /* Filterkriterium: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
+  $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['operator_id'] = 'field_user_fraction_tid_op';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['label'] = 'Fraktion';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['operator'] = 'field_user_fraction_tid_op';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['identifier'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
+  /* Filterkriterium: Benutzer (Historische Daten): Partei (field_user_party) */
+  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'user/%/revisions';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'Revisionen';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $translatables['pw_admin_user_revisionen'] = array(
+    t('Master'),
+    t('PW Admin User Revisionen'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('nächste Seite ›'),
+    t('letzte Seite »'),
+    t('Vid'),
+    t('Erstellungsdatum'),
+    t('Parlament'),
+    t('Partei'),
+    t('Fraktion'),
+    t('Wahlkreis'),
+    t('‚Bearbeiten‘-Link'),
+    t('‚Zurück‘-Link'),
+    t('Link löschen'),
+    t('Benutzerrolle'),
+    t('<li>[user_role]</li>'),
+    t('<li>[fraction_name]</li>'),
+    t('<li>[parliament_name]</li>'),
+    t('Öffentliches Profil'),
+    t('<ul>
+[user_role]
+[fraction_name]
+[parliament_name]
+</ul>'),
+    t('Optionen'),
+    t('Alle'),
+    t('Revisionen für %1'),
+    t('Page'),
+  );
+  $export['pw_admin_user_revisionen'] = $view;
+
   return $export;
 }
