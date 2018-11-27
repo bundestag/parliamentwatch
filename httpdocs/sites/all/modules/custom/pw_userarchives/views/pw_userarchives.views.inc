@@ -116,5 +116,21 @@ function pw_userarchives_views_data() {
       'handler'=> 'views_handler_filter_boolean_operator'
     )
   );
+
   return $data;
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function pw_userarchives_views_data_alter(&$data) {
+  // Alter edit user revision link
+  if (isset($data['user_revision']['edit_revision'])) {
+    $data['user_revision']['edit_revision'] = array(
+      'field' => array(
+        'handler' => 'views_handler_field_user_revision_link_edit',
+      ),
+    );
+  }
+
 }
