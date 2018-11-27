@@ -528,3 +528,14 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
     pw_userarchives_cron($uid, FALSE);
   }
 }
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_userarchives_views_api() {
+  return array(
+    'api' => '3',
+    'path' => drupal_get_path('module', 'pw_userarchives') . '/views',
+  );
+}
