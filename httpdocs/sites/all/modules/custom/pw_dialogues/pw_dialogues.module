@@ -790,29 +790,30 @@ function pw_dialogues_recent_block() {
   $server->options['excerpt'] = FALSE;
   $server->options['retrieve_data'] = FALSE;
 
-  $response = pw_dialogues_by_parliament_query($term)
+  $today = new DateTime();
+  $election_date = pw_parliaments_election_date($term);
+  $start_date = pw_parliaments_start_date($term);
+  $before_election = ($today < max($election_date, $start_date)) ? 1 : 0;
+
+  $response = pw_dialogues_by_parliament_query($term, $before_election)
     ->condition('comment_count', 0, '>')
     ->sort('created', 'DESC')
     ->range(0, 4)
     ->execute();
 
   if ($response['result count'] > 0) {
-    $today = new DateTime();
-    $election_date = pw_parliaments_election_date($term);
-    $before_election = ($today < $election_date) ? 1 : 0;
-
     $nodes = node_load_multiple(array_keys($response['results']));
-    $inline_js = 'window.dialogues = ' . drupal_json_encode(pw_dialogues_topics_by_parliament($term)) . ';';
-    $questions = pw_dialogues_by_parliament_query($term)->execute()['result count'];
-    $answers = pw_dialogues_answered_questions_by_parliament($term);
+    $inline_js = 'window.dialogues = ' . drupal_json_encode(pw_dialogues_topics_by_parliament($term, $before_election)) . ';';
+    $questions = pw_dialogues_by_parliament_query($term, $before_election)->execute()['result count'];
+    $answers = pw_dialogues_answered_questions_by_parliament($term, $before_election);
     $block['content'] = node_view_multiple($nodes, 'tile');
     $block['content']['stats'] = [
       '#theme' => 'dialogues_stats',
       '#questions' => $questions,
       '#answers' => $answers,
       '#answer_ratio' => round(100 * $answers / $questions, 0),
-      '#answer_ratio_by_party' => pw_dialogues_party_ratios_by_parliament($term),
-      '#average_response_time' => round(pw_dialogues_average_response_time_by_parliament($term) / 86400),
+      '#answer_ratio_by_party' => pw_dialogues_party_ratios_by_parliament($term, $before_election),
+      '#average_response_time' => round(pw_dialogues_average_response_time_by_parliament($term, $before_election) / 86400),
       '#before_election' => $before_election,
       '#weight' => -5,
     ];
@@ -916,22 +917,43 @@ function pw_dialogues_by_user_revision_query($account) {
  * @param object $term
  *   The parliament term.
  *
+ * @param bool $before_election
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
+ *
  * @return SearchApiQuery
  *   The query object.
  *
- * @throws SearchApiException
- *   If the index is unknown or disabled, or some other error was encountered.
+ * @throws SearchApiException If the index is unknown or disabled, or some other error was encountered.
  */
-function pw_dialogues_by_parliament_query($term) {
-  $today = new DateTime();
-  $election_date = pw_parliaments_election_date($term);
-
+function pw_dialogues_by_parliament_query($term, $before_election) {
   $q = search_api_query('dialogue_index')
     ->condition('status', NODE_PUBLISHED)
     ->condition('field_parliament', $term->tid)
-    ->condition('field_dialogue_before_election', ($today < $election_date) ? 1 : 0);
+    ->condition('field_dialogue_before_election', $before_election);
 
   return $q;
+}
+
+/**
+ * Returns whether the question has been posted before the election.
+ *
+ * @param $node
+ *   The dialogue node.
+ *
+ * @return bool
+ *   TRUE if the question has been posted before the election, FALSE otherwise.
+ */
+function pw_dialogues_before_election($node) {
+  $before_election = NULL;
+
+  $items = field_get_items('node', $node, 'field_dialogue_before_election');
+
+  if ($items) {
+    $before_election = (bool) $items[0]['value'];
+  }
+
+  return $before_election;
 }
 
 /**
@@ -965,7 +987,8 @@ function pw_dialogues_answers($node) {
  * @param object $parliament_term
  *   The parliament term.
  * @param bool $before_election
- *   Whether dialogues before or after the election should be included.
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
  *
  * @return SelectQuery
  *   The query object.
@@ -1009,15 +1032,14 @@ function pw_dialogues_average_response_time_by_account($account) {
  *
  * @param object $term
  *   The parliament term.
+ * @param bool $before_election
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
  *
  * @return int
  *   The average response time in seconds.
  */
-function pw_dialogues_average_response_time_by_parliament($term) {
-  $today = new DateTime();
-  $election_date = pw_parliaments_election_date($term);
-  $before_election = ($today < $election_date) ? 1 : 0;
-
+function pw_dialogues_average_response_time_by_parliament($term, $before_election) {
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
   $q->join('comment', 'c', 'n.nid = c.nid');
   $q->addTag('ignore_standard_replies');
@@ -1032,14 +1054,14 @@ function pw_dialogues_average_response_time_by_parliament($term) {
  * @param object $term
  *   The parliament term.
  *
+ * @param bool $before_election
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
+ *
  * @return int
  *   The number of answered questions.
  */
-function pw_dialogues_answered_questions_by_parliament($term) {
-  $today = new DateTime();
-  $election_date = pw_parliaments_election_date($term);
-  $before_election = ($today < $election_date) ? 1 : 0;
-
+function pw_dialogues_answered_questions_by_parliament($term, $before_election) {
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
   $q->join('comment', 'c', 'n.nid = c.nid');
   $q->addTag('ignore_standard_replies');
@@ -1051,7 +1073,7 @@ function pw_dialogues_answered_questions_by_parliament($term) {
 /**
  * Returns number of questions by topic for the given user.
  *
- * @param type $account
+ * @param object $account
  *   The account object.
  *
  * @return array
@@ -1079,15 +1101,14 @@ function pw_dialogues_topics_by_user_revision($account) {
  *
  * @param object $term
  *   The parliament term.
+ * @param $before_election
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
  *
  * @return array
  *   An associative array with topics as key and numbers as values.
  */
-function pw_dialogues_topics_by_parliament($term) {
-  $today = new DateTime();
-  $election_date = pw_parliaments_election_date($term);
-  $before_election = ($today < $election_date) ? 1 : 0;
-
+function pw_dialogues_topics_by_parliament($term, $before_election) {
   $q = pw_dialogues_aggregate_base_query($term, $before_election);
   $q->join('field_data_field_dialogue_topic', 't', 'n.nid = t.entity_id');
   $q->join('taxonomy_term_data', 'td', 't.field_dialogue_topic_tid = td.tid');
@@ -1104,17 +1125,19 @@ function pw_dialogues_topics_by_parliament($term) {
  *
  * @param object $term
  *   The parliament term.
+ * @param bool $before_election
+ *   A boolean indicating whether the dialogues before or after the election
+ *   should be loaded.
+ *
+ * @return array
+ *   An associative array
  */
-function pw_dialogues_party_ratios_by_parliament($term) {
+function pw_dialogues_party_ratios_by_parliament($term, $before_election) {
 
   $party_ratios = [
     'in_previous_parliament' => [],
     'not_in_previous_parliament' => []
   ];
-
-  $today = new DateTime();
-  $election_date = pw_parliaments_election_date($term);
-  $before_election = ($today < $election_date) ? 1 : 0;
 
   $parties_in_previous_parliament = [];
   if ($before_election && $field_previous_parliament = field_get_items('taxonomy_term', $term, 'field_parliament_previous')){

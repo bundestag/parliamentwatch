@@ -797,6 +797,7 @@ function pw_vote_by_user_revision_query($account, $node_target_type = 'poll') {
   $q->condition('n.status', NODE_PUBLISHED);
   $q->condition('u.field_vote_user_target_id', $account->uid);
   $q->condition('n_target.type', $node_target_type);
+  $q->condition('n_target.status', NODE_PUBLISHED);
   $q->condition('p.field_parliament_tid', pw_profiles_parliament($account)->tid);
 
   return $q;
