@@ -1097,11 +1097,13 @@ function pw_profiles_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
-  /* Feld: User revision: ‚Bearbeiten‘-Link */
+  /* Feld: User revision:  */
   $handler->display->display_options['fields']['edit_revision_1']['id'] = 'edit_revision_1';
   $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
   $handler->display->display_options['fields']['edit_revision_1']['field'] = 'edit_revision';
+  $handler->display->display_options['fields']['edit_revision_1']['label'] = '‚Bearbeiten‘-Link';
   $handler->display->display_options['fields']['edit_revision_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['edit_revision_1']['text'] = 'Bearbeiten';
   /* Feld: User revision: ‚Zurück‘-Link */
   $handler->display->display_options['fields']['revert_revision']['id'] = 'revert_revision';
   $handler->display->display_options['fields']['revert_revision']['table'] = 'user_revision';
@@ -1112,6 +1114,14 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['delete_revision']['table'] = 'user_revision';
   $handler->display->display_options['fields']['delete_revision']['field'] = 'delete_revision';
   $handler->display->display_options['fields']['delete_revision']['exclude'] = TRUE;
+  /* Feld: PW User archive: Link to public profile */
+  $handler->display->display_options['fields']['link_to_public_profile']['id'] = 'link_to_public_profile';
+  $handler->display->display_options['fields']['link_to_public_profile']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['link_to_public_profile']['field'] = 'link_to_public_profile';
+  $handler->display->display_options['fields']['link_to_public_profile']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['link_to_public_profile']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['link_to_public_profile']['alter']['text'] = '<li>[link_to_public_profile]</li>';
+  $handler->display->display_options['fields']['link_to_public_profile']['text'] = 'Profil ansehen';
   /* Feld: PW User archive: Benutzerrolle */
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
@@ -1143,6 +1153,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['label'] = 'Öffentliches Profil';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = '<ul>
+[link_to_public_profile]
 [user_role]
 [fraction_name]
 [parliament_name]
@@ -1255,14 +1266,19 @@ function pw_profiles_views_default_views() {
     t('Fraktion'),
     t('Wahlkreis'),
     t('‚Bearbeiten‘-Link'),
+    t('Bearbeiten'),
     t('‚Zurück‘-Link'),
     t('Link löschen'),
+    t('Link to public profile'),
+    t('<li>[link_to_public_profile]</li>'),
+    t('Profil ansehen'),
     t('Benutzerrolle'),
     t('<li>[user_role]</li>'),
     t('<li>[fraction_name]</li>'),
     t('<li>[parliament_name]</li>'),
     t('Öffentliches Profil'),
     t('<ul>
+[link_to_public_profile]
 [user_role]
 [fraction_name]
 [parliament_name]
