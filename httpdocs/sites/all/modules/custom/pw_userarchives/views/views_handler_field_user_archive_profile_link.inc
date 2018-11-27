@@ -31,7 +31,8 @@ class views_handler_field_user_archive_profile_link extends views_handler_field_
     $text = !empty($this->options['text']) ? $this->options['text'] : t('view');
     $this->options['alter']['make_link'] = TRUE;
 
-    $account = $values->_field_data["vid"]["entity"];
+    $account = user_load($values->{$this->aliases['uid']});
+    // check for the current revision
     if ($account->vid == $values->{$this->aliases['vid']}) {
       $path =  "user/" . $values->{$this->aliases['uid']};
     }
