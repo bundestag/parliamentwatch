@@ -32,23 +32,26 @@ function pw_userarchives_menu() {
     'weight' => 0
   );
   $items['user/%user_revision/revisions/%/edit/view'] = array(
-    'title' => 'Alle Profil-Versionen',
-    'type' => MENU_LOCAL_TASK,
-    'weight' => 10,
-    'load arguments' => array(3),
-    'page callback' => 'pw_userarchives_goto_view_revision',
-    'access callback'=> 'pw_userarchives_user_revision_admin_access',
-    'access arguments' => array(1),
-  );
-  $items['user/%user_revision/revisions/%/edit/all-revisions'] = array(
     'title' => 'Archiv-Profil Ansicht',
     'type' => MENU_LOCAL_TASK,
     'weight' => -10,
     'load arguments' => array(3),
-    'page callback' => 'pw_userarchives_edit_revision_page_callback',
+    'page callback' => 'pw_userarchives_goto_view_revision',
+    'page arguments' => array(1),
     'access callback'=> 'pw_userarchives_user_revision_admin_access',
-    'file' => 'pw_userarchives.admin.inc',
     'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+  $items['user/%user_revision/revisions/%/edit/all-revisions'] = array(
+    'title' => 'Alle Profil-Versionen',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'load arguments' => array(3),
+    'page callback' => 'pw_userarchives_all_revision_page_callback',
+    'page arguments' => array(1),
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
   );
 
   $items['profile/%pw_profiles_username/archive/%/view'] = [
@@ -60,25 +63,25 @@ function pw_userarchives_menu() {
   $items['profile/%pw_profiles_username/archive/%pw_user_revision/edit'] = [
     'title' => 'Archiv-Profil bearbeiten',
     'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
     'load arguments' => array(1),
     'page callback' => 'pw_userarchives_edit_revision_page_callback',
     'page arguments' => array(3),
     'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(3),
     'file' => 'pw_userarchives.admin.inc',
-    'weight' => 10
   ];
 
   $items['profile/%pw_profiles_username/archive/%pw_user_revision/all-revisions'] = [
     'title' => 'Alle Profil-Versionen',
     'type' => MENU_LOCAL_TASK,
+    'weight' => 50,
     'load arguments' => array(1),
     'page callback' => 'pw_userarchives_all_revision_page_callback',
     'page arguments' => array(3),
     'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(3),
     'file' => 'pw_userarchives.admin.inc',
-    'weight' => 50,
   ];
 
 
