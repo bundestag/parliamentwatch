@@ -296,6 +296,9 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       search_api_track_item_change('user_revision', array_intersect($tracked_items, $items_to_track_after_update));
       search_api_track_item_delete('user_revision', array_diff($tracked_items, $items_to_track_after_update));
     }
+
+    // finally check for outdated revisions which can be deleted
+    pw_delete_old_user_revisions($uid);
   }
   catch (Exception $e) {
     $transaction->rollback();
