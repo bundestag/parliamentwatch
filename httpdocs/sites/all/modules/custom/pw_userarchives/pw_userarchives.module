@@ -60,6 +60,33 @@ function pw_userarchives_node_delete($node) {
 }
 
 /**
+ * Implements hook_comment_insert().
+ */
+function pw_userarchives_comment_insert($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_update().
+ */
+function pw_userarchives_comment_update($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_delete().
+ */
+function pw_userarchives_comment_delete($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
  * Implements hook_user_revision_delete().
  *
  * Delete a user revision which may be stored in user archive table
