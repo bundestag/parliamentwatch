@@ -436,8 +436,19 @@ function pw_userarchives_check_refresh_profiles($parliament) {
 
 /**
  * Deletes old user revisions from database.
+ *
+ *  * @param int $uid
+ *   The user id.
+ *
+ * @return bool
+ *   False if uid is zero or not an integer.
  */
-function pw_delete_old_user_revisions($uid = NULL) {
+function pw_delete_old_user_revisions($uid) {
+
+  if (!is_int($uid) && $uid > 0) {
+    return FALSE;
+  }
+
   $days_buffer = 0;
   $time_buffer = time() - (86400 * $days_buffer);
 
@@ -450,9 +461,7 @@ function pw_delete_old_user_revisions($uid = NULL) {
   $query->join('taxonomy_term_data', 'rn', 'rn.tid=ro.field_user_roles_for_view_mode_s_tid');
   $query->leftJoin('user_archive_cache', 'uac', 'ur.uid = uac.uid AND ur.vid = uac.vid');
   $query->join('users', 'u', 'ur.uid = u.uid AND ur.vid != u.vid');
-  if ($uid !== NULL) {
-    $query->condition('ur.uid', $uid);
-  }
+  $query->condition('ur.uid', $uid);
   $query->condition('ur.timestamp', $time_buffer, '<');
   $query->condition('rn.name', 'Politician');
   $query->isNull('id');
@@ -473,6 +482,8 @@ function pw_delete_old_user_revisions($uid = NULL) {
       ':days_buffer' => $days_buffer
     ));
   }
+
+  return TRUE;
 }
 
 /**
