@@ -441,11 +441,11 @@ function pw_userarchives_check_refresh_profiles($parliament) {
  *   The user id.
  *
  * @return bool
- *   False if uid is zero or not an integer.
+ *   False if uid is zero or not a numeric value.
  */
 function pw_delete_old_user_revisions($uid) {
 
-  if (!is_int($uid) && $uid > 0) {
+  if (!is_numeric($uid) || $uid == 0) {
     return FALSE;
   }
 
