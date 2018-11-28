@@ -28,12 +28,29 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
   pw_userarchives_cron($account->uid, $reset_actual_profile);
 }
 
+/**
+ * Implements hook_node_insert().
+ */
+function pw_userarchives_node_insert($node) {
+  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
 
 /**
- * implements hook_user_revision_delete
+ * Implements hook_node_update().
+ */
+function pw_userarchives_node_update($node) {
+  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_user_revision_delete().
  *
- * Delete a user revision which my be stored in user archive table
- * when an user revision gets deleted
+ * Delete a user revision which may be stored in user archive table
+ * when a user revision gets deleted.
  *
  * @param $revision
  */
@@ -43,7 +60,6 @@ function pw_userarchives_user_revision_delete($revision) {
     ->condition('vid', $revision->vid)
     ->execute();
 }
-
 
 /**
  * Implements hook_cron().
