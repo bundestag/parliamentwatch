@@ -18,7 +18,7 @@ function pw_userarchives_menu() {
     'load arguments' => array(3),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pw_userarchives_user_revision_edit_form', 1),
-    'access callback' => 'pw_userarchives_user_revision_edit_link_access',
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(1),
     'file' => 'pw_userarchives.admin.inc',
   );
@@ -37,7 +37,7 @@ function pw_userarchives_menu() {
     'weight' => 10,
     'load arguments' => array(3),
     'page callback' => 'pw_userarchives_goto_view_revision',
-    'access callback'=> 'pw_userarchives_user_revision_edit_link_access',
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(1),
   );
   $items['user/%user_revision/revisions/%/edit/all-revisions'] = array(
@@ -46,7 +46,7 @@ function pw_userarchives_menu() {
     'weight' => -10,
     'load arguments' => array(3),
     'page callback' => 'pw_userarchives_edit_revision_page_callback',
-    'access callback'=> 'pw_userarchives_user_revision_edit_link_access',
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
     'file' => 'pw_userarchives.admin.inc',
     'access arguments' => array(1),
   );
@@ -63,7 +63,7 @@ function pw_userarchives_menu() {
     'load arguments' => array(1),
     'page callback' => 'pw_userarchives_edit_revision_page_callback',
     'page arguments' => array(3),
-    'access callback' => 'pw_userarchives_user_revision_edit_link_access',
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(3),
     'file' => 'pw_userarchives.admin.inc',
     'weight' => 10
@@ -75,7 +75,7 @@ function pw_userarchives_menu() {
     'load arguments' => array(1),
     'page callback' => 'pw_userarchives_all_revision_page_callback',
     'page arguments' => array(3),
-    'access callback' => 'pw_userarchives_user_revision_edit_link_access',
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(3),
     'file' => 'pw_userarchives.admin.inc',
     'weight' => 50,
@@ -90,7 +90,7 @@ function pw_userarchives_menu() {
 /**
  * Access callback.
  */
-function pw_userarchives_user_revision_edit_link_access($account) {
+function pw_userarchives_user_revision_admin_access($account) {
   global $user;
 
   // Checks if user has permissions.
