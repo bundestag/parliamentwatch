@@ -18,10 +18,73 @@ function pw_userarchives_menu() {
     'load arguments' => array(3),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pw_userarchives_user_revision_edit_form', 1),
-    'access callback' => 'pw_userarchives_user_revision_edit_link_access',
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
     'access arguments' => array(1),
     'file' => 'pw_userarchives.admin.inc',
   );
+
+  /**
+   * Add tabs on profile archive page and user revision edit form
+   */
+  $items['user/%user_revision/revisions/%/edit/default'] = array(
+    'title' => 'Archiv-Profil bearbeiten',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 0
+  );
+  $items['user/%user_revision/revisions/%/edit/view'] = array(
+    'title' => 'Archiv-Profil Ansicht',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => -10,
+    'load arguments' => array(3),
+    'page callback' => 'pw_userarchives_goto_view_revision',
+    'page arguments' => array(1),
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+  $items['user/%user_revision/revisions/%/edit/all-revisions'] = array(
+    'title' => 'Alle Profil-Versionen',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'load arguments' => array(3),
+    'page callback' => 'pw_userarchives_all_revision_page_callback',
+    'page arguments' => array(1),
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+
+  $items['profile/%pw_profiles_username/archive/%/view'] = [
+    'title' => 'Archiv-Profil Ansicht',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10
+  ];
+
+  $items['profile/%pw_profiles_username/archive/%pw_user_revision/edit'] = [
+    'title' => 'Archiv-Profil bearbeiten',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'load arguments' => array(1),
+    'page callback' => 'pw_userarchives_edit_revision_page_callback',
+    'page arguments' => array(3),
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(3),
+    'file' => 'pw_userarchives.admin.inc',
+  ];
+
+  $items['profile/%pw_profiles_username/archive/%pw_user_revision/all-revisions'] = [
+    'title' => 'Alle Profil-Versionen',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 50,
+    'load arguments' => array(1),
+    'page callback' => 'pw_userarchives_all_revision_page_callback',
+    'page arguments' => array(3),
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(3),
+    'file' => 'pw_userarchives.admin.inc',
+  ];
+
+
   return $items;
 }
 
@@ -30,7 +93,7 @@ function pw_userarchives_menu() {
 /**
  * Access callback.
  */
-function pw_userarchives_user_revision_edit_link_access($account) {
+function pw_userarchives_user_revision_admin_access($account) {
   global $user;
 
   // Checks if user has permissions.
@@ -52,6 +115,20 @@ function pw_userarchives_user_revision_edit_link_access($account) {
   return $access && ($count > 1);
 }
 
+
+/**
+ *
+ * Load a user revision by user name and vid
+ *
+ * @param int|string $vid
+ * @param string $pw_profiles_username
+ *
+ * @return object|false
+ */
+function pw_user_revision_load($vid, $pw_profiles_username) {
+  $account = pw_profiles_username_load($pw_profiles_username);
+  return user_revision_load($account->uid, $vid);
+}
 
 
 /**
