@@ -5,6 +5,90 @@
  * Includes main hooks.
  */
 
+
+
+/**
+ * Implements hook_menu().
+ */
+function pw_userarchives_menu() {
+
+  // Creates menu hook for editing user revisions.
+  $items['user/%user_revision/revisions/%/edit'] = array(
+    'title' => 'Edit this revision',
+    'load arguments' => array(3),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pw_userarchives_user_revision_edit_form', 1),
+    'access callback' => 'pw_userarchives_user_revision_edit_link_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+  return $items;
+}
+
+
+
+/**
+ * Access callback.
+ */
+function pw_userarchives_user_revision_edit_link_access($account) {
+  global $user;
+
+  // Checks if user has permissions.
+  $access = user_access('edit user revisions')
+    || user_access('edit own user revisions')
+    && $account->uid == $user->uid;
+
+  // Checks if at least 2 revisions exist.
+  $count = db_query("
+    SELECT COUNT(*) AS expression
+    FROM (
+      SELECT 1 AS expression
+      FROM user_revision ur
+      WHERE (ur.uid = {$account->uid})
+    ) subquery
+  ")->fetchField();
+
+  // Displays revisions tab only if both are true.
+  return $access && ($count > 1);
+}
+
+
+
+/**
+ * Implements hook_admin_paths().
+ */
+function pw_userarchives_admin_paths() {
+  // Enables the edit from to use admin theme.
+  if (variable_get('node_admin_theme')) {
+    $paths = array(
+      'user/*/revisions/*/edit' => TRUE,
+    );
+    return $paths;
+  }
+}
+
+
+
+/**
+ * Implements hook_permission().
+ */
+function pw_userarchives_permission() {
+
+  // Adds permission items for editing revisions.
+  return array(
+    'edit user revisions' => array(
+      'title' => t('Edit user revisions'),
+      'restrict access' => TRUE,
+    ),
+    'edit own user revisions' => array(
+      'title' => t('Edit own user revisions'),
+      'description' => t('Allow users to edit their own user revisions'),
+    ),
+  );
+}
+
+
+
 /**
  * Implements hook_entity_info_alter().
  */
@@ -538,4 +622,52 @@ function pw_userarchives_views_api() {
     'api' => '3',
     'path' => drupal_get_path('module', 'pw_userarchives') . '/views',
   );
+}
+
+
+/**
+ * Save an edited user revision. Mostly taken form User Revision Edit module
+ * ((@see _user_revision_edit_save() there)
+ *
+ * @param $revision
+ * @param $edits
+ */
+function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
+  global $user;
+
+  // Updates revision object.
+  $revision->authorid = $user->uid;
+  $revision->timestamp = REQUEST_TIME;
+
+  $picture = NULL;
+  if (isset($edits['picture_delete']) && $edits['picture_delete'] == 1) {
+    // Deletes picture from disk.
+    file_delete($revision->picture);
+    $revision->picture = 0;
+  }
+  elseif (isset($edits['picture_upload'])
+    && is_object($edits['picture_upload'])) {
+    $picture = $edits['picture_upload'];
+    $revision->picture = $picture->fid;
+  }
+  elseif (isset($revision->picture) && is_object($revision->picture)) {
+    $revision->picture = $revision->picture->fid;
+  }
+
+  // Updates the database record.
+  drupal_write_record('user_revision', $revision, 'vid');
+
+  // Uploads the picture.
+  if (is_object($picture)) {
+    file_usage_add($picture, 'user_revision', 'user', $revision->vid);
+    $revision->picture = $picture;
+  }
+
+  // Updates the FAPI fields for the selected revision and restores the user.
+  $restore = user_load($revision->uid);
+  field_attach_update('user', $revision);
+  if ($restore->vid != $revision->vid) {
+    field_attach_update('user', $restore);
+  }
+  entity_get_controller('user')->resetCache(array($revision->uid));
 }
