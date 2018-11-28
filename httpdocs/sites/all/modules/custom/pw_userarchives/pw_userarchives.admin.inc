@@ -133,3 +133,36 @@ function pw_userarchives_user_revision_edit_form_cancel_submit($form, &$form_sta
     $form_state['redirect'] = $destination["destination"];
   }
 }
+
+
+/**
+ * Page callback for the edit user revision tab on archive profile pages
+ *
+ * @param $pw_profiles_username
+ * @param $user_revision
+ */
+function pw_userarchives_edit_revision_page_callback($user_revision) {
+  drupal_goto('user/'. $user_revision->uid .'/revisions/'. $user_revision->vid .'/edit');
+}
+
+
+/**
+ * Page callback for the "All revisions" tab on archive profile pages
+ *
+ * @param $pw_profiles_username
+ * @param $user_revision
+ */
+function pw_userarchives_all_revision_page_callback($user_revision) {
+  drupal_goto('user/'. $user_revision->uid .'/revisions');
+}
+
+
+/**
+ * Page callback for the "View" tab on user revision form
+ *
+ * @param $pw_profiles_username
+ * @param $user_revision
+ */
+function pw_userarchives_goto_view_revision($user_revision) {
+  drupal_goto('profile/'. $user_revision->name .'/archive/'. $user_revision->vid);
+}

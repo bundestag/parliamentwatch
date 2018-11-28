@@ -52,6 +52,8 @@ function pw_profiles_menu() {
     'access arguments' => ['access content'],
     'type' => MENU_CALLBACK,
   ];
+
+
   return $items;
 }
 
