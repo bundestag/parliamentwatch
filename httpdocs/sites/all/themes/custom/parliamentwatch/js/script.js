@@ -2335,6 +2335,18 @@
             dynatable.sortsHeaders.appendArrowUp = SortsHeaders.appendArrowUp;
             dynatable.sortsHeaders.appendArrowDown = SortsHeaders.appendArrowDown;
             dynatable.sortsHeaders.toggleSort = SortsHeaders.toggleSort;
+
+            // sorting on mobile devices
+
+            $('#poll_detail_table_sorting').on('select2:select', function (e) {
+              var selectValue = $(this).find(':selected').data('sort-value');
+              var selectSortOrder = $(this).find(':selected').data('sort-order');
+
+              dynatable.sorts.clear();
+              dynatable.sorts.add(selectValue, selectSortOrder);
+              dynatable.process();
+            });
+
           }).dynatable({
             features: {
               perPageSelect: false,
@@ -2360,6 +2372,23 @@
               paginationGap: [1, 2, 2, 1],
             }
           })
+        });
+
+        // Sync mobile sorting-select with table-view
+        $('.table--poll-votes').bind('dynatable:afterProcess', function (event, dynatable) {
+          var sortValue = String([Object.keys(dynatable.sorts)[0]]);
+          var sortOrderInitial = dynatable.sorts[Object.keys(dynatable.sorts)[0]];
+          var sortOrderAfter = '';
+          if (sortOrderInitial == '-1') {
+            sortOrderAfter = '_dsc';
+          } else {
+            sortOrderAfter = '_asc';
+          }
+          var newSortValue = sortValue + sortOrderAfter;
+          if (windowWidth >= 768) {
+            $('select#poll_detail_table_sorting').val(newSortValue);
+            $('select#poll_detail_table_sorting').trigger('change.select2');
+          }
         });
 
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {

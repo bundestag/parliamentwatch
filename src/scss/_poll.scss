@@ -256,6 +256,17 @@
   .filterbar {
     margin-bottom: $space-large;
   }
+  .poll_detail__table__sorting {
+    background: $beige;
+    padding-bottom: $space;
+    @include breakpoint($breakpoint-s-min) {
+      display: none;
+    }
+    .select2-container .select2-selection,
+    .select2-container .select2-selection--single .select2-selection__arrow {
+      border-color: $darkBeige;
+    }
+  }
   .poll_detail__table {
     background: $white;
     @include grid-column(12);
@@ -340,10 +351,12 @@
       padding-top: $space-xsmall;
       padding-bottom: $space-xsmall;
       border-top: 1px solid $beige;
+      text-align: left !important;
       @include breakpoint($breakpoint-s-min) {
         margin-left: 0;
         padding-right: $space;
         padding-left: 0;
+        text-align: right !important;
       }
       .icon {
         font-size: .8em;
