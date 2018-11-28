@@ -32,7 +32,7 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
  * Implements hook_node_insert().
  */
 function pw_userarchives_node_insert($node) {
-  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
     pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
@@ -41,7 +41,7 @@ function pw_userarchives_node_insert($node) {
  * Implements hook_node_update().
  */
 function pw_userarchives_node_update($node) {
-  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
     pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
@@ -54,7 +54,7 @@ function pw_userarchives_node_update($node) {
  * drupal_register_shutdown_function.
  */
 function pw_userarchives_node_delete($node) {
-  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
     drupal_register_shutdown_function(pw_userarchives_cron, $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
