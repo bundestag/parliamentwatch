@@ -67,7 +67,7 @@ function pw_cron_export_submissions_cron() {
  *   The webform nid.
  *
  * @return boolean
- *   FALSE if filepath is not preparable for json exports, otherwise TRUE
+ *   TRUE if file(s) were exported, otherwise FALSE.
  *
  */
 
@@ -116,7 +116,7 @@ function pw_export_submissions($nid){
       return FALSE;
     }
 
-    // write submissions to json file
+    // prepare data fpr export
     foreach($submissions as $submission){
       $submission->data[$cid_status_field][0] = 'exported';
       $url_alias = drupal_get_path_alias($submission->data[$cid_node_path_field][0]);
@@ -138,9 +138,10 @@ function pw_export_submissions($nid){
       foreach($submissions as $submission){
         webform_submission_update($webform, $submission);
       }
+      return TRUE;
     }
   }
-  return TRUE;
+  return FALSE;
 }
 
 /**
@@ -152,15 +153,14 @@ function pw_export_submissions($nid){
  * @param int $delete_general
  *   Days after submissions should be deleted in general.
  *
- * @param int $delete_exported
+ * @param int|bool $delete_exported
  *   Days after exported submissions should be deleted.
  *
  */
 
 function pw_delete_submissions($nid, $delete_general, $delete_exported=FALSE) {
 
-  if (!$delete_exported) {
-      // calculate timestamps for database query
+  // calculate timestamps for database query
   if ($delete_exported) {
     $timestamp_exported = time() - $delete_exported * 86400;
   }
@@ -168,10 +168,6 @@ function pw_delete_submissions($nid, $delete_general, $delete_exported=FALSE) {
     $timestamp_exported = time() - $delete_general * 86400;
   }
 
-  $timestamp_general = time() - $delete_general * 86400;
-  }
-
-  $timestamp_exported = time() - $delete_exported * 86400;
   $timestamp_general = time() - $delete_general * 86400;
 
   // query for all submissions to be deleted
