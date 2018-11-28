@@ -47,6 +47,19 @@ function pw_userarchives_node_update($node) {
 }
 
 /**
+ * Implements hook_node_delete().
+ *
+ * Beware that hook_node_delete is called before the node is deleted from the
+ * database. Hence execution of pw_userarchives_cron needs to be deferred via
+ * drupal_register_shutdown_function.
+ */
+function pw_userarchives_node_delete($node) {
+  if ($node->type == 'dialogue' && isset($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    drupal_register_shutdown_function(pw_userarchives_cron, $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
  * Implements hook_user_revision_delete().
  *
  * Delete a user revision which may be stored in user archive table
