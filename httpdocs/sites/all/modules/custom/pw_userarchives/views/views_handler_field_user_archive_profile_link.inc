@@ -37,7 +37,7 @@ class views_handler_field_user_archive_profile_link extends views_handler_field_
       $path =  "user/" . $values->{$this->aliases['uid']};
     }
     else {
-      $path = "user/" . $values->{$this->aliases['uid']} . "/revisions/" . $values->{$this->aliases['vid']} . "/view";
+      $path = 'profile/'. $account->name .'/archive/'. $values->{$this->aliases['vid']};
     }
 
     $this->options['alter']['path'] = $path;
