@@ -29,6 +29,21 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
 }
 
 /**
+ * Implements hook_user_revision_delete().
+ *
+ * Delete a user revision which may be stored in user archive table
+ * when a user revision gets deleted.
+ *
+ * @param $revision
+ */
+function pw_userarchives_user_revision_delete($revision) {
+  db_delete('user_archive_cache')
+    ->condition('uid', $revision->uid)
+    ->condition('vid', $revision->vid)
+    ->execute();
+}
+
+/**
  * Implements hook_node_insert().
  */
 function pw_userarchives_node_insert($node) {
@@ -84,21 +99,6 @@ function pw_userarchives_comment_delete($comment) {
   if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
     pw_userarchives_cron($comment->uid);
   }
-}
-
-/**
- * Implements hook_user_revision_delete().
- *
- * Delete a user revision which may be stored in user archive table
- * when a user revision gets deleted.
- *
- * @param $revision
- */
-function pw_userarchives_user_revision_delete($revision) {
-  db_delete('user_archive_cache')
-    ->condition('uid', $revision->uid)
-    ->condition('vid', $revision->vid)
-    ->execute();
 }
 
 /**
