@@ -198,3 +198,11 @@ function pw_userarchives_update_7108() {
     throw $e;
   }
 }
+
+
+/**
+ * Deactivate and uninstall user_revision_edit module as it's logic is merged into pw_userarchives module */
+function pw_userarchives_update_7109() {
+  module_disable(['user_revision_edit']);
+  drupal_uninstall_modules(array('user_revision_edit'));
+}
