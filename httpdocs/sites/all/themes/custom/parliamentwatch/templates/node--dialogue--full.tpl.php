@@ -94,9 +94,9 @@
         <a href="<?php print render($content['user_url']); ?>" class="btn btn--small btn--mobile-block"><?php print t('Open profile'); ?></a>
       </div>
     </div>
-    <h1 class="question__profile_teaser__title"><?php print t('Question from'); ?> <span class="robots-nocontent"><?php print render($content['field_dialogue_sender_name']); ?></span> <?php print t('to'); ?> <?php print render($content['user_display_name']); ?><?php if (!empty($content['field_dialogue_topic'])): ?> <?php print t('regarding'); ?> <?php print render($content['field_dialogue_topic']); ?><?php endif; ?></h1>
+    <h1 class="question__profile_teaser__title"><?php print t('Question from'); ?> <span class="robots-nocontent"><?php print render($content['field_dialogue_sender_name']); ?></span> <?php print t('to'); ?> <?php print render($content['user_display_name']); ?><?php if (!empty($field_dialogue_topic[0])): ?> <?php print t('regarding'); ?> <?php print check_plain($field_dialogue_topic[0]['taxonomy_term']->name); ?><?php endif; ?></h1>
     <div class="question__meta tile__meta">
-      <a href="#" class="quesion__meta__tag tile__meta__tag">#<?php print render($content['field_dialogue_topic']); ?></a>
+      <?php print render($content['field_dialogue_topic']); ?>
       <span class="question__meta__date tile__meta__date"><?php print format_date($node->created, $type = 'custom', $format = 'd. M. Y - H:i'); ?></span>
     </div>
   </div>

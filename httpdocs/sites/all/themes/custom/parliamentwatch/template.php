@@ -372,11 +372,21 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     $path = 'profiles/' . $variables['field_user_parliament'][0]['tid'] . '/deputies';
   }
 
-  if (isset($variables['field_user_party']) && $variables['elements']['#view_mode'] == 'full' && isset($path)) {
-    $text = $variables['field_user_party'][0]['taxonomy_term']->name;
-    $options = ['query' => ['party[]' => $variables['field_user_party'][0]['tid']]];
+  if ($variables['elements']['#view_mode'] == 'full' && isset($path)) {
+    if (isset($variables['field_user_party'])) {
+      $text = $variables['field_user_party'][0]['taxonomy_term']->name;
+      $options = ['query' => ['party[]' => $variables['field_user_party'][0]['tid']]];
 
-    $variables['user_profile']['field_user_party'][0]['#markup'] = l($text, $path, $options);
+      $variables['user_profile']['field_user_party'][0]['#markup'] = l($text, $path, $options);
+    }
+    else {
+      $variables['user_profile']['field_user_party'][0]['#markup'] = 'parteilos';
+    }
+
+  }
+
+  if (isset($account->field_user_retired_reason) && !empty($account->field_user_retired_reason)) {
+    $variables['field_user_retired_reason'] = $account->field_user_retired_reason["und"][0]["safe_value"];
   }
 
   if (isset($variables['field_user_constituency']) && $variables['elements']['#view_mode'] == 'full' && isset($path)) {
@@ -481,6 +491,20 @@ function parliamentwatch_preprocess_field(&$variables) {
       $item['#options']['attributes']['title'] = t('More blog articles from the category “!name”', ['!name' => $item['#title']]);
     }
   }
+
+  if ($element['#field_name'] == 'field_dialogue_topic') {
+    $parliament = pw_globals_parliament($element['#object']);
+    $role_name = pw_dialogues_before_election($element['#object']) ? 'candidates' : 'deputies';
+    foreach ($variables['items'] as &$item) {
+      $item['#href'] = url("dialogues/$parliament->tid/$role_name");
+      $item['#title'] = '# ' . $item['#title'];
+      $item['#options']['query'] = ['topic' => [$item['#options']['entity']->tid]];
+      $item['#options']['attributes']['title'] = t('More contents on the topic “!name”', ['!name' => $item['#title']]);
+      $item['#options']['attributes']['class'][] = 'question__meta__tag';
+      $item['#options']['attributes']['class'][] = 'tile__meta__tag';
+    }
+  }
+
 }
 
 /**
@@ -510,7 +534,7 @@ function parliamentwatch_addressfield_formatter__linear($vars) {
     $locality = $loc['locality'];
   }
   if (!empty($loc['postal_code'])) {
-    $out[] = $loc['postal_code'].' '.$locality;
+    $out[] = $loc['postal_code'] . ' ' . $locality;
   }
   if ($loc['country'] != addressfield_tokens_default_country() && $country_name = _addressfield_tokens_country($loc['country'])) {
     $out[] = $country_name;

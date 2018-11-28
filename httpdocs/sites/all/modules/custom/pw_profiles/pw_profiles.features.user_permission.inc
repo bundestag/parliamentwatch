@@ -37,6 +37,16 @@ function pw_profiles_user_default_permissions() {
     'module' => 'rabbit_hole',
   );
 
+  // Exported permission: choose user revisions.
+  $permissions['choose user revisions'] = array(
+    'name' => 'choose user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
+  );
+
   // Exported permission: create field_user_about.
   $permissions['create field_user_about'] = array(
     'name' => 'create field_user_about',
@@ -413,6 +423,26 @@ function pw_profiles_user_default_permissions() {
       4 => 'administrator',
     ),
     'module' => 'file_entity',
+  );
+
+  // Exported permission: delete own user revisions.
+  $permissions['delete own user revisions'] = array(
+    'name' => 'delete own user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
+  );
+
+  // Exported permission: delete user revisions.
+  $permissions['delete user revisions'] = array(
+    'name' => 'delete user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
   );
 
   // Exported permission: edit field_user_about.
@@ -1208,6 +1238,26 @@ function pw_profiles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
+  // Exported permission: edit own user revisions.
+  $permissions['edit own user revisions'] = array(
+    'name' => 'edit own user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'pw_userarchives',
+  );
+
+  // Exported permission: edit user revisions.
+  $permissions['edit user revisions'] = array(
+    'name' => 'edit user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'pw_userarchives',
+  );
+
   // Exported permission: php redirect rh_user.
   $permissions['php redirect rh_user'] = array(
     'name' => 'php redirect rh_user',
@@ -1215,6 +1265,26 @@ function pw_profiles_user_default_permissions() {
       0 => 'administrator',
     ),
     'module' => 'rabbit_hole',
+  );
+
+  // Exported permission: revert own user revisions.
+  $permissions['revert own user revisions'] = array(
+    'name' => 'revert own user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
+  );
+
+  // Exported permission: revert user revisions.
+  $permissions['revert user revisions'] = array(
+    'name' => 'revert user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
   );
 
   // Exported permission: use text format copyright.
@@ -2189,6 +2259,26 @@ function pw_profiles_user_default_permissions() {
       2 => 'administrator',
     ),
     'module' => 'file_entity',
+  );
+
+  // Exported permission: view own user revisions.
+  $permissions['view own user revisions'] = array(
+    'name' => 'view own user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
+  );
+
+  // Exported permission: view user revisions.
+  $permissions['view user revisions'] = array(
+    'name' => 'view user revisions',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'user_revision',
   );
 
   return $permissions;
