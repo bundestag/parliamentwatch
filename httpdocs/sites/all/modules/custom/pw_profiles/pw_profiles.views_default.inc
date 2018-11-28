@@ -907,7 +907,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -1098,13 +1098,12 @@ function pw_profiles_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
-  /* Feld: User revision:  */
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
   $handler->display->display_options['fields']['edit_revision_1']['id'] = 'edit_revision_1';
   $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
   $handler->display->display_options['fields']['edit_revision_1']['field'] = 'edit_revision';
   $handler->display->display_options['fields']['edit_revision_1']['label'] = '‚Bearbeiten‘-Link';
   $handler->display->display_options['fields']['edit_revision_1']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['edit_revision_1']['text'] = 'Bearbeiten';
   /* Feld: User revision: ‚Zurück‘-Link */
   $handler->display->display_options['fields']['revert_revision']['id'] = 'revert_revision';
   $handler->display->display_options['fields']['revert_revision']['table'] = 'user_revision';
@@ -1258,7 +1257,7 @@ function pw_profiles_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Vid'),
     t('Erstellungs-/ Aktualisierungsdatum'),
@@ -1267,7 +1266,6 @@ function pw_profiles_views_default_views() {
     t('Fraktion'),
     t('Wahlkreis'),
     t('‚Bearbeiten‘-Link'),
-    t('Bearbeiten'),
     t('‚Zurück‘-Link'),
     t('Link löschen'),
     t('Link to public profile'),
