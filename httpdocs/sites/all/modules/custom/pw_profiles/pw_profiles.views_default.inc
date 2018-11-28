@@ -1021,7 +1021,8 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['table'] = 'user_revision';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
-  $handler->display->display_options['fields']['timestamp']['date_format'] = 'long';
+  $handler->display->display_options['fields']['timestamp']['label'] = 'Erstellungs-/ Aktualisierungsdatum';
+  $handler->display->display_options['fields']['timestamp']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['timestamp']['second_date_format'] = 'long';
   /* Feld: Benutzer (Historische Daten): Parlament */
   $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
@@ -1260,7 +1261,7 @@ function pw_profiles_views_default_views() {
     t('nächste Seite ›'),
     t('letzte Seite »'),
     t('Vid'),
-    t('Erstellungsdatum'),
+    t('Erstellungs-/ Aktualisierungsdatum'),
     t('Parlament'),
     t('Partei'),
     t('Fraktion'),
