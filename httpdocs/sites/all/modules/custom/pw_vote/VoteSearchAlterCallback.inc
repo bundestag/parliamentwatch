@@ -118,7 +118,9 @@ class VoteSearchAlterCallback extends SearchApiAbstractAlterCallback {
     $poll = node_load($item->field_vote_node[LANGUAGE_NONE][0]['target_id']);
     $parliament = pw_globals_parliament($item);
     $uid = $item->field_vote_user[LANGUAGE_NONE][0]['target_id'];
-    $poll_date = strtotime($poll->field_poll_date[LANGUAGE_NONE][0]['value']);
+
+    $poll_date = new \DateTime($poll->field_poll_date[LANGUAGE_NONE][0]['value']);
+    $poll_date = $poll_date->format('Y-m-d');
 
     $q = db_select('user_archive_cache', 'uac');
     $q->fields('uac', ['vid'])
