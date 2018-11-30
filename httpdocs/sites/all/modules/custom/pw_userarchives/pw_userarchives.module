@@ -229,7 +229,7 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
           ELSE dia_election.field_dialogue_before_election_value = 0
           END");
     $query->leftJoin("node", "n", "dia_rp.entity_id = n.nid AND n.status = 1");
-    $query->addExpression("IFNULL(COUNT(DISTINCT dia_election.entity_id), 0)", "number_of_questions");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 THEN dia_election.entity_id END), 0)", "number_of_questions");
 
     // join comments to dialogues to get number of answers without standard replies
     $query->leftJoin("comment", "c", "dia_election.entity_id = c.nid AND c.status = 1");
