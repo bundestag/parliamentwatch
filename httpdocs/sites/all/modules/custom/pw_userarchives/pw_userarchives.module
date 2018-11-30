@@ -234,7 +234,7 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
     // join comments to dialogues to get number of answers without standard replies
     $query->leftJoin("comment", "c", "dia_election.entity_id = c.nid AND c.status = 1");
     $query->leftJoin("field_data_field_dialogue_is_standard_reply", "standard_reply", "standard_reply.entity_type = 'comment' AND standard_reply.entity_id = c.cid");
-    $query->addExpression("IFNULL(COUNT(DISTINCT c.nid), 0) - IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_answers");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 AND c.status = 1 THEN c.nid END), 0) - IFNULL(SUM(CASE WHEN n.status = 1 AND c.status = 1 THEN standard_reply.field_dialogue_is_standard_reply_value END), 0)", "number_of_answers");
 
     // get number of standard replies
     $query->addExpression("IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_standard_replies");
