@@ -317,23 +317,6 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       ->condition('entity_id', $uids)
       ->execute();
 
-    // update fields
-    foreach ($result as $row) {
-
-      // load revision
-      $user_revision = user_revision_load($row['uid'], $row['vid']);
-      if ($user_revision) {
-        $revision_edit = array();
-
-        // reset pictures which have a null value
-        if (key_exists('und', $user_revision->field_user_picture) && $user_revision->field_user_picture['und'][0] === NULL) {
-          $revision_edit['field_user_picture'] = array();
-          _pw_send_debug_mail('field_user_picture is NULL', $user_revision);
-        }
-        // _user_revision_edit_save($user_revision, $revision_edit);
-      }
-    }
-
     $politician_index = search_api_index_load('politician_archive_index');
     $items_to_track_after_update = $tracked_items_query
       ->condition('uac.vid', $vids)
