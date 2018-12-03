@@ -107,6 +107,17 @@ function pw_vote_pw_user_revision_edit($user_revision) {
 }
 
 /**
+ * Implements hook_user_revision_delete().
+ */
+function pw_vote_user_revision_delete($user_revision) {
+  // update the votes in search index
+  $nids = pw_vote_by_user_query($user_revision)->execute()->fetchCol();
+  if (!empty($nids)) {
+    search_api_track_item_change('node', $nids);
+  }
+}
+
+/**
  * Checks if user is allowed to enter form
  *
  * @return int
