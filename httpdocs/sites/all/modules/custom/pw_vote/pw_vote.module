@@ -82,7 +82,7 @@ function pw_vote_user_view($account, $view_mode, $langcode) {
 /**
  * Implements hook_user_update().
  *
- *
+ *  - Update the votes of the user in Vote Search index 
  */
 function pw_vote_user_update(&$edit, $account, $category) {
   // update the votes in search index
@@ -95,6 +95,8 @@ function pw_vote_user_update(&$edit, $account, $category) {
 
 /**
  * Implements hook_pw_user_revision_update
+ *
+ *  - Update the votes of the user in Vote Search index
  */
 function pw_vote_pw_user_revision_edit($user_revision) {
   // update the votes in search index
