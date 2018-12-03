@@ -60,7 +60,7 @@ function pw_vote_node_load($nodes, $types) {
  */
 function pw_vote_user_view($account, $view_mode, $langcode) {
   if ($view_mode == 'full' && _pw_user_has_role($account, 'Deputy')) {
-    $nids = pw_vote_by_user_revision_query($account)->execute()->fetchCol();
+    $nids = pw_vote_by_user_query($account)->execute()->fetchCol();
 
     if (!empty($nids)) {
       $nodes = node_load_multiple($nids);
@@ -86,7 +86,7 @@ function pw_vote_user_view($account, $view_mode, $langcode) {
  */
 function pw_vote_user_update(&$edit, $account, $category) {
   // update the votes in search index
-  $nids = pw_vote_by_user_revision_query($account)->execute()->fetchCol();
+  $nids = pw_vote_by_user_query($account)->execute()->fetchCol();
   if (!empty($nids)) {
     search_api_track_item_change('node', $nids);
   }
@@ -100,7 +100,7 @@ function pw_vote_user_update(&$edit, $account, $category) {
  */
 function pw_vote_pw_user_revision_edit($user_revision) {
   // update the votes in search index
-  $nids = pw_vote_by_user_revision_query($user_revision)->execute()->fetchCol();
+  $nids = pw_vote_by_user_query($user_revision)->execute()->fetchCol();
   if (!empty($nids)) {
     search_api_track_item_change('node', $nids);
   }
@@ -530,7 +530,7 @@ function pw_vote_profile_block($type = 'poll') {
     return $block;
   }
 
-  $nids = pw_vote_by_user_revision_query($account, $type)
+  $nids = pw_vote_by_user_query($account, $type)
     ->orderBy('decision_date', 'DESC')
     ->extend('PagerDefault')
     ->limit(6)
@@ -806,7 +806,7 @@ function pw_vote_mark_deviant_votes($nid) {
  * @return EntityFieldQuery
  *   The query object
  */
-function pw_vote_by_user_revision_query($account, $node_target_type = 'poll') {
+function pw_vote_by_user_query($account, $node_target_type = 'poll') {
   $q = db_select('node', 'n');
   $q->fields('n', ['nid']);
   $q->join('field_data_field_vote_user', 'u', 'n.nid = u.entity_id');
