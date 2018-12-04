@@ -40,11 +40,10 @@ function pw_api_profile($username, $parliament=FALSE) {
     $query->fields('uac', array('uid', 'vid'));
     _pw_uac_add_conditions($query, array(
         'parliament' => $parliament,
-        'username' => $username,
-        'date' => date('Y-m-d')
+        'username' => $username
         )
     );
-    $query->orderBy("uac.user_role = 'deputy'", 'DESC');
+    $query->orderBy("uac.vid", 'DESC');
     $result = $query->execute()->fetchAssoc();
     $user = user_revision_load($result['uid'], $result['vid']);
   }
