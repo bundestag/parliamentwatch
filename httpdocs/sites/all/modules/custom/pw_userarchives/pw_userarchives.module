@@ -189,12 +189,11 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
   pw_userarchives_cron($account->uid, $reset_actual_profile);
 }
 
-
 /**
- * implements hook_user_revision_delete
+ * Implements hook_user_revision_delete().
  *
- * Delete a user revision which my be stored in user archive table
- * when an user revision gets deleted
+ * Delete a user revision which may be stored in user archive table
+ * when a user revision gets deleted.
  *
  * @param $revision
  */
@@ -205,6 +204,63 @@ function pw_userarchives_user_revision_delete($revision) {
     ->execute();
 }
 
+/**
+ * Implements hook_node_insert().
+ */
+function pw_userarchives_node_insert($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function pw_userarchives_node_update($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Beware that hook_node_delete is called before the node is deleted from the
+ * database. Hence execution of pw_userarchives_cron needs to be deferred via
+ * drupal_register_shutdown_function.
+ */
+function pw_userarchives_node_delete($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    drupal_register_shutdown_function(pw_userarchives_cron, $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_comment_insert().
+ */
+function pw_userarchives_comment_insert($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_update().
+ */
+function pw_userarchives_comment_update($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_delete().
+ */
+function pw_userarchives_comment_delete($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
 
 /**
  * Implements hook_cron().
@@ -334,12 +390,12 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
           ELSE dia_election.field_dialogue_before_election_value = 0
           END");
     $query->leftJoin("node", "n", "dia_rp.entity_id = n.nid AND n.status = 1");
-    $query->addExpression("IFNULL(COUNT(DISTINCT dia_election.entity_id), 0)", "number_of_questions");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 THEN dia_election.entity_id END), 0)", "number_of_questions");
 
     // join comments to dialogues to get number of answers without standard replies
     $query->leftJoin("comment", "c", "dia_election.entity_id = c.nid AND c.status = 1");
     $query->leftJoin("field_data_field_dialogue_is_standard_reply", "standard_reply", "standard_reply.entity_type = 'comment' AND standard_reply.entity_id = c.cid");
-    $query->addExpression("IFNULL(COUNT(DISTINCT c.nid), 0) - IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_answers");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 AND c.status = 1 THEN c.nid END), 0) - IFNULL(SUM(CASE WHEN n.status = 1 AND c.status = 1 THEN standard_reply.field_dialogue_is_standard_reply_value END), 0)", "number_of_answers");
 
     // get number of standard replies
     $query->addExpression("IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_standard_replies");
@@ -421,23 +477,6 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       ->condition('entity_type', 'user')
       ->condition('entity_id', $uids)
       ->execute();
-
-    // update fields
-    foreach ($result as $row) {
-
-      // load revision
-      $user_revision = user_revision_load($row['uid'], $row['vid']);
-      if ($user_revision) {
-        $revision_edit = array();
-
-        // reset pictures which have a null value
-        if (key_exists('und', $user_revision->field_user_picture) && $user_revision->field_user_picture['und'][0] === NULL) {
-          $revision_edit['field_user_picture'] = array();
-          _pw_send_debug_mail('field_user_picture is NULL', $user_revision);
-        }
-        // _user_revision_edit_save($user_revision, $revision_edit);
-      }
-    }
 
     $politician_index = search_api_index_load('politician_archive_index');
     $items_to_track_after_update = $tracked_items_query
