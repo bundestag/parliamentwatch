@@ -3672,7 +3672,7 @@ function pw_globals_field_default_fields() {
       'entity_types' => array(),
       'field_name' => 'field_topics_internal_info',
       'field_permissions' => array(
-        'type' => '2',
+        'type' => '0',
       ),
       'foreign keys' => array(
         'format' => array(
