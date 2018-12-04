@@ -92,3 +92,4 @@ Disallow: /?q=user/logout/
 # Disallow single politician profiles and sub pages
 # as we were asked to do so
 Disallow: /dialogues/16264/candidates/136945
+Disallow: /dialogues/16247/candidates/133477
