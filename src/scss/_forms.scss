@@ -279,7 +279,22 @@ textarea.form__item__control {
   @include text-overflow();
 }
 
+/* Form-Item Horizontal */
 
+.form__item--horizontal {
+  padding-left: 120px;
+  position: relative;
+  .form__item__label {
+    width: 100px;
+    padding: $space-small-mobile 0;
+    position: absolute;
+    left: 0;
+  }
+  .form__item__control,
+  .select2 {
+    display: block;
+  }
+}
 
 /* Form-Item Combiner */
 
