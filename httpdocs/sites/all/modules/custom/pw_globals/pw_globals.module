@@ -276,21 +276,27 @@ function pw_globals_taxonomy_term_page($term) {
   }
   elseif (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags', 'topics'])) {
     $build = taxonomy_term_view($term);
+    $term_wrapper = entity_metadata_wrapper('term', $term);
     $nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 12));
+
+    if (isset($build['description'])) {
+      $build['description']['#theme_wrappers'] = ['container__overview'];
+    }
 
     if ($nids) {
       $nodes = node_load_multiple($nids);
       if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
-        $build = node_view_multiple($nodes, 'tile');
-        $build['#theme_wrappers'] = ['container__tiles'];
+        $overview = node_view_multiple($nodes, 'tile');
+        $overview['#theme_wrappers'] = ['container__tiles'];
       } else {
-        $build = node_view_multiple($nodes, 'teaser');
-        $build['#theme_wrappers'] = ['container__overview'];
+        $overview = node_view_multiple($nodes, 'teaser');
+        $overview['#theme_wrappers'] = ['container__overview'];
       }
-      $build['pager'] = [
+      $overview['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,
       ];
+      $build['overview'][] = $overview;
     }
     else {
       $build['no_content'] = [
