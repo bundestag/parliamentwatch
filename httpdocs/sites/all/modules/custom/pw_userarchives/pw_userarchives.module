@@ -5,6 +5,167 @@
  * Includes main hooks.
  */
 
+
+
+/**
+ * Implements hook_menu().
+ */
+function pw_userarchives_menu() {
+
+  // Creates menu hook for editing user revisions.
+  $items['user/%user_revision/revisions/%/edit'] = array(
+    'title' => 'Edit this revision',
+    'load arguments' => array(3),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('pw_userarchives_user_revision_edit_form', 1),
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+
+  /**
+   * Add tabs on profile archive page and user revision edit form
+   */
+  $items['user/%user_revision/revisions/%/edit/default'] = array(
+    'title' => 'Archiv-Profil bearbeiten',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 0
+  );
+  $items['user/%user_revision/revisions/%/edit/view'] = array(
+    'title' => 'Archiv-Profil Ansicht',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => -10,
+    'load arguments' => array(3),
+    'page callback' => 'pw_userarchives_goto_view_revision',
+    'page arguments' => array(1),
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+  $items['user/%user_revision/revisions/%/edit/all-revisions'] = array(
+    'title' => 'Alle Profil-Versionen',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'load arguments' => array(3),
+    'page callback' => 'pw_userarchives_all_revision_page_callback',
+    'page arguments' => array(1),
+    'access callback'=> 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(1),
+    'file' => 'pw_userarchives.admin.inc',
+  );
+
+  $items['profile/%pw_profiles_username/archive/%/view'] = [
+    'title' => 'Archiv-Profil Ansicht',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10
+  ];
+
+  $items['profile/%pw_profiles_username/archive/%pw_user_revision/edit'] = [
+    'title' => 'Archiv-Profil bearbeiten',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+    'load arguments' => array(1),
+    'page callback' => 'pw_userarchives_edit_revision_page_callback',
+    'page arguments' => array(3),
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(3),
+    'file' => 'pw_userarchives.admin.inc',
+  ];
+
+  $items['profile/%pw_profiles_username/archive/%pw_user_revision/all-revisions'] = [
+    'title' => 'Alle Profil-Versionen',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 50,
+    'load arguments' => array(1),
+    'page callback' => 'pw_userarchives_all_revision_page_callback',
+    'page arguments' => array(3),
+    'access callback' => 'pw_userarchives_user_revision_admin_access',
+    'access arguments' => array(3),
+    'file' => 'pw_userarchives.admin.inc',
+  ];
+
+
+  return $items;
+}
+
+
+
+/**
+ * Access callback.
+ */
+function pw_userarchives_user_revision_admin_access($account) {
+  global $user;
+
+  // Checks if user has permissions.
+  $access = user_access('edit user revisions')
+    || user_access('edit own user revisions')
+    && $account->uid == $user->uid;
+
+  // Checks if at least 2 revisions exist.
+  $count = db_query("
+    SELECT COUNT(*) AS expression
+    FROM (
+      SELECT 1 AS expression
+      FROM user_revision ur
+      WHERE (ur.uid = {$account->uid})
+    ) subquery
+  ")->fetchField();
+
+  // Displays revisions tab only if both are true.
+  return $access && ($count > 1);
+}
+
+
+/**
+ *
+ * Load a user revision by user name and vid
+ *
+ * @param int|string $vid
+ * @param string $pw_profiles_username
+ *
+ * @return object|false
+ */
+function pw_user_revision_load($vid, $pw_profiles_username) {
+  $account = pw_profiles_username_load($pw_profiles_username);
+  return user_revision_load($account->uid, $vid);
+}
+
+
+/**
+ * Implements hook_admin_paths().
+ */
+function pw_userarchives_admin_paths() {
+  // Enables the edit from to use admin theme.
+  if (variable_get('node_admin_theme')) {
+    $paths = array(
+      'user/*/revisions/*/edit' => TRUE,
+    );
+    return $paths;
+  }
+}
+
+
+
+/**
+ * Implements hook_permission().
+ */
+function pw_userarchives_permission() {
+
+  // Adds permission items for editing revisions.
+  return array(
+    'edit user revisions' => array(
+      'title' => t('Edit user revisions'),
+      'restrict access' => TRUE,
+    ),
+    'edit own user revisions' => array(
+      'title' => t('Edit own user revisions'),
+      'description' => t('Allow users to edit their own user revisions'),
+    ),
+  );
+}
+
+
+
 /**
  * Implements hook_entity_info_alter().
  */
@@ -26,6 +187,79 @@ function pw_userarchives_user_insert(&$edit, $account, $category) {
 function pw_userarchives_user_update(&$edit, $account, $category) {
   $reset_actual_profile = !isset($_REQUEST['form_id']);
   pw_userarchives_cron($account->uid, $reset_actual_profile);
+}
+
+/**
+ * Implements hook_user_revision_delete().
+ *
+ * Delete a user revision which may be stored in user archive table
+ * when a user revision gets deleted.
+ *
+ * @param $revision
+ */
+function pw_userarchives_user_revision_delete($revision) {
+  db_delete('user_archive_cache')
+    ->condition('uid', $revision->uid)
+    ->condition('vid', $revision->vid)
+    ->execute();
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function pw_userarchives_node_insert($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function pw_userarchives_node_update($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_node_delete().
+ *
+ * Beware that hook_node_delete is called before the node is deleted from the
+ * database. Hence execution of pw_userarchives_cron needs to be deferred via
+ * drupal_register_shutdown_function.
+ */
+function pw_userarchives_node_delete($node) {
+  if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
+    drupal_register_shutdown_function(pw_userarchives_cron, $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+  }
+}
+
+/**
+ * Implements hook_comment_insert().
+ */
+function pw_userarchives_comment_insert($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_update().
+ */
+function pw_userarchives_comment_update($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
+}
+
+/**
+ * Implements hook_comment_delete().
+ */
+function pw_userarchives_comment_delete($comment) {
+  if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
+    pw_userarchives_cron($comment->uid);
+  }
 }
 
 /**
@@ -156,12 +390,12 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
           ELSE dia_election.field_dialogue_before_election_value = 0
           END");
     $query->leftJoin("node", "n", "dia_rp.entity_id = n.nid AND n.status = 1");
-    $query->addExpression("IFNULL(COUNT(DISTINCT dia_election.entity_id), 0)", "number_of_questions");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 THEN dia_election.entity_id END), 0)", "number_of_questions");
 
     // join comments to dialogues to get number of answers without standard replies
     $query->leftJoin("comment", "c", "dia_election.entity_id = c.nid AND c.status = 1");
     $query->leftJoin("field_data_field_dialogue_is_standard_reply", "standard_reply", "standard_reply.entity_type = 'comment' AND standard_reply.entity_id = c.cid");
-    $query->addExpression("IFNULL(COUNT(DISTINCT c.nid), 0) - IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_answers");
+    $query->addExpression("IFNULL(COUNT(DISTINCT CASE WHEN n.status = 1 AND c.status = 1 THEN c.nid END), 0) - IFNULL(SUM(CASE WHEN n.status = 1 AND c.status = 1 THEN standard_reply.field_dialogue_is_standard_reply_value END), 0)", "number_of_answers");
 
     // get number of standard replies
     $query->addExpression("IFNULL(SUM(standard_reply.field_dialogue_is_standard_reply_value), 0)", "number_of_standard_replies");
@@ -244,23 +478,6 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       ->condition('entity_id', $uids)
       ->execute();
 
-    // update fields
-    foreach ($result as $row) {
-
-      // load revision
-      $user_revision = user_revision_load($row['uid'], $row['vid']);
-      if ($user_revision) {
-        $revision_edit = array();
-
-        // reset pictures which have a null value
-        if (key_exists('und', $user_revision->field_user_picture) && $user_revision->field_user_picture['und'][0] === NULL) {
-          $revision_edit['field_user_picture'] = array();
-          _pw_send_debug_mail('field_user_picture is NULL', $user_revision);
-        }
-        // _user_revision_edit_save($user_revision, $revision_edit);
-      }
-    }
-
     $politician_index = search_api_index_load('politician_archive_index');
     $items_to_track_after_update = $tracked_items_query
       ->condition('uac.vid', $vids)
@@ -279,6 +496,9 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
       search_api_track_item_change('user_revision', array_intersect($tracked_items, $items_to_track_after_update));
       search_api_track_item_delete('user_revision', array_diff($tracked_items, $items_to_track_after_update));
     }
+
+    // finally check for outdated revisions which can be deleted
+    pw_delete_old_user_revisions($uid);
   }
   catch (Exception $e) {
     $transaction->rollback();
@@ -416,9 +636,20 @@ function pw_userarchives_check_refresh_profiles($parliament) {
 
 /**
  * Deletes old user revisions from database.
+ *
+ *  * @param int $uid
+ *   The user id.
+ *
+ * @return bool
+ *   False if uid is zero or not a numeric value.
  */
-function pw_delete_old_user_revisions($uid = NULL) {
-  $days_buffer = 0;
+function pw_delete_old_user_revisions($uid) {
+
+  if (!is_numeric($uid) || $uid == 0) {
+    return FALSE;
+  }
+
+  $days_buffer = 30;
   $time_buffer = time() - (86400 * $days_buffer);
 
   // query for all revision which are older than X days and which are not in the user_archive_cache table
@@ -430,9 +661,7 @@ function pw_delete_old_user_revisions($uid = NULL) {
   $query->join('taxonomy_term_data', 'rn', 'rn.tid=ro.field_user_roles_for_view_mode_s_tid');
   $query->leftJoin('user_archive_cache', 'uac', 'ur.uid = uac.uid AND ur.vid = uac.vid');
   $query->join('users', 'u', 'ur.uid = u.uid AND ur.vid != u.vid');
-  if ($uid !== NULL) {
-    $query->condition('ur.uid', $uid);
-  }
+  $query->condition('ur.uid', $uid);
   $query->condition('ur.timestamp', $time_buffer, '<');
   $query->condition('rn.name', 'Politician');
   $query->isNull('id');
@@ -453,6 +682,8 @@ function pw_delete_old_user_revisions($uid = NULL) {
       ':days_buffer' => $days_buffer
     ));
   }
+
+  return TRUE;
 }
 
 /**
@@ -510,4 +741,67 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
       ->execute();
     pw_userarchives_cron($uid, FALSE);
   }
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_userarchives_views_api() {
+  return array(
+    'api' => '3',
+    'path' => drupal_get_path('module', 'pw_userarchives') . '/views',
+  );
+}
+
+
+/**
+ * Save an edited user revision. Mostly taken form User Revision Edit module
+ * ((@see _user_revision_edit_save() there)
+ *
+ * @param $revision
+ * @param $edits
+ */
+function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
+  global $user;
+
+  // Updates revision object.
+  $revision->authorid = $user->uid;
+  $revision->timestamp = REQUEST_TIME;
+
+  $picture = NULL;
+  if (isset($edits['picture_delete']) && $edits['picture_delete'] == 1) {
+    // Deletes picture from disk.
+    file_delete($revision->picture);
+    $revision->picture = 0;
+  }
+  elseif (isset($edits['picture_upload'])
+    && is_object($edits['picture_upload'])) {
+    $picture = $edits['picture_upload'];
+    $revision->picture = $picture->fid;
+  }
+  elseif (isset($revision->picture) && is_object($revision->picture)) {
+    $revision->picture = $revision->picture->fid;
+  }
+
+  // Updates the database record.
+  drupal_write_record('user_revision', $revision, 'vid');
+
+  // Uploads the picture.
+  if (is_object($picture)) {
+    file_usage_add($picture, 'user_revision', 'user', $revision->vid);
+    $revision->picture = $picture;
+  }
+
+  // Updates the FAPI fields for the selected revision and restores the user.
+  $account = user_load($revision->uid);
+  field_attach_update('user', $revision);
+  if ($account->vid != $revision->vid) {
+    field_attach_update('user', $account);
+  }
+  entity_get_controller('user')->resetCache(array($revision->uid));
+
+  // Implement a hook to be able to react on user revision update
+  module_invoke_all('pw_user_revision_edit', $revision);
+
 }

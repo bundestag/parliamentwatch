@@ -197,21 +197,6 @@ function pw_dialogues_cron() {
         pw_dialogues_do_import_questions($source);
         pw_dialogues_do_import_answers($source);
 
-        // trigger userarchive cron which
-        if (function_exists('pw_userarchives_cron')) {
-
-          // query which politicians have a changed question and answer count.
-          $users = db_query('SELECT DISTINCT f.field_dialogue_recipient_target_id
-            FROM {field_data_field_dialogue_recipient} AS f
-            INNER JOIN {feeds_item} AS i ON f.entity_type = i.entity_type AND f.entity_id = i.entity_id
-            WHERE i.imported >= :imported', array(':imported' => $updated_since_timestamp))->fetchCol();
-
-          // rewrite user archive cache table
-          foreach ($users as $uid) {
-            pw_userarchives_cron($uid);
-          }
-        }
-
         // save last import date
         variable_set('pw_dialogues_importer_last_import', REQUEST_TIME);
       }
@@ -636,9 +621,7 @@ function pw_dialogues_triggered_import() {
       // set return_value to OK
       if (is_numeric($recipient_id) && ($user = user_load($recipient_id)) || $node->status != 1) {
         $return_value = 'OK';
-        if (function_exists('pw_userarchives_cron')) {
-          pw_userarchives_cron($recipient_id);
-        }
+
       }
     }
 

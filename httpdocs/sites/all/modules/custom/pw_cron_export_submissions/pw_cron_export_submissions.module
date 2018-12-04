@@ -10,110 +10,191 @@
  * Implements hook_cron()..
  */
 function pw_cron_export_submissions_cron() {
-  export_submissions('petition-unterschreiben');
-  export_submissions('newsletter-subscription');
-  export_submissions('newsletter/abmeldung');
-  export_submissions('ueber-uns/spendenformular');
-  export_submissions('frage-stellen');
-  export_submissions('profilerweiterung-buchen');
-  export_submissions('ueber-uns/aufkleber-bestellen');
+
+  // days after submissions should be deleted by default
+  $default_delete = 30;
+
+  // query for all webforms
+  $webform_nids = db_select('node', 'n')
+    ->fields('n',  ['nid'])
+    ->condition('type', 'webform')
+    ->execute()
+    ->fetchCol();
+  foreach ($webform_nids as $nid) {
+    switch ($nid) {
+      case 10508:
+      case 10369:
+        if (pw_export_submissions($nid)) {
+          pw_delete_submissions($nid, 3);
+        }
+        break;
+      case 10380:
+        if (pw_export_submissions($nid)) {
+          pw_delete_submissions($nid, 16, 3);
+        }
+        break;
+      case 65995:
+        pw_export_submissions($nid);
+      case 104846:
+      case 6578:
+      case 176108:
+        if (pw_export_submissions($nid)) {
+          pw_delete_submissions($nid, 0);
+        }
+        break;
+      case 111893:
+        if (pw_export_submissions($nid)) {
+          pw_delete_submissions($nid, 7);
+        }
+        break;
+      case 10446:
+        if (pw_export_submissions($nid)) {
+          pw_delete_submissions($nid, 7);
+        }
+        break;
+      default:
+        pw_delete_submissions($nid, $default_delete);
+        break;
+    }
+  }
 }
 
 
 /**
- * exports submissions of petition webform
+ *  Exports submissions of a webform to files/private
+ *
+ * @param int $nid
+ *   The webform nid.
+ *
+ * @return boolean
+ *   TRUE if file(s) were exported, otherwise FALSE.
+ *
  */
-function export_submissions($source){
 
-  // retrieve webform node for subscriptions
-  $internal_path = drupal_lookup_path('source', $source);
+function pw_export_submissions($nid){
 
-  if($internal_path && $webform = menu_get_object('node', 1, $internal_path)){
+  $export_path = 'private://webforms/submissions/'.$nid;
 
-    // load webform module
-    module_load_include('inc', 'webform', 'includes/webform.submissions');
+  // load webform module
+  module_load_include('inc', 'webform', 'includes/webform.submissions');
 
-    // query db for subscribed & confirmed submissions
-    $sql = "SELECT wf_data.sid
-    FROM webform_submitted_data wf_data
-    LEFT OUTER JOIN webform_confirm_email_code wf_email_code ON wf_data.sid = wf_email_code.sid
-    WHERE wf_data.nid = :nid AND wf_data.data = 'subscribed' AND wf_email_code.code IS NULL";
-    $submissions_confirmed = db_query($sql, array(':nid' => $webform->nid))->fetchCol();
+  // query db for subscribed & confirmed submissions
+  $q = db_select('webform_submitted_data', 'wf_data');
+  $q->addField('wf_data', 'sid');
+  $q->leftJoin('webform_confirm_email_code', 'wf_email_code', 'wf_data.sid = wf_email_code.sid');
+  $q->condition('wf_data.nid', $nid)
+    ->condition('wf_data.data', 'subscribed')
+    ->isNull('wf_email_code.code');
+  $result_confirmed = $q->execute();
 
-    if(sizeof($submissions_confirmed) > 0){
+  if($result_confirmed->rowCount() > 0){
 
-      // query db to retrieve webform components
-      $sql = "SELECT wf_comp.cid, wf_comp.form_key
-      FROM webform_component wf_comp
-      WHERE wf_comp.nid = :nid";
-      $form_fields = db_query($sql, array(':nid' => $webform->nid))->fetchAllAssoc('cid');
+    // query db to retrieve webform components
+    $q = db_select('webform_component', 'wf_comp');
+    $q->fields('wf_comp', ['cid', 'form_key']);
+    $q->condition('wf_comp.nid', $nid);
+    $result_confirmed_fields = $q->execute()->fetchAllAssoc('cid');
 
-      // load submissions
-      $submissions = webform_get_submissions(array('sid' => $submissions_confirmed));
+    // load submissions
+    $submissions = webform_get_submissions(['sid' => $result_confirmed->fetchCol()]);
 
-      // prepare
-      $cid_status_field = false;
-      $cid_node_path_field = false;
-      foreach($form_fields as $cid => $component){
-        if($component->form_key == 'status'){
-          $cid_status_field = $cid;
-        }
-        elseif($component->form_key == 'node_path'){
-          $cid_node_path_field = $cid;
-        }
+    // prepare
+    $cid_status_field = false;
+    $cid_node_path_field = false;
+    foreach($result_confirmed_fields as $cid => $component){
+      if($component->form_key == 'status'){
+        $cid_status_field = $cid;
       }
-
-      // prepare export path
-      $export_path = "private://webforms/submissions/";
-      $export_path .= str_replace('/', '_', $source).'/';
-      if(!file_prepare_directory($export_path, FILE_CREATE_DIRECTORY)){
-        watchdog('pw_cron_export_submissions_cron', 'could not create export path: '.$export_path, NULL, WATCHDOG_WARNING);
-        return;
-      }
-
-        // @TODO: Check $cid_status_field and $export_path
-
-      // write submissions to json file
-      foreach($submissions as $submission){
-        $submission->data[$cid_status_field][0] = 'exported';
-        $url_alias = drupal_get_path_alias($submission->data[$cid_node_path_field][0]);
-        $submission->export_url_alias = $url_alias;
-        foreach($form_fields as $cid => $component){
-          $form_key = 'export_'.$component->form_key;
-          $submission->$form_key = $submission->data[$cid][0];
-        }
-      }
-
-      // export to json
-      $file_json_content = json_encode($submissions);
-      $file_json_path = $export_path.'submissions_'.time().'.json';
-      $file_json = file_save_data($file_json_content, $file_json_path, FILE_EXISTS_RENAME);
-
-      // on success update submissions to status=exported
-      if($file_json){
-        foreach($submissions as $submission){
-          webform_submission_update($webform, $submission);
-        }
+      elseif($component->form_key == 'node_path'){
+        $cid_node_path_field = $cid;
       }
     }
 
-    // query db for exported submissions, older than 30 days or submissions in general older than 90 days
-    $timestamp_exported = time() - 30 * 86400;
-    $timestamp_other = time() - 90 * 86400;
-    $sql = "SELECT wf_data.sid
-    FROM webform_submitted_data wf_data
-    INNER JOIN webform_submissions wf ON wf_data.sid = wf.sid
-    WHERE wf_data.nid = :nid AND (wf_data.data = 'exported' AND wf.submitted < ".$timestamp_exported." OR wf.submitted < ".$timestamp_other.")";
-    $submissions_to_delete = db_query($sql, array(':nid' => $webform->nid))->fetchCol();
-    if(sizeof($submissions_to_delete) > 0){
+    // prepare export path
+    if(!file_prepare_directory($export_path, FILE_CREATE_DIRECTORY)){
+      watchdog('pw_cron_export_submissions_cron', 'could not create export path: '.$export_path, NULL, WATCHDOG_WARNING);
+      return FALSE;
+    }
 
-      // load submissions
-      $submissions = webform_get_submissions(array('sid' => $submissions_to_delete));
-
-      // delete submissions
-      foreach($submissions as $submission){
-        webform_submission_delete($webform, $submission);
+    // prepare data fpr export
+    foreach($submissions as $submission){
+      $submission->data[$cid_status_field][0] = 'exported';
+      $url_alias = drupal_get_path_alias($submission->data[$cid_node_path_field][0]);
+      $submission->export_url_alias = $url_alias;
+      foreach($result_confirmed_fields as $cid => $component){
+        $form_key = 'export_'.$component->form_key;
+        $submission->$form_key = $submission->data[$cid][0];
       }
+    }
+
+    // export to json
+    $file_json_content = json_encode($submissions);
+    $file_json_path = $export_path.'/submissions_'.time().'.json';
+    $file_json = file_save_data($file_json_content, $file_json_path, FILE_EXISTS_RENAME);
+
+    // on success update submissions to status=exported
+    if($file_json){
+      $webform = node_load($nid);
+      foreach($submissions as $submission){
+        webform_submission_update($webform, $submission);
+      }
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ *  Deletes submissions of a webform
+ *
+ * @param int $nid
+ *   The webform nid.
+ *
+ * @param int $delete_general
+ *   Days after submissions should be deleted in general.
+ *
+ * @param int|bool $delete_exported
+ *   Days after exported submissions should be deleted.
+ *
+ */
+
+function pw_delete_submissions($nid, $delete_general, $delete_exported=FALSE) {
+
+  // calculate timestamps for database query
+  if ($delete_exported) {
+    $timestamp_exported = time() - $delete_exported * 86400;
+  }
+  else {
+    $timestamp_exported = time() - $delete_general * 86400;
+  }
+
+  $timestamp_general = time() - $delete_general * 86400;
+
+  // query for all submissions to be deleted
+  $q = db_select('webform_submitted_data', 'wf_data');
+  $q->addField('wf_data', 'sid');
+  $q->leftJoin('webform_submissions', 'wf', 'wf_data.sid = wf.sid');
+  $q->condition('wf_data.nid', $nid);
+  $db_and = db_and()
+    ->condition('wf_data.data', 'exported')
+    ->condition('wf.submitted', $timestamp_exported, '<');
+  $db_or = db_or()
+    ->condition('wf.submitted', $timestamp_general, '<')
+    ->condition($db_and);
+  $q->condition($db_or);
+  $q->groupBy('wf_data.sid');
+  $result = $q->execute();
+
+  if($result->rowCount() > 0){
+
+    // load submissions
+    module_load_include('inc', 'webform', 'includes/webform.submissions');
+    $submissions = webform_get_submissions(['sid' => $result->fetchCol()]);
+
+    // delete submissions
+    $webform = node_load($nid);
+    foreach($submissions as $submission){
+      webform_submission_delete($webform, $submission);
     }
   }
 }
