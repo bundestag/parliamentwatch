@@ -41,6 +41,7 @@ function pw_api_profile($username, $parliament=FALSE) {
     _pw_uac_add_conditions($query, array(
         'parliament' => $parliament,
         'username' => $username,
+        'date' => date('Y-m-d')
         )
     );
     $query->orderBy("uac.user_role = 'deputy'", 'DESC');
@@ -82,6 +83,7 @@ function pw_api_profiles($parliament, $file_type) {
     _pw_uac_add_conditions($query, array(
         'parliament' => $parliament,
         'roles' => 'deputy',
+        'date' => date('Y-m-d')
       )
     );
   }
@@ -89,12 +91,14 @@ function pw_api_profiles($parliament, $file_type) {
     _pw_uac_add_conditions($query, array(
         'parliament' => $parliament,
         'roles' => 'candidate',
+        'date' => date('Y-m-d')
       )
     );
   }
   else {
     _pw_uac_add_conditions($query, array(
         'parliament' => $parliament,
+        'date' => date('Y-m-d')
       )
     );
     $query->groupBy('uac.uid');
