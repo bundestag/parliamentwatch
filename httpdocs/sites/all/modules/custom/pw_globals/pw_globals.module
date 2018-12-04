@@ -1098,7 +1098,7 @@ function _pw_uac_add_conditions(&$query, $conditions = array()) {
   // condition date
   if (array_key_exists('date', $conditions) && !empty($conditions['date'])) {
     $or_user_joined = db_or();
-    $or_user_joined->condition($alias_uac . '.user_joined', $conditions['date'], '<');
+    $or_user_joined->condition($alias_uac . '.user_joined', $conditions['date'], '<=');
     $or_user_joined->condition($alias_uac . '.user_joined', NULL);
     $query->condition($or_user_joined);
     $or_user_retired = db_or();
