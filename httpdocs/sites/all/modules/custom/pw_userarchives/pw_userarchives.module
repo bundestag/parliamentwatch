@@ -649,7 +649,7 @@ function pw_delete_old_user_revisions($uid) {
     return FALSE;
   }
 
-  $days_buffer = 0;
+  $days_buffer = 30;
   $time_buffer = time() - (86400 * $days_buffer);
 
   // query for all revision which are older than X days and which are not in the user_archive_cache table
