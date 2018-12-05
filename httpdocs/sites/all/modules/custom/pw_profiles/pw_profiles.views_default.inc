@@ -1098,17 +1098,11 @@ function pw_profiles_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
-  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  /* Feld: User revision: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_revision_1']['id'] = 'edit_revision_1';
   $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
   $handler->display->display_options['fields']['edit_revision_1']['field'] = 'edit_revision';
-  $handler->display->display_options['fields']['edit_revision_1']['label'] = '‚Bearbeiten‘-Link';
   $handler->display->display_options['fields']['edit_revision_1']['exclude'] = TRUE;
-  /* Feld: User revision: ‚Zurück‘-Link */
-  $handler->display->display_options['fields']['revert_revision']['id'] = 'revert_revision';
-  $handler->display->display_options['fields']['revert_revision']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['revert_revision']['field'] = 'revert_revision';
-  $handler->display->display_options['fields']['revert_revision']['exclude'] = TRUE;
   /* Feld: User revision: Link löschen */
   $handler->display->display_options['fields']['delete_revision']['id'] = 'delete_revision';
   $handler->display->display_options['fields']['delete_revision']['table'] = 'user_revision';
@@ -1165,7 +1159,6 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Optionen';
   $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
     'edit_revision_1' => 'edit_revision_1',
-    'revert_revision' => 'revert_revision',
     'delete_revision' => 'delete_revision',
   );
   $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
@@ -1266,7 +1259,6 @@ function pw_profiles_views_default_views() {
     t('Fraktion'),
     t('Wahlkreis'),
     t('‚Bearbeiten‘-Link'),
-    t('‚Zurück‘-Link'),
     t('Link löschen'),
     t('Link to public profile'),
     t('<li>[link_to_public_profile]</li>'),
