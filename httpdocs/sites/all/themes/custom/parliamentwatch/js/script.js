@@ -2426,6 +2426,7 @@
               history.pushState({}, document.title, search + window.location.hash);
             }
 
+            $('.filterbar__item--dropdown').removeClass('dropdown--open');
             removeLoadingAnimation($('.poll__table'));
           });
 
