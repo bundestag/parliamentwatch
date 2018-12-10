@@ -2319,7 +2319,7 @@
   Drupal.behaviors.votesTable = {
     attach: function (context, settings) {
       if (settings.pw_vote && settings.pw_vote.node) {
-        $('.poll_detail__table').addClass('loading-overlay');
+        $('.poll__table').addClass('loading-overlay');
 
         var url = '/votes/' + settings.pw_vote.node;
         var search = window.location.search;
@@ -2411,7 +2411,7 @@
         });
 
         $('.form--pw-vote-poll-filters').submit(function (event) {
-          addLoadingAnimation($('.poll_detail__table'));
+          addLoadingAnimation($('.poll__table'));
 
           search = '?' + $(this).serialize();
 
@@ -2421,7 +2421,7 @@
             dynatable.records.init();
             dynatable.paginationPage.set(1);
             dynatable.process();
-            removeLoadingAnimation($('.poll_detail__table'));
+            removeLoadingAnimation($('.poll__table'));
           });
 
           event.preventDefault();
