@@ -2398,7 +2398,7 @@
           var target = this.form;
 
           if ($(this).is('#edit-keys')) {
-            window.location = '?keys=' + $(this).val() + '#block-pw-vote-poll';
+            window.location = '?keys=' + $(this).val() + window.location.hash;
           } else {
             if (!$(this).parents('.filterbar--expanded').length) {
               $(target).submit();
@@ -2421,6 +2421,11 @@
             dynatable.records.init();
             dynatable.paginationPage.set(1);
             dynatable.process();
+
+            if (window.history.pushState) {
+              history.pushState({}, document.title, search + window.location.hash);
+            }
+
             removeLoadingAnimation($('.poll__table'));
           });
 
