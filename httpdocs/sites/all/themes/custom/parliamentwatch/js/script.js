@@ -2426,7 +2426,23 @@
               history.pushState({}, document.title, search + window.location.hash);
             }
 
-            $('.filterbar__item--dropdown').removeClass('dropdown--open');
+            $('.filterbar__item--dropdown').each(function () {
+              var countActive = $(this).find('input:checked').length;
+              var $countBadge = $(this).find('.dropdown__trigger .badge');
+
+              if (countActive > 0) {
+                if ($countBadge.length) {
+                  $countBadge.text(countActive);
+                } else {
+                  $(this).find('.dropdown__trigger .icon').before('<span class="badge">' + countActive + '</span>');
+                }
+              } else {
+                $countBadge.remove();
+              }
+
+              $(this).removeClass('dropdown--open');
+            });
+
             removeLoadingAnimation($('.poll__table'));
           });
 
