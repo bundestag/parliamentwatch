@@ -37,13 +37,13 @@ class DialogueImport {
 
   public function __construct(DOMDocument $source_document) {
     $this->sourceDocument = $source_document;
-    $this->setDialogueId();
+    $this->dialogueId = self::getDialogueIdFromDOMDocument($this->getSourceDocument());
   }
 
 
-  protected function setDialogueId() {
-    $xpath = new DOMXPath($this->getSourceDocument());
-    $this->dialogueId = $xpath->evaluate('string(//dialogue/@id)');
+  public static function getDialogueIdFromDOMDocument(DOMDocument $dom_document) {
+    $xpath = new DOMXPath($dom_document);
+    return $xpath->evaluate('string(//dialogue/@id)');
   }
 
 
