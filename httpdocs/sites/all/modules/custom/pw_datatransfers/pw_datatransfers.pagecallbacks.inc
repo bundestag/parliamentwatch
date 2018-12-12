@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\pw_datatransfers\Entity\LogDialogueImportCreator;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use Drupal\pw_datatransfers\Exception\ImportCheckFailed;
 use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
@@ -23,8 +24,6 @@ use Drupal\pw_datatransfers\Modtool\DialogueImportCheck;
  *
  */
 function pw_datatransfers_dialogue_import_old($dialogue_id) {
-  $return_value = 'FAILED';
-
   try {
     if (!is_numeric($dialogue_id)) {
       throw new InvalidArgumentException('The dialogue id ' . $dialogue_id . ' is not numeric');
@@ -41,7 +40,6 @@ function pw_datatransfers_dialogue_import_old($dialogue_id) {
 
     $importDialogue = new DialogueImport($source_document);
     $importFinished = $importDialogue->import();
-    $return_value = 'OK';
 
     // after the import was finished we check if really the whole
     // dialogue was imported
@@ -50,16 +48,34 @@ function pw_datatransfers_dialogue_import_old($dialogue_id) {
       if (!$importCheck->checkForQuestion()) {
         throw new ImportCheckFailed('The question for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
       }
-      if (!$importCheck->checkForAnswer()) {
+      if (!$importCheck->checkForAnswers()) {
         throw new ImportCheckFailed('The answer for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
       }
     }
   }
   catch (Exception $e) {
-    $return_value = 'FAILED';
+    $logImport = new LogDialogueImportCreator('failed');
+    $logImport->setException($e);
+    if (isset($importDialogue)) {
+      $logImport->setDialogueImport($importDialogue);
+    }
+    if (isset($importCheck)) {
+      $logImport->setDialogueImportCheck($importCheck);
+    }
+    $logImport->log();
+    return 'FAILED';
   }
 
-  print $return_value;
+  $logImport = new LogDialogueImportCreator('success');
+  if (isset($importDialogue)) {
+    $logImport->setDialogueImport($importDialogue);
+  }
+  if (isset($importCheck)) {
+    $logImport->setDialogueImportCheck($importCheck);
+  }
+  $logImport->log();
+
+  print 'OK';
 }
 
 
