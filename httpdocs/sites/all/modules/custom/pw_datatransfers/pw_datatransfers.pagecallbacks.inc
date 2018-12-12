@@ -127,7 +127,7 @@ function pw_datatransfers_dialogue_import() {
       if (!$importCheck->checkForQuestion()) {
         throw new ImportCheckFailed('The question for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
       }
-      if (!$importCheck->checkForAnswer()) {
+      if (!$importCheck->checkForAnswers()) {
         throw new ImportCheckFailed('The answer for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
       }
     }

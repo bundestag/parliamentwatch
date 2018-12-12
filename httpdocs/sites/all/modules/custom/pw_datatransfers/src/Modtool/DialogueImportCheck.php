@@ -54,7 +54,7 @@ class DialogueImportCheck {
    * True if no answers were defined in XML from Modtool or if there are
    * answers and they have been sucessfully loaded from Drupal
    */
-  public function checkForAnswer() {
+  public function checkForAnswers() {
     $answer_message_ids = $this->dialogueImport->getMessageIdsOfAnswers();
 
     // as no answers were added we simply return true
