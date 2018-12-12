@@ -45,7 +45,7 @@ function pw_datatransfers_entity_info() {
     'entity keys' => [
       'id' => 'id'
     ],
-    'entity class' => '\Drupal\pw_datatransfers\Entity\LogDialogueImport',
+    'entity class' => '\Drupal\pw_datatransfers\Entity\LogDialogueImportEntity',
     'controller class' => '\Drupal\pw_datatransfers\Entity\LogDialogueImportController',
     'module' => 'pw_datatransfers'
   ];
