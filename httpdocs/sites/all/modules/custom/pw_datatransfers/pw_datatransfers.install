@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * install file for PW Datatransfers module
+ */
+
+function pw_datatransfers_schema() {
+  $schema = [];
+
+  // database for loggings regarding Modtool import
+  $schema['pw_datatransfers_logs_dialogue'] = [
+    'description' => 'Loggings of dialogue imports from Modtool',
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier for a log entry.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'dialogue_nid' => [
+        'description' => 'The {node} nid of the question in Drupal',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'comment_cid' => [
+        'description' => 'The {comment} id of the answer in Drupal',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+      ],
+      'question_message_id' => [
+        'description' => 'The message id of the question in Modtool',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ],
+      'answer_message_id' => [
+        'description' => 'The message id of the answer in Modtool',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ],
+      'dialogue_id' => [
+        'description' => 'The dialogue id of the dialogue in Modtool',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ],
+      'message' => [
+        'description' => 'The message - can be a success or an error message',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'normal'
+      ],
+      'exception' => [
+        'description' => 'If an exception was thrown it is stored here',
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ],
+    'indexes' => [
+      'dialogue_id' => [
+        'dialogue_id'
+      ]
+    ],
+  ];
+
+  return $schema;
+}

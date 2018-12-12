@@ -3,5 +3,6 @@ description = The aim oif this module is to centralize all data transfer managem
 core = 7.x
 package = Parliamentwatch
 
+dependencies[] = entity
 dependencies[] = pw_parliaments
 dependencies[] = pw_dialogues
