@@ -8,7 +8,6 @@ use DateTime;
 use DOMDocument;
 use DOMXPath;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
-use Drupal\pw_datatransfers\Exception\TooManyItemsException;
 use stdClass;
 
 
@@ -40,13 +39,6 @@ class DialogueImport {
    * After saving the dialogue node is stored here
    */
   protected $savedQuestionNode = NULL;
-
-
-  /**
-   * @var null|object
-   * After saving the answer/ Drupal comment is stored here
-   */
-  protected $savedComment = NULL;
 
   /**
    * @var null|bool
@@ -94,9 +86,10 @@ class DialogueImport {
     try {
       node_save($question);
       $this->savedQuestionNode = $question;
-      $comment = $this->buildDrupalComment($question);
-      comment_save($comment);
-      $this->savedComment = $comment;
+      $comments = $this->buildDrupalComments($question);
+      foreach ($comments as $comment) {
+        comment_save($comment);
+      }
       return TRUE;
     }
     catch (\Exception $e) {
@@ -119,7 +112,7 @@ class DialogueImport {
    *
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    */
-  protected function buildDrupalComment($question) {
+  protected function buildDrupalComments($question) {
     $xpath = new DOMXPath($this->getSourceDocument());
     $answers = [];
 
@@ -181,11 +174,7 @@ class DialogueImport {
       $answers[] = $comment;
     }
 
-    if (count($answers) > 1) {
-      throw new TooManyItemsException('There are more than one answers delivered for dialogue '. $this->getDialogueId());
-    }
-
-    return $answers[0];
+    return $answers;
   }
 
 
