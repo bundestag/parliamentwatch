@@ -11,6 +11,14 @@ use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use stdClass;
 
 
+/**
+ * Manages the import from questions and answers. It receives the
+ * DOMDocument of the XML, extracts all data from there and updates existing or
+ * creates new dialogues/ questions/ answers in Drupal
+ *
+ * During the process we throw exceptions which should be catched by the caller
+ * of the import process.
+ */
 class DialogueImport {
 
   /**
@@ -21,11 +29,15 @@ class DialogueImport {
 
   /**
    * @var \DOMDocument|null
-   * The loaded and initialised DOM document
+   * The DOM document represnation of the XML received from Modtool
    */
   protected $sourceDocument = NULL;
 
 
+  /**
+   * @var null|object
+   * After saving the dialogue node is stored here
+   */
   protected $savedQuestionNode = NULL;
 
   /**
@@ -35,12 +47,24 @@ class DialogueImport {
   public $questionIsNew = NULL;
 
 
+  /**
+   * DialogueImport constructor.
+   *
+   * @param \DOMDocument $source_document
+   */
   public function __construct(DOMDocument $source_document) {
     $this->sourceDocument = $source_document;
     $this->dialogueId = self::getDialogueIdFromDOMDocument($this->getSourceDocument());
   }
 
 
+  /**
+   * Static helper for receiving the dialogue id from the DOM document
+   *
+   * @param \DOMDocument $dom_document
+   *
+   * @return mixed
+   */
   public static function getDialogueIdFromDOMDocument(DOMDocument $dom_document) {
     $xpath = new DOMXPath($dom_document);
     return $xpath->evaluate('string(//dialogue/@id)');
@@ -48,16 +72,21 @@ class DialogueImport {
 
 
   /**
-   * Start the import of the question and answer
+   * Import question and answers data from Modtool
+   *
+   * @return TRUE
+   * True when the import process was finished
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    */
   public function import() {
-    $question = $this->createQuestionNode();
+    $question = $this->buildQuestionNode();
 
     $transaction = db_transaction();
     try {
       node_save($question);
       $this->savedQuestionNode = $question;
-      $comments = $this->createComments($question);
+      $comments = $this->buildDrupalComments($question);
       foreach ($comments as $comment) {
         comment_save($comment);
       }
@@ -71,13 +100,19 @@ class DialogueImport {
 
 
   /**
+   * Builds a Drupal comment entity object for each answer found. It checks if
+   * an answer can be found in Drupal already - if so it's data will be updated. If
+   * not a new comment entity object gets created
+   *
    * @param object $question
    * The node object of the question
    *
-   * @return array
+   * @return object[]
+   * An array of Drupal comment objects. Empty of no answer was found in XMl from Modtool
+   *
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    */
-  protected function createComments($question) {
+  protected function buildDrupalComments($question) {
     $xpath = new DOMXPath($this->getSourceDocument());
     $answers = [];
 
@@ -144,7 +179,7 @@ class DialogueImport {
 
 
   /**
-   * Creates a dialogue (question) node object from the DOM object. When a question
+   * Build a dialogue (question) node object from the DOM object. When a question
    * already exists in Drupal it loads this node to update the node.
    *
    * @return object
@@ -152,7 +187,7 @@ class DialogueImport {
    *
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    */
-  protected function createQuestionNode() {
+  protected function buildQuestionNode() {
     $xpath = new DOMXPath($this->getSourceDocument());
     $question_from_modtool = $xpath->query('//message[type="question"]')
       ->item(0);
@@ -271,13 +306,13 @@ class DialogueImport {
     }
 
     return $node;
-
-
   }
 
 
 
   /**
+   * Get the DOM document which holds the XML from Modtool
+   *
    * @return \DOMDocument|null
    * The DOM document object
    */
@@ -287,6 +322,8 @@ class DialogueImport {
 
 
   /**
+   * Get the dialogue id of the dialogue as defined in Modtool
+   *
    * @return int|string|null
    * The dialogue id which is imported in the moment
    */
@@ -296,28 +333,7 @@ class DialogueImport {
 
 
   /**
-   * @return string|null
-   * The path to the XML document for the current dialogue
-   */
-  public function getSourcePath() {
-    return $this->sourcePath;
-  }
-
-
-  /**
-   * Create the sourcepath from the given dialogue id
-   *
-   * @return string
-   */
-  public static function createSourcePath($dialogue_id) {
-    $source_path = variable_get('pw_dialogues_importer_source');
-    $source_path .= $dialogue_id;
-    $source_path .= '?unreleased=1';
-    return $source_path;
-  }
-
-  /**
-   * Load the question by it's message id set in modtool - if none found
+   * Load the question in Drupal by it's message id set in modtool - if none found
    * create a new empty node object
    *
    * @param $message_id
@@ -345,8 +361,8 @@ class DialogueImport {
 
 
   /**
-   * Load the answer by it's message id set in modtool - if none found
-   * create a new empty node object
+   * Load the answer (comment in Drupal) by it's message id set in modtool - if none found
+   * create a new empty comment object
    *
    * @param int|string $message_id
    * The message id of the answer in Modtool
@@ -354,7 +370,8 @@ class DialogueImport {
    * @param object $question
    * The Drupal node object of the related question
    *
-   * @return bool|\stdClass|null
+   * @return object
+   * A Drupal comment object representing the answer
    */
   protected function loadOrCreateAnswer($message_id, $question) {
     $answer = load_answer_by_message_id($message_id);
@@ -372,6 +389,12 @@ class DialogueImport {
   }
 
 
+  /**
+   * Get the message id of the question in Modtool
+   *
+   * @return string
+   * The message id of the question
+   */
   public function getMessageIdOfQuestion() {
     $xpath = new DOMXPath($this->getSourceDocument());
     $question_from_modtool = $xpath->query('//message[type="question"]')
@@ -382,6 +405,12 @@ class DialogueImport {
   }
 
 
+  /**
+   * Get the message id of the answers in Modtool
+   *
+   * @return array
+   * Array of answer message ids
+   */
   public function getMessageIdsOfAnswers() {
     $xpath = new DOMXPath($this->getSourceDocument());
     $answers_message_ids = [];
@@ -394,6 +423,10 @@ class DialogueImport {
   }
 
 
+  /**
+   * @return object|null
+   * The Drupal node object of the question saved during import
+   */
   public function getSavedQuestionNode() {
     return $this->savedQuestionNode;
   }

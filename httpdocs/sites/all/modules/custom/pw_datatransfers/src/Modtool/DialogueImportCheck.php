@@ -16,12 +16,22 @@ class DialogueImportCheck {
   protected $dialogueImport;
 
 
+  /**
+   * DialogueImportCheck constructor.
+   *
+   * @param \Drupal\pw_datatransfers\Modtool\DialogueImport $dialogue_import
+   */
   public function __construct(DialogueImport $dialogue_import) {
     $this->dialogueImport = $dialogue_import;
   }
 
 
-
+  /**
+   * Check if the question is stored in Drupal
+   *
+   * @return bool
+   * True if the question was sucessfully loaded, false if not
+   */
   public function checkForQuestion() {
     $question_message_id = $this->dialogueImport->getMessageIdOfQuestion();
 
@@ -35,6 +45,15 @@ class DialogueImportCheck {
     return FALSE;
   }
 
+
+  /**
+   * Check if the answers given from Modtool are stored in Drupal. It returns
+   * TRUE when no answers were defined in teh XML from Modtool
+   *
+   * @return bool
+   * True if no answers were defined in XML from Modtool or if there are
+   * answers and they have been sucessfully loaded from Drupal
+   */
   public function checkForAnswer() {
     $answer_message_ids = $this->dialogueImport->getMessageIdsOfAnswers();
 

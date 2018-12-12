@@ -62,8 +62,13 @@ function pw_datatransfers_dialogue_import_old($dialogue_id) {
   print $return_value;
 }
 
+
 /**
- * Page callback: creates or updates a dialogue node and its comments.
+ * Enhanced age callback for the new Modtool. The XML document is sent by POST
+ * and the page callbacks defines some HTTP header depending on the result. it also
+ * does the access check which we might move to an access callback later
+ *
+ *
  */
 function pw_datatransfers_dialogue_import() {
   if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
@@ -106,7 +111,7 @@ function pw_datatransfers_dialogue_import() {
     // load the DomDocument of the dialogue XML
     $doc = new DOMDocument('1.0');
     if (!$doc->load('php://input')) {
-      throw new SourceNotFoundException('The source document for dialogue ' . $dialogue_id . ' could not be loaded by calling the path ' . $this->sourcePath);
+      throw new SourceNotFoundException('It was not possible to load the XML document for dialogue import');
     }
 
 
