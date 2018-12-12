@@ -9,7 +9,7 @@ use Entity;
 /**
  *
  */
-class LogDialogueImport extends Entity {
+class LogDialogueImportEntity extends Entity {
 
 
   /**
