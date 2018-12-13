@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Main module file for PW Datatransfers module for hooks
+ */
+
+
+/**
+ * Implements hook_menu().
+ */
+function pw_datatransfers_menu() {
+  // Path for old Modtool way to import dialogues
+  $items['api/import/dialogue/%'] = [
+    'title' => 'imports dialogue',
+    'access arguments' => array('access content'),
+    'page callback' => 'pw_datatransfers_dialogue_import_old',
+    'page arguments' => array(3),
+    'type' => MENU_CALLBACK,
+    'file' => 'pw_datatransfers.pagecallbacks.inc'
+  ];
+
+  // Path for new Modtool way to import dialogues
+  $items['api/dialogues'] = [
+    'page callback' => 'pw_datatransfers_dialogue_import',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+    'file' => 'pw_datatransfers.pagecallbacks.inc'
+  ];
+  return $items;
+}
