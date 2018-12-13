@@ -2276,6 +2276,7 @@
           var attr = $(this).parents('.modal').attr('data-modal-cookie');
           var cookieExpires = $(this).parents('.modal').attr('data-modal-cookie-expires');
           $('.modal__close').parents('.modal').removeClass('modal--open');
+          $('body').removeClass('block-scrolling');
 
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = $(this).parents('.modal').attr('data-modal-name');
@@ -2289,6 +2290,7 @@
           var modal = $('.modal[data-modal-name=' + modalName + ']');
           var attr = modal.attr('data-modal-cookie');
           modal.removeClass('modal--open');
+          $('body').removeClass('block-scrolling');
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = modalName;
             $.cookie(cookieName, '1', {expires: 7, path: '/'});
@@ -2302,6 +2304,7 @@
             var clicksToShow = $(this).attr('data-modal-clicksToShow');
             if (!$.cookie(cookieName) == '1' && clickCount >= clicksToShow) {
               $('[data-modal-initial]').addClass('modal--open');
+              $('body').addClass('block-scrolling');
             }
           });
         }
