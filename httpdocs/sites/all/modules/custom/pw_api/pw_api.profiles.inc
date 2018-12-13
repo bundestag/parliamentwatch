@@ -62,7 +62,22 @@ function pw_api_profile($username, $parliament=FALSE) {
   return $profile;
 }
 
-function pw_api_profiles($parliament, $file_type) {
+
+/**
+ * Return multiple profiles. The page callback is used for the following paths:
+ *  - api/parliament/[PARLIAMENT]/deputies.json
+ *  - api/parliament/[PARLIAMENT]/deputies.xml
+ *  - api/parliament/[PARLIAMENT]/candidates.json
+ *  - api/parliament/[PARLIAMENT]/candidates.xml
+ *  - api/parliament/[PARLIAMENT]/profiles.json
+ *  - api/parliament/[PARLIAMENT]/profiles.xml
+ *
+ * @param $parliament
+ * @param $file_type
+ *
+ * @return array
+ */
+function pw_api_multiple_profiles($parliament, $file_type) {
 
   // translate uuid into parliament name
   if(preg_match('/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i', $parliament, $uuid)){

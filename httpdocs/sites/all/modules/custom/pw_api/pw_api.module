@@ -142,7 +142,7 @@ function pw_api_menu() {
   foreach (array('xml', 'json') as $file_type) {
     $key = 'api/parliament/%/profiles.'.$file_type;
     $item = array(
-      'page callback' => 'pw_api_profiles',
+      'page callback' => 'pw_api_multiple_profiles',
       'page arguments' => array(2, $file_type),
       'access callback' => TRUE,
       'delivery callback' => 'pw_api_deliver_'.$file_type,
