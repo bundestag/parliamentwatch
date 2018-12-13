@@ -129,7 +129,7 @@ function pw_export_submissions($nid){
 
     // export to json
     $file_json_content = json_encode($submissions);
-    $file_json_path = $export_path.'submissions_'.time().'.json';
+    $file_json_path = $export_path.'/submissions_'.time().'.json';
     $file_json = file_save_data($file_json_content, $file_json_path, FILE_EXISTS_RENAME);
 
     // on success update submissions to status=exported
