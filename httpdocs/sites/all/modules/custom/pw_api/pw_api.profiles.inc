@@ -93,30 +93,27 @@ function pw_api_multiple_profiles($parliament, $file_type) {
   $query = db_select('user_archive_cache', 'uac');
   $query->fields('uac', array('uid', 'vid'));
 
-  if($pathinfo['filename'] == 'deputies') {
-    _pw_uac_add_conditions($query, array(
-        'parliament' => $parliament,
-        'roles' => 'deputy',
-        'date' => date('Y-m-d')
-      )
-    );
+  switch ($pathinfo['filename'] ) {
+    case 'deputies':
+      _pw_uac_add_conditions($query, array('parliament' => $parliament, 'roles' => 'deputy'));
+      $query->addExpression('MAX(vid)', 'max_vid');
+      $query->groupBy('uac.uid');
+      break;
+
+    case 'candidates':
+      _pw_uac_add_conditions($query, array('parliament' => $parliament, 'roles' => 'candidate'));
+      $query->addExpression('MAX(vid)', 'max_vid');
+      $query->groupBy('uac.uid');
+      break;
+
+      // it should only be "profiles" as s filename possible
+    default:
+      _pw_uac_add_conditions($query, array('parliament' => $parliament,));
+      $query->addExpression('MAX(vid)', 'max_vid');
+      $query->groupBy('uac.uid');
+      break;
   }
-  elseif($pathinfo['filename'] == 'candidates') {
-    _pw_uac_add_conditions($query, array(
-        'parliament' => $parliament,
-        'roles' => 'candidate',
-        'date' => date('Y-m-d')
-      )
-    );
-  }
-  else {
-    _pw_uac_add_conditions($query, array(
-        'parliament' => $parliament,
-        'date' => date('Y-m-d')
-      )
-    );
-    $query->groupBy('uac.uid');
-  }
+
 
   $result = $query->execute()->fetchCol(1);
   $parameters = drupal_get_query_parameters();
