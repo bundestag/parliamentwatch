@@ -276,13 +276,11 @@ function pw_globals_taxonomy_term_page($term) {
   }
   elseif (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags', 'topics'])) {
     $build = taxonomy_term_view($term);
-    $term_wrapper = entity_metadata_wrapper('term', $term);
     $nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 12));
 
-    if (isset($build['description'])) {
-      $build['description']['#theme_wrappers'] = ['container__overview'];
+    if (isset($build["description"]["#prefix"])) {
+      $build["description"]["#prefix"] = '<div class="intro">';
     }
-
     if ($nids) {
       $nodes = node_load_multiple($nids);
       if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
