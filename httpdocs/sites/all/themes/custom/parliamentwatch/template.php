@@ -352,7 +352,7 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     }
   }
 
-  $gender = 'male';
+  $gender = '';
   if (isset($account->field_user_gender[LANGUAGE_NONE])) {
     $gender = $account->field_user_gender[LANGUAGE_NONE][0]['value'];
   }
