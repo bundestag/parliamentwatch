@@ -64,13 +64,13 @@ function pw_datatransfers_dialogue_import_old($dialogue_id) {
 
 
 /**
- * Enhanced age callback for the new Modtool. The XML document is sent by POST
+ * Enhanced page callback for the new Modtool. The XML document is sent by POST
  * and the page callbacks defines some HTTP header depending on the result. it also
  * does the access check which we might move to an access callback later
  *
  *
  */
-function pw_datatransfers_dialogue_import() {
+function pw_datatransfers_dialogue_import($dialogue_id, $message_type, $message_id, $action) {
   if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
     $credentials = base64_decode(substr($_SERVER['REDIRECT_HTTP_AUTHORIZATION'], 6));
     list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $credentials, 2);
@@ -108,15 +108,31 @@ function pw_datatransfers_dialogue_import() {
 
   try {
 
-    // load the DomDocument of the dialogue XML
-    $doc = new DOMDocument('1.0');
-    if (!$doc->load('php://input')) {
-      throw new SourceNotFoundException('It was not possible to load the XML document for dialogue import');
+    // get the JSON from the POST
+    $json = '';
+    if (isset($_POST['message'])) {
+      $json = json_decode($_POST['message']);
     }
 
+    if (empty($json)) {
+      throw new SourceNotFoundException('It was not possible to receive a JSON');
+    }
+
+    switch ($message_type) {
+      case 'question':
+        $dataClass = new \Drupal\pw_datatransfers\Modtool\DataQuestion($json);
+        $dataClass->action($action);
+        break;
+      case 'answer':
+        $dataClass = new \Drupal\pw_datatransfers\Modtool\DataQuestion($json);
+        $dataClass->action($action);
+        break;
+      default:
+        throw new DatatransfersException('No valid action was defined: "'. $action .'"');
+    }
 
     // do the import
-    $importDialogue = new DialogueImport($doc);
+    $importDialogue = new DialogueImport($json);
     $importFinished = $importDialogue->import();
 
 
