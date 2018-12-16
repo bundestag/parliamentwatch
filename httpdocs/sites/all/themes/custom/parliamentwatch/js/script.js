@@ -2276,6 +2276,7 @@
           var attr = $(this).parents('.modal').attr('data-modal-cookie');
           var cookieExpires = $(this).parents('.modal').attr('data-modal-cookie-expires');
           $('.modal__close').parents('.modal').removeClass('modal--open');
+          $('body').removeClass('block-scrolling');
 
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = $(this).parents('.modal').attr('data-modal-name');
@@ -2289,6 +2290,7 @@
           var modal = $('.modal[data-modal-name=' + modalName + ']');
           var attr = modal.attr('data-modal-cookie');
           modal.removeClass('modal--open');
+          $('body').removeClass('block-scrolling');
           if (typeof attr !== typeof undefined && attr !== false) {
             var cookieName = modalName;
             $.cookie(cookieName, '1', {expires: 7, path: '/'});
@@ -2302,6 +2304,7 @@
             var clicksToShow = $(this).attr('data-modal-clicksToShow');
             if (!$.cookie(cookieName) == '1' && clickCount >= clicksToShow) {
               $('[data-modal-initial]').addClass('modal--open');
+              $('body').addClass('block-scrolling');
             }
           });
         }
@@ -2319,9 +2322,12 @@
   Drupal.behaviors.votesTable = {
     attach: function (context, settings) {
       if (settings.pw_vote && settings.pw_vote.node) {
-        var url = '/votes/' + settings.pw_vote.node + window.location.search;
-        $('.poll_detail__table').addClass('loading-overlay');
-        $.ajax(url).done(function (data) {
+        $('.poll__table').addClass('loading-overlay');
+
+        var url = '/votes/' + settings.pw_vote.node;
+        var search = window.location.search;
+
+        $.ajax(url + search).done(function (data) {
           $('.table--poll-votes').bind('dynatable:init', function (event, dynatable) {
             var PaginationLinks = Drupal.dynatable.PaginationLinks(dynatable, dynatable.settings);
             dynatable.paginationLinks.create = PaginationLinks.create;
@@ -2335,6 +2341,18 @@
             dynatable.sortsHeaders.appendArrowUp = SortsHeaders.appendArrowUp;
             dynatable.sortsHeaders.appendArrowDown = SortsHeaders.appendArrowDown;
             dynatable.sortsHeaders.toggleSort = SortsHeaders.toggleSort;
+
+            // sorting on mobile devices
+
+            $('#poll_detail_table_sorting').on('select2:select', function (e) {
+              var selectValue = $(this).find(':selected').data('sort-value');
+              var selectSortOrder = $(this).find(':selected').data('sort-order');
+
+              dynatable.sorts.clear();
+              dynatable.sorts.add(selectValue, selectSortOrder);
+              dynatable.process();
+            });
+
           }).dynatable({
             features: {
               perPageSelect: false,
@@ -2362,11 +2380,28 @@
           })
         });
 
+        // Sync mobile sorting-select with table-view
+        $('.table--poll-votes').bind('dynatable:afterProcess', function (event, dynatable) {
+          var sortValue = String([Object.keys(dynatable.sorts)[0]]);
+          var sortOrderInitial = dynatable.sorts[Object.keys(dynatable.sorts)[0]];
+          var sortOrderAfter = '';
+          if (sortOrderInitial == '-1') {
+            sortOrderAfter = '_dsc';
+          } else {
+            sortOrderAfter = '_asc';
+          }
+          var newSortValue = sortValue + sortOrderAfter;
+          if (windowWidth >= 768) {
+            $('select#poll_detail_table_sorting').val(newSortValue);
+            $('select#poll_detail_table_sorting').trigger('change.select2');
+          }
+        });
+
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {
           var target = this.form;
 
           if ($(this).is('#edit-keys')) {
-            window.location = '?keys=' + $(this).val() + '#block-pw-vote-poll';
+            window.location = '?keys=' + $(this).val() + window.location.hash;
           } else {
             if (!$(this).parents('.filterbar--expanded').length) {
               $(target).submit();
@@ -2379,22 +2414,42 @@
         });
 
         $('.form--pw-vote-poll-filters').submit(function (event) {
-          event.preventDefault();
-          addLoadingAnimation($('.poll_detail__table'));
+          addLoadingAnimation($('.poll__table'));
 
-          if (window.location.search == '') {
-            var search = '?' + $(this).serialize();
-          } else {
-            var search = window.location.search + '&' + $(this).serialize();
-          }
+          search = '?' + $(this).serialize();
+
           $.ajax(url + search).done(function (data) {
             var dynatable = $('.table--poll-votes').data('dynatable');
             dynatable.records.updateFromJson(data);
             dynatable.records.init();
             dynatable.paginationPage.set(1);
             dynatable.process();
-            removeLoadingAnimation($('.poll_detail__table'));
+
+            if (window.history.pushState) {
+              history.pushState({}, document.title, search + window.location.hash);
+            }
+
+            $('.filterbar__item--dropdown').each(function () {
+              var countActive = $(this).find('input:checked').length;
+              var $countBadge = $(this).find('.dropdown__trigger .badge');
+
+              if (countActive > 0) {
+                if ($countBadge.length) {
+                  $countBadge.text(countActive);
+                } else {
+                  $(this).find('.dropdown__trigger .icon').before('<span class="badge">' + countActive + '</span>');
+                }
+              } else {
+                $countBadge.remove();
+              }
+
+              $(this).removeClass('dropdown--open');
+            });
+
+            removeLoadingAnimation($('.poll__table'));
           });
+
+          event.preventDefault();
         });
       }
     }

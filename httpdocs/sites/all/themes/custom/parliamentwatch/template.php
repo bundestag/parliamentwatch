@@ -352,7 +352,10 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     }
   }
 
-  $gender = $account->field_user_gender[LANGUAGE_NONE][0]['value'];
+  $gender = '';
+  if (isset($account->field_user_gender[LANGUAGE_NONE])) {
+    $gender = $account->field_user_gender[LANGUAGE_NONE][0]['value'];
+  }
 
   if (_pw_user_has_role($account, 'Candidate')) {
     $variables['role'] = t('Candidate', [], ['context' => $gender]);
