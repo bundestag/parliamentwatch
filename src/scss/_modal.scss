@@ -64,7 +64,8 @@
   padding: 0;
   color: $gray;
   font-size: 1.4em;
-  @include transition(color 300ms ease);
+  will-change: color;
+  transition: color 300ms ease;
   @include breakpoint($breakpoint-s-min) {
     right: $space-large;
     top: $space-large;

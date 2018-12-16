@@ -93,7 +93,7 @@
         right: $space;
         top: 50%;
         font-size: .7em;
-        @include transform(translate(0, -50%));
+        transform: translate(0, -50%);
         @include breakpoint($breakpoint-m-min) {
           content: initial;
           display: none;
