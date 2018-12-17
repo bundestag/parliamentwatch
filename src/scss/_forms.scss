@@ -32,7 +32,10 @@
     appearance: none;
     width: 100%;
   }
-  @include placeholder {
+  &::-webkit-input-placeholder,
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &:-moz-placeholder {
     color: $gray;
   }
 }
@@ -168,7 +171,7 @@
   overflow: hidden;
   margin-top: -8px;
   color: $gray;
-  @include animation(spinnerRotate 1.0s linear infinite);
+  animation: spinnerRotate 1.0s linear infinite;
 }
 .loading .form__item__loader {
   display: block;
@@ -380,7 +383,7 @@ textarea.form__item__control {
       z-index: 9;
       top: 50%;
       margin-right: $space-small;
-      @include animation(spin 1s linear infinite);
+      animation: spin 1s linear infinite;
       @include breakpoint($breakpoint-xs-min) {
         right: 10%;
       }
