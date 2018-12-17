@@ -278,19 +278,26 @@ function pw_globals_taxonomy_term_page($term) {
     $build = taxonomy_term_view($term);
     $nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 12));
 
+    if (isset($build["description"]["#prefix"])) {
+      $build["description"]["#prefix"] = '<div class="intro"><div class="intro__left">';
+    }
+    if (isset($build["description"]["#suffix"])) {
+      $build["description"]["#suffix"] = '</div></div>';
+    }
     if ($nids) {
       $nodes = node_load_multiple($nids);
       if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
-        $build = node_view_multiple($nodes, 'tile');
-        $build['#theme_wrappers'] = ['container__tiles'];
+        $overview = node_view_multiple($nodes, 'tile');
+        $overview['#theme_wrappers'] = ['container__tiles'];
       } else {
-        $build = node_view_multiple($nodes, 'teaser');
-        $build['#theme_wrappers'] = ['container__overview'];
+        $overview = node_view_multiple($nodes, 'teaser');
+        $overview['#theme_wrappers'] = ['container__overview'];
       }
-      $build['pager'] = [
+      $overview['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,
       ];
+      $build['overview'][] = $overview;
     }
     else {
       $build['no_content'] = [
@@ -980,7 +987,7 @@ function _pw_get_formatted_legislature_start_date($parliament) {
  *
  * @param array $date_field
  *   date field with start and end date as value and value2
- * 
+ *
  * @return boolean
  */
 function _pw_is_between_dates($date_field, $timestamp = FALSE) {
