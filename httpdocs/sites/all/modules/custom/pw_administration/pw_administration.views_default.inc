@@ -252,6 +252,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
@@ -379,7 +380,7 @@ function pw_administration_views_default_views() {
       'override_label' => 1,
       'label' => 'Einträge exportieren',
       'settings' => array(
-        'url' => 'admin/content/fragen/antworten/export',
+        'url' => 'admin/abgeordnetenwatch/fragen/antworten/export',
       ),
     ),
     'action::views_bulk_operations_delete_item' => array(
@@ -784,7 +785,7 @@ function pw_administration_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/content/fragen/antworten';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/fragen/antworten';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Antworten';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -952,13 +953,13 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['arguments']['cid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['cid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['cid']['break_phrase'] = TRUE;
-  $handler->display->display_options['path'] = 'admin/content/fragen/antworten/export';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/fragen/antworten/export';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
   );
   $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['return_path'] = 'admin/content/fragen/antworten';
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/fragen/antworten';
   $handler->display->display_options['segment_size'] = '100';
   $translatables['pw_administration_antworten'] = array(
     t('Master'),
@@ -2242,7 +2243,7 @@ function pw_administration_views_default_views() {
       'override_label' => 1,
       'label' => 'Einträge exportieren',
       'settings' => array(
-        'url' => 'admin/content/fragen/export',
+        'url' => 'admin/abgeordnetenwatch/fragen/export',
       ),
     ),
     'action::node_unpublish_action' => array(
@@ -2640,14 +2641,13 @@ function pw_administration_views_default_views() {
   /* Display: Page default Reiter */
   $handler = $view->new_display('page', 'Page default Reiter', 'page_1');
   $handler->display->display_options['display_description'] = 'Der Default Reiter';
-  $handler->display->display_options['path'] = 'admin/content/fragen/default';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/fragen/fragen';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'Fragen';
   $handler->display->display_options['menu']['weight'] = '-50';
   $handler->display->display_options['menu']['name'] = 'management';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['menu']['context_only_inline'] = 0;
-  $handler->display->display_options['tab_options']['type'] = 'normal';
   $handler->display->display_options['tab_options']['title'] = 'Fragen & Antworten';
   $handler->display->display_options['tab_options']['weight'] = '0';
   $handler->display->display_options['tab_options']['name'] = 'management';
@@ -2655,7 +2655,7 @@ function pw_administration_views_default_views() {
   /* Display: Menu Punkt */
   $handler = $view->new_display('page', 'Menu Punkt', 'page_2');
   $handler->display->display_options['display_description'] = 'Page um einen Menü Punkt im Management Menu zu erstellen';
-  $handler->display->display_options['path'] = 'admin/content/fragen';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/fragen';
   $handler->display->display_options['menu']['type'] = 'normal';
   $handler->display->display_options['menu']['title'] = 'Fragen & Antworten';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -2827,14 +2827,14 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['nid']['break_phrase'] = TRUE;
-  $handler->display->display_options['path'] = 'admin/content/fragen/export';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/fragen/export';
   $handler->display->display_options['displays'] = array(
     'page_1' => 'page_1',
     'page_2' => 'page_2',
     'default' => 0,
   );
   $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['return_path'] = 'admin/content/fragen';
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/fragen';
   $handler->display->display_options['segment_size'] = '100';
   $translatables['pw_administration_fragen'] = array(
     t('Master'),
@@ -3012,7 +3012,7 @@ function pw_administration_views_default_views() {
       'override_label' => 1,
       'label' => 'Einträge exportieren',
       'settings' => array(
-        'url' => 'admin/content/sidejobs/export',
+        'url' => 'admin/abgeordnetenwatch/sidejobs/export',
       ),
     ),
     'action::node_unpublish_action' => array(
@@ -3475,7 +3475,7 @@ function pw_administration_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/content/sidejobs';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/sidejobs';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Sidejobs';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -3700,13 +3700,13 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['path'] = 'admin/content/sidejobs/export';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/sidejobs/export';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
   );
   $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['return_path'] = 'admin/content/sidejobs';
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/sidejobs';
   $handler->display->display_options['segment_size'] = '100';
   $translatables['pw_administration_sidejobs'] = array(
     t('Master'),
@@ -3903,7 +3903,7 @@ function pw_administration_views_default_views() {
       'override_label' => 1,
       'label' => 'Einträge exportieren',
       'settings' => array(
-        'url' => 'admin/content/votings/export',
+        'url' => 'admin/abgeordnetenwatch/votings/export',
       ),
     ),
     'action::node_unpublish_action' => array(
@@ -4341,7 +4341,7 @@ function pw_administration_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/content/votings';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/votings';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Stimmen/ Votes';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -4373,13 +4373,13 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['arguments']['nid']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['nid']['summary_options']['items_per_page'] = '25';
   $handler->display->display_options['arguments']['nid']['break_phrase'] = TRUE;
-  $handler->display->display_options['path'] = 'admin/content/votings/export';
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/votings/export';
   $handler->display->display_options['displays'] = array(
     'page' => 'page',
     'default' => 0,
   );
   $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['return_path'] = 'admin/content/votings';
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/votings';
   $handler->display->display_options['segment_size'] = '100';
   $translatables['pw_administration_votings'] = array(
     t('Master'),
