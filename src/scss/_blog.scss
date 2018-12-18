@@ -45,7 +45,7 @@
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
-    @include filter(blur(4px));
+    filter: blur(4px);
   }
   &:before,
   &:after {
@@ -69,7 +69,6 @@
     opacity: .8;
     mix-blend-mode: darken;
   }
-
   .blog__header__content {
     position: relative;
     z-index: 999;

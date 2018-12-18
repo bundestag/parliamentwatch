@@ -70,3 +70,29 @@ function pw_sidejobs_update_7001(&$sandbox) {
   $sandbox['#finished'] = $sandbox['progress'] >= $sandbox['max'] ? TRUE : $sandbox['progress'] / $sandbox['max'];
 
 }
+
+
+/**
+ * Update old sidejobs with no categories
+ */
+function pw_sidejobs_update_7002() {
+  $row = 1;
+  $path = dirname(__FILE__) .'/update-source/jobs_category.csv';
+  $handle = fopen($path, "r");
+  if (($handle) !== FALSE) {
+    while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+      if ($row > 1) {
+        $uuid_sidejob = $data[0];
+        $tid_category = $data[1];
+        $sidejob = entity_uuid_load('node', [$uuid_sidejob]);
+        if (!empty($sidejob)) {
+          $sidejob = reset($sidejob);
+          $sidejob->field_sidejob_job_category["und"][0]["tid"] = $tid_category;
+          entity_uuid_save('node', $sidejob);
+        }
+      }
+      $row++;
+    }
+    fclose($handle);
+  }
+}
