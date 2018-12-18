@@ -23,6 +23,7 @@ dependencies[] = tfa_basic
 dependencies[] = views_data_export
 dependencies[] = webform
 dependencies[] = webform_countdown
+dependencies[] = xautoload
 features[ctools][] = field_group:field_group:1
 features[ctools][] = strongarm:strongarm:1
 features[ctools][] = views:views_default:3.0
