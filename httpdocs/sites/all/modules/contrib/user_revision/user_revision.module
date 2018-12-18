@@ -115,7 +115,7 @@ function user_revision_menu() {
     'load arguments' => array(3),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('user_revision_delete_confirm', 1),
-    'access callback' => '_user_revision_access',
+    'access callback' => '_user_revision_access_delete',
     'access arguments' => array(1, array('delete user revisions', 'delete own user revisions')),
     'file' => 'user_revision.pages.inc',
   );
@@ -155,6 +155,30 @@ function _user_revision_access($u, $perm){
     ->fetchField();
   return $access && ($count > 1);
 }
+
+
+/**
+ * Custom Abgeordnetenwatch permission check for delete user revision path.
+ *
+ * Avoid deletion of current user revision
+ *
+ * @param $u
+ * @param $perm
+ */
+function _user_revision_access_delete($u, $perm) {
+  $current_user_revision = db_select('users', 'u')
+    ->condition('u.uid', $u->uid)
+    ->fields('u', array('vid'))
+    ->execute()
+    ->fetchAssoc();
+
+  if ($current_user_revision["vid"] == $u->vid) {
+    return FALSE;
+  }
+
+  return _user_revision_access($u, $perm);
+}
+
 
 /**
  * Implements hook_permission().
