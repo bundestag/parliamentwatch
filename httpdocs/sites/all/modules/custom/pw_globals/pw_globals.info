@@ -22,6 +22,7 @@ dependencies[] = tfa
 dependencies[] = tfa_basic
 dependencies[] = webform
 dependencies[] = webform_countdown
+dependencies[] = xautoload
 features[ctools][] = field_group:field_group:1
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:1
