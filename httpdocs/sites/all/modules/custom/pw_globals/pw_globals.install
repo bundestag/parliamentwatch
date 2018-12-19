@@ -644,3 +644,11 @@ function pw_globals_update_7133() {
     module_enable(['pw_administration']);
   }
 }
+
+
+/**
+ * Set the new aw_admintheme
+ */
+function pw_globals_update_7134() {
+  variable_set('admin_theme', 'aw_admintheme');
+}
