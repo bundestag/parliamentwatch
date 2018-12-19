@@ -12,56 +12,6 @@ use Drupal\pw_datatransfers\Modtool\DialogueImportCheck;
  */
 
 
-/**
- * Page callback for the old Modtool. It just prints some strings
- * directly.
- *
- * @param int|string $dialogue_id
- * The id of the dialogue in modtool
- *
- * @return void - directly prints "OK" or "FAILED"
- *
- */
-function pw_datatransfers_dialogue_import_old($dialogue_id) {
-  $return_value = 'FAILED';
-
-  try {
-    if (!is_numeric($dialogue_id)) {
-      throw new InvalidArgumentException('The dialogue id ' . $dialogue_id . ' is not numeric');
-    }
-
-    $source_path = variable_get('pw_dialogues_importer_source');
-    $source_path .= $dialogue_id;
-    $source_path .= '?unreleased=1';
-    $source_document = new DOMDocument('1.0');
-    $isLoaded = $source_document->load($source_path);
-    if (!$isLoaded) {
-      throw new SourceNotFoundException('The source document for dialogue ' . $dialogue_id . ' could not be loaded by calling the path ' . $source_path);
-    }
-
-    $importDialogue = new DialogueImport($source_document);
-    $importFinished = $importDialogue->import();
-    $return_value = 'OK';
-
-    // after the import was finished we check if really the whole
-    // dialogue was imported
-    if ($importFinished) {
-      $importCheck = new DialogueImportCheck($importDialogue);
-      if (!$importCheck->checkForQuestion()) {
-        throw new ImportCheckFailed('The question for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
-      }
-      if (!$importCheck->checkForAnswer()) {
-        throw new ImportCheckFailed('The answer for dialogue id '. $importDialogue->getDialogueId() .' were not found in Drupal');
-      }
-    }
-  }
-  catch (Exception $e) {
-    $return_value = 'FAILED';
-  }
-
-  print $return_value;
-}
-
 
 /**
  * Enhanced age callback for the new Modtool. The XML document is sent by POST
