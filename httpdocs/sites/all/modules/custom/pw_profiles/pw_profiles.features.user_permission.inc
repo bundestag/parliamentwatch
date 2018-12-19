@@ -69,16 +69,6 @@ function pw_profiles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: create field_user_age.
-  $permissions['create field_user_age'] = array(
-    'name' => 'create field_user_age',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'anonymous user',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: create field_user_birthday.
   $permissions['create field_user_birthday'] = array(
     'name' => 'create field_user_birthday',
@@ -465,15 +455,6 @@ function pw_profiles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: edit field_user_age.
-  $permissions['edit field_user_age'] = array(
-    'name' => 'edit field_user_age',
-    'roles' => array(
-      0 => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: edit field_user_birthday.
   $permissions['edit field_user_birthday'] = array(
     'name' => 'edit field_user_birthday',
@@ -844,15 +825,6 @@ function pw_profiles_user_default_permissions() {
       3 => 'Politician',
       4 => 'Premium User',
       5 => 'administrator',
-    ),
-    'module' => 'field_permissions',
-  );
-
-  // Exported permission: edit own field_user_age.
-  $permissions['edit own field_user_age'] = array(
-    'name' => 'edit own field_user_age',
-    'roles' => array(
-      0 => 'administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -1356,17 +1328,6 @@ function pw_profiles_user_default_permissions() {
     'module' => 'field_permissions',
   );
 
-  // Exported permission: view field_user_age.
-  $permissions['view field_user_age'] = array(
-    'name' => 'view field_user_age',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'anonymous user',
-      2 => 'authenticated user',
-    ),
-    'module' => 'field_permissions',
-  );
-
   // Exported permission: view field_user_birthday.
   $permissions['view field_user_birthday'] = array(
     'name' => 'view field_user_birthday',
@@ -1830,17 +1791,6 @@ function pw_profiles_user_default_permissions() {
       2 => 'administrator',
       3 => 'anonymous user',
       4 => 'authenticated user',
-    ),
-    'module' => 'field_permissions',
-  );
-
-  // Exported permission: view own field_user_age.
-  $permissions['view own field_user_age'] = array(
-    'name' => 'view own field_user_age',
-    'roles' => array(
-      0 => 'administrator',
-      1 => 'anonymous user',
-      2 => 'authenticated user',
     ),
     'module' => 'field_permissions',
   );
