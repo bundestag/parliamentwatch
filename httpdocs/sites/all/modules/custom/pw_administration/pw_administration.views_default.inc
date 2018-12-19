@@ -2952,7 +2952,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -3299,18 +3299,32 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'uid' => 'uid',
     'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
-    'field_parliament' => 'field_parliament',
-    'field_vote_node' => 'field_vote_node',
-    'field_vote' => 'field_vote',
-    'field_voted' => 'field_voted',
-    'delete_node' => 'delete_node',
+    'field_user_party' => 'field_user_party',
+    'field_job' => 'field_job',
+    'field_sidejob_organization' => 'field_sidejob_organization',
+    'field_topics' => 'field_topics',
+    'field_sidejob_classification' => 'field_sidejob_classification',
+    'field_sidejob_date_end' => 'field_sidejob_date_end',
+    'field_sidejob_date_start' => 'field_sidejob_date_start',
+    'field_sidejob_job_category' => 'field_sidejob_job_category',
+    'field_sidejob_income_interval' => 'field_sidejob_income_interval',
+    'changed' => 'changed',
+    'view_user' => 'view_user',
     'edit_node' => 'edit_node',
+    'delete_node' => 'delete_node',
+    'ctools_dropdown' => 'ctools_dropdown',
   );
-  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'uid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -3332,28 +3346,78 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_parliament' => array(
+    'field_user_party' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_vote_node' => array(
+    'field_job' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_vote' => array(
+    'field_sidejob_organization' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_voted' => array(
+    'field_topics' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sidejob_classification' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sidejob_date_end' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sidejob_date_start' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sidejob_job_category' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sidejob_income_interval' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'view_user' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -3363,7 +3427,7 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'edit_node' => array(
+    'ctools_dropdown' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -3498,6 +3562,26 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Benutzer: Partei */
+  $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['field'] = 'field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['fields']['field_user_party']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_party']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_party']['delta_offset'] = '0';
   /* Feld: Inhalt: Job */
   $handler->display->display_options['fields']['field_job']['id'] = 'field_job';
   $handler->display->display_options['fields']['field_job']['table'] = 'field_data_field_job';
@@ -3535,6 +3619,24 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Inhalt: Job category */
+  $handler->display->display_options['fields']['field_sidejob_job_category']['id'] = 'field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['table'] = 'field_data_field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['field'] = 'field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Inhalt: Topics */
   $handler->display->display_options['fields']['field_topics']['id'] = 'field_topics';
   $handler->display->display_options['fields']['field_topics']['table'] = 'field_data_field_topics';
@@ -3555,23 +3657,6 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
-  /* Feld: Inhalt: Classification */
-  $handler->display->display_options['fields']['field_sidejob_classification']['id'] = 'field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['table'] = 'field_data_field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['field'] = 'field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Inhalt: Date End */
   $handler->display->display_options['fields']['field_sidejob_date_end']['id'] = 'field_sidejob_date_end';
   $handler->display->display_options['fields']['field_sidejob_date_end']['table'] = 'field_data_field_sidejob_date_end';
@@ -3620,12 +3705,11 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Inhalt: Job category */
-  $handler->display->display_options['fields']['field_sidejob_job_category']['id'] = 'field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['table'] = 'field_data_field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['field'] = 'field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['settings'] = array(
+  /* Feld: Inhalt: Classification */
+  $handler->display->display_options['fields']['field_sidejob_classification']['id'] = 'field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['table'] = 'field_data_field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['field'] = 'field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -3638,6 +3722,35 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Inhalt: Income Interval */
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['id'] = 'field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['table'] = 'field_data_field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['field'] = 'field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['label'] = 'Intervall';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Sidejob income */
+  $handler->display->display_options['fields']['sidejobs_income']['id'] = 'sidejobs_income';
+  $handler->display->display_options['fields']['sidejobs_income']['table'] = 'node';
+  $handler->display->display_options['fields']['sidejobs_income']['field'] = 'sidejobs_income';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Benutzer: Link */
   $handler->display->display_options['fields']['view_user']['id'] = 'view_user';
   $handler->display->display_options['fields']['view_user']['table'] = 'users';
@@ -3863,6 +3976,103 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_job_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_job_tid']['vocabulary'] = 'sidejob_jobs';
+  /* Filterkriterium: Benutzer: Partei (field_user_party) */
+  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
+  /* Filterkriterium: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['filters']['changed']['id'] = 'changed';
+  $handler->display->display_options['filters']['changed']['table'] = 'node';
+  $handler->display->display_options['filters']['changed']['field'] = 'changed';
+  $handler->display->display_options['filters']['changed']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['changed']['expose']['operator_id'] = 'changed_op';
+  $handler->display->display_options['filters']['changed']['expose']['label'] = 'Letztes Update';
+  $handler->display->display_options['filters']['changed']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['changed']['expose']['operator'] = 'changed_op';
+  $handler->display->display_options['filters']['changed']['expose']['identifier'] = 'changed';
+  $handler->display->display_options['filters']['changed']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Classification (field_sidejob_classification) */
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['id'] = 'field_sidejob_classification_value';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['table'] = 'field_data_field_sidejob_classification';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['field'] = 'field_sidejob_classification_value';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['operator_id'] = 'field_sidejob_classification_value_op';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['label'] = 'Classification';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['operator'] = 'field_sidejob_classification_value_op';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['identifier'] = 'field_sidejob_classification_value';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Income Interval (field_sidejob_income_interval) */
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['id'] = 'field_sidejob_income_interval_value';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['table'] = 'field_data_field_sidejob_income_interval';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['field'] = 'field_sidejob_income_interval_value';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['operator_id'] = 'field_sidejob_income_interval_value_op';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['label'] = 'Intervall';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['operator'] = 'field_sidejob_income_interval_value_op';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['identifier'] = 'field_sidejob_income_interval_value';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -3902,8 +4112,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_user_fname']['table'] = 'field_data_field_user_fname';
   $handler->display->display_options['fields']['field_user_fname']['field'] = 'field_user_fname';
   $handler->display->display_options['fields']['field_user_fname']['relationship'] = 'field_politician_target_id';
-  $handler->display->display_options['fields']['field_user_fname']['label'] = '';
-  $handler->display->display_options['fields']['field_user_fname']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_user_fname']['label'] = 'Vorname';
   $handler->display->display_options['fields']['field_user_fname']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_user_fname']['settings'] = array(
     'linked_field' => array(
@@ -3923,8 +4132,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_user_lname']['table'] = 'field_data_field_user_lname';
   $handler->display->display_options['fields']['field_user_lname']['field'] = 'field_user_lname';
   $handler->display->display_options['fields']['field_user_lname']['relationship'] = 'field_politician_target_id';
-  $handler->display->display_options['fields']['field_user_lname']['label'] = 'Politiker';
-  $handler->display->display_options['fields']['field_user_lname']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lname']['label'] = 'Nachname';
   $handler->display->display_options['fields']['field_user_lname']['alter']['text'] = '[field_user_lname], [field_user_fname]';
   $handler->display->display_options['fields']['field_user_lname']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['field_user_lname']['alter']['path'] = 'user/[uid]';
@@ -3941,6 +4149,26 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Benutzer: Partei */
+  $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['field'] = 'field_user_party';
+  $handler->display->display_options['fields']['field_user_party']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['fields']['field_user_party']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_party']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_party']['delta_offset'] = '0';
   /* Feld: Inhalt: Job */
   $handler->display->display_options['fields']['field_job']['id'] = 'field_job';
   $handler->display->display_options['fields']['field_job']['table'] = 'field_data_field_job';
@@ -3978,6 +4206,24 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Inhalt: Job category */
+  $handler->display->display_options['fields']['field_sidejob_job_category']['id'] = 'field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['table'] = 'field_data_field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['field'] = 'field_sidejob_job_category';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_sidejob_job_category']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Inhalt: Topics */
   $handler->display->display_options['fields']['field_topics']['id'] = 'field_topics';
   $handler->display->display_options['fields']['field_topics']['table'] = 'field_data_field_topics';
@@ -3998,23 +4244,6 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
-  /* Feld: Inhalt: Classification */
-  $handler->display->display_options['fields']['field_sidejob_classification']['id'] = 'field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['table'] = 'field_data_field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['field'] = 'field_sidejob_classification';
-  $handler->display->display_options['fields']['field_sidejob_classification']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Inhalt: Date End */
   $handler->display->display_options['fields']['field_sidejob_date_end']['id'] = 'field_sidejob_date_end';
   $handler->display->display_options['fields']['field_sidejob_date_end']['table'] = 'field_data_field_sidejob_date_end';
@@ -4063,12 +4292,11 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Inhalt: Job category */
-  $handler->display->display_options['fields']['field_sidejob_job_category']['id'] = 'field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['table'] = 'field_data_field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['field'] = 'field_sidejob_job_category';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_sidejob_job_category']['settings'] = array(
+  /* Feld: Inhalt: Classification */
+  $handler->display->display_options['fields']['field_sidejob_classification']['id'] = 'field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['table'] = 'field_data_field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['field'] = 'field_sidejob_classification';
+  $handler->display->display_options['fields']['field_sidejob_classification']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -4081,6 +4309,36 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Inhalt: Income Interval */
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['id'] = 'field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['table'] = 'field_data_field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['field'] = 'field_sidejob_income_interval';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['label'] = 'Intervall';
+  $handler->display->display_options['fields']['field_sidejob_income_interval']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Sidejob income */
+  $handler->display->display_options['fields']['sidejobs_income']['id'] = 'sidejobs_income';
+  $handler->display->display_options['fields']['sidejobs_income']['table'] = 'node';
+  $handler->display->display_options['fields']['sidejobs_income']['field'] = 'sidejobs_income';
+  $handler->display->display_options['fields']['sidejobs_income']['label'] = 'Gesamteinkünfte';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontextfilter: Inhalt: Beitrags-ID */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -4123,13 +4381,17 @@ function pw_administration_views_default_views() {
     t('Löschen'),
     t('Werte ändern'),
     t('[field_user_lname], [field_user_fname]'),
+    t('Partei'),
     t('Job'),
     t('Organisation'),
+    t('Job category'),
     t('Themen'),
-    t('Classification'),
     t('Date End'),
     t('Date Start'),
-    t('Job category'),
+    t('Classification'),
+    t('Intervall'),
+    t('Sidejob income'),
+    t('Letztes Update'),
     t('Profil'),
     t('[edit_node] [delete_node] '),
     t('Bearbeiten'),
@@ -4140,6 +4402,7 @@ function pw_administration_views_default_views() {
     t('Veröffentlicht'),
     t('Page'),
     t('Data export'),
+    t('Gesamteinkünfte'),
     t('Alle'),
   );
   $export['pw_administration_sidejobs'] = $view;

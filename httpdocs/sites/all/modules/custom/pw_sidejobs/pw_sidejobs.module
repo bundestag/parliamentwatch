@@ -380,3 +380,19 @@ function pw_sidejobs_multiplier($interval, $date) {
 
   return (int) $multiplier;
 }
+
+
+/**
+ * Implements hook_views_data().
+ */
+function pw_sidejobs_views_data() {
+  $data['node']['sidejobs_income'] = [
+    'title' => t('Sidejob income'),
+    'help' => t('Calculates the sidejobs income.'),
+    'field' => array(
+      'handler' => 'views_handler_filter_sidejobs_income',
+    ),
+  ];
+
+  return $data;
+}
