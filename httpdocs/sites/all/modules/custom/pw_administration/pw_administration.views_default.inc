@@ -2927,7 +2927,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -3658,18 +3658,18 @@ function pw_administration_views_default_views() {
     'sidejob' => 'sidejob',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filterkriterium: Benutzer: First Name (field_user_fname:format) */
-  $handler->display->display_options['filters']['field_user_fname_format']['id'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['table'] = 'field_data_field_user_fname';
-  $handler->display->display_options['filters']['field_user_fname_format']['field'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['relationship'] = 'field_politician_target_id';
-  $handler->display->display_options['filters']['field_user_fname_format']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_fname_format']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['operator_id'] = 'field_user_fname_format_op';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['label'] = 'Vorname';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['operator'] = 'field_user_fname_format_op';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['identifier'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['remember_roles'] = array(
+  /* Filterkriterium: Benutzer: First Name (field_user_fname) */
+  $handler->display->display_options['filters']['field_user_fname_value']['id'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['table'] = 'field_data_field_user_fname';
+  $handler->display->display_options['filters']['field_user_fname_value']['field'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['filters']['field_user_fname_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_fname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator_id'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['label'] = 'Vorname';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['identifier'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -3764,6 +3764,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['id'] = 'field_sidejob_job_category_tid';
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['table'] = 'field_data_field_sidejob_job_category';
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['field'] = 'field_sidejob_job_category_tid';
+  $handler->display->display_options['filters']['field_sidejob_job_category_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['expose']['operator_id'] = 'field_sidejob_job_category_tid_op';
   $handler->display->display_options['filters']['field_sidejob_job_category_tid']['expose']['label'] = 'Job category';
@@ -3789,6 +3790,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['field_topics_tid']['id'] = 'field_topics_tid';
   $handler->display->display_options['filters']['field_topics_tid']['table'] = 'field_data_field_topics';
   $handler->display->display_options['filters']['field_topics_tid']['field'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_topics_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_topics_tid']['expose']['operator_id'] = 'field_topics_tid_op';
   $handler->display->display_options['filters']['field_topics_tid']['expose']['label'] = 'Themen';
@@ -3814,6 +3816,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['field_job_tid']['id'] = 'field_job_tid';
   $handler->display->display_options['filters']['field_job_tid']['table'] = 'field_data_field_job';
   $handler->display->display_options['filters']['field_job_tid']['field'] = 'field_job_tid';
+  $handler->display->display_options['filters']['field_job_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_job_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_job_tid']['expose']['operator_id'] = 'field_job_tid_op';
   $handler->display->display_options['filters']['field_job_tid']['expose']['label'] = 'Job';
@@ -5773,18 +5776,18 @@ function pw_administration_views_default_views() {
     'vote' => 'vote',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  /* Filterkriterium: Benutzer: First Name (field_user_fname:format) */
-  $handler->display->display_options['filters']['field_user_fname_format']['id'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['table'] = 'field_data_field_user_fname';
-  $handler->display->display_options['filters']['field_user_fname_format']['field'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['relationship'] = 'field_vote_user_target_id';
-  $handler->display->display_options['filters']['field_user_fname_format']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_fname_format']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['operator_id'] = 'field_user_fname_format_op';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['label'] = 'Vorname';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['operator'] = 'field_user_fname_format_op';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['identifier'] = 'field_user_fname_format';
-  $handler->display->display_options['filters']['field_user_fname_format']['expose']['remember_roles'] = array(
+  /* Filterkriterium: Benutzer: First Name (field_user_fname) */
+  $handler->display->display_options['filters']['field_user_fname_value']['id'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['table'] = 'field_data_field_user_fname';
+  $handler->display->display_options['filters']['field_user_fname_value']['field'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['relationship'] = 'field_vote_user_target_id';
+  $handler->display->display_options['filters']['field_user_fname_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_fname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator_id'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['label'] = 'Vorname';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['identifier'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -5959,6 +5962,7 @@ function pw_administration_views_default_views() {
     'poll' => 'poll',
     'pw_petition' => 'pw_petition',
   );
+  $handler->display->display_options['filters']['type_1']['group'] = 1;
   $handler->display->display_options['filters']['type_1']['exposed'] = TRUE;
   $handler->display->display_options['filters']['type_1']['expose']['operator_id'] = 'type_1_op';
   $handler->display->display_options['filters']['type_1']['expose']['label'] = 'Abstimmung/ Petition';
