@@ -327,7 +327,7 @@ function pw_profiles_user_update(&$edit, $account, $category) {
       if ($user_revision->name != $account->name) {
         $revision_edit = [];
         $revision_edit['name'] = $account->name;
-        _user_revision_edit_save($user_revision, $revision_edit);
+        _pw_userarchives_user_revision_edit_save($user_revision, $revision_edit);
       }
     }
   }
