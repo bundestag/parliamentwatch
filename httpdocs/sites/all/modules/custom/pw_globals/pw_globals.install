@@ -678,3 +678,15 @@ function pw_globals_update_7135() {
     drupal_uninstall_modules(array('clientside_validation'));
   }
 }
+
+
+
+/**
+ * Deactivate and deinstall MediaElement.js module
+ */
+function pw_globals_update_7136() {
+  if( module_exists('mediaelement')) {
+    module_disable(array('mediaelement'));
+    drupal_uninstall_modules(array('mediaelement'));
+  }
+}
