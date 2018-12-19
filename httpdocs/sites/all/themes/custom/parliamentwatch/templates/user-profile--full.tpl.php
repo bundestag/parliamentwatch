@@ -186,7 +186,16 @@
         <?php endif; ?>
         <?php if (!empty($user_profile['field_user_list'])): ?>
           <dt class="dl__dt"><?php print $user_profile['field_user_list']['#title']; ?></dt>
-          <dd class="dl__dd"><?php print $user_profile['field_user_list'][0]['#markup']; ?><?php if ($user_profile['field_user_list_position']): ?>, Platz <?php print $user_profile['field_user_list_position'][0]['#markup']; ?><?php endif; ?><?php if ($user_profile['field_user_list_won']['#items'][0]['value'] == 1): ?> (<?php print t('drafted via list'); ?>)<?php endif; ?></dd>
+          <dd class="dl__dd">
+            <?php print $user_profile['field_user_list'][0]['#markup']; ?><?php if ($user_profile['field_user_list_position']): ?>, Platz <?php print $user_profile['field_user_list_position'][0]['#markup']; ?><?php endif; ?>
+              <?php if ($user_profile['field_user_list_won']['#items'][0]['value'] == 1): ?>
+                <p>
+                  <small>
+                    <?php print t('drafted via list'); ?>
+                  </small>
+                </p>
+              <?php endif; ?>
+          </dd>
         <?php endif; ?>
         <?php if (!empty($user_profile['field_user_parliament'])): ?>
           <dt class="dl__dt"><?php print $user_profile['field_user_parliament']['#title']; ?></dt>
