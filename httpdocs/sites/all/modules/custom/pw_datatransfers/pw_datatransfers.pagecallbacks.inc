@@ -14,7 +14,7 @@ use Drupal\pw_datatransfers\Modtool\DialogueImportCheck;
 
 
 /**
- * Enhanced age callback for the new Modtool. The XML document is sent by POST
+ * Enhanced page callback for the new Modtool. The XML document is sent by POST
  * and the page callbacks defines some HTTP header depending on the result. it also
  * does the access check which we might move to an access callback later
  *
