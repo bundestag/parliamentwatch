@@ -652,3 +652,29 @@ function pw_globals_update_7133() {
 function pw_globals_update_7134() {
   variable_set('admin_theme', 'aw_admintheme');
 }
+
+
+/**
+ * Deactivate and deinstall clientside validation modules
+ */
+function pw_globals_update_7135() {
+  if( module_exists('clientside_validation_webform')) {
+    module_disable(array('clientside_validation_webform'));
+    drupal_uninstall_modules(array('clientside_validation_webform'));
+  }
+
+  if( module_exists('clientside_validation_ife')) {
+    module_disable(array('clientside_validation_ife'));
+    drupal_uninstall_modules(array('clientside_validation_ife'));
+  }
+
+  if( module_exists('clientside_validation_form')) {
+    module_disable(array('clientside_validation_form'));
+    drupal_uninstall_modules(array('clientside_validation_form'));
+  }
+
+  if( module_exists('clientside_validation')) {
+    module_disable(array('clientside_validation'));
+    drupal_uninstall_modules(array('clientside_validation'));
+  }
+}
