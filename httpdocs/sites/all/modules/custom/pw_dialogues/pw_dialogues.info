@@ -88,5 +88,5 @@ features[variable][] = pw_dialogues_importer_source
 features[variable][] = webform_node_dialogue
 features[variable][] = xmlsitemap_settings_node_dialogue
 features[variable][] = xmlsitemap_settings_taxonomy_term_dialogue_topics
-files[] = pw_dialogues_custom_base_path_provider.inc
+files[] = views/views_handler_filter_has_comments.inc
 mtime = 1543221283

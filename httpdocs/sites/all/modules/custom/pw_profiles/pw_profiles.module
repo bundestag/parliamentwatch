@@ -394,9 +394,6 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
       $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']], ['context' => $constituency_context]);
     }
-    elseif ($account->content['field_user_list_won']['#items'][0]['value'] == 1) {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via list)', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']], ['context' => $list_context]);
-    }
     else {
       $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']]);
     }
