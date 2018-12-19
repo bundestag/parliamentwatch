@@ -1,0 +1,27 @@
+<?php
+/**
+ * @file
+ * Code for the PW Administration feature.
+ */
+
+include_once 'pw_administration.features.inc';
+include_once 'pw_administration.access_callbacks.inc';
+
+
+/**
+ * Implements hook_menu().
+ */
+function pw_administration_menu() {
+  $items = [];
+
+  $items['admin/abgeordnetenwatch'] = [
+    'title' => 'Abgeordnetenwatch',
+    'page callback' => 'pw_administration_dashboard_pagecallback',
+    'access callback' => 'pw_administration_dashboard_pagecallback_access',
+    'file' => 'pw_administration.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management'
+  ];
+
+  return $items;
+}

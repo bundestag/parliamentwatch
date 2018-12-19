@@ -1308,3 +1308,14 @@ function load_answer_by_message_id($message_id) {
 
   return $answer;
 }
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_dialogues_views_api() {
+  return [
+    'api' => 3,
+    'path' => drupal_get_path('module', 'pw_dialogues') . '/views',
+  ];
+}
