@@ -18,7 +18,9 @@ function pw_administration_menu() {
     'title' => 'Abgeordnetenwatch',
     'page callback' => 'pw_administration_dashboard_pagecallback',
     'access callback' => 'pw_administration_dashboard_pagecallback_access',
-    'file' => 'pw_administration.pages.inc'
+    'file' => 'pw_administration.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management'
   ];
 
   return $items;
