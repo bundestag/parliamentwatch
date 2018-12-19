@@ -8,6 +8,17 @@
 
 class views_handler_filter_has_comments extends views_handler_filter_boolean_operator {
 
+  /**
+   *
+   */
+  public function get_value_options() {
+    if (!isset($this->value_options)) {
+      $this->value_title = 'Beantwortet';
+      $options = array('1' => 'Ja', '0' => 'Nein');
+      $this->value_options = $options;
+    }
+  }
+
   function query() {
     $this->ensure_my_table();
     $field = "$this->table_alias.$this->real_field";

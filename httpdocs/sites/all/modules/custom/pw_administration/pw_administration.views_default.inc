@@ -569,6 +569,29 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Feld: Message ID */
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['id'] = 'field_dialogue_message_id_1';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['table'] = 'field_data_field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['field'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['relationship'] = 'nid';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['label'] = 'Message ID Frage';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['alter']['path'] = 'admin/abgeordnetenwatch/fragen?field_dialogue_message_id_value=[field_dialogue_message_id_1-value]';
+  $handler->display->display_options['fields']['field_dialogue_message_id_1']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Inhalt: Link */
   $handler->display->display_options['fields']['view_node']['id'] = 'view_node';
   $handler->display->display_options['fields']['view_node']['table'] = 'views_entity_node';
@@ -1024,6 +1047,7 @@ function pw_administration_views_default_views() {
     t('Antwort'),
     t('Dialogue ID'),
     t('Message ID'),
+    t('Message ID Frage'),
     t('Ansehen'),
     t('Bearbeiten'),
     t('Aktionen'),
@@ -2807,6 +2831,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['has_comment']['id'] = 'has_comment';
   $handler->display->display_options['filters']['has_comment']['table'] = 'node_comment_statistics';
   $handler->display->display_options['filters']['has_comment']['field'] = 'has_comment';
+  $handler->display->display_options['filters']['has_comment']['value'] = 'All';
   $handler->display->display_options['filters']['has_comment']['group'] = 1;
   $handler->display->display_options['filters']['has_comment']['exposed'] = TRUE;
   $handler->display->display_options['filters']['has_comment']['expose']['operator_id'] = '';
