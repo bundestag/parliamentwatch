@@ -1,0 +1,7 @@
+
+/**
+* Better formats for filters in administration views
+ */
+.pw-administration-view .views-exposed-form .form-text {
+    width: 10em;
+}
