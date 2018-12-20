@@ -1161,7 +1161,7 @@ function pw_profiles_views_default_views() {
     'edit_revision_1' => 'edit_revision_1',
     'delete_revision' => 'delete_revision',
   );
-  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
   /* Kontextfilter: Benutzer: Uid */
   $handler->display->display_options['arguments']['uid']['id'] = 'uid';
   $handler->display->display_options['arguments']['uid']['table'] = 'users';

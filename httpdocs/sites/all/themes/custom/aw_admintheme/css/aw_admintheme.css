@@ -1,0 +1,22 @@
+
+/**
+* Better formats for filters in administration views
+ */
+.pw-administration-view .views-exposed-form .form-text {
+    width: 10em;
+}
+
+.views-exposed-form .dependent-options.form-item {
+    margin-left: 0;
+    padding-top: 3px;
+}
+
+.views-exposed-form .views-exposed-widget {
+    float: none;
+    padding: 1em 1em 0 0;
+}
+
+.views-exposed-widgets {
+    display: flex;
+    flex-wrap: wrap;
+}

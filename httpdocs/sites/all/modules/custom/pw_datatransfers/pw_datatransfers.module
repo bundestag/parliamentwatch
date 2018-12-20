@@ -14,8 +14,7 @@ function pw_datatransfers_menu() {
   $items['api/import/dialogue/%'] = [
     'title' => 'imports dialogue',
     'access arguments' => array('access content'),
-    'page callback' => 'pw_datatransfers_dialogue_import_old',
-    'page arguments' => array(3),
+    'page callback' => 'pw_dialogues_triggered_import',
     'type' => MENU_CALLBACK,
     'file' => 'pw_datatransfers.pagecallbacks.inc'
   ];

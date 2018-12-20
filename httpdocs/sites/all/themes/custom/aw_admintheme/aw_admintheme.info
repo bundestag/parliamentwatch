@@ -1,0 +1,6 @@
+name = 'Abgeordnetenwatch Administration'
+description = 'Makes it easier to adjust frontend for the administration'
+core = '7.x'
+base theme = 'seven'
+
+stylesheets[all][] = css/aw_admintheme.css

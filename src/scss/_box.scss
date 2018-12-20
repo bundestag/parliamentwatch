@@ -44,14 +44,14 @@
 }
 
 @keyframes rotationCenter {
-  0%   { @include transform(translate(-50%, -50%) rotate(0deg)); }
-  80%  { @include transform(translate(-50%, -50%) rotate(360deg)); }
-  100% { @include transform(translate(-50%, -50%) rotate(360deg)); }
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  80%  { transform: translate(-50%, -50%) rotate(360deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes rotationCenterDelayed {
-  0%   { @include transform(translate(-50%, -50%) rotate(0deg)); }
-  100% { @include transform(translate(-50%, -50%) rotate(360deg)); }
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .tile-wrapper--loading {
@@ -268,7 +268,7 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
     color: $gray;
     cursor: pointer;
     display: block;
-    @include transition(color 300ms ease);
+    transition: color 300ms ease;
     .icon {
       width: 20px;
       height: 20px;
@@ -518,8 +518,8 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
     position: absolute;
     right: $space-xsmall-mobile;
     top: 50%;
-    @include transition(transform 300ms ease);
-    @include transform(translate(0,-50%));
+    transition: transform 300ms ease;
+    transform: translate(0,-50%);
   }
 }
 .sidebar__box__accordion__item__content {
@@ -528,7 +528,7 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
   background: $brightBeige;
   padding: 0 $space-small-mobile;
   border-top: 1px solid transparent;
-  @include transition(all 300ms ease);
+  transition: all 300ms ease;
 }
 
 // State: open
@@ -542,7 +542,7 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
   }
   .sidebar__box__accordion__item__title {
     &:after {
-      @include transform(translate(0,-50%) rotate(180deg));
+      transform: translate(0,-50%) rotate(180deg);
     }
 
   }
