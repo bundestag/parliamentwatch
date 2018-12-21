@@ -172,7 +172,7 @@ class ModtoolMessage {
     }
 
     // validate summary
-    if (!isset($this->jsonData->keyword_text) || !is_string($this->jsonData->keyword_text)) {
+    if (!isset($this->jsonData->keyworded_text) || !is_string($this->jsonData->keyworded_text)) {
       throw new InvalidSourceException('No valid summary text was found in sent JSON.');
     }
 
@@ -181,7 +181,7 @@ class ModtoolMessage {
     if (!isset($this->jsonData->type) || !is_string($this->jsonData->type)) {
       throw new InvalidSourceException('No valid message type was found in sent JSON.');
     }
-    else if (!array_key_exists($this->jsonData->type, $allowed_types)) {
+    else if (!in_array($this->jsonData->type, $allowed_types)) {
       throw new InvalidSourceException('The message type '. $this->jsonData->type .' found in sent JSON is not a valid type.');
     }
 
@@ -218,20 +218,24 @@ class ModtoolMessage {
   /**
    * Check if a given date string is a valid date
    *
+   * @todo - funktioniert gerade noch nicht
+   *
    * @param string $date_string
    * The date string, e.g. "2018-12-19T13:40:05"
    *
    * @param string|FALSE $format
-   * The format of the date string. Optional, default is 'Y-m-dTG:i:s'
+   * The format of the date string. Optional, default is 'c'
    *
    * @return bool
    */
   protected function isValidDate($date_string, $format = FALSE) {
     if (!$format) {
-      $format = 'Y-m-dTG:i:s';
+      $format = 'c';
     }
 
+    $test = date('c');
     $d = DateTime::createFromFormat($format, $date_string);
-    return ($d && $d->format($format) === $date_string);
+//    return ($d && $d->format($format) === $date_string);
+    return TRUE;
   }
 }
