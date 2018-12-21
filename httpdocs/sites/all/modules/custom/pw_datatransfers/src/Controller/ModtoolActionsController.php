@@ -76,13 +76,24 @@ class ModtoolActionsController {
       $actionClass = $this->getActionClass();
       $actionClass->run();
     }
+    // catch DataTransfersExceptions to have user friendly error messages
+    catch (DatatransfersException $d) {
+      watchdog_exception('pw_dialogues', $d);
+      $status_header = drupal_get_http_header('status');
+      if (!$status_header) {
+        drupal_add_http_header('Status', '500 Internal Server Error');
+      }
+      $this->setStatus('error', $d->getMessage());
+      return $this->responseArray;
+    }
+      // catch all other exceptions to avoid cryptic error messages
     catch (\Exception $e) {
       watchdog_exception('pw_dialogues', $e);
       $status_header = drupal_get_http_header('status');
       if (!$status_header) {
         drupal_add_http_header('Status', '500 Internal Server Error');
       }
-      $this->setStatus('error', $e->getMessage());
+      $this->setStatus('error', '500 Internal Server Error');
       return $this->responseArray;
     }
 
