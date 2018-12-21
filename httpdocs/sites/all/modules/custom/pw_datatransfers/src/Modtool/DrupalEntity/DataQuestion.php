@@ -90,8 +90,8 @@ class DataQuestion extends DataEntityBase {
     $node->body = [
       LANGUAGE_NONE => [
         0 => [
-          'value' => html_entity_decode($modtoolMessage->getText()),
-          'summary' => html_entity_decode($modtoolMessage->getSummary()),
+          'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
+          'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
           'format' => 'managed_content',
         ],
       ],
