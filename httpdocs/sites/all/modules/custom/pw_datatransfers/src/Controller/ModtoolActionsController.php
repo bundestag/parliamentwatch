@@ -241,6 +241,11 @@ class ModtoolActionsController {
     $dataClass = new DataAnswer($modtoolMessage);
     $dataAction = NULL;
 
+    switch ($this->action) {
+      case 'release':
+        $dataAction = new DataAnswerActionRelease($dataClass);
+        break;
+    }
 
     if (!$dataAction) {
       throw new DatatransfersException($this->action .' is not a valid action for an answer');

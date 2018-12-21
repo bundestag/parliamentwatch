@@ -7,25 +7,25 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 /**
  * Actionclass
- *  - message type: question
+ *  - message type: answer
  *  - action: delete
- *  - description: an existing question in Drupal will be deleted. If none was
+ *  - description: an existing answer in Drupal will be deleted. If none was
  *    found nothing will be done
  */
-class DataQuestionActionDelete extends DataActionQuestionBase {
+class DataAnswerActionDelete extends DataActionAnswersBase {
 
 
   /**
-   * Delete the question from Drupal if found
+   * Delete the answer from Drupal if found
    */
   public function run() {
-    $question = $this->dataQuestion->loadDrupalEntity();
+    $answer = $this->dataAnswer->loadDrupalEntity();
 
-    if ($question) {
-      $this->dataQuestion->setEntity($question);
+    if ($answer) {
+      $this->dataAnswer->setEntity($answer);
       $this->check();
 
-      node_delete($question->nid);
+      comment_delete($answer->cid);
     }
   }
 
@@ -39,11 +39,11 @@ class DataQuestionActionDelete extends DataActionQuestionBase {
    * @throws \Drupal\pw_datatransfers\Exception\DataActionException
    */
   public function check() {
-    $modtoolMessage = $this->dataQuestion->getModtoolMessage();
+    $modtoolMessage = $this->dataAnswer->getModtoolMessage();
 
     if ($modtoolMessage->getStatus() != ModtoolMessageStatus::DELETED) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question should have status deleted but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
+      throw new DataActionException('The answer should have status deleted but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;

@@ -17,7 +17,7 @@ class DataQuestionActionHold extends DataActionQuestionBase {
 
 
   /**
-   * On release an existing question may be updated or a new question may be
+   * When on hold an existing question may be updated or a new question may be
    * created
    */
   public function run() {

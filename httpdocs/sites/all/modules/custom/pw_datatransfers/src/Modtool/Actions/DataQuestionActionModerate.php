@@ -17,7 +17,7 @@ class DataQuestionActionModerate extends DataActionQuestionBase {
 
 
   /**
-   * On release an existing question may be updated or a new question may be
+   * When a question is moderated an existing question may be updated or a new question may be
    * created
    */
   public function run() {
