@@ -78,8 +78,23 @@ class ModtoolMessage {
     return $this->getData('text');
   }
 
+
+  /**
+   * Get the politician UUID depending on the type of message
+   *
+   * @return string|null
+   * The UUID of the politician in Drupal
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
+   */
   public function getPoliticianUUID() {
-    return $this->getData('recipient.external_id');
+    switch ($this->getType()) {
+      case 'question':
+        return $this->getData('recipient.external_id');
+      case 'answer':
+        return $this->getData('sender.external_id');
+    }
+    return NULL;
   }
 
   public function getTopic() {
