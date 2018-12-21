@@ -164,6 +164,7 @@ class ModtoolMessage {
    * Validate the transferred JSON data for the message
    *
    * @todo validation for documents, tags
+   * @todo - for answers: check if sender uuid is set
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
