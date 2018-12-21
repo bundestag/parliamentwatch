@@ -210,10 +210,22 @@ class ModtoolMessage {
     if (isset($this->jsonData->{$annotation_text_key}) && $this->jsonData->{$annotation_text_key} !== NULL && !is_string($this->jsonData->{$annotation_text_key})) {
       throw new InvalidSourceException('There was aproblem with the annotation text found in sent JSON is not a valid string.');
     }
+
+    $this->validated = TRUE;
  }
 
 
-
+  /**
+   * Check if a given date string is a valid date
+   *
+   * @param string $date_string
+   * The date string, e.g. "2018-12-19T13:40:05"
+   *
+   * @param string|FALSE $format
+   * The format of the date string. Optional, default is 'Y-m-dTG:i:s'
+   *
+   * @return bool
+   */
   protected function isValidDate($date_string, $format = FALSE) {
     if (!$format) {
       $format = 'Y-m-dTG:i:s';
