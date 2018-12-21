@@ -27,13 +27,27 @@ class DataQuestion extends DataEntityBase {
     return $question;
   }
 
+
+  /**
+   * Update the node by the values sent from Modtool. The values are received
+   * from the ModtoolMessage class
+   *
+   * @param object $node
+   * Drupal node object of the question which should be updated. Can be a newly
+   * created node object with no values or a node object of an existing question.
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
+   */
   public function setDrupalEntityValuesFromJson($node) {
     $modtoolMessage = $this->modtoolMessage;
     $dialogue_id = $modtoolMessage->getDialogueId();
 
 
-    $date = new DateTime($modtoolMessage->getInsertedDate());
-    $node->created = $date->format('U');
+    $date_created = new DateTime($modtoolMessage->getInsertedDate());
+    $node->created = $date_created->format('U');
+
+    $date_updated = new DateTime($modtoolMessage->getUpdatedDate());
+    $node->changed = $date_updated->format('U');
 
     // set the parliament
     $parliament = array_values(taxonomy_get_term_by_name($modtoolMessage->getParliament(), 'parliaments'));

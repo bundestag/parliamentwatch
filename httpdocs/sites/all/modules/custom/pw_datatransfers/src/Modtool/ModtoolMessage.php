@@ -41,6 +41,10 @@ class ModtoolMessage {
     return $this->getData('inserted_date');
   }
 
+  public function getUpdatedDate() {
+    return $this->getData('updated');
+  }
+
   public function getType() {
     return $this->getData('type');
   }
@@ -149,14 +153,23 @@ class ModtoolMessage {
     }
 
     // validate inserted dated
-    if (!isset($this->jsonData->inserted_date) || (is_null($this->jsonData->inserted_date))) {
+    if (!isset($this->jsonData->inserted_date) || is_null($this->jsonData->inserted_date)) {
       throw new InvalidSourceException('Required inserted date field missing in sent JSON.');
     }
     else if (!is_string($this->jsonData->inserted_date) ) {
       throw new InvalidSourceException('Inserted date field in sent JSON is not a string.');
     }
-    else if ($this->isValidDate($this->jsonData->inserted_date)) {
+    else if (!$this->isValidDate($this->jsonData->inserted_date)) {
       throw new InvalidSourceException('Inserted date field in sent JSON is not a valid date.');
+    }
+
+
+    // validate updated dated
+    if (!is_string($this->jsonData->updated) ) {
+      throw new InvalidSourceException('Updated date field in sent JSON is not a string.');
+    }
+    else if (!$this->isValidDate($this->jsonData->updated)) {
+      throw new InvalidSourceException('Updated date field in sent JSON is not a valid date.');
     }
 
     // validate annotation
