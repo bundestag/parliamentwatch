@@ -239,7 +239,7 @@ class ModtoolActionsController {
 
     if (isset($_POST['message'])) {
       $json_data = json_decode($_POST['message']);
-      $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId);
+      $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
     }
 
     if ($modtoolMessage === NULL) {

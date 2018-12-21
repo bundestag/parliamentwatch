@@ -6,17 +6,44 @@ namespace Drupal\pw_datatransfers\Modtool;
 use DateTime;
 use Drupal\pw_datatransfers\Exception\InvalidSourceException;
 
+
+/**
+ * Build a class from the JSON the Modtool sends to Drupal
+ */
 class ModtoolMessage {
 
+
+  /**
+   * @var object|null
+   * The JSON data from Modtool as an object
+   */
   protected $jsonData = NULL;
 
+
+  /**
+   * @var bool
+   * If the message data was validated. @see $this->validate()
+   */
   protected $validated = FALSE;
 
-  protected $dialogueId = NULL;
 
-  public function __construct($json_data, $dialogueId) {
+  /**
+   * @var string|int
+   * The dialogue id from the Modtool as defined in the API path
+   */
+  protected $dialogueId;
+
+
+  /**
+   * @var string|int
+   * The message id from the Modtool as defined in the API path
+   */
+  protected $messageId;
+
+  public function __construct($json_data, $dialogue_id, $message_id) {
     $this->jsonData = $json_data;
-    $this->dialogueId = $dialogueId;
+    $this->dialogueId = $dialogue_id;
+    $this->messageId = $message_id;
   }
 
   public function getDialogueId() {
@@ -120,6 +147,9 @@ class ModtoolMessage {
     // validate message id
     if (!isset($this->jsonData->id) || !is_numeric($this->jsonData->id)) {
       throw new InvalidSourceException('No message id was found in sent JSON.');
+    }
+    else if($this->messageId != $this->jsonData->id) {
+      throw new InvalidSourceException('The message id defined in path ('.  check_plain($this->messageId) .') does not match the message id of the transferred message ('.  check_plain($this->jsonData->id) .').');
     }
 
     // validate parliament
