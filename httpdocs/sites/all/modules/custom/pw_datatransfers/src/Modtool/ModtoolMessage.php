@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tobias Krause
- * Date: 20.12.2018
- * Time: 15:39
- */
 
 namespace Drupal\pw_datatransfers\Modtool;
 

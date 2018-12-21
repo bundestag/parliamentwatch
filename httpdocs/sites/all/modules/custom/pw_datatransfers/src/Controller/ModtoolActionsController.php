@@ -157,7 +157,7 @@ class ModtoolActionsController {
   /**
    * Get the action class corresponding to the message type and action
    *
-   * @return \Drupal\pw_datatransfers\Modtool\DataActionInterface
+   * @return \Drupal\pw_datatransfers\Modtool\Actions\DataActionInterface
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
    */
@@ -182,7 +182,7 @@ class ModtoolActionsController {
   /**
    * Create an DataAction class which handles the defined action for a question
    *
-   * @return \Drupal\pw_datatransfers\Modtool\DataActionInterface
+   * @return \Drupal\pw_datatransfers\Modtool\Actions\DataActionInterface
    *
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
@@ -209,7 +209,7 @@ class ModtoolActionsController {
   /**
    * Create an DataAction class which handles the defined action for an answer
    *
-   *  @return \Drupal\pw_datatransfers\Modtool\DataActionInterface
+   *  @return \Drupal\pw_datatransfers\Modtool\Actions\DataActionInterface
    *
    * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
@@ -284,7 +284,7 @@ class ModtoolActionsController {
   /**
    * Create the success response for a question
    *
-   * @param \Drupal\pw_datatransfers\Modtool\DataEntityBase $dataQuestion
+   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase $dataQuestion
    */
   protected function successQuestion(DataEntityBase $dataQuestion) {
     $question = $dataQuestion->getEntity();
@@ -312,7 +312,7 @@ class ModtoolActionsController {
   /**
    * Create the success response for an answer
    *
-   * @param \Drupal\pw_datatransfers\Modtool\DataEntityBase $dataQuestion
+   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase $dataQuestion
    */
   protected function successAnswer(DataEntityBase $dataAnswer) {
     $comment = $dataAnswer->getEntity();

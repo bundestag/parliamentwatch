@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
-
 
 use DateTime;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
@@ -13,7 +11,6 @@ use stdClass;
  * A class for building a Drupal node (dialogue) for a Modtool message of type question
  */
 class DataQuestion extends DataEntityBase {
-
 
   /**
    * Load the Drupal node object of the question
