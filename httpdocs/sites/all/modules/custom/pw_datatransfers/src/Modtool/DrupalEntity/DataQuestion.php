@@ -76,7 +76,7 @@ class DataQuestion extends DataEntityBase {
     $politician_uuid = $modtoolMessage->getPoliticianUUID();
     $recipient_uid = array_values(entity_get_id_by_uuid('user', [$politician_uuid]));
     if (empty($recipient_uid)) {
-      throw new DatatransfersException('No user account found for recipient in dialogue id: ' . $dialogue_id);
+      throw new DatatransfersException('No user account found for recipient of the question.');
     }
     $node->field_dialogue_recipient = [
       LANGUAGE_NONE => [
