@@ -108,7 +108,6 @@ class ModtoolMessage {
     return $this->getData('annotation.text');
   }
 
-
   public function getTags() {
     $tags = $this->getData('tags');
 
@@ -120,7 +119,17 @@ class ModtoolMessage {
   }
 
 
-
+  /**
+   * Get the data from JSON by key. it checks if the data was validated
+   * and calls $this->validate() if not.
+   *
+   * @param $key
+   *
+   * @return mixed|null
+   * NULL if no $key was found in JSON object
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
+   */
   public function getData($key) {
     if (!$this->validated) {
       $this->validate();
