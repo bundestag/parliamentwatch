@@ -1294,6 +1294,31 @@ function load_question_by_message_id($message_id) {
 
 
 /**
+ * Load the question (node) by the dialogue id it belongs to
+ *
+ * @param $dialogue_id
+ *
+ * @return object|null
+ */
+function load_question_by_dialogue_id($dialogue_id) {
+  $question = NULL;
+
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', 'dialogue');
+  $q->fieldCondition('field_dialogue_id', 'value', $dialogue_id);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    $question = node_load(key($result['node']));
+  }
+
+  return $question;
+}
+
+
+
+/**
  * Load the answer (comment) by it's message id set in modtool
  *
  * @param $message_id
