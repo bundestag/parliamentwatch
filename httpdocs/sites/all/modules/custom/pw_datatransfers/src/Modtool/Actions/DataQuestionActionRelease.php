@@ -50,7 +50,7 @@ class DataQuestionActionRelease extends DataActionQuestionBase {
 
     if ($modtoolMessage->getStatus() != ModtoolMessageStatus::RELEASED) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question '. $modtoolMessage->getMessageId() .' should be released but it has the status '. $modtoolMessage->getStatus() .'('. $status_message. ')');
+      throw new DataActionException('The question should have the status released but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;

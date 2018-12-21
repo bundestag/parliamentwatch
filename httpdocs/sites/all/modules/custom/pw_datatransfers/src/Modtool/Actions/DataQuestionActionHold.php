@@ -50,7 +50,7 @@ class DataQuestionActionHold extends DataActionQuestionBase {
 
     if ($modtoolMessage->getStatus() != ModtoolMessageStatus::HOLD) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question '. $modtoolMessage->getMessageId() .' should have status "hold" but it has the status '. $modtoolMessage->getStatus() .'('. $status_message. ')');
+      throw new DataActionException('The question should have the status hold but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;
