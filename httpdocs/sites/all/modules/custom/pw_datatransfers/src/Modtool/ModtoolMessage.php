@@ -136,7 +136,7 @@ class ModtoolMessage {
     }
 
     if (isset($this->jsonData->{$key})) {
-      return $this->jsonData{$key};
+      return $this->jsonData->{$key};
     }
 
     return NULL;
