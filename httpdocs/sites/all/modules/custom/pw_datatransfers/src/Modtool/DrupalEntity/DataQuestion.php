@@ -11,11 +11,15 @@ use stdClass;
 
 /**
  * A class for building a Drupal node (dialogue) for a Modtool message of type question
- * and
  */
 class DataQuestion extends DataEntityBase {
 
 
+  /**
+   * Load the Drupal node object of the question
+   *
+   * @return object|null
+   */
   public function loadDrupalEntity() {
     $modtoolQuestion = $this->modtoolMessage;
     $question = NULL;
@@ -62,16 +66,14 @@ class DataQuestion extends DataEntityBase {
       ],
     ];
 
-
     // set the field_dialogue_before_election
     $node->field_dialogue_before_election = [
       LANGUAGE_NONE => [
         0 => [
-          'value' => (int) ($date < pw_parliaments_election_date($parliament[0])),
+          'value' => (int) ($date_created < pw_parliaments_election_date($parliament[0])),
         ],
       ],
     ];
-
 
     // set the politician
     $politician_uuid = $modtoolMessage->getPoliticianUUID();
@@ -87,7 +89,6 @@ class DataQuestion extends DataEntityBase {
       ],
     ];
 
-
     // set the question/ body text
     $node->body = [
       LANGUAGE_NONE => [
@@ -98,7 +99,6 @@ class DataQuestion extends DataEntityBase {
         ],
       ],
     ];
-
 
     // set the dialogue id
     $node->field_dialogue_id = [
@@ -127,7 +127,6 @@ class DataQuestion extends DataEntityBase {
       ],
     ];
 
-
     // set the sender name
     $node->field_dialogue_sender_name = [
       LANGUAGE_NONE => [
@@ -143,7 +142,6 @@ class DataQuestion extends DataEntityBase {
     foreach ($modtoolMessage->getDocuments() as $document) {
       // $node->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
     }
-
 
     // add tags
     // @todo - tags import implementation
@@ -184,6 +182,11 @@ class DataQuestion extends DataEntityBase {
   }
 
 
+  /**
+   * Create a new Drupal node object for a question
+   *
+   * @return object|\stdClass
+   */
   public function createDrupalEntity() {
     $modtoolMessage = $this->modtoolMessage;
     $question = new stdClass();
@@ -196,7 +199,5 @@ class DataQuestion extends DataEntityBase {
     $question->uid = 0;
     return $question;
   }
-
-
 
 }
