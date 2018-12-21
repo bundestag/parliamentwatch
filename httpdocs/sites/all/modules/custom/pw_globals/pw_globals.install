@@ -643,7 +643,7 @@ function _pw_globals_delete_blocks($deltas) {
  * @param int $plid
  *   The (optional) parent item ID.
  *
- * @return intq
+ * @return int
  *   The mlid of the saved menu link, or FALSE if the menu link could not be
  *   saved.
  */
