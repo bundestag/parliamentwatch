@@ -311,18 +311,14 @@ class ModtoolActionsController {
   protected function successQuestion(DataEntityBase $dataQuestion) {
     $question = $dataQuestion->getEntity();
     $question_nid = $question->nid;
-    global $base_url;
-    $node_path = $base_url .'/node/'. $question_nid;
     if ($dataQuestion->isNew) {
       drupal_add_http_header('Status', '201 Created');
-      drupal_add_http_header('Location', $node_path);
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'New question created');
       $this->setResponseValue('drupal_question_id', $question_nid);
     }
     else {
-      drupal_add_http_header('Status', '303 See Other');
-      drupal_add_http_header('Location', $node_path);
+      drupal_add_http_header('Status', '200 OK');
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'Question updated');
       $this->setResponseValue('drupal_question_id', $question_nid);
@@ -340,19 +336,15 @@ class ModtoolActionsController {
     $comment = $dataAnswer->getEntity();
     $comment_cid = $comment->cid;
     $question_nid = $comment->nid;
-    global $base_url;
-    $node_path = $base_url .'/node/'. $question_nid;
     if ($dataAnswer->isNew) {
       drupal_add_http_header('Status', '201 Created');
-      drupal_add_http_header('Location', $node_path);
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'New answer created');
       $this->setResponseValue('drupal_question_id', $question_nid);
       $this->setResponseValue('drupal_answer_id', $comment_cid);
     }
     else {
-      drupal_add_http_header('Status', '303 See Other');
-      drupal_add_http_header('Location', $node_path);
+      drupal_add_http_header('Status', '200 OK');
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'Answer updated');
       $this->setResponseValue('drupal_question_id', $question_nid);
