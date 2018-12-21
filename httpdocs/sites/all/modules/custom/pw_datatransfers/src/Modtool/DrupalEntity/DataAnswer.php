@@ -6,10 +6,10 @@
  * Time: 08:49
  */
 
-namespace Drupal\pw_datatransfers\Modtool;
+namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
 
 
-class DataComment {
+class DataAnswer {
 
   protected $json = NULL;
 
