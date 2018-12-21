@@ -149,7 +149,7 @@ class ModtoolMessage {
       throw new InvalidSourceException('No message id was found in sent JSON.');
     }
     else if($this->messageId != $this->jsonData->id) {
-      throw new InvalidSourceException('The message id defined in path ('.  check_plain($this->messageId) .') does not match the message id of the transferred message ('.  check_plain($this->jsonData->id) .').');
+      throw new InvalidSourceException('The message id defined in path ('. $this->messageId .') does not match the message id of the transferred message ('.  $this->jsonData->id .').');
     }
 
     // validate parliament
