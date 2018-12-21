@@ -8,12 +8,12 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 /**
  * Actionclass
  *  - message type: question
- *  - action: release
- *  - description: a new question will be created and an question already existing
- *    in Drupal will be updated by the data/ values sent from Modtool. The status
- *    of the node will be 1.
+ *  - action: moderate
+ *  - description: an existing question in Drupal gets the status 0 and will
+ *    be updated by the values sent from Modtool. If no question exists it will
+ *    be created with status = 0.
  */
-class DataQuestionActionRelease extends DataActionQuestionBase {
+class DataQuestionActionModerate extends DataActionQuestionBase {
 
 
   /**
@@ -32,13 +32,13 @@ class DataQuestionActionRelease extends DataActionQuestionBase {
     $this->check();
 
     // release the question
-    $question->status = 1;
+    $question->status = 0;
     node_save($question);
   }
 
 
   /**
-   * Before release we check if the sent message has the status "released"
+   * Before moderate we check if the sent message has the status "moderated"
    *
    * @return TRUE
    * Just in case no error appeared. Otherwise it throws an exception
@@ -48,9 +48,9 @@ class DataQuestionActionRelease extends DataActionQuestionBase {
   public function check() {
     $modtoolMessage = $this->dataQuestion->getModtoolMessage();
 
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::RELEASED) {
+    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::MODERATED) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question '. $modtoolMessage->getMessageId() .' should be released but it has the status '. $modtoolMessage->getStatus() .'('. $status_message. ')');
+      throw new DataActionException('The question '. $modtoolMessage->getMessageId() .' should have status "moderated" but it has the status '. $modtoolMessage->getStatus() .'('. $status_message. ')');
     }
 
     return TRUE;
