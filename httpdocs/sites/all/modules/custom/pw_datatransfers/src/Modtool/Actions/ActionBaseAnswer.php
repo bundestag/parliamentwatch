@@ -62,9 +62,9 @@ abstract class ActionBaseAnswer implements ActionInterface {
     $modtoolMessage = $this->dataAnswer->getModtoolMessage();
 
     if ($modtoolMessage->getStatus() != $status) {
-      $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      $target_status = ModtoolMessageStatus::getStatusLabel($status);
-      throw new DataActionException('The answer should have the status '. $target_status .'  but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
+      $status_message_label = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
+      $target_status_label = ModtoolMessageStatus::getStatusLabel($status);
+      throw new DataActionException('The answer should have the status '. $status .' ('. $target_status_label .')  but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message_label. ')');
     }
 
     return TRUE;
