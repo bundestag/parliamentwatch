@@ -2,7 +2,6 @@
 
 namespace Drupal\pw_datatransfers\Modtool\Actions\Questions;
 
-use Drupal\pw_datatransfers\Exception\DataActionException;
 use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
@@ -39,22 +38,10 @@ class Hold extends ActionBaseQuestion {
 
 
   /**
-   * Before set on hold we check if the sent message has the status "hold"
-   *
-   * @return TRUE
-   * Just in case no error appeared. Otherwise it throws an exception
-   *
-   * @throws \Drupal\pw_datatransfers\Exception\DataActionException
+   * @inheritdoc
    */
   public function check() {
-    $modtoolMessage = $this->dataQuestion->getModtoolMessage();
-
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::HOLD) {
-      $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question should have the status hold but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
-    }
-
-    return TRUE;
+    $this->checkMessageStatus(ModtoolMessageStatus::HOLD);
   }
 
 }

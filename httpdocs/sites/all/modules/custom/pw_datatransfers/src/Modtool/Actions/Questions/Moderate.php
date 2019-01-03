@@ -2,7 +2,6 @@
 
 namespace Drupal\pw_datatransfers\Modtool\Actions\Questions;
 
-use Drupal\pw_datatransfers\Exception\DataActionException;
 use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
@@ -39,22 +38,10 @@ class Moderate extends ActionBaseQuestion {
 
 
   /**
-   * Before moderate we check if the sent message has the status "moderated"
-   *
-   * @return TRUE
-   * Just in case no error appeared. Otherwise it throws an exception
-   *
-   * @throws \Drupal\pw_datatransfers\Exception\DataActionException
+   * @inheritdoc
    */
   public function check() {
-    $modtoolMessage = $this->dataQuestion->getModtoolMessage();
-
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::MODERATED) {
-      $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The question should have status moderated but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
-    }
-
-    return TRUE;
+    $this->checkMessageStatus(ModtoolMessageStatus::MODERATED);
   }
 
 }

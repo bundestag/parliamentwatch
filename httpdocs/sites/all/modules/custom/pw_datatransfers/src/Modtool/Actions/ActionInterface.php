@@ -11,7 +11,7 @@ namespace Drupal\pw_datatransfers\Modtool\Actions;
  *
  * @see \Drupal\pw_datatransfers\Modtool\ModtoolMessage->getActionClass()
  */
-interface DataActionInterface {
+interface ActionInterface {
 
   /**
    * Run the tasks/ actions chosen in the Modtool. Before starting the real
@@ -24,8 +24,6 @@ interface DataActionInterface {
   /**
    * Do any checks before the actual action is running in this method. If a check
    * fails throw an DataActionException
-   *
-   * @return TRUE
    *
    * @throws \Drupal\pw_datatransfers\Exception\DataActionException
    */

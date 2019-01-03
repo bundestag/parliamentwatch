@@ -42,22 +42,10 @@ class Release extends ActionBaseAnswer {
 
 
   /**
-   * Before release we check if the sent message has the status "released"
-   *
-   * @return TRUE
-   * Just in case no error appeared. Otherwise it throws an exception
-   *
-   * @throws \Drupal\pw_datatransfers\Exception\DataActionException
+   * @inheritdoc
    */
   public function check() {
-    $modtoolMessage = $this->dataAnswer->getModtoolMessage();
-
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::RELEASED) {
-      $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The answer should have the status released but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
-    }
-
-    return TRUE;
+    $this->checkMessageStatus(ModtoolMessageStatus::RELEASED);
   }
 
 }

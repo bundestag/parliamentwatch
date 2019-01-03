@@ -11,7 +11,7 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
  * An abstract base class for actions related to answers.
  *
  */
-abstract class ActionBaseAnswer implements DataActionInterface {
+abstract class ActionBaseAnswer implements ActionInterface {
 
   /**
    * @var \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer
@@ -46,22 +46,27 @@ abstract class ActionBaseAnswer implements DataActionInterface {
 
 
   /**
-   * Before release we check if the sent message has the status "released"
+   * Check if the message sent from Modtool has the correct status.
    *
-   * @return TRUE
-   * Just in case no error appeared. Otherwise it throws an exception
+   * For example wghen an answer should be released the answer sent
+   * to Drupal should have this status.
+   *
+   * @param integer $status
+   * The key of the status which should be checked
+   *
+   * @return bool
    *
    * @throws \Drupal\pw_datatransfers\Exception\DataActionException
    */
-  public function check() {
+  protected function checkMessageStatus($status) {
     $modtoolMessage = $this->dataAnswer->getModtoolMessage();
 
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::RELEASED) {
+    if ($modtoolMessage->getStatus() != $status) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The answer should have the status released but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
+      $target_status = ModtoolMessageStatus::getStatusLabel($status);
+      throw new DataActionException('The answer should have the status '. $target_status .'  but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;
   }
-
 }
