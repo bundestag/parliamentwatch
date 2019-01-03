@@ -26,6 +26,7 @@ class DataAnswer extends DataEntityBase {
       $answer->nid = $question->nid;
       $answer->subject = 'Antwort von ' .$this->modtoolMessage->getSenderName();
       $answer->uid = 0;
+      $this->isNew = TRUE;
       return $answer;
     }
 
