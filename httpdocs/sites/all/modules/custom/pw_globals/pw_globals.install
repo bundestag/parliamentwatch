@@ -697,3 +697,18 @@ function pw_globals_update_7137() {
     drupal_uninstall_modules(array('mediaelement'));
   }
 }
+
+/**
+ * Deinstall pw_gdpr and eu_cookie_compliance modules
+ */
+function pw_globals_update_7138() {
+  if( module_exists('pw_gdpr')) {
+    module_disable(array('pw_gdpr'));
+  }
+  drupal_uninstall_modules(array('pw_gdpr'));
+
+  if( module_exists('eu_cookie_compliance')) {
+    module_disable(array('eu_cookie_compliance'));
+  }
+  drupal_uninstall_modules(array('eu_cookie_compliance'));
+}
