@@ -134,13 +134,13 @@ dl {
   }
   a {
     display: block;
-    padding: $space-xsmall 0;
+    padding: $space-xsmall 20px $space-xsmall 0;
     color: $darkGray;
     position: relative;
     text-overflow: ellipsis;
     overflow: hidden;
-    padding-right: 20px;
-    @include transition(color 300ms ease);
+    will-change: color;
+    transition: color 300ms ease;
     &:after {
       content: '\e825';
       font-family: 'awfont';
@@ -149,8 +149,9 @@ dl {
       right: $space-xsmall-mobile;
       top: 50%;
       color: $orangeBG;
-      @include transition(color 300ms ease);
-      @include transform(translate(0,-50%));
+      will-change: color;
+      transition: color 300ms ease;
+      transform: translate(0,-50%);
     }
     &:hover {
       color: $black;

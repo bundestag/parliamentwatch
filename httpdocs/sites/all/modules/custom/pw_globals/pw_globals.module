@@ -136,15 +136,6 @@ function pw_globals_form_pw_globals_politician_search_form_alter(&$form, &$form_
 }
 
 /**
- * Implements hook_comment_presave().
- */
-function pw_globals_comment_presave($comment) {
-  if (pw_globals_comment_is_spam($comment, $_SERVER)) {
-    $comment->status = COMMENT_NOT_PUBLISHED;
-  }
-}
-
-/**
  * Implements hook_element_info().
  */
 function pw_globals_element_info() {
@@ -278,19 +269,26 @@ function pw_globals_taxonomy_term_page($term) {
     $build = taxonomy_term_view($term);
     $nids = taxonomy_select_nodes($term->tid, TRUE, variable_get('default_nodes_main', 12));
 
+    if (isset($build["description"]["#prefix"])) {
+      $build["description"]["#prefix"] = '<div class="intro"><div class="intro__left">';
+    }
+    if (isset($build["description"]["#suffix"])) {
+      $build["description"]["#suffix"] = '</div></div>';
+    }
     if ($nids) {
       $nodes = node_load_multiple($nids);
       if (in_array($term->vocabulary_machine_name, ['blogcategories', 'blogtags'])) {
-        $build = node_view_multiple($nodes, 'tile');
-        $build['#theme_wrappers'] = ['container__tiles'];
+        $overview = node_view_multiple($nodes, 'tile');
+        $overview['#theme_wrappers'] = ['container__tiles'];
       } else {
-        $build = node_view_multiple($nodes, 'teaser');
-        $build['#theme_wrappers'] = ['container__overview'];
+        $overview = node_view_multiple($nodes, 'teaser');
+        $overview['#theme_wrappers'] = ['container__overview'];
       }
-      $build['pager'] = [
+      $overview['pager'] = [
         '#theme' => 'pager',
         '#weight' => 5,
       ];
+      $build['overview'][] = $overview;
     }
     else {
       $build['no_content'] = [
@@ -629,45 +627,6 @@ function pw_globals_politician($node) {
   return $politician;
 }
 
-/**
- * Returns TRUE if the submission is considered spam, FALSE otherwise.
- *
- * @param string $content_type
- *   Node or comment.
- * @param object $content
- *   The node or comment.
- *
- * @return bool
- *   TRUE if the submission is considered spam, FALSE otherwise.
- */
-function pw_globals_comment_is_spam($comment, $server_vars) {
-  if (!variable_get('pw_globals_antispam_enabled', TRUE)) {
-    return FALSE;
-  }
-
-  if (in_array($comment->node_type, variable_get('pw_globals_antispam_exclude', []))) {
-    return FALSE;
-  }
-
-  $api_key = variable_get('pw_globals_antispam_api_key', '');
-
-  if (empty($api_key)) {
-    return FALSE;
-  }
-
-  $is_test = variable_get('pw_globals_antispam_is_test', FALSE);
-  $url = "https://$api_key.rest.akismet.com/1.1/comment-check";
-  $data = http_build_query(_pw_globals_antispam_prepare_comment_data($comment, $server_vars, $is_test));
-  $headers = ['Content-Type' => 'application/x-www-form-urlencoded'];
-  $response = drupal_http_request($url, ['method' => 'POST', 'headers' => $headers, 'data' => $data, 'timeout' => 5.0]);
-
-  if (isset($response->error)) {
-    watchdog('pw_globals', 'Checking a comment for spam failed: @error.', ['@error' => $response->error], WATCHDOG_WARNING);
-    return TRUE;
-  }
-
-  return ($response->data == 'false') ? FALSE : TRUE;
-}
 
 /**
  * Processes an interval element.
@@ -980,7 +939,7 @@ function _pw_get_formatted_legislature_start_date($parliament) {
  *
  * @param array $date_field
  *   date field with start and end date as value and value2
- * 
+ *
  * @return boolean
  */
 function _pw_is_between_dates($date_field, $timestamp = FALSE) {

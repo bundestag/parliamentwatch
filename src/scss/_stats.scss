@@ -78,8 +78,8 @@
     display: block;
     width: 0;
     height: 6px;
-
-    @include transition(width 600ms ease);
+    will-change: width;
+    transition: width 600ms ease;
   }
 }
 

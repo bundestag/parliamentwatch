@@ -43,14 +43,6 @@ function username_creator($source, $item_key, $element_key, &$field, $settings) 
     $lname = $source->current_item['xpathparser:12'];
     $uname = $fname . '-' . $lname;
 
-    $title = $source->current_item['xpathparser:7'];
-    //if (!empty($title)) {
-
-      // add title to umame if exists
-      //$uname = $title . '-' . $uname;
-
-    //}
-
     $replacement_array = array(
       'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'Ae', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
       'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'Oe', 'Ø'=>'O', 'Ù'=>'U',

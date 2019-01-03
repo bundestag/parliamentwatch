@@ -1270,11 +1270,11 @@ function _pw_dialogues_sanitized_filters($filters) {
 }
 
 /**
- * Load the question by it's message id set in modtool
+ * Load the question (node) by it's message id set in modtool
  *
  * @param $message_id
  *
- * @return bool|mixed|null
+ * @return object|null
  */
 function load_question_by_message_id($message_id) {
   $question = NULL;
@@ -1293,6 +1293,38 @@ function load_question_by_message_id($message_id) {
 }
 
 
+/**
+ * Load the question (node) by the dialogue id it belongs to
+ *
+ * @param $dialogue_id
+ *
+ * @return object|null
+ */
+function load_question_by_dialogue_id($dialogue_id) {
+  $question = NULL;
+
+  $q = new EntityFieldQuery();
+  $q->entityCondition('entity_type', 'node');
+  $q->entityCondition('bundle', 'dialogue');
+  $q->fieldCondition('field_dialogue_id', 'value', $dialogue_id);
+  $result = $q->execute();
+
+  if (!empty($result['node'])) {
+    $question = node_load(key($result['node']));
+  }
+
+  return $question;
+}
+
+
+
+/**
+ * Load the answer (comment) by it's message id set in modtool
+ *
+ * @param $message_id
+ *
+ * @return object|null
+ */
 function load_answer_by_message_id($message_id) {
   $answer = NULL;
 
@@ -1307,4 +1339,15 @@ function load_answer_by_message_id($message_id) {
   }
 
   return $answer;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_dialogues_views_api() {
+  return [
+    'api' => 3,
+    'path' => drupal_get_path('module', 'pw_dialogues') . '/views',
+  ];
 }

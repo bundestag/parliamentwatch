@@ -27,7 +27,7 @@ function set_fraction_to_party($source, $item_key, $element_key, &$field, $setti
     $field = $party;
 
     // overwrite default for EU and Bundestag
-    if(ereg('EU', $parliament)){
+    if(strpos($parliament, 'EU') !== FALSE){
       if(in_array($party, array('CDU', 'CSU'))){
         $field = 'CDU/CSU (EVP)';
       }
@@ -44,7 +44,7 @@ function set_fraction_to_party($source, $item_key, $element_key, &$field, $setti
         $field = 'DIE GRÜNEN/PIRATEN/ÖDP (Grüne/EFA)';
       }
     }
-    elseif(ereg('Bundestag', $parliament)){
+    elseif(strpos($parliament, 'Bundestag') !== FALSE){
       if(in_array($party, array('CDU', 'CSU'))){
         $field = 'CDU/CSU';
       }

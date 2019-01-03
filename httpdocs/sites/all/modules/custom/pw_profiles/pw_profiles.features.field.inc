@@ -698,93 +698,6 @@ function pw_profiles_field_default_fields() {
     ),
   );
 
-  // Exported field: 'user-user-field_user_age'.
-  $fields['user-user-field_user_age'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_user_age',
-      'field_permissions' => array(
-        'type' => '2',
-      ),
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'computed_field',
-      'settings' => array(
-        'code' => '$entity_field[0][\'value\'] = 0;
-if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
-  $entity_field[0][\'value\'] = ( time() - strtotime($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\']) ) / 86400 / 365.25;
-}',
-        'database' => array(
-          'data_default' => '',
-          'data_index' => 0,
-          'data_length' => '32',
-          'data_not_NULL' => 0,
-          'data_precision' => '10',
-          'data_scale' => '2',
-          'data_size' => 'normal',
-          'data_type' => 'int',
-        ),
-        'display_format' => '$display_output = $entity_field_item[\'value\'];',
-        'recalculate' => 0,
-        'store' => 1,
-      ),
-      'translatable' => '0',
-      'type' => 'computed',
-    ),
-    'field_instance' => array(
-      'bundle' => 'user',
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '45',
-        ),
-        'full' => array(
-          'label' => 'above',
-          'module' => 'computed_field',
-          'settings' => array(
-            'field_delimiter' => '',
-            'linked_field' => array(
-              'advanced' => array(
-                'class' => '',
-                'rel' => '',
-                'target' => '',
-                'text' => '',
-                'title' => '',
-              ),
-              'destination' => '',
-              'linked' => 0,
-            ),
-          ),
-          'type' => 'computed_field_unsanitized',
-          'weight' => '13',
-        ),
-      ),
-      'entity_type' => 'user',
-      'field_name' => 'field_user_age',
-      'label' => 'Alter',
-      'required' => 0,
-      'settings' => array(
-        'exclude_cv' => FALSE,
-        'user_register_form' => 0,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'computed_field',
-        'settings' => array(),
-        'type' => 'computed',
-        'weight' => '81',
-      ),
-    ),
-  );
-
   // Exported field: 'user-user-field_user_birthday'.
   $fields['user-user-field_user_birthday'] = array(
     'field_config' => array(
@@ -4701,7 +4614,6 @@ if(isset($entity->field_user_birthday[LANGUAGE_NONE][0][\'value\'])){
   // Included for use with string extractors like potx.
   t('Adresse');
   t('Alt Text');
-  t('Alter');
   t('Ausgeübte Tätigkeit');
   t('Because system user roles are not revisionable, this fields stores a copy of the user role.');
   t('Berufliche Qualifikation');

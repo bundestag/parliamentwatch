@@ -1,0 +1,55 @@
+From 431f7606bb59cdc48fb6f6a588f4dfd3de8df265 Mon Sep 17 00:00:00 2001
+From: Tobias Krause <krause@abgeordnetenwatch.de>
+Date: Mon, 10 Dec 2018 11:38:51 +0100
+Subject: [PATCH] AW-5958 add uuid.feeds.inc file
+
+---
+ .../all/modules/contrib/uuid/uuid.feeds.inc   | 39 +++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+ create mode 100644 httpdocs/sites/all/modules/contrib/uuid/uuid.feeds.inc
+
+diff --git a/httpdocs/sites/all/modules/contrib/uuid/uuid.feeds.inc b/httpdocs/sites/all/modules/contrib/uuid/uuid.feeds.inc
+new file mode 100644
+index 000000000..e5764f38b
+--- /dev/null
++++ b/httpdocs/sites/all/modules/contrib/uuid/uuid.feeds.inc
+@@ -0,0 +1,39 @@
++<?php
++/**
++ * @file
++ * Feeds mapper for UUID module.
++ */
++
++/**
++ * Implements hook_feeds_processor_targets_alter().
++ */
++function uuid_feeds_processor_targets_alter(&$targets, $entity_type, $bundle_name) {
++  $info = entity_get_info($entity_type);
++  if (isset($info['uuid']) && $info['uuid'] == TRUE && !empty($info['entity keys']['uuid'])) {
++    $uuid_key = $info['entity keys']['uuid'];
++    $targets['uuid:' . $uuid_key] = array(
++      'name' => 'UUID',
++      'callback' => 'uuid_feeds_set_target',
++      'description' => t('The UUID property of the @type.', array('@type' => $info['label'])),
++    );
++  }
++}
++
++/**
++ * Callback for UUID mapping.
++ */
++function uuid_feeds_set_target($source, $entity, $target, $value) {
++  if (empty($value)) {
++    return;
++  }
++
++  // Only one value makes sense here, use the first one.
++  if (is_array($value)) {
++    $value = reset($value);
++  }
++
++  list( , $uuid_key) = explode(':', $target);
++  if (uuid_is_valid($value)) {
++    $entity->{$uuid_key} = $value;
++  }
++}

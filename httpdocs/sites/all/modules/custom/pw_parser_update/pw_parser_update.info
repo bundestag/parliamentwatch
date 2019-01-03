@@ -1,5 +1,0 @@
-name = Pw Parser Update
-description = TODO: Description of module
-package = Parliamentwatch
-core = 7.x
-files[] = tests/pw_parser_update.test

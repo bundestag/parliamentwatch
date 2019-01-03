@@ -118,7 +118,13 @@ function pw_sidejobs_profile_block() {
     return $block;
   }
 
-  $result = pw_sidejobs_by_user_revision_query($account)
+  $parliament = pw_profiles_parliament($account);
+
+  if (!$parliament) {
+    return $block;
+  }
+
+  $result = pw_sidejobs_by_user_revision_and_parliament_query($account, $parliament)
     ->execute();
 
   if (!empty($result['node'])) {
@@ -165,17 +171,19 @@ function pw_sidejobs_load($account) {
  * @param object $account
  *   The user account (version).
  *
+ * @param object $parliament
+ *   The parliament term object
+ *
  * @return EntityFieldQuery
  *   The query object.
  */
-function pw_sidejobs_by_user_revision_query($account) {
+function pw_sidejobs_by_user_revision_and_parliament_query($account, $parliament) {
   $q = new EntityFieldQuery();
   $q->entityCondition('entity_type', 'node');
   $q->entityCondition('bundle', 'sidejob');
   $q->propertyCondition('status', NODE_PUBLISHED);
   $q->fieldCondition('field_politician', 'target_id', $account->uid);
-  $q->fieldCondition('field_parliament', 'tid', pw_profiles_parliament($account)->tid);
-
+  $q->fieldCondition('field_parliament', 'tid', $parliament->tid);
   return $q;
 }
 
@@ -371,4 +379,20 @@ function pw_sidejobs_multiplier($interval, $date) {
   }
 
   return (int) $multiplier;
+}
+
+
+/**
+ * Implements hook_views_data().
+ */
+function pw_sidejobs_views_data() {
+  $data['node']['sidejobs_income'] = [
+    'title' => t('Sidejob income'),
+    'help' => t('Calculates the sidejobs income.'),
+    'field' => array(
+      'handler' => 'views_handler_filter_sidejobs_income',
+    ),
+  ];
+
+  return $data;
 }
