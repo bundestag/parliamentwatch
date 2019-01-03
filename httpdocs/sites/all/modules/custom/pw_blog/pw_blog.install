@@ -20,3 +20,11 @@ function pw_blog_update_7100() {
   module_enable(['spamicide'], FALSE);
   db_query("UPDATE spamicide SET form_field='please_update_me', enabled=1 WHERE form_id='comment_node_blogpost_form'");
 }
+
+/**
+ * Configure spamicide for spam protection - avoid the default naming
+ * as it may be helpful for spammers
+ */
+function pw_blog_update_7101() {
+  db_query("UPDATE spamicide SET form_field='enter_name' WHERE enabled=1");
+}
