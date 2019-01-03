@@ -6,9 +6,9 @@ namespace Drupal\pw_datatransfers\Controller;
 
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
-use Drupal\pw_datatransfers\Modtool\Actions\DataQuestionActionHold;
-use Drupal\pw_datatransfers\Modtool\Actions\DataQuestionActionModerate;
-use Drupal\pw_datatransfers\Modtool\Actions\DataQuestionActionRelease;
+use Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold;
+use Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate;
+use Drupal\pw_datatransfers\Modtool\Actions\Questions\Release;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
@@ -207,13 +207,13 @@ class ModtoolActionsController {
 
     switch ($this->action) {
       case 'release':
-        $dataAction = new DataQuestionActionRelease($dataClass);
+        $dataAction = new Release($dataClass);
         break;
       case 'moderate':
-        $dataAction = new DataQuestionActionModerate($dataClass);
+        $dataAction = new Moderate($dataClass);
         break;
       case 'hold':
-        $dataAction = new DataQuestionActionHold($dataClass);
+        $dataAction = new Hold($dataClass);
         break;
       case 'delete':
         $dataAction = new DataQuestionActionDelete($dataClass);

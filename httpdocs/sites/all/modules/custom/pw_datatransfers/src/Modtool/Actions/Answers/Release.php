@@ -1,26 +1,27 @@
 <?php
 
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Answers;
 
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseAnswer;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
 /**
  * Actionclass
  *  - message type: answer
- *  - action: moderate
- *  - description: an existing answer in Drupal gets the status 0 and will
- *    be updated by the values sent from Modtool. If no answer exists it will
- *    be created with status = 0.
+ *  - action: release
+ *  - description: a new answer will be created and an answer already existing
+ *    in Drupal will be updated by the data/ values sent from Modtool. The status
+ *    of the comment will be 1.
  */
-class DataAnswerActionModerate extends DataActionAnswersBase {
+class Release extends ActionBaseAnswer {
 
 
   /**
-   * When moderated an existing answer may be updated or a new answer may be
+   * On release an existing answer may be updated or a new answer may be
    * created
    */
   public function run() {
@@ -35,13 +36,13 @@ class DataAnswerActionModerate extends DataActionAnswersBase {
     $this->check();
 
     // release the answer
-    $answer->status = 0;
+    $answer->status = 1;
     comment_save($answer);
   }
 
 
   /**
-   * Before moderate we check if the sent message has the status "moderated"
+   * Before release we check if the sent message has the status "released"
    *
    * @return TRUE
    * Just in case no error appeared. Otherwise it throws an exception
@@ -51,9 +52,9 @@ class DataAnswerActionModerate extends DataActionAnswersBase {
   public function check() {
     $modtoolMessage = $this->dataAnswer->getModtoolMessage();
 
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::MODERATED) {
+    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::RELEASED) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The answer should have status moderated but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
+      throw new DataActionException('The answer should have the status released but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;

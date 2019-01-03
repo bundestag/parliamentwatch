@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Questions;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
  *    in Drupal will be updated by the data/ values sent from Modtool. The status
  *    of the node will be 1.
  */
-class DataQuestionActionRelease extends DataActionQuestionBase {
+class Release extends ActionBaseQuestion {
 
 
   /**

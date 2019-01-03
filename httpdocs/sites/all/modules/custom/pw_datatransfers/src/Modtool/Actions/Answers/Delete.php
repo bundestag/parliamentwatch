@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Answers;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseAnswer;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 /**
@@ -12,7 +13,7 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
  *  - description: an existing answer in Drupal will be deleted. If none was
  *    found nothing will be done
  */
-class DataAnswerActionDelete extends DataActionAnswersBase {
+class Delete extends ActionBaseAnswer {
 
 
   /**

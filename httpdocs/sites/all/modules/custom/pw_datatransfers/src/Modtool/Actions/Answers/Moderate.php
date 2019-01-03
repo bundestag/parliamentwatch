@@ -1,22 +1,23 @@
 <?php
 
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Answers;
 
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseAnswer;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
 /**
  * Actionclass
  *  - message type: answer
- *  - action: hold
+ *  - action: moderate
  *  - description: an existing answer in Drupal gets the status 0 and will
  *    be updated by the values sent from Modtool. If no answer exists it will
  *    be created with status = 0.
  */
-class DataAnswerActionHold extends DataActionAnswersBase {
+class Moderate extends ActionBaseAnswer {
 
 
   /**
@@ -51,9 +52,9 @@ class DataAnswerActionHold extends DataActionAnswersBase {
   public function check() {
     $modtoolMessage = $this->dataAnswer->getModtoolMessage();
 
-    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::HOLD) {
+    if ($modtoolMessage->getStatus() != ModtoolMessageStatus::MODERATED) {
       $status_message = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      throw new DataActionException('The answer should have status hold but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
+      throw new DataActionException('The answer should have status moderated but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message. ')');
     }
 
     return TRUE;

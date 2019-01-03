@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Questions;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 /**
@@ -12,7 +13,7 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
  *  - description: an existing question in Drupal will be deleted. If none was
  *    found nothing will be done
  */
-class DataQuestionActionDelete extends DataActionQuestionBase {
+class Delete extends ActionBaseQuestion {
 
 
   /**

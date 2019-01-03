@@ -1,8 +1,9 @@
 <?php
 
-namespace Drupal\pw_datatransfers\Modtool\Actions;
+namespace Drupal\pw_datatransfers\Modtool\Actions\Questions;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
+use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
  *    be updated by the values sent from Modtool. If no question exists it will
  *    be created with status = 0.
  */
-class DataQuestionActionHold extends DataActionQuestionBase {
+class Hold extends ActionBaseQuestion {
 
 
   /**

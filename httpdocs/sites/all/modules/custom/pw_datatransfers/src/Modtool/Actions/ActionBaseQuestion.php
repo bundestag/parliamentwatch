@@ -10,7 +10,7 @@ use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
 /**
  * Base class for DataAction classes related to questions
  */
-abstract class DataActionQuestionBase implements DataActionInterface {
+abstract class ActionBaseQuestion implements DataActionInterface {
 
   /**
    * @var \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion
