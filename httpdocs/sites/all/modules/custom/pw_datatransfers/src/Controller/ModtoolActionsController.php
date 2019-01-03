@@ -6,9 +6,6 @@ namespace Drupal\pw_datatransfers\Controller;
 
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
-use Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold;
-use Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate;
-use Drupal\pw_datatransfers\Modtool\Actions\Questions\Release;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
@@ -207,16 +204,16 @@ class ModtoolActionsController {
 
     switch ($this->action) {
       case 'release':
-        $dataAction = new Release($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Release($dataClass);
         break;
       case 'moderate':
-        $dataAction = new Moderate($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate($dataClass);
         break;
       case 'hold':
-        $dataAction = new Hold($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($dataClass);
         break;
       case 'delete':
-        $dataAction = new DataQuestionActionDelete($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($dataClass);
         break;
     }
 
@@ -243,7 +240,16 @@ class ModtoolActionsController {
 
     switch ($this->action) {
       case 'release':
-        $dataAction = new DataAnswerActionRelease($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Release($dataClass);
+        break;
+      case 'moderate':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Moderate($dataClass);
+        break;
+      case 'hold':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($dataClass);
+        break;
+      case 'delete':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($dataClass);
         break;
     }
 
