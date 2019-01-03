@@ -15,11 +15,6 @@ define('PW_DIALOGUES_INTERVAL', 86400); // one day buffer
  * Implements hook_menu().
  */
 function pw_dialogues_menu() {
-  $items['api/dialogues'] = [
-    'page callback' => 'pw_dialogues_post',
-    'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
-  ];
   $items['dialogues/%taxonomy_term/%'] = [
     'title callback' => 'pw_dialogues_page_title',
     'title arguments' => [1, 2],
@@ -51,12 +46,7 @@ function pw_dialogues_menu() {
     'access arguments' => array('import dialogue_importer feeds'),
     'file' => 'pw_dialogues.admin.inc',
   ];
-  $items['api/import/dialogue/%'] = [
-    'title' => 'imports dialogue',
-    'access arguments' => array('access content'),
-    'page callback' => 'pw_dialogues_triggered_import',
-    'type' => MENU_SUGGESTED_ITEM,
-  ];
+
   return $items;
 }
 
@@ -398,90 +388,6 @@ function pw_dialogues_form_pw_dialogues_filters_form_alter(&$form, &$form_state)
   $form['form_build_id']['#access'] = FALSE;
   $form['form_token']['#access'] = FALSE;
   $form['form_id']['#access'] = FALSE;
-}
-
-/**
- * Page callback: creates or updates a dialogue node and its comments.
- */
-function pw_dialogues_post() {
-  if (!empty($_SERVER['REDIRECT_HTTP_AUTHORIZATION'])) {
-    $credentials = base64_decode(substr($_SERVER['REDIRECT_HTTP_AUTHORIZATION'], 6));
-    list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':', $credentials, 2);
-  }
-
-  if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
-    drupal_add_http_header('Status', '401 Unauthorized');
-    return;
-  }
-
-  $uid = user_authenticate($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-
-  if (!$uid) {
-    drupal_add_http_header('Status', '401 Unauthorized');
-    return;
-  }
-
-  $account = user_load($uid);
-
-  if (!in_array(user_role_load_by_name('API User')->rid, array_keys($account->roles))) {
-    drupal_add_http_header('Status', '403 Forbidden');
-    return;
-  }
-
-  if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    drupal_add_http_header('Status', '405 Method Not Allowed');
-    drupal_add_http_header('Allow', 'POST');
-    return;
-  }
-
-  if (strpos($_SERVER['CONTENT_TYPE'] , 'text/xml') !== 0) {
-    drupal_add_http_header('Status', '415 Unsupported Media Type');
-    return;
-  }
-
-  $doc = new DOMDocument('1.0');
-
-  if (!$doc->load('php://input')) {
-    drupal_add_http_header('Status', '400 Bad Request');
-    return;
-  }
-
-  try {
-    $node = _pw_dialogues_question($doc, $account);
-    $comments = _pw_dialogues_answers($doc, $node);
-  }
-  catch (Exception $e) {
-    watchdog_exception('pw_dialogues', $e);
-    drupal_add_http_header('Status', '422 Unprocessable Entity');
-    return;
-  }
-
-  $is_new = empty($node->nid);
-  $transaction = db_transaction();
-
-  try {
-    node_save($node);
-    foreach ($comments as $comment) {
-      comment_save($comment);
-    }
-  }
-  catch (Exception $e) {
-    $transaction->rollback();
-    // At this point all checks for client side errors have passed and any
-    // remaining problem is assumed to be a server issue. node_save() and
-    // comment_save() take care of logging the exception.
-    drupal_add_http_header('Status', '500 Internal Server Error');
-    return;
-  }
-
-  if ($is_new) {
-    drupal_add_http_header('Status', '201 Created');
-    drupal_add_http_header('Location', url(node_uri($node)['path'], ['absolute' => TRUE]));
-  }
-  else {
-    drupal_add_http_header('Status', '303 See Other');
-    drupal_add_http_header('Location', url(node_uri($node)['path'], ['absolute' => TRUE]));
-  }
 }
 
 /**
@@ -1364,185 +1270,15 @@ function _pw_dialogues_sanitized_filters($filters) {
 }
 
 /**
- * Returns a question node populated from the given XML document.
- *
- * @param DOMDocument $doc
- *   The XML received from the Mod-Tool.
- *
- * @return object
- *   The question node.
- *
- * @throws Exception
- *   Throws an exception if the given document cannot be processed.
- */
-function _pw_dialogues_question(DOMDocument $doc, $account) {
-  $xpath = new DOMXPath($doc);
-  $context_node = $xpath->query('//message[type="question"]')->item(0);
-
-  if (is_null($context_node)) {
-    throw new Exception(t('Invalid dialogue'));
-  }
-
-  $parliament = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(context)', $context_node), 'parliaments'));
-  if (empty($parliament)) {
-    throw new Exception(t('Invalid context'));
-  }
-
-  $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(recipient.external_id)', $context_node)]));
-  if (empty($uid)) {
-    throw new Exception(t('Invalid recpient.external_id'));
-  }
-
-  $date = new DateTime($xpath->evaluate('string(inserted_date)', $context_node));
-  $id = $xpath->evaluate('string(id)', $context_node);
-
-  $node = _pw_dialogues_load_or_create_question($id);
-  $node->created = $date->format('U');
-  $node->status = $xpath->evaluate('string(status)', $context_node);
-  $node->title = 'Frage von ' . $xpath->evaluate('string(sender)', $context_node);
-  $node->uid = $account->uid;
-  $node->body = [LANGUAGE_NONE => [0 => [
-    'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
-    'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
-    'format' => 'managed_content',
-  ]]];
-  $node->field_dialogue_before_election = [LANGUAGE_NONE => [0 => [
-    'value' => (int) ($date < pw_parliaments_election_date($parliament[0])),
-  ]]];
-  $node->field_dialogue_id = [LANGUAGE_NONE => [0 => [
-    'value' => $xpath->evaluate('string(//dialogue/@id)'),
-  ]]];
-  $node->field_dialogue_message_id = [LANGUAGE_NONE => [0 => [
-    'value' => $id,
-  ]]];
-  $node->field_dialogue_message_type = [LANGUAGE_NONE => [0 => [
-    'value' => $xpath->evaluate('string(type)', $context_node),
-  ]]];
-  $node->field_dialogue_recipient = [LANGUAGE_NONE => [0 => [
-    'target_id' => $uid[0],
-  ]]];
-  $node->field_dialogue_sender_name = [LANGUAGE_NONE => [0 => [
-    'value'=> $xpath->evaluate('string(sender)', $context_node),
-  ]]];
-  $node->field_parliament = [LANGUAGE_NONE => [0 => [
-    'tid' => $parliament[0]->tid,
-  ]]];
-  $node->field_dialogue_documents[LANGUAGE_NONE] = [];
-  foreach ($xpath->query('documents/documents_item', $context_node) as $item) {
-    $node->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-  }
-  $node->field_dialogue_tags[LANGUAGE_NONE] = [];
-  foreach ($xpath->query('tags/tags_item', $context_node) as $item) {
-    $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
-    if (!empty($term)) {
-      $node->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-    }
-  };
-  $annotation = $xpath->evaluate('string(annotation.text)', $context_node);
-  if (!empty($annotation)) {
-    $node->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
-      'value' => $annotation,
-    ]]];
-  }
-  $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
-  if (!empty($topic)) {
-    $node->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-      'tid' => $topic[0]->tid,
-    ]]];
-  }
-
-  return $node;
-}
-
-/**
- * Returns answers as comments populated from the given XML document.
- *
- * @param DOMDocument $doc
- *   The XML received from the Mod-Tool.
- *
- * @param object
- *   The question node.
- *
- * @return array
- *   The answers as comments.
- *
- * @throws Exception
- *   Throws an exception if the given document cannot be processed.
- */
-function _pw_dialogues_answers(DOMDocument $doc, $question) {
-  $xpath = new DOMXPath($doc);
-  $answers = [];
-
-  foreach ($xpath->query('//message[type="answer"]') as $context_node) {
-    $uid = array_values(entity_get_id_by_uuid('user', [$xpath->evaluate('string(sender.external_id)', $context_node)]));
-    if (empty($uid)) {
-      throw new Exception(t('Invalid sender.external_id'));
-    }
-
-    $date = new DateTime($xpath->evaluate('string(inserted_date)', $context_node));
-    $id = $xpath->evaluate('string(id)', $context_node);
-
-    $comment = _pw_dialogues_load_or_create_answer($id, $question);
-    $comment->created = $date->format('U');
-    $comment->status = $xpath->evaluate('string(status)', $context_node);
-    $comment->subject = 'Antwort von ' . $xpath->evaluate('string(sender)', $context_node);
-    $comment->uid = $uid;
-    $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
-      'value' => html_entity_decode($xpath->evaluate('string(text)', $context_node)),
-      'summary' => html_entity_decode($xpath->evaluate('string(keyworded_text)', $context_node)),
-      'format' => 'managed_content',
-    ]]];
-    $comment->field_dialogue_id = [LANGUAGE_NONE => [0 => [
-      'value' => $xpath->evaluate('string(//dialogue/@id)'),
-    ]]];
-    $comment->field_dialogue_message_id = [LANGUAGE_NONE => [0 => [
-      'value' => $id,
-    ]]];
-    $comment->field_dialogue_message_type = [LANGUAGE_NONE => [0 => [
-      'value' => $xpath->evaluate('string(type)', $context_node),
-    ]]];
-    $comment->field_dialogue_sender_fullname = [LANGUAGE_NONE => [0 => [
-      'value' => $xpath->evaluate('string(sender)', $context_node),
-    ]]];
-    $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
-    foreach ($xpath->query('documents/documents_item', $context_node) as $item) {
-      $comment->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-    }
-    $comment->field_dialogue_tags[LANGUAGE_NONE] = [];
-    foreach ($xpath->query('tags/tags_item', $context_node) as $item) {
-      $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
-      if (!empty($term)) {
-        $comment->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-      }
-    };
-    $annotation = $xpath->evaluate('string(annotation.text)', $context_node);
-    if (!empty($annotation)) {
-      $comment->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
-        'value' => $annotation,
-      ]]];
-    }
-    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $context_node), 'dialogue_topics'));
-    if (!empty($topic)) {
-      $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-        'tid' => $topic[0]->tid,
-      ]]];
-    }
-    $answers[] = $comment;
-  }
-
-  return $answers;
-}
-
-/**
- * Returns a fully-populated question or a new node.
+ * Load the question by it's message id set in modtool
  *
  * @param $message_id
- *   The message_id of the question.
  *
- * @return object
- *   The question node.
+ * @return bool|mixed|null
  */
-function _pw_dialogues_load_or_create_question($message_id) {
+function load_question_by_message_id($message_id) {
+  $question = NULL;
+
   $q = new EntityFieldQuery();
   $q->entityCondition('entity_type', 'node');
   $q->entityCondition('bundle', 'dialogue');
@@ -1550,31 +1286,16 @@ function _pw_dialogues_load_or_create_question($message_id) {
   $result = $q->execute();
 
   if (!empty($result['node'])) {
-    $node = node_load(key($result['node']));
-  }
-  else {
-    $node = new stdClass();
-    $node->language = LANGUAGE_NONE;
-    $node->type = 'dialogue';
-    node_object_prepare($node);
+    $question = node_load(key($result['node']));
   }
 
-  return $node;
+  return $question;
 }
 
-/**
- * Returns a fully populated answer or a new comment.
- *
- * @param $message_id
- *   The message_id of the answer.
- *
- * @param $question
- *   The question node.
- *
- * @return object
- *   The answer comment.
- */
-function _pw_dialogues_load_or_create_answer($message_id, $question) {
+
+function load_answer_by_message_id($message_id) {
+  $answer = NULL;
+
   $q = new EntityFieldQuery();
   $q->entityCondition('entity_type', 'comment');
   $q->entityCondition('bundle', 'comment_node_dialogue');
@@ -1582,13 +1303,19 @@ function _pw_dialogues_load_or_create_answer($message_id, $question) {
   $result = $q->execute();
 
   if (!empty($result['comment'])) {
-    $comment = comment_load(key($result['comment']));
-    $comment->changed = REQUEST_TIME;
-  }
-  else {
-    $comment = new stdClass();
-    $comment->nid = $question->nid;
+    $answer = comment_load(key($result['comment']));
   }
 
-  return $comment;
+  return $answer;
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_dialogues_views_api() {
+  return [
+    'api' => 3,
+    'path' => drupal_get_path('module', 'pw_dialogues') . '/views',
+  ];
 }

@@ -117,7 +117,6 @@ function pw_search_api_default_search_api_index() {
         "field_petition_status" : { "type" : "string" },
         "field_politician" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "user" },
         "field_politician:created" : { "type" : "list\\u003Cdate\\u003E" },
-        "field_politician:field_user_age" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_politician:field_user_birthday" : { "type" : "list\\u003Cdate\\u003E" },
         "field_politician:field_user_childs" : { "type" : "list\\u003Cinteger\\u003E" },
         "field_politician:field_user_constituency" : {
@@ -278,7 +277,6 @@ function pw_search_api_default_search_api_index() {
         "field_vote_user:created" : { "type" : "date" },
         "field_vote_user:edit_url" : { "type" : "uri" },
         "field_vote_user:feed_nid" : { "type" : "integer" },
-        "field_vote_user:field_user_age" : { "type" : "integer" },
         "field_vote_user:field_user_birthday" : { "type" : "date" },
         "field_vote_user:field_user_childs" : { "type" : "integer" },
         "field_vote_user:field_user_constituency" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
@@ -712,7 +710,6 @@ function pw_search_api_default_search_api_index() {
       "index_directly" : 0,
       "cron_limit" : "50",
       "fields" : {
-        "field_user_age" : { "type" : "integer" },
         "field_user_constituency" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
         "field_user_constituency:field_constituency_ac_descriptor" : { "type" : "list\\u003Ctext\\u003E" },
         "field_user_constituency:field_constituency_area_codes:name" : { "type" : "list\\u003Clist\\u003Ctext\\u003E\\u003E" },

@@ -327,7 +327,7 @@ function pw_profiles_user_update(&$edit, $account, $category) {
       if ($user_revision->name != $account->name) {
         $revision_edit = [];
         $revision_edit['name'] = $account->name;
-        _user_revision_edit_save($user_revision, $revision_edit);
+        _pw_userarchives_user_revision_edit_save($user_revision, $revision_edit);
       }
     }
   }
@@ -393,9 +393,6 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
 
     if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
       $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']], ['context' => $constituency_context]);
-    }
-    elseif ($account->content['field_user_list_won']['#items'][0]['value'] == 1) {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via list)', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']], ['context' => $list_context]);
     }
     else {
       $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']]);

@@ -178,7 +178,7 @@
     bottom: -5px;
     width: calc(100% + 10px);
     max-width: none;
-    @include filter(blur(1px));
+    filter: blur(1px);
   }
   &:after,
   &:before {
@@ -202,15 +202,15 @@
     z-index: 9;
   }
 
-  &:nth-child(1n) img { @include filter(blur(1px)); }
-  &:nth-child(2n) img { @include filter(blur(1.5px)); }
-  &:nth-child(3n) img { @include filter(blur(2px)); }
-  &:nth-child(4n) img { @include filter(blur(1px)); }
-  &:nth-child(5n) img { @include filter(blur(1.5px)); }
-  &:nth-child(6n) img { @include filter(blur(1px)); }
-  &:nth-child(7n) img { @include filter(blur(2px)); }
-  &:nth-child(8n) img { @include filter(blur(1px)); }
-  &:nth-child(9n) img { @include filter(blur(1.5px)); }
+  &:nth-child(1n) img { filter: blur(1px); }
+  &:nth-child(2n) img { filter: blur(1.5px); }
+  &:nth-child(3n) img { filter: blur(2px); }
+  &:nth-child(4n) img { filter: blur(1px); }
+  &:nth-child(5n) img { filter: blur(1.5px); }
+  &:nth-child(6n) img { filter: blur(1px); }
+  &:nth-child(7n) img { filter: blur(2px); }
+  &:nth-child(8n) img { filter: blur(1px); }
+  &:nth-child(9n) img { filter: blur(1.5px); }
 
   &:nth-child(1n):before { opacity: 0.5; }
   &:nth-child(2n):before { opacity: 0.4; }
@@ -282,7 +282,6 @@
     border-top: 0;
   }
 }
-
 .patron-teaser {
   @include grid-container();
   position: relative;
@@ -381,9 +380,6 @@
     margin-bottom: $space;
   }
 }
-
-
-
 
 .testimonial {
   @include grid-container();

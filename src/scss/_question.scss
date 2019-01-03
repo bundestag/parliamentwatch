@@ -279,7 +279,7 @@
       position: absolute;
       left: 50%;
       top: 100%;
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0);
     }
     &:before {
       @include triangle(46px 15px, $darkGray, down);

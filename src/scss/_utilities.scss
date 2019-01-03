@@ -74,6 +74,7 @@ textarea {
   }
 }
 
+
 /* Title with options */
 
 .option-title {
@@ -197,8 +198,9 @@ textarea {
   background: $gray;
   color: $white;
   line-height: 34px;
+  will-change: background;
+  transition: background 300ms ease;
   @include grid-container();
-  @include transition(background 300ms ease);
   @include breakpoint($breakpoint-m-min) {
     padding-right: $space-small;
   }
@@ -556,7 +558,7 @@ textarea {
     bottom: 100%;
     margin-bottom: 1px;
     height: 200px;
-    @include background(linear-gradient(rgba(255,255,255,0), $white) left repeat);
+    background: linear-gradient(rgba(255,255,255,0), $white) left repeat;
   }
   &:after {
     content: '';
@@ -567,7 +569,7 @@ textarea {
     bottom: 100%;
     margin-bottom: 1px;
     height: 20px;
-    @include background(linear-gradient(transparent, rgba(0,0,0,.2)) left repeat);
+    background: linear-gradient(transparent, rgba(0,0,0,.2)) left repeat;
     opacity: .15;
   }
 }
@@ -723,7 +725,7 @@ $transition-length: .3s;
   user-select: none;
   background: none;
   outline: none;
-  transition: .3s;
+  transition: $transition-length;
 }
 
 @mixin line() {
@@ -731,7 +733,7 @@ $transition-length: .3s;
   width: $button-size - 4;
   height: 2px;
   background-color: $gray;
-  @include transition($transition-length);
+  transition: $transition-length;
 }
 .lines {
   @include line();
@@ -741,7 +743,7 @@ $transition-length: .3s;
     content: '';
     position: absolute;
     left: 0;
-    @include transform-origin($button-size/14 center);
+    transform-origin: $button-size/14 center;
     @include line();
   }
   &:before { top: $button-size/4; }
@@ -750,19 +752,18 @@ $transition-length: .3s;
 .lines-button.x.lines-button-close .lines {
     background-color: transparent;
     &:before, &:after {
-        @include transform-origin(50% 50%);
+        transform-origin: 50% 50%;
         top: 0;
         background-color: $darkGray;
         width: $button-size;
     }
     &:before {
-        @include transform(rotate3d(0,0,1,45deg));
+      transform: rotate3d(0,0,1,45deg);
     }
     &:after {
-        @include transform(rotate3d(0,0,1,-45deg));
+      transform: rotate3d(0,0,1,-45deg);
     }
 }
-
 
 /* Animations */
 
