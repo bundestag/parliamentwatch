@@ -8,7 +8,9 @@ use stdClass;
 
 
 /**
- * A class for building a Drupal node (dialogue) for a Modtool message of type question
+ * Class for managing questions in Drupal context. This class transfers the data
+ * stored in ModtoolMessage class to a Drupal node of type "dialogue".
+ *
  */
 class DataQuestion extends DataEntityBase {
 

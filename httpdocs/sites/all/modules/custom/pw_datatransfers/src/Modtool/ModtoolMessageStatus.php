@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tobias Krause
- * Date: 20.12.2018
- * Time: 15:37
- */
+
 
 namespace Drupal\pw_datatransfers\Modtool;
 
 
+/**
+ * Define the status which are possible for messages in Modtool
+ */
 class ModtoolMessageStatus {
 
   const UNRELEASED = 0;

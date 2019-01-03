@@ -3,11 +3,16 @@
 
 namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
 
-
 use DateTime;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use stdClass;
 
+
+/**
+ * Class for managing answers in Drupal context. This class transfers the data
+ * stored in ModtoolMessage class to a Drupal comment.
+ *
+ */
 class DataAnswer extends DataEntityBase {
 
   /**

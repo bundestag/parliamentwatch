@@ -3,12 +3,12 @@
 
 namespace Drupal\pw_datatransfers\Modtool\Actions;
 
-
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
 
 
 /**
- * Base class for DataAction classes related to questions
+ * An abstract base class for actions related to questions.
+ *
  */
 abstract class ActionBaseQuestion implements DataActionInterface {
 
@@ -29,7 +29,7 @@ abstract class ActionBaseQuestion implements DataActionInterface {
 
 
   /**
-   * @return object|null
+   * @inheritdoc
    */
   public function getEntity() {
     return $this->dataQuestion->getEntity();
@@ -37,7 +37,7 @@ abstract class ActionBaseQuestion implements DataActionInterface {
 
 
   /**
-   * @return \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion
+   * @inheritdoc
    */
   public function getDataEntity() {
     return $this->dataQuestion;

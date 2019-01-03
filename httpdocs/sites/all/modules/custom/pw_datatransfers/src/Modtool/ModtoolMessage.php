@@ -2,13 +2,15 @@
 
 namespace Drupal\pw_datatransfers\Modtool;
 
-
 use DateTime;
 use Drupal\pw_datatransfers\Exception\InvalidSourceException;
 
 
 /**
- * Build a class from the JSON the Modtool sends to Drupal
+ *
+ * This class represents the Modtool message as it is sent to Drupal.
+ *
+ *
  */
 class ModtoolMessage {
 
@@ -40,6 +42,19 @@ class ModtoolMessage {
    */
   protected $messageId;
 
+
+  /**
+   * ModtoolMessage constructor.
+   *
+   * @param object $json_data
+   * Decoded JSON data sent from Modtool to Drupal
+   *
+   * @param string|int $dialogue_id
+   * The dialogue id from Modtool
+   *
+   * @param string|int $message_id
+   * The message id of the message within the Modtool
+   */
   public function __construct($json_data, $dialogue_id, $message_id) {
     $this->jsonData = $json_data;
     $this->dialogueId = $dialogue_id;
@@ -165,6 +180,7 @@ class ModtoolMessage {
    *
    * @todo validation for documents, tags
    * @todo - for answers: check if sender uuid is set
+   * @todo - validation for dates
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */

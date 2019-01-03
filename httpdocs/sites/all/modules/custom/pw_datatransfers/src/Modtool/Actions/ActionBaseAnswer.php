@@ -7,6 +7,10 @@ use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
+/**
+ * An abstract base class for actions related to answers.
+ *
+ */
 abstract class ActionBaseAnswer implements DataActionInterface {
 
   /**
@@ -14,16 +18,27 @@ abstract class ActionBaseAnswer implements DataActionInterface {
    */
   protected $dataAnswer;
 
+  /**
+   * ActionBaseAnswer constructor.
+   *
+   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer $dataanswer
+   */
   public function __construct(DataAnswer $dataanswer) {
     $this->dataAnswer = $dataanswer;
   }
 
 
+  /**
+   * @inheritdoc
+   */
   public function getEntity() {
     return $this->dataAnswer->getEntity();
   }
 
 
+  /**
+   * @inheritdoc
+   */
   public function getDataEntity() {
     return $this->dataAnswer;
   }
