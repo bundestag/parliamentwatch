@@ -66,7 +66,7 @@
     background: $white;
     text-align: center;
     padding: 8px;
-    @include transform(translate(-50%,-50%));
+    transform: translate(-50%,-50%);
     @include breakpoint($breakpoint-l-min) {
       width: 120px;
       height: 120px;
@@ -94,7 +94,6 @@
     a {
       color: $darkGray;
     }
-
   }
   .tile__summary {
     text-align: center;
@@ -131,13 +130,11 @@
   }
 }
 
-
 .poll_overview {
   border: 2px solid $beige;
 }
 .poll_overview__primary {
-  padding: $space-small $space;
-  padding-right: 120px;
+  padding: $space-small 120px $space-small $space;
   position: relative;
   margin: 0 auto;
   @include breakpoint($breakpoint-s-min) {
@@ -149,12 +146,11 @@
   .icon {
     position: absolute;
     right: 0;
-    top: 0;
+    top: 50%;
     width: 90px;
     font-size: 1.6em;
     text-align: center;
-    top: 50%;
-    @include transform(translate(0,-50%));
+    transform: translate3d(0,-50%,0);
     @include breakpoint($breakpoint-m-min) {
       width: 120px;
     }
@@ -169,7 +165,7 @@
     top: 50%;
     right: 90px;
     margin-top: -5px;
-    @include transform(translate(0,-50%));
+    transform: translate3d(0,-50%,0);
     color: $darkBeige;
     @include breakpoint($breakpoint-s-min) {
       right: 70px;
@@ -473,7 +469,7 @@
       position: absolute;
       left: 50%;
       top: 100%;
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0);
       @include triangle(28px 11px, $darkBeige, down);
     }
     &:after {
@@ -482,7 +478,7 @@
       left: 50%;
       top: 100%;
 
-      @include transform(translate(-50%,0));
+      transform: translate(-50%,0);
       @include triangle(26px 10px, $white, down);
     }
     @include breakpoint($breakpoint-xs-min) {
@@ -511,23 +507,21 @@
 
 .poll__timeline.swiper-container-horizontal {
   .poll__timeline__inner {
-    @include transform(translate3d(0,0,0));
+    transition-property: transform;
+    transform: translate3d(0,0,0);
     position: relative;
     width: 100%;
     height: 100%;
     z-index: 1;
     display: flex;
     box-sizing: content-box;
-    transition-property: transform;
   }
   .poll__timeline__item {
     -webkit-flex-shrink: 0;
     -ms-flex: 0 0 auto;
     flex-shrink: 0;
-    width: 100%;
     height: 100%;
     position: relative;
-
     width: 300px;
   }
 }
@@ -547,7 +541,7 @@
   margin-right: $space-xsmall;
   padding: $space-xsmall;
   cursor: pointer;
-  @include transition(all 300ms ease);
+  transition: all 300ms ease;
   @include poll-icon-colors();
   &:last-child {
     border-bottom: 1px solid $darkBeige;
@@ -572,7 +566,7 @@
     position: absolute;
     left: $space-xsmall-mobile;
     top: 50%;
-    @include transform(translate(0,-50%));
+    transform: translate(0,-50%);
   }
   .poll__timeline__item__poll__title__link {
     display: none;
@@ -612,7 +606,7 @@
       position: absolute;
       left: 50%;
       width: 60%;
-      @include transform(translate(-50%, 0));
+      transform: translate(-50%, 0);
       border-top: 1px solid $darkBeige;
     }
     .icon {
@@ -641,7 +635,7 @@
     .icon {
       position: absolute;
       left: 50%;
-      @include transform(translate(-50%, 0));
+      transform: translate(-50%, 0);
     }
   }
   .poll__timeline__item__poll__result__accepted {

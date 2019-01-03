@@ -43,3 +43,10 @@ function pw_profiles_update_7201() {
 
   field_delete_field('field_user_twitter_account');
 }
+
+/**
+ * Delete field field_user_age.
+ */
+function pw_profiles_update_7202() {
+  field_delete_field('field_user_age');
+}

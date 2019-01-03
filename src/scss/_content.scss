@@ -6,7 +6,8 @@
   background: $white;
 }
 .docready #content {
-  @include transition(margin-top 300ms ease);
+  will-change: margin-top;
+  transition: margin-top 300ms ease;
 }
 #content > .container {
   padding: 0;

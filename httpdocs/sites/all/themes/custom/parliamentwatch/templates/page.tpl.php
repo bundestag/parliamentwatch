@@ -182,34 +182,36 @@
 
   <?php if ($GLOBALS['theme_key'] === 'parliamentwatch'): ?>
     <div class="modal modal--newsletter" data-modal-initial data-modal-cookie data-modal-cookie-expires="7" data-modal-clicksToShow="3" data-modal-name="modal_newsletter">
-      <div class="modal__content">
-        <button class="modal__close" data-modal-close><i class="icon icon-close"></i></button>
-        <h3 class="modal__content__title"><?php print t('Stay informed with the parliamentwatch Newsletter') ?></h3>
-        <div class="modal--newsletter__left">
-          <p><?php print t('Description for the newsletter registration form, embedded in a blog article') ?></p>
+      <div class="modal__container">
+        <div class="modal__content">
+          <button class="modal__close" data-modal-close><i class="icon icon-close"></i></button>
+          <h3 class="modal__content__title"><?php print t('Stay informed with the parliamentwatch Newsletter') ?></h3>
+          <div class="modal--newsletter__left">
+            <p><?php print t('Description for the newsletter registration form, embedded in a blog article') ?></p>
+          </div>
+          <div class="modal--newsletter__right">
+            <form id="newsletter-widget" action="" class="form">
+              <div id="newsletter-widget-message" class="form__item form__item--alert"></div>
+              <div class="form__item">
+                <label class="form__item__label sr-only">
+                  <?php print t('Email address') ?>
+                </label>
+                <input type="text" id="newsletter-widget-mail" class="form__item__control" placeholder="<?php print t('Email address') ?>">
+                <div class="form__item__loader"><i class="icon icon-spinner"></i></div>
+              </div>
+              <div class="form__item">
+                <button type="submit" id="newsletter-widget-button" class="btn btn--block">Anfordern</button>
+              </div>
+            </form>
+          </div>
+          <div class="modal--newsletter__whole">
+            <p><?php print t('By registering you confirm that you have read our <a href="/datenschutzerklaerung" target="_blank">privacy policy</a> and agree to the receipt of our newsletter and the associated storage of your data.') ?></p>
+          </div>
         </div>
-        <div class="modal--newsletter__right">
-          <form id="newsletter-widget" action="" class="form">
-            <div id="newsletter-widget-message" class="form__item form__item--alert"></div>
-            <div class="form__item">
-              <label class="form__item__label sr-only">
-                <?php print t('Email address') ?>
-              </label>
-              <input type="text" id="newsletter-widget-mail" class="form__item__control" placeholder="<?php print t('Email address') ?>">
-              <div class="form__item__loader"><i class="icon icon-spinner"></i></div>
-            </div>
-            <div class="form__item">
-              <button type="submit" id="newsletter-widget-button" class="btn btn--block">Anfordern</button>
-            </div>
-          </form>
+        <div class="modal__footer">
+          <p><?php print t('Go further for the content of abgeordnetenwatch.de'); ?></p>
+          <a href="#" class="btn btn--mobile-block" data-modal-close><?php print t('Close') ?></a>
         </div>
-        <div class="modal--newsletter__whole">
-          <p><?php print t('By registering you confirm that you have read our <a href="/datenschutzerklaerung" target="_blank">privacy policy</a> and agree to the receipt of our newsletter and the associated storage of your data.') ?></p>
-        </div>
-      </div>
-      <div class="modal__footer">
-        <p><?php print t('Go further for the content of abgeordnetenwatch.de'); ?></p>
-        <a href="#" class="btn btn--mobile-block" data-modal-close><?php print t('Close') ?></a>
       </div>
     </div>
     <div class="modal-overlay" data-modal-close data-modal-name="modal_newsletter"></div>
