@@ -5,6 +5,7 @@ namespace Drupal\pw_datatransfers\Controller;
 
 
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
+use Drupal\pw_datatransfers\Exception\InvalidSourceException;
 use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase;
@@ -15,15 +16,53 @@ use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
  */
 class ModtoolActionsController {
 
+  /**
+   * @var array
+   * See constructor for the structure of the array
+   */
   protected $responseArray = [];
 
+
+  /**
+   * @var integer|string
+   * The dialogue id from Modtool as defined in the path
+   */
   protected $dialogueId = NULL;
 
+
+  /**
+   * @var string
+   * The message type from Modtool as defined in the path
+   */
   protected $messageType = NULL;
 
+
+  /**
+   * @var integer|string
+   * The message id from Modtool as defined in the path
+   */
   protected $messageId = NULL;
 
+
+  /**
+   * @var string
+   * The action from Modtool as defined in the path
+   */
   protected $action = NULL;
+
+
+  /**
+   * @var \Drupal\pw_datatransfers\Modtool\ModtoolMessage
+   * The ModtoolMessage class created from the JSON
+   */
+  protected $modtoolMessage;
+
+
+  /**
+   * @var DataEntityBase
+   * The DataClass building the bridge to Drupal entities
+   */
+  protected $dataClass;
 
 
   /**
@@ -69,6 +108,9 @@ class ModtoolActionsController {
       $actionClass = NULL;
       $this->authentication();
       $this->httpChecks();
+
+      $this->setModtoolMessage();
+      $this->setDataClass();
 
       $actionClass = $this->getActionClass();
       $actionClass->run();
@@ -198,22 +240,18 @@ class ModtoolActionsController {
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
    */
   protected function getActionClassQuestions() {
-    $modtoolMessage = $this->getModtoolMessage();
-    $dataClass = new DataQuestion($modtoolMessage);
-    $dataAction = NULL;
-
     switch ($this->action) {
       case 'release':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Release($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Release($this->dataClass);
         break;
       case 'moderate':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate($this->dataClass);
         break;
       case 'hold':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($this->dataClass);
         break;
       case 'delete':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($this->dataClass);
         break;
     }
 
@@ -234,22 +272,19 @@ class ModtoolActionsController {
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
    */
   protected function getActionClassAnswers() {
-    $modtoolMessage = $this->getModtoolMessage();
-    $dataClass = new DataAnswer($modtoolMessage);
     $dataAction = NULL;
-
     switch ($this->action) {
       case 'release':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Release($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Release($this->dataClass);
         break;
       case 'moderate':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Moderate($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Moderate($this->dataClass);
         break;
       case 'hold':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($this->dataClass);
         break;
       case 'delete':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($this->dataClass);
         break;
     }
 
@@ -262,12 +297,12 @@ class ModtoolActionsController {
 
 
   /**
-   * Get a ModtoolMessage class from the sent JSON
+   * Set the ModtoolMessage class from the sent JSON
    *
-   * @return \Drupal\pw_datatransfers\Modtool\ModtoolMessage|null
    * @throws \Drupal\pw_datatransfers\Exception\SourceNotFoundException
+   * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
-  protected function getModtoolMessage() {
+  protected function setModtoolMessage() {
     $modtoolMessage = NULL;
 
     if (isset($_POST['message'])) {
@@ -275,13 +310,41 @@ class ModtoolActionsController {
       $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
     }
 
-    if ($modtoolMessage === NULL) {
+    if (!$modtoolMessage) {
       throw new SourceNotFoundException('It was not possible to receive a JSON');
     }
 
-    return $modtoolMessage;
+    if ($modtoolMessage->getType() !== $this->messageType) {
+      throw new InvalidSourceException('The type ('. $modtoolMessage->getType() .') of the message sent does not match the message type defined in path ('. $this->messageType .').');
+    }
+
+    $this->modtoolMessage = $modtoolMessage;
   }
 
+
+  /**
+   * Set the DataClass representing the Drupal node entity of the message
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
+   */
+  protected function setDataClass() {
+    $dataClass = NULL;
+
+    switch ($this->messageType) {
+      case 'question':
+        $dataClass = new DataQuestion($this->modtoolMessage);
+        break;
+      case 'answer':
+        $dataClass = new DataAnswer($this->modtoolMessage);
+        break;
+    }
+
+    if (!$dataClass) {
+      throw new DatatransfersException('The defined message type ('. $this->messageType .') is not a valid type.');
+    }
+
+    $this->dataClass = $dataClass;
+  }
 
   /**
    * Set the status and status text for the response array
