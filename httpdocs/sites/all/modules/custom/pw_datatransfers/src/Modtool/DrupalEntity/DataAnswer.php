@@ -139,4 +139,21 @@ class DataAnswer extends DataEntityBase {
 //      ]]];
 //    }
   }
+
+
+
+  /**
+   * @inheritdoc
+   */
+  public function getDrupalQuestionId() {
+    return $this->getEntity()->nid;
+  }
+
+
+  /**
+   * @inheritdoc
+   */
+  public function getDrupalAnswerId() {
+    return $this->getEntity()->cid;
+  }
 }

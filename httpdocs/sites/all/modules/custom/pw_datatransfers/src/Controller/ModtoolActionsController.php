@@ -385,13 +385,11 @@ class ModtoolActionsController {
 
 
   /**
-   * Set HTTP header and response array on succes
+   * Set HTTP header and response array on success
    */
   protected function setSuccessResponse() {
     // set the success response
     $dataEntity = $this->actionClass->getDataEntity();
-    $drupalEntity =  $dataEntity->getEntity();
-
 
     if ($dataEntity->isNew) {
       drupal_add_http_header('Status', '201 Created');
@@ -405,12 +403,13 @@ class ModtoolActionsController {
     }
     switch ($this->messageType) {
       case 'question':
-        $this->setResponseValue('drupal_question_id', $drupalEntity->nid);
+        $this->setResponseValue('drupal_question_id', $dataEntity->getDrupalQuestionId());
         break;
       case 'answer':
-        $this->setResponseValue('drupal_question_id', $drupalEntity->nid);
-        $this->setResponseValue('drupal_answer_id', $drupalEntity->cid);
+        $this->setResponseValue('drupal_question_id', $dataEntity->getDrupalQuestionId());
+        $this->setResponseValue('drupal_answer_id', $dataEntity->getDrupalAnswerId());
         break;
     }
   }
+
 }

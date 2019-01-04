@@ -199,4 +199,20 @@ class DataQuestion extends DataEntityBase {
     return $question;
   }
 
+
+
+  /**
+   * @inheritdoc
+   */
+  public function getDrupalQuestionId() {
+    return $this->getEntity()->nid;
+  }
+
+
+  /**
+   * @inheritdoc
+   */
+  public function getDrupalAnswerId() {
+    return NULL;
+  }
 }
