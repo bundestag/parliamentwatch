@@ -7,11 +7,11 @@ namespace Drupal\pw_datatransfers\Entity;
 use DatabaseTransaction;
 use EntityAPIController;
 
-class LogDialogueImportController extends EntityAPIController  {
+class LogentryController extends EntityAPIController  {
 
 
   /**
-   * For performance resons it might be better to overwrite the parent's
+   * For performance reasons it might be better to overwrite the parent's
    * load() method to use the cache mechanism of the entity API. By now we
    * always load our custom related data after the entities are loaded and cached
    * without any caching

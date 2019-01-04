@@ -15,8 +15,8 @@
 function pw_logging_entity_info() {
   $custom_entities = [];
 
-  // the dialogue import log entry entity
-  $custom_entities['pw_log'] = [
+  // the logentry entity
+  $custom_entities['pwlogentry'] = [
     'label' => t('PW Logentry'),
     'base table' => 'pw_logging',
     'entity keys' => [
@@ -27,6 +27,18 @@ function pw_logging_entity_info() {
     'module' => 'pw_logging'
   ];
 
+
+  // details for the logentry for Modtool logs
+  $custom_entities['pwlogentry_modtool'] = [
+    'label' => t('PW Logentry Modtool details'),
+    'base table' => 'pw_logging_modtool',
+    'entity keys' => [
+      'id' => 'id'
+    ],
+    'entity class' => '\Drupal\pw_logging\Entity\Details\ModtoolLogDetails',
+    // 'controller class' => '\Drupal\pw_logging\Entity\LogentryController',
+    'module' => 'pw_logging'
+  ];
   return $custom_entities;
 }
 
