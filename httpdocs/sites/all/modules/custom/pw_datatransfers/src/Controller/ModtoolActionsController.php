@@ -9,7 +9,9 @@ use Drupal\pw_datatransfers\Exception\InvalidSourceException;
 use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase;
+use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityInterface;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
+use Drupal\pw_logging\LogStatus;
 use Drupal\pw_logging\PWLog;
 
 /**
@@ -125,32 +127,36 @@ class ModtoolActionsController {
     // catch DataTransfersExceptions to have user friendly error messages
     catch (DatatransfersException $d) {
       $this->setErrorResponse($d->getMessage(), $d);
-      $this->logError($d);
+      $this->log(LogStatus::ERROR, $d->getMessage(), $d);
       return $this->responseArray;
     }
       // catch all other exceptions to avoid cryptic error messages
     catch (\Exception $e) {
       $this->setErrorResponse('500 Internal Server Error', $e);
-      $this->logError($e);
+      $this->log(LogStatus::ERROR, $e->getMessage(), $e);
       return $this->responseArray;
     }
 
 
     $this->setSuccessResponse();
+    $this->log(LogStatus::SUCCESS, $this->responseArray['status_text']);
     return $this->responseArray;
   }
 
 
-  protected function logError(\Exception $exception) {
+  protected function log($status, $text, \Exception $exception = NULL) {
     $details = [
       'dialogue_id' => $this->dialogueId,
       'message_id' => $this->messageId
     ];
+    $dataClass = $this->dataClass;
+    if ($dataClass !== NULL && $dataClass instanceof DataEntityInterface) {
+      $details['drupal_question_id'] = $dataClass->getDrupalQuestionId();
+      $details['drupal_answer_id'] = $dataClass->getDrupalAnswerId();
+    }
 
-    if ($this->getD)
-
-
-    $pwLog = new PWLog('update_from_modtool', 'error', $exception->getMessage(), $details, $exception);
+    $pwLog = new PWLog('update_from_modtool', 'error', $text, $details, $exception);
+    $pwLog->log();
   }
 
   /**
