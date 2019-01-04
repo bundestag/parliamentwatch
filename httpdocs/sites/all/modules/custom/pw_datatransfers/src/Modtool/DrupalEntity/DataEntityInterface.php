@@ -41,4 +41,19 @@ interface DataEntityInterface {
    */
   public function setDrupalEntityValuesFromJson($entity);
 
+
+  /**
+   * Get the question id (node nid of dialogue)
+   *
+   * @return int|string
+   */
+  public function getDrupalQuestionId();
+
+
+  /**
+   * Get the answer id (comment cid of answer comment). Can be null
+   *
+   * @return int|string|null
+   */
+  public function getDrupalAnswerId();
 }
