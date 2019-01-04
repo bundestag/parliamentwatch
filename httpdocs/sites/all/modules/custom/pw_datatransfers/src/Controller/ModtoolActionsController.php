@@ -10,6 +10,7 @@ use Drupal\pw_datatransfers\Exception\SourceNotFoundException;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
+use Drupal\pw_logging\PWLog;
 
 /**
  * Helper class for better control over the Modtool import dialogue page callback
@@ -124,11 +125,13 @@ class ModtoolActionsController {
     // catch DataTransfersExceptions to have user friendly error messages
     catch (DatatransfersException $d) {
       $this->setErrorResponse($d->getMessage(), $d);
+      $this->logError($d);
       return $this->responseArray;
     }
       // catch all other exceptions to avoid cryptic error messages
     catch (\Exception $e) {
       $this->setErrorResponse('500 Internal Server Error', $e);
+      $this->logError($e);
       return $this->responseArray;
     }
 
@@ -137,6 +140,18 @@ class ModtoolActionsController {
     return $this->responseArray;
   }
 
+
+  protected function logError(\Exception $exception) {
+    $details = [
+      'dialogue_id' => $this->dialogueId,
+      'message_id' => $this->messageId
+    ];
+
+    if ($this->getD)
+
+
+    $pwLog = new PWLog('update_from_modtool', 'error', $exception->getMessage(), $details, $exception);
+  }
 
   /**
    * For better control for the response we do the authentication here
