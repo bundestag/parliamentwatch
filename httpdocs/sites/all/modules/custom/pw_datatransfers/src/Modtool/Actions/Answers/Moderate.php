@@ -48,4 +48,17 @@ class Moderate extends ActionBaseAnswer {
     $this->checkMessageStatus(ModtoolMessageStatus::MODERATED);
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function getSuccessMessage() {
+    return t('The answer !messageid was set to moderated in Drupal.', ['!messageid' => $this->getMessageId()]);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function getErrorMessage() {
+    return t('When trying to set the answer !messageid to moderated in Drupal an error appeared.', ['!messageid' => $this->getMessageId()]);
+  }
 }

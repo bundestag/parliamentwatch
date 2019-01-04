@@ -44,4 +44,25 @@ interface ActionInterface {
    * @return \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase
    */
   public function getDataEntity();
+
+
+  /**
+   * For simpler logging this function should create a simple success message, e.g.
+   * "The question XYZ was sucessfully released"
+   *
+   * @return string
+   * The translated string for a success message
+   */
+  public function getSuccessMessage();
+
+
+  /**
+   * For simpler logging this function should create a simple error message, e.g.
+   * "When trying to release the question XY an error appeared". Detailed error
+   * message should be definde in Exceptions
+   *
+   * @return string
+   * The translated string for an erros message
+   */
+  public function getErrorMessage();
 }

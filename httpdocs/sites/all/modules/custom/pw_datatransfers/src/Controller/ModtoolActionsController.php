@@ -147,7 +147,8 @@ class ModtoolActionsController {
   protected function log($status, \Exception $exception = NULL) {
     $details = [
       'dialogue_id' => $this->dialogueId,
-      'message_id' => $this->messageId
+      'message_id' => $this->messageId,
+      'action_on_message' => $this->action
     ];
     $dataClass = $this->dataClass;
     if ($dataClass !== NULL && $dataClass instanceof DataEntityInterface) {
@@ -155,14 +156,23 @@ class ModtoolActionsController {
       $details['drupal_answer_id'] = $dataClass->getDrupalAnswerId();
     }
 
-    $general_text = $this->responseArray['status_text'];
-    $detailed_text = '';
+    // define the general and the error text
+    $error_message = '';
+    if ($status == LogStatus::SUCCESS) {
+      $general_text = $this->actionClass->getSuccessMessage();
+    }
+    else if ($status == LogStatus::ERROR && $this->actionClass !== NULL) {
+      $general_text = $this->actionClass->getErrorMessage();
+    }
+    else {
+      $general_text = t('An error appeared when trying to start the action "!action" on Modtool message !messageid', ['!action' => $this->action, '!messageid' => $this->messageId]);
+    }
     if ($exception !== NULL) {
-      $detailed_text = $exception->getMessage();
+      $error_message = $exception->getMessage();
     }
 
 
-    $pwLog = new PWLog('update_from_modtool', $status, $general_text, $detailed_text, $details, $exception);
+    $pwLog = new PWLog('update_from_modtool', $status, $general_text, $error_message, $details, $exception);
     $pwLog->log();
   }
 

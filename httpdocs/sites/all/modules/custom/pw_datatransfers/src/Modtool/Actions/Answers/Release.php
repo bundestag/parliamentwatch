@@ -48,4 +48,17 @@ class Release extends ActionBaseAnswer {
     $this->checkMessageStatus(ModtoolMessageStatus::RELEASED);
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function getSuccessMessage() {
+    return t('The answer !messageid was released in Drupal.', ['!messageid' => $this->getMessageId()]);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function getErrorMessage() {
+    return t('When trying to release the answer !messageid in Drupal an error appeared.', ['!messageid' => $this->getMessageId()]);
+  }
 }

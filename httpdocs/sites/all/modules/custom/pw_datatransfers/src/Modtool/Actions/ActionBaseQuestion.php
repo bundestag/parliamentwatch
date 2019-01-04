@@ -71,4 +71,14 @@ abstract class ActionBaseQuestion implements ActionInterface {
     return TRUE;
   }
 
+
+
+  public function getModtoolMessage() {
+    return $this->getDataEntity()->getModtoolMessage();
+  }
+
+
+  public function getMessageId() {
+    return $this->getModtoolMessage()->getMessageId();
+  }
 }

@@ -44,4 +44,18 @@ class Hold extends ActionBaseQuestion {
     $this->checkMessageStatus(ModtoolMessageStatus::HOLD);
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function getSuccessMessage() {
+    return t('The question !messageid is set on hold in Drupal.', ['!messageid' => $this->getMessageId()]);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function getErrorMessage() {
+    return t('When trying to set the question !messageid on hold in Drupal an error appeared.', ['!messageid' => $this->getMessageId()]);
+  }
+
 }

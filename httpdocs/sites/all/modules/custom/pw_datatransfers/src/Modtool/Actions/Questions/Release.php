@@ -43,4 +43,18 @@ class Release extends ActionBaseQuestion {
   public function check() {
     $this->checkMessageStatus(ModtoolMessageStatus::RELEASED);
   }
+
+  /**
+   * @inheritdoc
+   */
+  public function getSuccessMessage() {
+    return t('The question !messageid was relased in Drupal.', ['!messageid' => $this->getMessageId()]);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function getErrorMessage() {
+    return t('When trying to release the question !messageid in Drupal an error appeared.', ['!messageid' => $this->getMessageId()]);
+  }
 }

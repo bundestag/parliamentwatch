@@ -37,4 +37,17 @@ class Delete extends ActionBaseAnswer {
     $this->checkMessageStatus(ModtoolMessageStatus::DELETED);
   }
 
+  /**
+   * @inheritdoc
+   */
+  public function getSuccessMessage() {
+    return t('The answer !messageid was deleted from Drupal.', ['!messageid' => $this->getMessageId()]);
+  }
+
+  /**
+   * @inheritdoc
+   */
+  public function getErrorMessage() {
+    return t('When trying to delete the answer !messageid from Drupal an error appeared.', ['!messageid' => $this->getMessageId()]);
+  }
 }

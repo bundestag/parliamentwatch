@@ -59,7 +59,7 @@ abstract class ActionBaseAnswer implements ActionInterface {
    * @throws \Drupal\pw_datatransfers\Exception\DataActionException
    */
   protected function checkMessageStatus($status) {
-    $modtoolMessage = $this->dataAnswer->getModtoolMessage();
+    $modtoolMessage = $this->getDataEntity()->getModtoolMessage();
 
     if ($modtoolMessage->getStatus() != $status) {
       $status_message_label = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
@@ -68,5 +68,15 @@ abstract class ActionBaseAnswer implements ActionInterface {
     }
 
     return TRUE;
+  }
+
+
+  public function getModtoolMessage() {
+    return $this->getDataEntity()->getModtoolMessage();
+  }
+
+
+  public function getMessageId() {
+    return $this->getModtoolMessage()->getMessageId();
   }
 }

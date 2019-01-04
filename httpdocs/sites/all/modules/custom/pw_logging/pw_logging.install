@@ -32,15 +32,15 @@ function pw_logging_schema() {
         'length' => 255
       ],
       'action' => [
-        'description' => 'Id for the action',
+        'description' => 'Id for the logged interaction',
         'type' => 'varchar',
         'not null' => TRUE,
         'length' => 30
       ],
-      'message_detailed' => [
-        'description' => 'A more detailed message, may include technical information',
+      'message_error' => [
+        'description' => 'A more detailed error message, may include technical information',
         'type' => 'text',
-        'not null' => TRUE,
+        'not null' => FALSE,
         'size' => 'normal'
       ],
       'message_general' => [
@@ -118,6 +118,12 @@ function pw_logging_schema() {
       ],
       'drupal_answer_id' => [
         'description' => 'The Drupal comment cis of the answer',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ],
+      'action_on_message' => [
+        'description' => 'The action that should be run on the message',
         'type' => 'varchar',
         'not null' => FALSE,
         'length' => 15

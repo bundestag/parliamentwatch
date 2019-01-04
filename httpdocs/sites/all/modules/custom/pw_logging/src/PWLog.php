@@ -17,7 +17,7 @@ class PWLog {
 
   protected $generalMessage;
 
-  protected $detailedMessage;
+  protected $errorMessage;
 
   protected $details;
 
@@ -30,11 +30,11 @@ class PWLog {
   protected $exception;
 
 
-  public function __construct($action, $status, $message_general, $message_detailed, array $details = [], \Exception $exception = NULL) {
+  public function __construct($action, $status, $message_general, $error_message, array $details = [], \Exception $exception = NULL) {
     $this->action = $action;
     $this->status = $status;
     $this->generalMessage = $message_general;
-    $this->detailedMessage = $message_detailed;
+    $this->errorMessage = $error_message;
     $this->details = $details;
     $this->setTargetTool($action);
     $this->setSourceTool($action);
@@ -60,7 +60,7 @@ class PWLog {
     $logentry->tool_source = $this->sourceTool;
     $logentry->action = $this->action;
     $logentry->message_general = $this->generalMessage;
-    $logentry->message_detailed = $this->detailedMessage;
+    $logentry->message_error = $this->errorMessage;
     $logentry->status = $this->status;
     $logentry->date = time();
     $logentry->exception = $this->exception;

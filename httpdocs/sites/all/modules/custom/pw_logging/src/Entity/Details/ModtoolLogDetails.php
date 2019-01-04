@@ -15,7 +15,8 @@ use Entity;
  *  dialogue_id
  *  message_id
  *  drupal_question_id (can be NULL),
- *  drupal_answer_id (can be NULL)
+ *  drupal_answer_id (can be NULL),
+ *  action_on_message
  */
 class ModtoolLogDetails extends Entity {
 
@@ -26,7 +27,8 @@ class ModtoolLogDetails extends Entity {
       'dialogue_id' => $details['dialogue_id'],
       'message_id' => $details['message_id'],
       'drupal_question_id' => $details['drupal_question_id'],
-      'drupal_answer_id' => $details['drupal_answer_id']
+      'drupal_answer_id' => $details['drupal_answer_id'],
+      'action_on_message' => $details['action_on_message']
     ]);
 
     return $details_entity;
