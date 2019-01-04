@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_datatransfers\Entity;
+namespace Drupal\pw_logging\Entity;
 
 
 use Entity;

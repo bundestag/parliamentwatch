@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_datatransfers\Entity\Details;
+namespace Drupal\pw_logging\Entity\Details;
 
 
 use Drupal\pw_datatransfers\Entity\Logentry;

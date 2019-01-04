@@ -9,7 +9,7 @@
 namespace Drupal\pw_logging;
 
 
-use Drupal\pw_datatransfers\Entity\Logentry;
+use \Drupal\pw_logging\Entity\Logentry;
 
 /**
  * Helper class for logging. It defines the possible actions
