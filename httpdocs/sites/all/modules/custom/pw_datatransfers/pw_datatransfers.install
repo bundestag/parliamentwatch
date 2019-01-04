@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * Update functions for PW Datatransfers module
+ */
+
+
+/**
+ * Install pw_logging module
+ */
+function pw_datatransfers_update_7000() {
+  if( !module_exists('pw_logging')) {
+    module_enable(['pw_logging']);
+  }
+}
