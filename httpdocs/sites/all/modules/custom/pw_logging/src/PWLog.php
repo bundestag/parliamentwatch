@@ -112,7 +112,7 @@ class PWLog {
   }
   protected function actionsInformation($action = FALSE) {
     $all_actions_information = [
-      'update_form_modtool' => [
+      'update_from_modtool' => [
         'detail_class' => '\Drupal\pw_datatransfers\Entity\Details\ModtoolLogDetails',
         'target_tool' => 'drupal',
         'source_tool' => 'modtool'

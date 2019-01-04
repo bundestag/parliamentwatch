@@ -11,9 +11,11 @@ use Entity;
 /**
  * Details which should be given to PWLog
  *
+ *  log_id
  *  dialogue_id
  *  message_id
- *  drupal_question_id (can be NULL)
+ *  drupal_question_id (can be NULL),
+ *  drupal_answer_id (can be NULL)
  */
 class ModtoolLogDetails extends Entity {
 
