@@ -33,9 +33,9 @@ function pw_logging_schema() {
       ],
       'action' => [
         'description' => 'Id for the action',
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 30
       ],
       'message' => [
         'description' => 'The message - can be a success or an error message',
