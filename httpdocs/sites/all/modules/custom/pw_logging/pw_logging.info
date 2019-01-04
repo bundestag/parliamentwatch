@@ -1,4 +1,4 @@
-name = PW Kandidatencheck
+name = PW Logging
 description = Implements a logging system for datatransfers and interaction between tools
 core = 7.x
 package = Parliamentwatch
