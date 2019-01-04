@@ -36,7 +36,7 @@ function pw_logging_entity_info() {
       'id' => 'id'
     ],
     'entity class' => '\Drupal\pw_logging\Entity\Details\ModtoolLogDetails',
-    // 'controller class' => '\Drupal\pw_logging\Entity\LogentryController',
+    'controller class' => '\Drupal\pw_logging\Entity\Details\ModtoolLogDetailsController',
     'module' => 'pw_logging'
   ];
   return $custom_entities;

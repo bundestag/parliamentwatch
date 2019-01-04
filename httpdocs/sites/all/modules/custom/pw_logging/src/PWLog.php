@@ -58,14 +58,13 @@ class PWLog {
 
   protected function saveLogEntry() {
     $logentry = entity_create('pwlogentry', []);
-    $logentry_wrapper = entity_metadata_wrapper('pwlogentry', $logentry);
-    $logentry_wrapper->tool_target->set($this->targetTool);
-    $logentry_wrapper->tool_source->set($this->sourceTool);
-    $logentry_wrapper->action->set($this->action);
-    $logentry_wrapper->message->set($this->message);
-    $logentry_wrapper->status->set($this->status);
-    $logentry_wrapper->exception->set($this->exception);
-    $logentry_wrapper->save();
+    $logentry->tool_target = $this->targetTool;
+    $logentry->tool_source = $this->sourceTool;
+    $logentry->action = $this->action;
+    $logentry->message = $this->message;
+    $logentry->status = $this->status;
+    $logentry->exception = $this->exception;
+    $logentry->save();
     return $logentry;
   }
 
@@ -73,15 +72,17 @@ class PWLog {
   protected function saveDetails(Logentry $logentry) {
     $detailClass = $this->getDetailsClass($this->action);
 
-    $detailEntity = $detailClass::createFromLogDetails($logentry, $this->details);
-    $detailClass->save();
+    if ($detailClass !== NULL) {
+      $detailEntity = $detailClass::createFromLogDetails($logentry, $this->details);
+      $detailEntity->save();
+    }
   }
 
   protected function getDetailsClass($action) {
     $details = $this->actionsInformation($action);
 
-    if (isset($details['details_class'])) {
-      return $details['details_class'];
+    if (isset($details['detail_class'])) {
+      return $details['detail_class'];
     }
 
     return NULL;
@@ -113,7 +114,7 @@ class PWLog {
   protected function actionsInformation($action = FALSE) {
     $all_actions_information = [
       'update_from_modtool' => [
-        'detail_class' => '\Drupal\pw_datatransfers\Entity\Details\ModtoolLogDetails',
+        'detail_class' => '\Drupal\pw_logging\Entity\Details\ModtoolLogDetails',
         'target_tool' => 'drupal',
         'source_tool' => 'modtool'
       ]

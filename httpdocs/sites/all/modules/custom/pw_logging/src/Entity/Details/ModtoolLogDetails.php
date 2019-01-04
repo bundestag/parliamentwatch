@@ -4,7 +4,7 @@
 namespace Drupal\pw_logging\Entity\Details;
 
 
-use Drupal\pw_datatransfers\Entity\Logentry;
+use Drupal\pw_logging\Entity\Logentry;
 use Entity;
 
 
