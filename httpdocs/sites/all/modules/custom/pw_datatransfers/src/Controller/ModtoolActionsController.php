@@ -155,7 +155,7 @@ class ModtoolActionsController {
       $details['drupal_answer_id'] = $dataClass->getDrupalAnswerId();
     }
 
-    $pwLog = new PWLog('update_from_modtool', 'error', $text, $details, $exception);
+    $pwLog = new PWLog('update_from_modtool', $status, $text, $details, $exception);
     $pwLog->log();
   }
 
