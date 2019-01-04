@@ -4,3 +4,41 @@
  * @file
  * Hooks used for PW Logging module
  */
+
+
+
+
+
+/**
+ * Implements hook_entity_info().
+ */
+function pw_logging_entity_info() {
+  $custom_entities = [];
+
+  // the dialogue import log entry entity
+  $custom_entities['pw_log'] = [
+    'label' => t('PW Logentry'),
+    'base table' => 'pw_logging',
+    'entity keys' => [
+      'id' => 'id'
+    ],
+    'entity class' => '\Drupal\pw_logging\Entity\Logentry',
+    'controller class' => '\Drupal\pw_logging\Entity\LogentryController',
+    'module' => 'pw_logging'
+  ];
+
+  return $custom_entities;
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function pw_logging_permission() {
+  return [
+    'see pw logs' => [
+      'title' => 'See logs for Abgeordnetenwatch',
+      'description' => 'Can see logs for Abgeordnetenwatch'
+    ]
+  ];
+}

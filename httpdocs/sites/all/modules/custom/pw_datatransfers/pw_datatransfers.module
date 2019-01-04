@@ -32,37 +32,3 @@ function pw_datatransfers_menu() {
   return $items;
 }
 
-
-/**
- * Implements hook_entity_info().
- */
-function pw_datatransfers_entity_info() {
-  $custom_entities = [];
-
-  // the dialogue import log entry entity
-  $custom_entities['dialogue_import_log'] = [
-    'label' => t('Dialogue Import log entry'),
-    'base table' => 'pw_datatransfers_logs_dialogue',
-    'entity keys' => [
-      'id' => 'id'
-    ],
-    'entity class' => '\Drupal\pw_datatransfers\Entity\LogDialogueImportEntity',
-    'controller class' => '\Drupal\pw_datatransfers\Entity\LogDialogueImportController',
-    'module' => 'pw_datatransfers'
-  ];
-
-  return $custom_entities;
-}
-
-
-/**
- * Implements hook_permission().
- */
-function pw_datatransfers_permission() {
-  return [
-    'see datatransfer logs' => [
-      'title' => 'See datatransfer logs',
-      'description' => 'Can see the log entries'
-    ]
-  ];
-}
