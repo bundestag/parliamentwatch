@@ -45,9 +45,9 @@ function pw_logging_schema() {
       ],
       'status' => [
         'description' => 'The message - can be a success or an error message',
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 20
       ],
       'exception' => [
         'description' => 'If an exception was thrown it is stored here',
