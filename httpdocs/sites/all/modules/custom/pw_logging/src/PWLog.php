@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Tobias Krause
- * Date: 04.01.2019
- * Time: 10:50
- */
+
 
 namespace Drupal\pw_logging;
 
@@ -20,7 +15,9 @@ class PWLog {
 
   protected $status;
 
-  protected $message;
+  protected $generalMessage;
+
+  protected $detailedMessage;
 
   protected $details;
 
@@ -33,10 +30,11 @@ class PWLog {
   protected $exception;
 
 
-  public function __construct($action, $status, $message, array $details = [], \Exception $exception = NULL) {
+  public function __construct($action, $status, $message_general, $message_detailed, array $details = [], \Exception $exception = NULL) {
     $this->action = $action;
     $this->status = $status;
-    $this->message = $message;
+    $this->generalMessage = $message_general;
+    $this->detailedMessage = $message_detailed;
     $this->details = $details;
     $this->setTargetTool($action);
     $this->setSourceTool($action);
@@ -61,8 +59,10 @@ class PWLog {
     $logentry->tool_target = $this->targetTool;
     $logentry->tool_source = $this->sourceTool;
     $logentry->action = $this->action;
-    $logentry->message = $this->message;
+    $logentry->message_general = $this->generalMessage;
+    $logentry->message_details = $this->detailedMessage;
     $logentry->status = $this->status;
+    $logentry->date = time();
     $logentry->exception = $this->exception;
     $logentry->save();
     return $logentry;

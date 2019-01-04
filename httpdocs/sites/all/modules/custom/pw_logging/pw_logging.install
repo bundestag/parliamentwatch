@@ -37,8 +37,14 @@ function pw_logging_schema() {
         'not null' => TRUE,
         'length' => 30
       ],
-      'message' => [
-        'description' => 'The message - can be a success or an error message',
+      'message_detailed' => [
+        'description' => 'A more detailed message, may include technical information',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'normal'
+      ],
+      'message_general' => [
+        'description' => 'A general message which can be shown to administrators and users',
         'type' => 'text',
         'not null' => TRUE,
         'size' => 'normal'
@@ -48,6 +54,12 @@ function pw_logging_schema() {
         'type' => 'varchar',
         'not null' => TRUE,
         'length' => 20
+      ],
+      'date' => [
+        'description' => 'Date when logentry was createde',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
       ],
       'exception' => [
         'description' => 'If an exception was thrown it is stored here',
