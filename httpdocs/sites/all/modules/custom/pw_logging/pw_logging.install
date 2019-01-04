@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @file
+ * Schemas, (un)install and update hooks for PW Logging module
+ */
+
+
+function pw_logging_schema() {
+  $schema = [];
+
+  // database for general logs data
+  $schema['pw_logging'] = [
+    'description' => 'Logs of interactions between the tools of Abgeordnetenwatch',
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier for a log entry.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'tool_target' => [
+        'description' => 'The tool which should receive data or start an action',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 255
+      ],
+      'tool_source' => [
+        'description' => 'The tool which should deliver data or which tries to start an action',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 255
+      ],
+      'action' => [
+        'description' => 'Id for the action',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'message' => [
+        'description' => 'The message - can be a success or an error message',
+        'type' => 'text',
+        'not null' => TRUE,
+        'size' => 'normal'
+      ],
+      'status' => [
+        'description' => 'The message - can be a success or an error message',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'exception' => [
+        'description' => 'If an exception was thrown it is stored here',
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ],
+    'indexes' => [
+      'tool_target' => [
+        'tool_target'
+      ],
+      'tool_source' => [
+        'tool_source'
+      ]
+    ],
+  ];
+
+  // database for logs regarding Modtool
+  $schema['pw_logging_modtool'] = [
+    'description' => 'Details for logs regarding Modtool',
+    'fields' => [
+      'id' => [
+        'description' => 'The primary identifier for a detailed log entry.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'log_id' => [
+        'description' => 'The log id',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE
+      ],
+      'dialogue_id' => [
+        'description' => 'The dialogue id of the dialogue in Modtool',
+        'type' => 'int',
+        'not null' => TRUE,
+        'unsigned' => TRUE
+      ],
+      'message_id' => [
+        'description' => 'The message id for the message sent from Modtool',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 15
+      ],
+      'drupal_question_id' => [
+        'description' => 'The Drupal node nid of the question',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ],
+      'drupal_answer_id' => [
+        'description' => 'The Drupal comment cis of the answer',
+        'type' => 'varchar',
+        'not null' => FALSE,
+        'length' => 15
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ],
+    'indexes' => [
+      'dialogue_id' => [
+        'dialogue_id'
+      ],
+      'message_id' => [
+        'message_id'
+      ]
+    ],
+  ];
+  return $schema;
+}
