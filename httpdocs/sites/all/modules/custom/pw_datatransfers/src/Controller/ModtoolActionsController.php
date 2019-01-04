@@ -127,24 +127,24 @@ class ModtoolActionsController {
     // catch DataTransfersExceptions to have user friendly error messages
     catch (DatatransfersException $d) {
       $this->setErrorResponse($d->getMessage(), $d);
-      $this->log(LogStatus::ERROR, $d->getMessage(), $d);
+      $this->log(LogStatus::ERROR, $d);
       return $this->responseArray;
     }
       // catch all other exceptions to avoid cryptic error messages
     catch (\Exception $e) {
       $this->setErrorResponse('500 Internal Server Error', $e);
-      $this->log(LogStatus::ERROR, $e->getMessage(), $e);
+      $this->log(LogStatus::ERROR, $e);
       return $this->responseArray;
     }
 
 
     $this->setSuccessResponse();
-    $this->log(LogStatus::SUCCESS, $this->responseArray['status_text']);
+    $this->log(LogStatus::SUCCESS);
     return $this->responseArray;
   }
 
 
-  protected function log($status, $text, \Exception $exception = NULL) {
+  protected function log($status, \Exception $exception = NULL) {
     $details = [
       'dialogue_id' => $this->dialogueId,
       'message_id' => $this->messageId
@@ -155,7 +155,14 @@ class ModtoolActionsController {
       $details['drupal_answer_id'] = $dataClass->getDrupalAnswerId();
     }
 
-    $pwLog = new PWLog('update_from_modtool', $status, $text, $details, $exception);
+    $general_text = $this->responseArray['status_text'];
+    $detailed_text = '';
+    if ($exception !== NULL) {
+      $detailed_text = $exception->getMessage();
+    }
+
+
+    $pwLog = new PWLog('update_from_modtool', $status, $general_text, $detailed_text, $details, $exception);
     $pwLog->log();
   }
 

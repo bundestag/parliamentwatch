@@ -60,7 +60,7 @@ class PWLog {
     $logentry->tool_source = $this->sourceTool;
     $logentry->action = $this->action;
     $logentry->message_general = $this->generalMessage;
-    $logentry->message_details = $this->detailedMessage;
+    $logentry->message_detailed = $this->detailedMessage;
     $logentry->status = $this->status;
     $logentry->date = time();
     $logentry->exception = $this->exception;
