@@ -52,6 +52,12 @@ class ModtoolActionsController {
 
 
   /**
+   * @var \Drupal\pw_datatransfers\Modtool\Actions\ActionInterface
+   */
+  protected $actionClass = NULL;
+
+
+  /**
    * @var \Drupal\pw_datatransfers\Modtool\ModtoolMessage
    * The ModtoolMessage class created from the JSON
    */
@@ -112,42 +118,22 @@ class ModtoolActionsController {
       $this->setModtoolMessage();
       $this->setDataClass();
 
-      $actionClass = $this->getActionClass();
-      $actionClass->run();
+      $this->actionClass = $this->getActionClass();
+      $this->actionClass->run();
     }
     // catch DataTransfersExceptions to have user friendly error messages
     catch (DatatransfersException $d) {
-      watchdog_exception('pw_dialogues', $d);
-      $status_header = drupal_get_http_header('status');
-      if (!$status_header) {
-        drupal_add_http_header('Status', '500 Internal Server Error');
-      }
-      $this->setStatus('error', $d->getMessage());
+      $this->setErrorResponse($d->getMessage(), $d);
       return $this->responseArray;
     }
       // catch all other exceptions to avoid cryptic error messages
     catch (\Exception $e) {
-      watchdog_exception('pw_dialogues', $e);
-      $status_header = drupal_get_http_header('status');
-      if (!$status_header) {
-        drupal_add_http_header('Status', '500 Internal Server Error');
-      }
-      $this->setStatus('error', '500 Internal Server Error');
+      $this->setErrorResponse('500 Internal Server Error', $e);
       return $this->responseArray;
     }
 
 
-    // set the success response
-    $dataEntity = $actionClass->getDataEntity();
-    switch ($this->messageType) {
-      case 'question':
-        $this->successQuestion($dataEntity);
-        break;
-      case 'answer':
-        $this->successAnswer($dataEntity);
-        break;
-    }
-
+    $this->setSuccessResponse();
     return $this->responseArray;
   }
 
@@ -375,54 +361,56 @@ class ModtoolActionsController {
       $this->responseArray[$key] = $value;
     }
   }
-
+  
 
   /**
-   * Create the success response for a question
    *
-   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase $dataQuestion
+   * Set HTTP header and response array on failure
+   *
+   * @param string $text
+   * The error text which should be shown in response array
+   *
+   * @param \Exception $exception
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\DatatransfersException
    */
-  protected function successQuestion(DataEntityBase $dataQuestion) {
-    $question = $dataQuestion->getEntity();
-    $question_nid = $question->nid;
-    if ($dataQuestion->isNew) {
-      drupal_add_http_header('Status', '201 Created');
-      $this->setResponseValue('status', 'success');
-      $this->setResponseValue('status_text', 'New question created');
-      $this->setResponseValue('drupal_question_id', $question_nid);
+  protected function setErrorResponse($text, \Exception $exception) {
+    watchdog_exception('pw_datatransfers', $exception);
+    $status_header = drupal_get_http_header('status');
+    if (!$status_header) {
+      drupal_add_http_header('Status', '500 Internal Server Error');
     }
-    else {
-      drupal_add_http_header('Status', '200 OK');
-      $this->setResponseValue('status', 'success');
-      $this->setResponseValue('status_text', 'Question updated');
-      $this->setResponseValue('drupal_question_id', $question_nid);
-    }
+    $this->setStatus('error', $text);
   }
 
 
-
   /**
-   * Create the success response for an answer
-   *
-   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataEntityBase $dataQuestion
+   * Set HTTP header and response array on succes
    */
-  protected function successAnswer(DataEntityBase $dataAnswer) {
-    $comment = $dataAnswer->getEntity();
-    $comment_cid = $comment->cid;
-    $question_nid = $comment->nid;
-    if ($dataAnswer->isNew) {
+  protected function setSuccessResponse() {
+    // set the success response
+    $dataEntity = $this->actionClass->getDataEntity();
+    $drupalEntity =  $dataEntity->getEntity();
+
+
+    if ($dataEntity->isNew) {
       drupal_add_http_header('Status', '201 Created');
       $this->setResponseValue('status', 'success');
-      $this->setResponseValue('status_text', 'New answer created');
-      $this->setResponseValue('drupal_question_id', $question_nid);
-      $this->setResponseValue('drupal_answer_id', $comment_cid);
+      $this->setResponseValue('status_text', 'New '. $this->messageType .' created');
     }
     else {
       drupal_add_http_header('Status', '200 OK');
       $this->setResponseValue('status', 'success');
-      $this->setResponseValue('status_text', 'Answer updated');
-      $this->setResponseValue('drupal_question_id', $question_nid);
-      $this->setResponseValue('drupal_answer_id', $comment_cid);
+      $this->setResponseValue('status_text', $this->messageType .' updated');
+    }
+    switch ($this->messageType) {
+      case 'question':
+        $this->setResponseValue('drupal_question_id', $drupalEntity->nid);
+        break;
+      case 'answer':
+        $this->setResponseValue('drupal_question_id', $drupalEntity->nid);
+        $this->setResponseValue('drupal_answer_id', $drupalEntity->cid);
+        break;
     }
   }
 }
