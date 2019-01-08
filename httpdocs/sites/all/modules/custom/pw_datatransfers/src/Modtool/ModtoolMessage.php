@@ -105,9 +105,9 @@ class ModtoolMessage {
   public function getPoliticianUUID() {
     switch ($this->getType()) {
       case 'question':
-        return $this->getData('recipient.external_id');
+        return $this->getData('recipient_external_id');
       case 'answer':
-        return $this->getData('sender.external_id');
+        return $this->getData('sender_external_id');
     }
     return NULL;
   }
@@ -135,7 +135,7 @@ class ModtoolMessage {
   }
 
   public function getAnnotation() {
-    return $this->getData('annotation.text');
+    return $this->getData('annotation_text');
   }
 
   public function getTags() {
@@ -180,7 +180,7 @@ class ModtoolMessage {
    *
    * @todo validation for documents, tags
    * @todo - for answers: check if sender uuid is set
-   * @todo - validation for dates
+   * @todo - sender and recipient id checken
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
@@ -238,9 +238,8 @@ class ModtoolMessage {
     }
 
     // validate annotation
-    $annotation_text_key = 'annotation.text';
-    if (isset($this->jsonData->{$annotation_text_key}) && $this->jsonData->{$annotation_text_key} !== NULL && !is_string($this->jsonData->{$annotation_text_key})) {
-      throw new InvalidSourceException('There was aproblem with the annotation text found in sent JSON is not a valid string.');
+    if (isset($this->jsonData->annotation_text) && $this->jsonData->annotation_text !== NULL && !is_string($this->jsonData->annotation_text)) {
+      throw new InvalidSourceException('The annotation text found in sent JSON is not a valid string.');
     }
 
     $this->validated = TRUE;
@@ -250,7 +249,6 @@ class ModtoolMessage {
   /**
    * Check if a given date string is a valid date
    *
-   * @todo - funktioniert gerade noch nicht
    *
    * @param string $date_string
    * The date string, e.g. "2018-12-19T13:40:05"
@@ -265,9 +263,7 @@ class ModtoolMessage {
       $format = 'c';
     }
 
-    $test = date('c');
     $d = DateTime::createFromFormat($format, $date_string);
-//    return ($d && $d->format($format) === $date_string);
-    return TRUE;
+    return ($d && $d->format($format) === $date_string);
   }
 }

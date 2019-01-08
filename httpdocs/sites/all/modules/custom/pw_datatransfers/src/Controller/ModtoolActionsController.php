@@ -196,7 +196,7 @@ class ModtoolActionsController {
 
     if (!$uid) {
       drupal_add_http_header('Status', '401 Unauthorized');
-      throw new DatatransfersException('401 Unauthorized - no user found for sent credentials');
+      throw new DatatransfersException('401 Unauthorized - no match found for sent credentials');
     }
 
     $account = user_load($uid);
@@ -331,6 +331,9 @@ class ModtoolActionsController {
 
     if (isset($_POST['message'])) {
       $json_data = json_decode($_POST['message']);
+      if (!$json_data) {
+        throw new SourceNotFoundException('It was not possible to receive a JSON');
+      }
       $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
     }
 
