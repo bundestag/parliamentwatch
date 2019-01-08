@@ -180,7 +180,7 @@ class ModtoolMessage {
    *
    * @todo validation for documents, tags
    * @todo - for answers: check if sender uuid is set
-   * @todo - validation for dates
+   * @todo - sender id checken
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
@@ -249,7 +249,6 @@ class ModtoolMessage {
   /**
    * Check if a given date string is a valid date
    *
-   * @todo - funktioniert gerade noch nicht
    *
    * @param string $date_string
    * The date string, e.g. "2018-12-19T13:40:05"
@@ -264,9 +263,7 @@ class ModtoolMessage {
       $format = 'c';
     }
 
-    $test = date('c');
     $d = DateTime::createFromFormat($format, $date_string);
-//    return ($d && $d->format($format) === $date_string);
-    return TRUE;
+    return ($d && $d->format($format) === $date_string);
   }
 }
