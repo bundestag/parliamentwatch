@@ -105,9 +105,9 @@ class ModtoolMessage {
   public function getPoliticianUUID() {
     switch ($this->getType()) {
       case 'question':
-        return $this->getData('recipient.external_id');
+        return $this->getData('recipient_external_id');
       case 'answer':
-        return $this->getData('sender.external_id');
+        return $this->getData('sender_external_id');
     }
     return NULL;
   }
@@ -238,9 +238,8 @@ class ModtoolMessage {
     }
 
     // validate annotation
-    $annotation_text_key = 'annotation.text';
-    if (isset($this->jsonData->{$annotation_text_key}) && $this->jsonData->{$annotation_text_key} !== NULL && !is_string($this->jsonData->{$annotation_text_key})) {
-      throw new InvalidSourceException('There was aproblem with the annotation text found in sent JSON is not a valid string.');
+    if (isset($this->jsonData->annotation_text) && $this->jsonData->annotation_text !== NULL && !is_string($this->jsonData->annotation_text)) {
+      throw new InvalidSourceException('The annotation text found in sent JSON is not a valid string.');
     }
 
     $this->validated = TRUE;
