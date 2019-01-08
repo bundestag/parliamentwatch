@@ -135,7 +135,7 @@ class ModtoolMessage {
   }
 
   public function getAnnotation() {
-    return $this->getData('annotation.text');
+    return $this->getData('annotation_text');
   }
 
   public function getTags() {
