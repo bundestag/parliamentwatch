@@ -158,7 +158,7 @@ class ModtoolActionsController {
 
     if (!$uid) {
       drupal_add_http_header('Status', '401 Unauthorized');
-      throw new DatatransfersException('401 Unauthorized - no user found for sent credentials');
+      throw new DatatransfersException('401 Unauthorized - no match found for sent credentials');
     }
 
     $account = user_load($uid);
