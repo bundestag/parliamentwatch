@@ -180,7 +180,7 @@ class ModtoolMessage {
    *
    * @todo validation for documents, tags
    * @todo - for answers: check if sender uuid is set
-   * @todo - sender id checken
+   * @todo - sender and recipient id checken
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
