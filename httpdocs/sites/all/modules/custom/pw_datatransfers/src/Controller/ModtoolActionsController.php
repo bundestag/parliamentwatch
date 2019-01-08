@@ -293,6 +293,9 @@ class ModtoolActionsController {
 
     if (isset($_POST['message'])) {
       $json_data = json_decode($_POST['message']);
+      if (!$json_data) {
+        throw new SourceNotFoundException('It was not possible to receive a JSON');
+      }
       $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
     }
 
