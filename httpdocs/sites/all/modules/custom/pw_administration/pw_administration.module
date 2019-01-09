@@ -23,5 +23,17 @@ function pw_administration_menu() {
     'menu_name' => 'management'
   ];
 
+
+  $items['admin/abgeordnetenwatch/wahlen-parlamente'] = [
+    'title' => 'Wahlen & Parlamente',
+    'page callback' => 'pw_administration_wahlenparlamente_pagecallback',
+    'access callback' => 'pw_administration_wahlenparlamente_pagecallback_access',
+    'file' => 'pw_administration.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management'
+  ];
+
+
+
   return $items;
 }
