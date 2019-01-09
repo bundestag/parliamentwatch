@@ -573,3 +573,9 @@ textarea.form__item__control {
 .form--user-login {
   > p { margin-bottom: $space-large; }
 }
+
+
+// hide spamicide form field
+.edit-enter-name-wrapper {
+  display: none;
+}
