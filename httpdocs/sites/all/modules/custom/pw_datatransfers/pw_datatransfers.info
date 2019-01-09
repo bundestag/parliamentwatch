@@ -6,4 +6,3 @@ package = Parliamentwatch
 dependencies[] = entity
 dependencies[] = pw_parliaments
 dependencies[] = pw_dialogues
-dependencies[] = pw_logging
