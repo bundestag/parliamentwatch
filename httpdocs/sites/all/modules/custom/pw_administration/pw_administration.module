@@ -37,3 +37,16 @@ function pw_administration_menu() {
 
   return $items;
 }
+
+
+/**
+ * Implements hook_admin_paths().
+ *
+ * Define some paths to use the admin theme
+ */
+function pw_administration_admin_paths() {
+  $paths = array(
+    'taxonomy/term/*/politicians' => TRUE,
+  );
+  return $paths;
+}
