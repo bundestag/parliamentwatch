@@ -40,6 +40,18 @@ function pw_administration_menu() {
 
 
 /**
+ * Implements hook_menu_alter().
+ *
+ * Move the "Merge terms" tab to the end of the tab list
+ */
+function pw_administration_menu_alter(&$items) {
+  if (isset($items['taxonomy/term/%taxonomy_term/merge'])) {
+    $items['taxonomy/term/%taxonomy_term/merge']['weight'] = 100;
+  }
+}
+
+
+/**
  * Implements hook_admin_paths().
  *
  * Define some paths to use the admin theme
