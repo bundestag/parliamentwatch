@@ -74,7 +74,7 @@ function pw_userarchives_views_data() {
     'title' => t('User role'),
     'help' => t('The user role.'),
     'field' => array(
-      'handler' => 'views_handler_field',
+      'handler' => 'views_handler_field_user_archive_role',
       'click sortable' => TRUE,
     ),
     'sort' => array(
