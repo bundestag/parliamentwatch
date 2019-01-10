@@ -1697,7 +1697,7 @@ msgstr "Zurück"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--10508.tpl.php:115
 msgid "Transparency"
-msgstr ""
+msgstr "Transparenz"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--10508.tpl.php:116
 msgid ""
