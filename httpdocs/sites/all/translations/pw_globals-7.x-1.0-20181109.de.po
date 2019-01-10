@@ -1705,7 +1705,7 @@ msgid ""
 "the previous year with a total amount of € 1,000 and above."
 msgstr ""
 "Wir veröffentlichen in unserem Jahresbericht die Namen der Spender/innen,"
-"die uns im Vorjahr mit einer Gesamtsumme ab 1.000 Euro unterstützt haben."
+"die uns mit einer Gesamtsumme ab 1.000 Euro im Jahr unterstützen."
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--10508.tpl.php:132
 msgid ""
