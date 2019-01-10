@@ -80,6 +80,9 @@ function pw_userarchives_views_data() {
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_user_archive_role',
+    )
   );
 
   $data['user_archive_cache']['parliament_name'] = array(

@@ -805,3 +805,14 @@ function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
   module_invoke_all('pw_user_revision_edit', $revision);
 
 }
+
+
+/**
+ * Define the possible politician roles related to a parliament
+ */
+function pw_userarchives_politician_roles() {
+  return [
+    'deputy' => 'Abgeordneter',
+    'candidate' => 'Kandidat'
+  ];
+}
