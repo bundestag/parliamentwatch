@@ -47,6 +47,7 @@ function pw_administration_menu() {
 function pw_administration_admin_paths() {
   $paths = array(
     'taxonomy/term/*/politicians' => TRUE,
+    'taxonomy/term/*/polls' => TRUE
   );
   return $paths;
 }
