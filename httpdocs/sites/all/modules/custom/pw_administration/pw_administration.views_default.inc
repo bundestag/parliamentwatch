@@ -5098,6 +5098,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: PW Administration - Create new */
+  $handler->display->display_options['header']['pw_administration_create_new']['id'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
+  $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'parliament';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';

@@ -4,12 +4,19 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
 
   protected $entityCreation = [
     'poll' => [
+      'options_label' => 'Poll',
       'linktext' => 'Neue Abtimmung erstellen',
       'path' => 'node/add/poll'
     ],
     'committee' => [
+      'options_label' => 'Committee',
       'linktext' => 'Neuen Ausschuss erstellen',
       'path' => 'node/add/committee'
+    ],
+    'parliament' => [
+      'options_label' => 'Parliament',
+      'linktext' => 'Neues Parlament erstellen',
+      'path' => 'admin/structure/taxonomy/parliaments/add'
     ]
   ];
 
@@ -24,13 +31,15 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
   function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
 
+    $options = [];
+    foreach ($this->entityCreation as $key => $entity_creation_information) {
+      $options[$key] = t($entity_creation_information['options_label']);
+    }
+
     $form['entity_to_create'] = array(
       '#type' => 'select',
       '#title' => t('Create new...'),
-      '#options' => array(
-        'poll' => t('Poll'),
-        'committee' => t('Committee')
-      ),
+      '#options' => $options,
       '#default_value' => isset($this->options['entity_to_create']) ? $this->options['entity_to_create'] : '',
     );
   }
