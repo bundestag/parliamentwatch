@@ -17,6 +17,11 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
       'options_label' => 'Parliament',
       'linktext' => 'Neues Parlament erstellen',
       'path' => 'admin/structure/taxonomy/parliaments/add'
+    ],
+    'party' => [
+      'options_label' => 'Party',
+      'linktext' => 'Neue Partei erstellen',
+      'path' => 'admin/structure/taxonomy/party/add'
     ]
   ];
 
