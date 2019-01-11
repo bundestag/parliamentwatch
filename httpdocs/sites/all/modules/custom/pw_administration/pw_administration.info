@@ -6,6 +6,9 @@ php = 5.2.4
 dependencies[] = pw_globals
 dependencies[] = views
 dependencies[] = views_data_export
+
+files[] = views/pw_administration_views_handler_area_create_new.inc
+
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:1
 features[views_view][] = administration_files
