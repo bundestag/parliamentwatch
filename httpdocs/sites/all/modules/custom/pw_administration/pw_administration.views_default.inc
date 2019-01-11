@@ -1885,7 +1885,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -2148,6 +2148,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Ausschüsse gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -2339,7 +2346,7 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -2510,6 +2517,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Keine Ausschüsse gefunden'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
@@ -2532,6 +2540,447 @@ function pw_administration_views_default_views() {
     t('Data export'),
   );
   $export['pw_administration_committees_by_parliament'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_constituencies';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'PW Administration Constituencies';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Electoral Regions';
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'edit terms in 17';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'name' => 'name',
+    'field_parliament' => 'field_parliament',
+  );
+  $handler->display->display_options['style_options']['default'] = 'name';
+  $handler->display->display_options['style_options']['info'] = array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Electoral Regions gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Stapelverarbeitungen: Taxonomie-Begriff */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_taxonomy_term';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '0';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['row_clickable'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 1,
+      'label' => 'Löschen',
+      'settings' => array(
+        'log' => 0,
+      ),
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 1,
+      'label' => 'Werte ändern',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          '_all_' => '_all_',
+        ),
+      ),
+    ),
+    'action::term_merge_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Feld: Taxonomie-Begriff: Number */
+  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'Wahlkreis-Nr.';
+  $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Electoral Region */
+  $handler->display->display_options['fields']['field_electoral_region']['id'] = 'field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['table'] = 'field_data_field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['field'] = 'field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_electoral_region']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'taxonomy/term/[tid]/edit';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'taxonomy/term/[tid]/delete';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'nothing_1' => 'nothing_1',
+    'nothing' => 'nothing',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
+  /* Kontextfilter: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['arguments']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_parliament_tid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['field_parliament_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['title'] = '%1 - Constituencies';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_parliament_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate_options']['vocabularies'] = array(
+    'parliaments' => 'parliaments',
+  );
+  /* Filterkriterium: Taxonomie-Begriff: Vokabular */
+  $handler->display->display_options['filters']['vid']['id'] = 'vid';
+  $handler->display->display_options['filters']['vid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['filters']['vid']['field'] = 'vid';
+  $handler->display->display_options['filters']['vid']['value'] = array(
+    17 => '17',
+  );
+  $handler->display->display_options['filters']['vid']['group'] = 1;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'taxonomy/term/%/constituencies';
+  $handler->display->display_options['menu']['title'] = 'Electoral Regions';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'constituencies.csv';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'ID';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Feld: Taxonomie-Begriff: Number */
+  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'Wahlkreis-Nr.';
+  $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Electoral Region */
+  $handler->display->display_options['fields']['field_electoral_region']['id'] = 'field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['table'] = 'field_data_field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['field'] = 'field_electoral_region';
+  $handler->display->display_options['fields']['field_electoral_region']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_electoral_region']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Taxonomie-Begriff: Area Codes */
+  $handler->display->display_options['fields']['field_constituency_area_codes']['id'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['table'] = 'field_data_field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_constituency_area_codes']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: AC Descriptor */
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['id'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['table'] = 'field_data_field_constituency_ac_descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['field'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['label'] = 'Area Code Descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Taxonomie-Begriff: Street */
+  $handler->display->display_options['fields']['field_constituency_street']['id'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['table'] = 'field_data_field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['field'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_constituency_street']['delta_offset'] = '0';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Kontextfilter: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['arguments']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_parliament_tid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_parliament_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate_options']['vocabularies'] = array(
+    'parliaments' => 'parliaments',
+  );
+  $handler->display->display_options['path'] = 'taxonomy/term/%/constituencies/export';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/wahlen-parlamente/electoral-regions';
+  $handler->display->display_options['segment_size'] = '100';
+  $translatables['pw_administration_constituencies'] = array(
+    t('Master'),
+    t('Electoral Regions'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('nächste Seite ›'),
+    t('letzte Seite »'),
+    t('Keine Electoral Regions gefunden'),
+    t('Begriff-ID'),
+    t('.'),
+    t('Bitte auswählen'),
+    t('Einträge exportieren'),
+    t('Löschen'),
+    t('Werte ändern'),
+    t('Name'),
+    t('Wahlkreis-Nr.'),
+    t('Parlament'),
+    t('Electoral Region'),
+    t('Bearbeiten'),
+    t('Aktionen'),
+    t('Alle'),
+    t('%1 - Constituencies'),
+    t('Page'),
+    t('Data export'),
+    t('ID'),
+    t('Area Codes'),
+    t('Area Code Descriptor'),
+    t('Street'),
+  );
+  $export['pw_administration_constituencies'] = $view;
 
   $view = new view();
   $view->name = 'pw_administration_content';
@@ -3135,6 +3584,314 @@ function pw_administration_views_default_views() {
     t('Alle'),
   );
   $export['pw_administration_content'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_electoral_regions';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'PW Administration Electoral Regions';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Electoral Regions';
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'edit terms in 39';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'name' => 'name',
+    'field_parliament' => 'field_parliament',
+  );
+  $handler->display->display_options['style_options']['default'] = 'name';
+  $handler->display->display_options['style_options']['info'] = array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Electoral Regions gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Stapelverarbeitungen: Taxonomie-Begriff */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_taxonomy_term';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '0';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['row_clickable'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 1,
+      'label' => 'Löschen',
+      'settings' => array(
+        'log' => 0,
+      ),
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 1,
+      'label' => 'Werte ändern',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          '_all_' => '_all_',
+        ),
+      ),
+    ),
+    'action::term_merge_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'taxonomy/term/[tid]/edit';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'taxonomy/term/[tid]/delete';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'nothing_1' => 'nothing_1',
+    'nothing' => 'nothing',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
+  /* Kontextfilter: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['arguments']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_parliament_tid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['field_parliament_tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['title'] = '%1 - Electoral Regions';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_parliament_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate_options']['vocabularies'] = array(
+    'parliaments' => 'parliaments',
+  );
+  /* Filterkriterium: Taxonomie-Begriff: Vokabular */
+  $handler->display->display_options['filters']['vid']['id'] = 'vid';
+  $handler->display->display_options['filters']['vid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['filters']['vid']['field'] = 'vid';
+  $handler->display->display_options['filters']['vid']['value'] = array(
+    39 => '39',
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'taxonomy/term/%/electoral-regions';
+  $handler->display->display_options['menu']['title'] = 'Electoral Regions';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'electoral-regions.csv';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'ID';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Kontextfilter: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['arguments']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['field_parliament_tid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['field_parliament_tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['field_parliament_tid']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['field_parliament_tid']['specify_validation'] = TRUE;
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate']['type'] = 'taxonomy_term';
+  $handler->display->display_options['arguments']['field_parliament_tid']['validate_options']['vocabularies'] = array(
+    'parliaments' => 'parliaments',
+  );
+  $handler->display->display_options['path'] = 'taxonomy/term/%/electoral-regions/export';
+  $handler->display->display_options['displays'] = array(
+    'page' => 'page',
+    'default' => 0,
+  );
+  $handler->display->display_options['return_path'] = 'admin/abgeordnetenwatch/wahlen-parlamente/electoral-regions';
+  $handler->display->display_options['segment_size'] = '100';
+  $translatables['pw_administration_electoral_regions'] = array(
+    t('Master'),
+    t('Electoral Regions'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('nächste Seite ›'),
+    t('letzte Seite »'),
+    t('Keine Electoral Regions gefunden'),
+    t('Begriff-ID'),
+    t('.'),
+    t('Bitte auswählen'),
+    t('Einträge exportieren'),
+    t('Löschen'),
+    t('Werte ändern'),
+    t('Name'),
+    t('Parlament'),
+    t('Bearbeiten'),
+    t('Aktionen'),
+    t('Alle'),
+    t('%1 - Electoral Regions'),
+    t('Page'),
+    t('Data export'),
+    t('ID'),
+  );
+  $export['pw_administration_electoral_regions'] = $view;
 
   $view = new view();
   $view->name = 'pw_administration_files';
@@ -3909,7 +4666,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -4319,6 +5076,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Parlamente gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
   /* Feld: Taxonomie-Begriff: Begriff-ID */
   $handler->display->display_options['fields']['tid']['id'] = 'tid';
   $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
@@ -4441,6 +5205,15 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_2']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing_2']['alter']['path'] = 'taxonomy/term/[tid]/politicians';
   /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_5']['id'] = 'nothing_5';
+  $handler->display->display_options['fields']['nothing_5']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_5']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_5']['label'] = 'Ausschüsse';
+  $handler->display->display_options['fields']['nothing_5']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['text'] = 'Ausschüsse';
+  $handler->display->display_options['fields']['nothing_5']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_5']['alter']['path'] = 'taxonomy/term/[tid]/committees';
+  /* Feld: Global: Benutzerdefinierter Text */
   $handler->display->display_options['fields']['nothing_3']['id'] = 'nothing_3';
   $handler->display->display_options['fields']['nothing_3']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_3']['field'] = 'nothing';
@@ -4450,6 +5223,23 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_3']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing_3']['alter']['path'] = 'taxonomy/term/[tid]/polls';
   /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_6']['id'] = 'nothing_6';
+  $handler->display->display_options['fields']['nothing_6']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_6']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_6']['label'] = 'Electoral Regions';
+  $handler->display->display_options['fields']['nothing_6']['alter']['text'] = 'Electoral Regions';
+  $handler->display->display_options['fields']['nothing_6']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_6']['alter']['path'] = 'taxonomy/term/[tid]/electoral-regions';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_7']['id'] = 'nothing_7';
+  $handler->display->display_options['fields']['nothing_7']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_7']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_7']['label'] = 'Constituencies';
+  $handler->display->display_options['fields']['nothing_7']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_7']['alter']['text'] = 'Constituencies';
+  $handler->display->display_options['fields']['nothing_7']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_7']['alter']['path'] = 'taxonomy/term/[tid]/constituencies';
+  /* Feld: Global: Benutzerdefinierter Text */
   $handler->display->display_options['fields']['nothing_4']['id'] = 'nothing_4';
   $handler->display->display_options['fields']['nothing_4']['table'] = 'views';
   $handler->display->display_options['fields']['nothing_4']['field'] = 'nothing';
@@ -4457,6 +5247,9 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_4']['alter']['text'] = '<ul>
 <li>[nothing_2]</li>
 <li>[nothing_3]</li>
+<li>[nothing_5]</li>
+<li>[nothing_6]</li>
+<li>[nothing_7]</li>
 </ul>';
   /* Feld: Global: Benutzerdefinierter Text */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
@@ -4466,7 +5259,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Bearbeiten';
   $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'taxonomy/term/[tid]';
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'taxonomy/term/[tid]/edit';
   /* Feld: Global: Benutzerdefinierter Text */
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
@@ -4541,6 +5334,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Keine Parlamente gefunden'),
     t('ID'),
     t('.'),
     t('Name'),
@@ -4550,11 +5344,17 @@ function pw_administration_views_default_views() {
     t('Affiliates'),
     t('Politiker'),
     t('Politiker-Übersicht'),
+    t('Ausschüsse'),
     t('Abstimmungen'),
+    t('Electoral Regions'),
+    t('Constituencies'),
     t('Links'),
     t('<ul>
 <li>[nothing_2]</li>
 <li>[nothing_3]</li>
+<li>[nothing_5]</li>
+<li>[nothing_6]</li>
+<li>[nothing_7]</li>
 </ul>'),
     t('Bearbeiten'),
     t('Löschen'),
@@ -5589,6 +6389,19 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Textbereich */
+  $handler->display->display_options['header']['area']['id'] = 'area';
+  $handler->display->display_options['header']['area']['table'] = 'views';
+  $handler->display->display_options['header']['area']['field'] = 'area';
+  $handler->display->display_options['header']['area']['content'] = 'Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.';
+  $handler->display->display_options['header']['area']['format'] = 'managed_content';
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Politiker gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
   /* Beziehung: PW User archive: User revision */
   $handler->display->display_options['relationships']['vid']['id'] = 'vid';
   $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
@@ -5646,7 +6459,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
-  $handler->display->display_options['fields']['user_role']['label'] = 'Profil als';
+  $handler->display->display_options['fields']['user_role']['label'] = 'Profil für';
   /* Feld: Benutzer (Historische Daten): Partei */
   $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
   $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
@@ -5908,7 +6721,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['exposed'] = TRUE;
   $handler->display->display_options['filters']['user_role']['expose']['operator_id'] = 'user_role_op';
-  $handler->display->display_options['filters']['user_role']['expose']['label'] = 'Rolle';
+  $handler->display->display_options['filters']['user_role']['expose']['label'] = 'Profil für';
   $handler->display->display_options['filters']['user_role']['expose']['operator'] = 'user_role_op';
   $handler->display->display_options['filters']['user_role']['expose']['identifier'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['expose']['remember_roles'] = array(
@@ -6129,12 +6942,14 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.'),
+    t('Keine Politiker gefunden'),
     t('User Revision'),
     t('Uid'),
     t('First Name'),
     t('Nachname'),
     t('[field_user_lname-revision_id], [field_user_fname-revision_id]'),
-    t('Profil als'),
+    t('Profil für'),
     t('Partei'),
     t('Fraktion'),
     t('Parlament beigetreten'),
@@ -6153,7 +6968,6 @@ function pw_administration_views_default_views() {
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
-    t('Rolle'),
     t('Vorname'),
     t('Page'),
   );
@@ -6874,6 +7688,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Abstimmungen gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -7399,6 +8220,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Keine Abstimmungen gefunden'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
@@ -8600,15 +9422,38 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '30';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'tid_1' => 'tid_1',
     'name_1' => 'name_1',
     'name' => 'name',
-    'tid' => 'tid',
+    'description' => 'description',
+    'uuid' => 'uuid',
+    'nothing' => 'nothing',
+    'nothing_1' => 'nothing_1',
+    'ctools_dropdown' => 'ctools_dropdown',
   );
   $handler->display->display_options['style_options']['default'] = 'name';
   $handler->display->display_options['style_options']['info'] = array(
+    'tid_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'name_1' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -8623,9 +9468,29 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'tid' => array(
+    'description' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'ctools_dropdown' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -8637,69 +9502,57 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['tid_1']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['tid_1']['field'] = 'tid';
   $handler->display->display_options['fields']['tid_1']['separator'] = '';
-  /* Feld: Taxonomie-Vokabular: Name */
-  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
-  $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_vocabulary';
-  $handler->display->display_options['fields']['name_1']['field'] = 'name';
-  $handler->display->display_options['fields']['name_1']['label'] = '';
-  $handler->display->display_options['fields']['name_1']['exclude'] = TRUE;
   /* Feld: Taxonomie-Begriff: Name */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['label'] = 'Begriff';
-  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  $handler->display->display_options['fields']['name']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['name']['alter']['path'] = 'taxonomy/term/[tid_1]/nodes';
   /* Feld: Taxonomie-Begriff: Begriffsbeschreibung */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['description']['field'] = 'description';
   $handler->display->display_options['fields']['description']['label'] = 'Beschreibung';
   $handler->display->display_options['fields']['description']['element_label_colon'] = FALSE;
-  /* Feld: Taxonomie-Begriff: Begriff-ID */
-  $handler->display->display_options['fields']['tid']['id'] = 'tid';
-  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['tid']['field'] = 'tid';
-  $handler->display->display_options['fields']['tid']['label'] = 'Aktionen';
-  $handler->display->display_options['fields']['tid']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['tid']['alter']['text'] = 'Bearbeiten';
-  $handler->display->display_options['fields']['tid']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['tid']['alter']['path'] = 'taxonomy/term/[tid]/edit';
-  $handler->display->display_options['fields']['tid']['separator'] = '';
   /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
-  /* Feld: Taxonomie-Begriff: Number */
-  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'Zahl';
-  $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'taxonomy/term/[tid_1]/edit';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'taxonomy/term/[tid_1]/delete';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'nothing' => 'nothing',
+    'nothing_1' => 'nothing_1',
   );
-  /* Sortierkriterien: Taxonomie-Begriff: Gewichtung */
-  $handler->display->display_options['sorts']['weight']['id'] = 'weight';
-  $handler->display->display_options['sorts']['weight']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['sorts']['weight']['field'] = 'weight';
-  /* Sortierkriterien: Taxonomie-Begriff: Name */
-  $handler->display->display_options['sorts']['name']['id'] = 'name';
-  $handler->display->display_options['sorts']['name']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['sorts']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
   /* Kontextfilter: Taxonomie-Vokabular: Systemname */
   $handler->display->display_options['arguments']['machine_name']['id'] = 'machine_name';
   $handler->display->display_options['arguments']['machine_name']['table'] = 'taxonomy_vocabulary';
   $handler->display->display_options['arguments']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['arguments']['machine_name']['default_action'] = 'not found';
   $handler->display->display_options['arguments']['machine_name']['exception']['title'] = 'Alle';
   $handler->display->display_options['arguments']['machine_name']['title_enable'] = TRUE;
   $handler->display->display_options['arguments']['machine_name']['title'] = 'Begriffe in %1';
@@ -8709,7 +9562,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['arguments']['machine_name']['summary']['number_of_records'] = '0';
   $handler->display->display_options['arguments']['machine_name']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['machine_name']['summary_options']['items_per_page'] = '25';
-  $handler->display->display_options['arguments']['machine_name']['specify_validation'] = TRUE;
   $handler->display->display_options['arguments']['machine_name']['validate']['fail'] = 'ignore';
   $handler->display->display_options['arguments']['machine_name']['limit'] = '0';
   /* Filterkriterium: Taxonomie-Begriff: Name */
@@ -8759,14 +9611,21 @@ function pw_administration_views_default_views() {
     t('Sortieren nach'),
     t('Aufsteigend'),
     t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
     t('Begriff-ID'),
     t('.'),
     t('Begriff'),
     t('Beschreibung'),
-    t('Aktionen'),
-    t('Bearbeiten'),
     t('UUID'),
-    t('Zahl'),
+    t('Bearbeiten'),
+    t('Löschen'),
+    t('Aktionen'),
     t('Alle'),
     t('Begriffe in %1'),
     t('%1'),
@@ -8775,6 +9634,252 @@ function pw_administration_views_default_views() {
     t('Seite'),
   );
   $export['pw_administration_taxonomy_term_list'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_term_nodes_tagged_by';
+  $view->description = 'Listet alle Nodes auf, die mit einem Term getaggt sind';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'PW Administration Term - Nodes Tagged by';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Nodes tagged';
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administer taxonomy';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'changed' => 'changed',
+    'type' => 'type',
+    'status' => 'status',
+  );
+  $handler->display->display_options['style_options']['default'] = 'changed';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'type' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Es wurden keine Nodes gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Feld: Inhalt: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Feld: Inhalt: Typ */
+  $handler->display->display_options['fields']['type']['id'] = 'type';
+  $handler->display->display_options['fields']['type']['table'] = 'node';
+  $handler->display->display_options['fields']['type']['field'] = 'type';
+  /* Feld: Inhalt: Veröffentlicht */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'node';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Inhalt: ‚Bearbeiten‘-Link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
+  /* Feld: Inhalt: Link löschen */
+  $handler->display->display_options['fields']['delete_node']['id'] = 'delete_node';
+  $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
+  $handler->display->display_options['fields']['delete_node']['exclude'] = TRUE;
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'edit_node' => 'edit_node',
+    'delete_node' => 'delete_node',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
+  /* Kontextfilter: Inhalt: Besitzt eine Taxonomiebegriff-ID. */
+  $handler->display->display_options['arguments']['tid']['id'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_index';
+  $handler->display->display_options['arguments']['tid']['field'] = 'tid';
+  $handler->display->display_options['arguments']['tid']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['tid']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['tid']['title_enable'] = TRUE;
+  $handler->display->display_options['arguments']['tid']['title'] = 'Nodes getaggt mit %1';
+  $handler->display->display_options['arguments']['tid']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['tid']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['tid']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['tid']['summary_options']['items_per_page'] = '25';
+  /* Filterkriterium: Inhalt: Veröffentlicht */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 'All';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Veröffentlicht';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['type']['expose']['operator_id'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['label'] = 'Typ';
+  $handler->display->display_options['filters']['type']['expose']['operator'] = 'type_op';
+  $handler->display->display_options['filters']['type']['expose']['identifier'] = 'type';
+  $handler->display->display_options['filters']['type']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Titel */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Titel';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'taxonomy/term/%/nodes';
+  $handler->display->display_options['menu']['title'] = 'Nodes';
+  $handler->display->display_options['menu']['weight'] = '10';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $translatables['pw_administration_term_nodes_tagged_by'] = array(
+    t('Master'),
+    t('Nodes tagged'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('nächste Seite ›'),
+    t('letzte Seite »'),
+    t('Es wurden keine Nodes gefunden'),
+    t('Titel'),
+    t('Typ'),
+    t('Veröffentlicht'),
+    t('Letztes Update'),
+    t('‚Bearbeiten‘-Link'),
+    t('Link löschen'),
+    t('Aktionen'),
+    t('Alle'),
+    t('Nodes getaggt mit %1'),
+    t('Page'),
+  );
+  $export['pw_administration_term_nodes_tagged_by'] = $view;
 
   $view = new view();
   $view->name = 'pw_administration_users';
