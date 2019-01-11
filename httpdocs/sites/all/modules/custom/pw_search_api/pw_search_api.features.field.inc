@@ -478,7 +478,7 @@ function pw_search_api_field_default_fields() {
           'year_range' => '-3:+3',
         ),
         'type' => 'date_popup',
-        'weight' => '14',
+        'weight' => '13',
       ),
     ),
   );
