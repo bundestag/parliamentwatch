@@ -40,12 +40,17 @@
   }
 }
 
+.form__item__label {
+  display: block;
+  margin-bottom: $space-xsmall-mobile;
+  font-weight: 600;
+  color: $darkGray;
+}
+
 .form__item--checkboxes,
 .form__item--radios {
   & > .form__item__label {
-    display: block;
     margin-bottom: $space-xsmall;
-    font-weight: 600;
   }
 }
 
@@ -61,8 +66,11 @@
   }
   .form__item__label {
     display: block;
+    margin-bottom: 0;
+    font-weight: 300;
     padding-left: $space + $space-xsmall-mobile;
     line-height: 1.5em;
+    color: inherit;
     &::before {
       content: "";
       display: block;
@@ -183,21 +191,6 @@ textarea.form__item__control {
   min-height: 200px;
   width: 100%;
   resize: vertical;
-}
-.form__item--textarea {
-  .form__item__label {
-    margin-bottom: $space-xsmall-mobile;
-    display: block;
-  }
-}
-
-/* Text fields */
-
-.form__item--textfield {
-  .form__item__label {
-    margin-bottom: $space-xsmall-mobile;
-    display: block;
-  }
 }
 
 
