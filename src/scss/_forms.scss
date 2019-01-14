@@ -46,10 +46,22 @@
 
   &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label {
     display: block;
-    margin-bottom: $space-xsmall-mobile;
-    font-size: .8em;
-    font-weight: 600;
+    line-height: $space;
+    position: relative;
+    left: $space-xsmall;
+    top: $space-large;
     color: $darkGray;
+    pointer-events: none;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+    transition-property: left, top, font-size;
+
+    &--floating {
+      left: 0;
+      top: 0;
+      font-size: .8em;
+      font-weight: 600;
+    }
   }
 
   &--checkboxes > &__label,

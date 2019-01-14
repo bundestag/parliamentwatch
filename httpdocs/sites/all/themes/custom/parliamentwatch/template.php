@@ -1240,7 +1240,7 @@ function parliamentwatch_select($variables) {
     $element['#attributes']['data-placeholder'] = $element['#title'];
   }
   element_set_attributes($element, ['id', 'name', 'size']);
-  _parliamentwatch_form_set_class($element, ['form__item__control']);
+  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<select data-width="100%" ' . drupal_attributes($element['#attributes']) . '>' . form_select_options($element) . '</select>';
 }
@@ -1264,7 +1264,7 @@ function parliamentwatch_checkbox($variables) {
   if (!empty($element['#checked'])) {
     $element['#attributes']['checked'] = 'checked';
   }
-  _parliamentwatch_form_set_class($element, ['form__item__control']);
+  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
@@ -1280,7 +1280,7 @@ function parliamentwatch_radio($variables) {
   if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
     $element['#attributes']['checked'] = 'checked';
   }
-  _form_set_class($element, ['form__item__control']);
+  _form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
