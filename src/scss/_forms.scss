@@ -54,13 +54,14 @@
     transition-duration: 300ms;
     transition-timing-function: ease;
     transition-property: left, top, font-size;
+  }
 
-    &--floating {
-      left: 0;
-      top: 0;
-      font-size: .8em;
-      font-weight: 600;
-    }
+  &__label--floating,
+  &--select &__label {
+    left: 0 !important;
+    top: 0 !important;
+    font-size: .8em !important;
+    font-weight: 600 !important;
   }
 
   &--checkboxes > &__label,
