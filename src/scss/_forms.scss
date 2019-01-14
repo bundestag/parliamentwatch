@@ -113,7 +113,7 @@
     }
   }
 
-  &--checkbox:checked + &__label {
+  &--checkbox &__control:checked + &__label {
     &::after {
       content: "\e87a";
       font-family: awfont;
@@ -130,7 +130,7 @@
     }
   }
 
-  &--radio:checked + &__label {
+  &--radio &__control:checked + &__label {
     &::after {
       content: "";
       display: block;
