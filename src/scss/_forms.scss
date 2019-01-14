@@ -16,9 +16,8 @@
     display: inline-block;
   }
 
-  .form-text,
-  .form-email,
-  &__control {
+  &__control,
+  .form-email {
     border: 1px solid $gray;
     display: block;
     padding: $space-xsmall;
