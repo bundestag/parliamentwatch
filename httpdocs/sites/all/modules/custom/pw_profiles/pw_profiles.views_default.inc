@@ -918,11 +918,13 @@ function pw_profiles_views_default_views() {
     'field_user_fraction-revision_id' => 'field_user_fraction-revision_id',
     'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
     'edit_revision_1' => 'edit_revision_1',
-    'revert_revision' => 'revert_revision',
     'delete_revision' => 'delete_revision',
+    'link_to_public_profile' => 'link_to_public_profile',
     'user_role' => 'user_role',
     'fraction_name' => 'fraction_name',
     'parliament_name' => 'parliament_name',
+    'field_user_joined-revision_id' => 'field_user_joined-revision_id',
+    'field_user_retired-revision_id' => 'field_user_retired-revision_id',
     'nothing' => 'nothing',
     'ctools_dropdown' => 'ctools_dropdown',
   );
@@ -943,7 +945,7 @@ function pw_profiles_views_default_views() {
       'empty_column' => 0,
     ),
     'field_user_parliament-revision_id' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -955,7 +957,7 @@ function pw_profiles_views_default_views() {
       'empty_column' => 0,
     ),
     'field_user_fraction-revision_id' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -971,12 +973,12 @@ function pw_profiles_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'revert_revision' => array(
+    'delete_revision' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'delete_revision' => array(
+    'link_to_public_profile' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -998,6 +1000,20 @@ function pw_profiles_views_default_views() {
     'parliament_name' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_joined-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_retired-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -1098,6 +1114,54 @@ function pw_profiles_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Parlament beigetreten */
+  $handler->display->display_options['fields']['field_user_joined-revision_id']['id'] = 'field_user_joined-revision_id';
+  $handler->display->display_options['fields']['field_user_joined-revision_id']['table'] = 'field_revision_field_user_joined';
+  $handler->display->display_options['fields']['field_user_joined-revision_id']['field'] = 'field_user_joined-revision_id';
+  $handler->display->display_options['fields']['field_user_joined-revision_id']['settings'] = array(
+    'format_type' => 'date_only_short',
+    'custom_date_format' => '',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Parlament verlassen */
+  $handler->display->display_options['fields']['field_user_retired-revision_id']['id'] = 'field_user_retired-revision_id';
+  $handler->display->display_options['fields']['field_user_retired-revision_id']['table'] = 'field_revision_field_user_retired';
+  $handler->display->display_options['fields']['field_user_retired-revision_id']['field'] = 'field_user_retired-revision_id';
+  $handler->display->display_options['fields']['field_user_retired-revision_id']['settings'] = array(
+    'format_type' => 'date_only_short',
+    'custom_date_format' => '',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: User revision: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_revision_1']['id'] = 'edit_revision_1';
   $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
@@ -1258,6 +1322,8 @@ function pw_profiles_views_default_views() {
     t('Partei'),
     t('Fraktion'),
     t('Wahlkreis'),
+    t('Parlament beigetreten'),
+    t('Parlament verlassen'),
     t('‚Bearbeiten‘-Link'),
     t('Link löschen'),
     t('Link to public profile'),

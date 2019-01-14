@@ -540,7 +540,7 @@ function pw_poll_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '0',
+          'weight' => 0,
         ),
         'tile' => array(
           'label' => 'above',
@@ -563,7 +563,7 @@ function pw_poll_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -735,7 +735,7 @@ function pw_poll_field_default_fields() {
           'year_range' => '-10:+10',
         ),
         'type' => 'date_popup',
-        'weight' => '6',
+        'weight' => '5',
       ),
     ),
   );
@@ -865,7 +865,7 @@ function pw_poll_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '9',
+        'weight' => '7',
       ),
     ),
   );
@@ -1018,7 +1018,7 @@ function pw_poll_field_default_fields() {
           ),
         ),
         'type' => 'media_generic',
-        'weight' => '5',
+        'weight' => '4',
       ),
     ),
   );
@@ -1089,7 +1089,7 @@ function pw_poll_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '0',
+          'weight' => 0,
         ),
         'tile' => array(
           'label' => 'above',
@@ -1115,7 +1115,7 @@ function pw_poll_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'options_select',
-        'weight' => '3',
+        'weight' => '2',
       ),
     ),
   );
@@ -1241,7 +1241,7 @@ function pw_poll_field_default_fields() {
           'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
         ),
         'type' => 'options_onoff',
-        'weight' => '7',
+        'weight' => '6',
       ),
     ),
   );

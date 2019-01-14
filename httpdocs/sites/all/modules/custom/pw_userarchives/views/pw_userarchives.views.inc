@@ -74,12 +74,15 @@ function pw_userarchives_views_data() {
     'title' => t('User role'),
     'help' => t('The user role.'),
     'field' => array(
-      'handler' => 'views_handler_field',
+      'handler' => 'views_handler_field_user_archive_role',
       'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_user_archive_role',
+    )
   );
 
   $data['user_archive_cache']['parliament_name'] = array(
