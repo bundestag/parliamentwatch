@@ -175,7 +175,7 @@ function pw_api_user_to_array($user, $subsets = array()) {
       foreach($w_user->field_user_roles_for_view_mode_s as $role){
         $roles[] = $role->value()->name;
       }
-      $profile['meta']['roles'] = implode(',', $roles);
+      $profile['meta']['roles'] = $roles;
     }
     if ($result['actual_profile'] == 0) {
           $path = 'profile/' . $user->name . '/archive/' . $user->vid;
