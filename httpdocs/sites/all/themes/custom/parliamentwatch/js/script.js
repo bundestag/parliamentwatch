@@ -1000,12 +1000,12 @@
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
       $('.form__item__control:not(.form__item__control--special), .form-email').on('focus', function () {
-        $(this).siblings('.form__item__label').addClass('form__item__label--floating');
+        $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
       });
 
       $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
         if (!$(this).val()) {
-          $(this).siblings('.form__item__label').removeClass('form__item__label--floating');
+          $(this).siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
         }
       });
     }

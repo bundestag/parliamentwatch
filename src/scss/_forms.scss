@@ -43,7 +43,7 @@
     }
   }
 
-  &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label {
+  &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
     display: block;
     line-height: $space;
     position: relative;
@@ -57,15 +57,15 @@
   }
 
   &__label--floating,
-  &--select &__label {
+  &--select &__label:not(.sr-only) {
     left: 0 !important;
     top: 0 !important;
     font-size: .8em !important;
     font-weight: 600 !important;
   }
 
-  &--checkboxes > &__label,
-  &--radios > &__label {
+  &--checkboxes > &__label:not(.sr-only),
+  &--radios > &__label:not(.sr-only) {
     display: block;
     margin-bottom: $space-xsmall;
     font-size: 1em;
