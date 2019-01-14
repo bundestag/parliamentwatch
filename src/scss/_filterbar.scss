@@ -1,30 +1,24 @@
 /**
 * Filterbar
 */
+
 .filterbar {
   margin-bottom: -1px;
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
   background: $white;
-  position: relative;
+  position: sticky;
   z-index: 9;
+  top: 50px;
   @include container();
+  @include breakpoint($breakpoint-s-min) {
+    min-height: 62px;
+    top: 60px;
+  }
   @include breakpoint($breakpoint-l-min) {
     min-height: 62px;
+    top: 80px;
   }
-  &.is_stuck {
-    z-index: 999;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    + .filterbar-placeholder {
-      display: block;
-    }
-  }
-}
-.filterbar-placeholder {
-  display: none;
 }
 .filterbar__inner {
   min-height: 60px;
@@ -424,6 +418,17 @@ _:-ms-fullscreen,
     border-bottom: 1px solid $beige;
     .filterbar__view_options__item__link {
       color: $darkGray;
+    }
+    &:after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+
+      background: $beige;
     }
   }
 }
