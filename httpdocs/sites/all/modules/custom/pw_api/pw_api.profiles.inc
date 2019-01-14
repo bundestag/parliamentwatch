@@ -425,8 +425,7 @@ function pw_api_user_to_array($user, $subsets = array()) {
     }
   }
   catch (EntityMetadataWrapperException $exc) {
-    watchdog('pw_api',  'See '  . __FUNCTION__ . '() <pre>' .  $exc->getTraceAsString() . '</pre>', NULL, WATCHDOG_ERROR);
-    $profile['error'] = 'See '  . __FUNCTION__ . '() ' .  $exc->getTraceAsString();
+    watchdog_exception('pw_api',  $exc);
   }
 
   return $profile;
