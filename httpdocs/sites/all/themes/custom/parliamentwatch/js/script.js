@@ -972,7 +972,7 @@
         } else if ($(this).parents('.filterbar__secondary').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
-            placeholder: 'Bitte wählen',
+            placeholder: $(this).siblings('label').text(),
             dropdownParent: $('.filterbar__secondary__inner')
           });
         } else {

@@ -1236,9 +1236,6 @@ function parliamentwatch_textarea($variables) {
  */
 function parliamentwatch_select($variables) {
   $element = $variables['element'];
-  if (isset($element['#title'])) {
-    $element['#attributes']['data-placeholder'] = $element['#title'];
-  }
   element_set_attributes($element, ['id', 'name', 'size']);
   _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
