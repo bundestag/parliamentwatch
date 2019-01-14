@@ -45,10 +45,10 @@
 
   &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
     display: block;
-    line-height: $space;
+    line-height: 1.15rem;
     position: relative;
     left: $space-xsmall;
-    top: $space-large;
+    top: calc(1.15rem + 1px + #{$space-xsmall});
     color: $darkGray;
     pointer-events: none;
     transition-duration: 300ms;
