@@ -115,7 +115,7 @@ function pw_api_multiple_profiles($parliament, $file_type) {
   }
 
 
-  $result = $query->execute()->fetchCol(1);
+  $result = $query->execute()->fetchCol(2);
   $parameters = drupal_get_query_parameters();
   $subsets = isset($parameters['subsets'])?array($parameters['subsets']):array();
 
