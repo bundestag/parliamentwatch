@@ -211,7 +211,14 @@ function pw_api_user_to_array($user, $subsets = array()) {
     }
 
     $profile['party'] = $w_user->field_user_party->label();
-
+    if (empty($profile['party'])) {
+      $profile['party'] = 'parteilos';
+    }
+    $profile['fraction'] = $w_user->field_user_fraction->label();
+    if (empty($profile['fraction'])) {
+      $profile['fraction'] = 'fraktionslos';
+    }
+    
     // add location
     $profile['personal']['location'] = array();
     $profile['personal']['location']['country'] = $w_user->field_user_address->country->value();
