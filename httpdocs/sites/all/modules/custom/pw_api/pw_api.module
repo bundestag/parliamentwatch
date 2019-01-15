@@ -156,13 +156,15 @@ function pw_api_menu() {
 
   // add topics hooks
   foreach (array('xml', 'json') as $file_type) {
-    $key = 'api/topics.'.$file_type;
+    $key = 'api/%taxonomy_vocabulary_machine_name/terms.'.$file_type;
     $item = array(
-      'page callback' => 'pw_api_topics',
-      'access callback' => TRUE,
+      'page callback' => 'pw_api_terms',
+      'page arguments' => array(1),
+      'access callback' => 'pw_api_terms_access',
+      'access arguments' => array(1),
       'delivery callback' => 'pw_api_deliver_'.$file_type,
       'type' => MENU_CALLBACK,
-      'file' => 'pw_api.topics.inc',
+      'file' => 'pw_api.terms.inc',
       );
     $items[$key] = $item;
   }
@@ -185,6 +187,30 @@ function pw_api_permission() {
     );
 }
 
+
+/**
+ * Access check for API path api/path/VOCABULARY/terms
+ *  - Just allow access for some of the vocabularies not all
+ *
+ * @param $vocabulary
+ *
+ * @return bool
+ */
+function pw_api_terms_access($vocabulary) {
+
+  $allowed_vocabularies = [
+    'fraction',
+    'list',
+    'parliaments',
+    'party',
+    'topics'
+  ];
+
+  if (!in_array($vocabulary->machine_name, $allowed_vocabularies)) {
+    return FALSE;
+  }
+  return TRUE;
+}
 
 /**
  * Delivery callback; returns XML.

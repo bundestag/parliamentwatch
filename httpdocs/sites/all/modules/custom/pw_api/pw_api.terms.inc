@@ -13,20 +13,18 @@
  *   Returns all topics.
  */
 
-function pw_api_topics() {
+function pw_api_terms($vocabulary) {
 
-  $topics = [];
+  $terms = [];
 
   // load topics
-  $vocabulary = taxonomy_vocabulary_machine_name_load('topics');
   $terms_topics = entity_load('taxonomy_term', FALSE, ['vid' => $vocabulary->vid]);
-
   foreach ($terms_topics as $tid => $term) {
-    $topics['topic_'.$tid] = $term->name;
+    $terms[$tid] = $term->name;
   }
 
-  asort($topics);
+  asort($terms);
 
   // add meta data and return
-  return pw_api_meta_data($topics, 'topics');
+  return pw_api_meta_data($terms, $vocabulary->machine_name);
 }
