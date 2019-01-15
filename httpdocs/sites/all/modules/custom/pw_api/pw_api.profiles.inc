@@ -256,7 +256,7 @@ function pw_api_user_to_array($user, $subsets = array()) {
 
     // add constituency
     $profile['constituency'] = array();
-    if(sizeof($w_user->field_user_constituency) > 0){
+    if($w_user->field_user_constituency->value != NULL){
       $profile['constituency']['name'] = $w_user->field_user_constituency[0]->label();
       $profile['constituency']['uuid'] = $w_user->field_user_constituency[0]->uuid->value();
       $profile['constituency']['number'] = $w_user->field_user_constituency[0]->field_constituency_nr->value();
