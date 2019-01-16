@@ -215,4 +215,22 @@ class DataQuestion extends DataEntityBase {
   public function getDrupalAnswerId() {
     return NULL;
   }
+
+
+  /**
+   * @inheritdoc
+   */
+  public static function loadDrupalEntityById($id) {
+    $node = node_load($id);
+
+    if (!$node) {
+      return FALSE;
+    }
+
+    if (!isset($node->type) || $node->type != 'dialogue') {
+      return FALSE;
+    }
+
+    return $node;
+  }
 }

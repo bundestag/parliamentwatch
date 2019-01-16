@@ -156,4 +156,21 @@ class DataAnswer extends DataEntityBase {
   public function getDrupalAnswerId() {
     return $this->getEntity()->cid;
   }
+
+
+  /**
+   * @inheritdoc
+   */
+  public static function loadDrupalEntityById($id) {
+    $comment = comment_load($id);
+    if (!$comment) {
+      return FALSE;
+    }
+    // assure that it is a comment of a dialogue
+    if (!isset($comment->node_type) || $comment->node_type != 'comment_node_dialogue') {
+      return FALSE;
+    }
+
+    return $comment;
+  }
 }
