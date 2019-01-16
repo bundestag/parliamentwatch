@@ -56,7 +56,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 999999;
+  z-index: 9999;
   height: 100vh;
   width: 280px;
   box-shadow: 0 0 20px rgba(0, 0, 0, .3);
@@ -296,9 +296,6 @@
   margin-top: -2px;
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
-  position: sticky;
-  top: -1px;
-  z-index: 999;
   .header__bottom__inner {
     position: relative;
     display: flex;

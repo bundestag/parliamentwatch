@@ -590,12 +590,7 @@
       $('[data-localScroll]', context).once('initLocalScroll', function () {
         $(this).on('click', function (event) {
           var hrefValue = $(this).attr('href');
-          var scrollOffset = $('.header__bottom').height() * -1;
-          $(window).scrollTo($(hrefValue), 800, {
-            offset: {
-              top: scrollOffset
-            }
-          });
+          $(window).scrollTo($(hrefValue), 800);
 
           // trigger possible tab-elements
 
@@ -623,14 +618,13 @@
   Drupal.behaviors.initLocalScrollPageLoad = {
     attach: function (context) {
       function scrollToAnchor(hash) {
-        var target = $(hash),
-            headerHeight = $('.header__bottom').height();
+        var target = $(hash);
 
         target = target.length ? target : $('[name=' + hash.slice(1) +']');
 
         if (target.length) {
           $('html,body').animate({
-            scrollTop: target.offset().top - headerHeight
+            scrollTop: target.offset().top
           }, 100);
           return false;
         }
@@ -1957,19 +1951,15 @@
         });
 
         $(window).load(function () {
-          var sideBarOffset = $('.header__bottom').outerHeight() + 20;
-          var sideBarOffsetAdmin = $('.header__bottom').outerHeight() + $('#admin-menu').outerHeight() + 16;
-
           if (windowWidth >= breakpointSMin) {
             // Init stickyKit
             if ($("body").hasClass("admin-menu")) {
               $(".sidebar").stick_in_parent({
-                offset_top: sideBarOffsetAdmin,
+                offset_top: 45,
                 parent: '.sidebar-container'
               });
             } else {
               $(".sidebar").stick_in_parent({
-                offset_top: sideBarOffset,
                 parent: '.sidebar-container'
               });
             }

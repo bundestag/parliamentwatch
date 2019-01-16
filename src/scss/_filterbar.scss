@@ -7,17 +7,9 @@
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
   background: $white;
-  position: sticky;
-  z-index: 9;
-  top: 50px;
   @include container();
-  @include breakpoint($breakpoint-s-min) {
-    min-height: 62px;
-    top: 60px;
-  }
   @include breakpoint($breakpoint-l-min) {
     min-height: 62px;
-    top: 80px;
   }
 }
 .filterbar__inner {
