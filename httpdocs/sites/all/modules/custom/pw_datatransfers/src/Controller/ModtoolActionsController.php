@@ -184,7 +184,7 @@ class ModtoolActionsController {
       throw new DatatransfersException('405 Method Not Allowed');
     }
 
-    if (strpos($_SERVER['CONTENT_TYPE'] , 'application/x-www-form-urlencoded') !== 0) {
+    if (strpos($_SERVER['CONTENT_TYPE'] , 'application/json') !== 0) {
       drupal_add_http_header('Status', '415 Unsupported Media Type');
       throw new DatatransfersException('415 Unsupported Media Type');
     }
@@ -290,18 +290,14 @@ class ModtoolActionsController {
    */
   protected function setModtoolMessage() {
     $modtoolMessage = NULL;
+    $received_json = file_get_contents("php://input",  TRUE);
+    $json_data = json_decode($received_json);
 
-    if (isset($_POST['message'])) {
-      $json_data = json_decode($_POST['message']);
-      if (!$json_data) {
-        throw new SourceNotFoundException('It was not possible to receive a JSON');
-      }
-      $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
-    }
-
-    if (!$modtoolMessage) {
+    if (!$json_data) {
       throw new SourceNotFoundException('It was not possible to receive a JSON');
     }
+    $modtoolMessage = new \Drupal\pw_datatransfers\Modtool\ModtoolMessage($json_data->message, $this->dialogueId, $this->messageId);
+
 
     if ($modtoolMessage->getType() !== $this->messageType) {
       throw new InvalidSourceException('The type ('. $modtoolMessage->getType() .') of the message sent does not match the message type defined in path ('. $this->messageType .').');
