@@ -108,6 +108,10 @@ class DataAnswer extends DataEntityBase {
       'value' => $modtoolMessage->getData('sender'),
     ]]];
 
+    $comment->field_dialogue_is_standard_reply =[LANGUAGE_NONE => [0 => [
+      'value' => (int) $modtoolMessage->getIsStandardAnswer(),
+    ]]];
+
     // @todo - documents import implementieren
     $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
 //    foreach ($modtoolMessage->getDocuments() as $item) {
