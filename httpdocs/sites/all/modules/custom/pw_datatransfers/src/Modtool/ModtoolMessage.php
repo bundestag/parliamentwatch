@@ -251,7 +251,7 @@ class ModtoolMessage {
    *
    *
    * @param string $date_string
-   * The date string, e.g. "2018-12-19T13:40:05"
+   * The date string, e.g. "2018-12-19T13:40:05+01:00"
    *
    * @param string|FALSE $format
    * The format of the date string. Optional, default is 'c'
