@@ -256,7 +256,8 @@ function pw_api_user_to_array($user, $subsets = array()) {
 
     // add constituency
     $profile['constituency'] = array();
-    if(sizeof($w_user->field_user_constituency) > 0){
+    $constituency = $w_user->field_user_constituency->value();
+    if(is_array($constituency) && isset($constituency[0]) && is_object($constituency[0])){
       $profile['constituency']['name'] = $w_user->field_user_constituency[0]->label();
       $profile['constituency']['uuid'] = $w_user->field_user_constituency[0]->uuid->value();
       $profile['constituency']['number'] = $w_user->field_user_constituency[0]->field_constituency_nr->value();
@@ -425,8 +426,7 @@ function pw_api_user_to_array($user, $subsets = array()) {
     }
   }
   catch (EntityMetadataWrapperException $exc) {
-    watchdog('pw_api',  'See '  . __FUNCTION__ . '() <pre>' .  $exc->getTraceAsString() . '</pre>', NULL, WATCHDOG_ERROR);
-    $profile['error'] = 'See '  . __FUNCTION__ . '() ' .  $exc->getTraceAsString();
+    watchdog_exception('pw_api',  $exc);
   }
 
   return $profile;
