@@ -93,6 +93,9 @@ class ModtoolMessage {
     return $this->getData('text');
   }
 
+  public function getIsStandardAnswer() {
+    return $this->getData('isStandard');
+  }
 
   /**
    * Get the politician UUID depending on the type of message
@@ -215,6 +218,15 @@ class ModtoolMessage {
     }
     else if (!in_array($this->jsonData->type, $allowed_types)) {
       throw new InvalidSourceException('The message type '. $this->jsonData->type .' found in sent JSON is not a valid type.');
+    }
+
+    // validate isStandard
+    // - for answers it needs to be set and it needs to have a boolean value
+    if (!isset($this->jsonData->isStandard) && $this->jsonData->type == 'answer') {
+      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
+    }
+    else if (isset($this->jsonData->isStandard)  && $this->jsonData->type == 'answer' && !is_bool($this->jsonData->isStandard) ) {
+      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
     }
 
     // validate inserted dated
