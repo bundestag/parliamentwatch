@@ -531,6 +531,24 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Kommentar: Standard reply */
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['id'] = 'field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['table'] = 'field_data_field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['field'] = 'field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['label'] = 'Standard-Antwort';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Feld: Dialogue ID */
   $handler->display->display_options['fields']['field_dialogue_id']['id'] = 'field_dialogue_id';
   $handler->display->display_options['fields']['field_dialogue_id']['table'] = 'field_data_field_dialogue_id';
@@ -820,10 +838,33 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['exposed'] = TRUE;
   $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
-  $handler->display->display_options['filters']['status']['expose']['label'] = 'Genemigter Kommentar';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Kommentar veröffentlicht';
   $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
   $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
   $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Kommentar: Standard reply (field_dialogue_is_standard_reply) */
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['id'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['table'] = 'field_data_field_dialogue_is_standard_reply';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['field'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['operator_id'] = 'field_dialogue_is_standard_reply_value_op';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['label'] = 'Ist Standardantwort';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['operator'] = 'field_dialogue_is_standard_reply_value_op';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['identifier'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -1045,6 +1086,7 @@ function pw_administration_views_default_views() {
     t('Fragesteller'),
     t('Datum'),
     t('Antwort'),
+    t('Standard-Antwort'),
     t('Dialogue ID'),
     t('Message ID'),
     t('Message ID Frage'),
@@ -1055,7 +1097,8 @@ function pw_administration_views_default_views() {
     t('Vorname (Politiker)'),
     t('Nachname (Politiker)'),
     t('Frage veröffentlicht'),
-    t('Genemigter Kommentar'),
+    t('Kommentar veröffentlicht'),
+    t('Ist Standardantwort'),
     t('Page'),
     t('Data export'),
     t('Alle'),
