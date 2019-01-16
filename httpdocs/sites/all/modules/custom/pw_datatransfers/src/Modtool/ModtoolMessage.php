@@ -113,7 +113,7 @@ class ModtoolMessage {
   }
 
   public function getTopic() {
-    return $this->getData('topic');
+    return $this->getData('message_topic');
   }
 
   public function getParliament() {
