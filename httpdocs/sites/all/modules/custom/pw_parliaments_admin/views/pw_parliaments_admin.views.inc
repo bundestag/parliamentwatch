@@ -76,5 +76,37 @@ function pw_parliaments_admin_views_data() {
   );
 
 
+  $data['pw_parliaments_admin_imports']['type'] = array(
+    'title' => t('Type'),
+    'help' => t('The type'),
+    'field' => array(
+      'handler' => 'views_handler_field_import_type',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    )
+  );
+
+
+  $data['pw_parliaments_admin_imports']['status'] = array(
+    'title' => t('Status'),
+    'help' => t('The status'),
+    'field' => array(
+      'handler' => 'views_handler_field_import_status',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    )
+  );
+
+
   return $data;
 }

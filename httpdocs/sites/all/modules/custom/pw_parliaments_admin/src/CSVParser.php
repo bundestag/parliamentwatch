@@ -3,21 +3,43 @@
 
 namespace Drupal\pw_parliaments_admin;
 
+
+use Drupal\pw_parliaments_admin\Exception\ImportException;
+use League\Csv\Reader;
+use League\Csv\Statement;
+
 class CsvParser {
 
   /**
-   * @var \Drupal\pw_parliaments_admin\ImportInterface
+   * @var object
+   * The Drupal file entity
    */
-  protected $pwImport;
+  protected $file;
 
+
+  protected $dataSetsNumber;
+
+
+  protected $headers = [];
 
   /**
    * CsvParser constructor.
    *
-   * @param \Drupal\pw_parliaments_admin\ImportInterface $pw_import
+   * @param object
+   * The Drupal file entity
+   *
+   * @throws \Drupal\pw_parliaments_admin\Exception\ImportException
    */
-  public function __construct(ImportInterface $pw_import) {
-    $this->pwImport = $pw_import;
+  public function __construct($file) {
+    if (is_object($file) && isset($file->fid)) {
+      $this->file = $file;
+    }
+    else {
+      throw new ImportException('No valid file was defined.');
+    }
+
+    $elements = $this->getDatasets(1);
+    $this->headers = $elements['header'];
   }
 
 
@@ -32,13 +54,14 @@ class CsvParser {
    * @return array
    * An array containing an header sub array with all headers and a result
    * subarray containing associative arrays for each row in the CSV. Empty
-   * if none was found
+   * if no dataset was found or an Exception was thrown
+   *
    */
-  public function getDatasets($limit = 5, $offset = 0, $delimiter = ';') {
+  public function getDatasets($limit = 5, $offset = 0, $delimiter = ',') {
     $datasets = [];
-    $file = $this->pwImport->getLoadFile();
-    if ($file) {
-      $file_uri = $file->uri;
+
+    try {
+      $file_uri = $this->file->uri;
 
       $csv = Reader::createFromPath($file_uri, 'r');
       $csv->setDelimiter($delimiter);
@@ -62,12 +85,38 @@ class CsvParser {
         }
       }
     }
+    catch (\Exception $e) {
+      watchdog_exception('pw_parliaments_admin', $e);
+      drupal_set_message('An error appeared while trying to fetch the datasets from the CSV.', 'error');
+    }
+
 
     return $datasets;
   }
 
 
-  public function getImport() {
-    return $this->pwImport;
+  /**
+   * Count all datasets in the CSV
+   *
+   * @return int
+   */
+  public function countDataSets() {
+    if ($this->dataSetsNumber !== NULL) {
+      return $this->dataSetsNumber;
+    }
+
+    $datasets = $this->getDatasets(-1);
+    $this->dataSetsNumber = count($datasets['result']);
+    return $this->dataSetsNumber;
   }
+
+
+  /**
+   * Get the heading of the CSV
+   * @return array
+   */
+  public function getHeader() {
+    return $this->headers;
+  }
+
 }

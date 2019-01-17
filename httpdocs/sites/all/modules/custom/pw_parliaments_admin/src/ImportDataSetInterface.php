@@ -4,42 +4,61 @@
 namespace Drupal\pw_parliaments_admin;
 
 
+use Drupal\pw_parliaments_admin\Entity\EntityInterface;
+use Drupal\pw_parliaments_admin\Import\Import;
+
 /**
- * ImportDataSet classes describe a single entry from a CSV and it's
- * relation to Drupal entities.
+ * ImportDataSet classes describe a single entry from a CSV. Together with a
+ * PreDrupalEntity class it describes how a Drupal entity will be gained from
+ * the CSV entry. The PreDrupalEntity will then really creating the Drupal entities.
  */
-interface ImportDataSetInterface {
+interface ImportDataSetInterface extends EntityInterface {
 
 
   /**
-   * Do the actual import of the data defined in the dataset. Always revalidate
-   * before really importing the data to Drupal and throw an exception when
-   * validation failed or when import failed.
    *
-   * @return TRUE
-   * True if everything worked fine. Otherwise it throws an exception
-   *
-   * @throws \Drupal\pw_parliaments_admin\Exception\ImportException
+   * Turn the ImportDataSet into an PreEntity and save it to the database. This
+   * function needs to do all the stuff needed to prepare the data for a later
+   * import into Drupal.
    */
-  public function import();
+  public function preEntity();
+
 
 
   /**
-   * Validate if the field values of the dataset are valid.
+   * Defines each field of the dataset in an array. The array should have
+   * the following structure:
    *
-   * Validation should run for the whole dataset and all it's fields to
-   * get a full overview about invalid data. Therefore each ImportDataSet class
-   * stores the validation results for each field in a validations result array.
-   * Additionally to avoid multiple runs through validation a property named
-   * "validated" should be set to true. In this method validation should just run
-   * when validated = FALSE or if $revalidate = TRUE
+   * 'NAME_OF_FIELD_IN_CSV' => [
+   *    'required' => TRUE / FALSE,
+   *    'csv' => TRUE when the field is taken from CSV
+   *    'csv_required' => TRUE when the field needs to be set in CSV
+   * ]
    *
-   * @param bool $revalidate
-   * Indicating if the validation should run although it might already has run
+   * @return array
+   */
+  public static function getFieldsInCSV();
+
+
+  /**
+   * Create a new instance of an ImportDataSet from the array the CSVParser
+   * generates.
+   *
+   * @param array $dataFromCsv
+   * An array of field values parsed from the CSV
+   *
+   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
+   */
+  public static function createFromCSVArray(array $dataFromCsv, Import $import);
+
+  /**
+   * Validate if the field values of the dataset are valid. Add errors to a
+   * validationErrors[] array
+   *
    *
    * @return void
    */
-  public function validate($revalidate = FALSE);
+  public function validate();
 
 
   /**
@@ -52,15 +71,13 @@ interface ImportDataSetInterface {
   public function getValidationErrors();
 
 
+  public function hasErrors();
+
+
   /**
-   * Defines each field of the dataset in an array. The array should have
-   * the following structure:
+   * get the label for a dataset
    *
-   * 'NAME_OF_FIELD_IN_CSV' => [
-   *    'required' => TRUE / FALSE
-   * ]
-   *
-   * @return array
+   * @return string
    */
-  public static function getFields();
+  public function getLabel();
 }
