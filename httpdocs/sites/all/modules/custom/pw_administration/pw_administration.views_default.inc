@@ -350,6 +350,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Antworten';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -519,6 +524,24 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_dialogue_comment_body']['type'] = 'text_summary_or_trimmed';
   $handler->display->display_options['fields']['field_dialogue_comment_body']['settings'] = array(
     'trim_length' => '600',
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Kommentar: Standard reply */
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['id'] = 'field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['table'] = 'field_data_field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['field'] = 'field_dialogue_is_standard_reply';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['label'] = 'Standard-Antwort';
+  $handler->display->display_options['fields']['field_dialogue_is_standard_reply']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -820,10 +843,33 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['exposed'] = TRUE;
   $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
-  $handler->display->display_options['filters']['status']['expose']['label'] = 'Genemigter Kommentar';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Kommentar veröffentlicht';
   $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
   $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
   $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Kommentar: Standard reply (field_dialogue_is_standard_reply) */
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['id'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['table'] = 'field_data_field_dialogue_is_standard_reply';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['field'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['operator_id'] = 'field_dialogue_is_standard_reply_value_op';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['label'] = 'Ist Standardantwort';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['operator'] = 'field_dialogue_is_standard_reply_value_op';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['identifier'] = 'field_dialogue_is_standard_reply_value';
+  $handler->display->display_options['filters']['field_dialogue_is_standard_reply_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -1032,6 +1078,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Antworten'),
     t('Keine Ergebnisse gefunden'),
     t('Inhalt'),
     t('Politiker'),
@@ -1045,6 +1092,7 @@ function pw_administration_views_default_views() {
     t('Fragesteller'),
     t('Datum'),
     t('Antwort'),
+    t('Standard-Antwort'),
     t('Dialogue ID'),
     t('Message ID'),
     t('Message ID Frage'),
@@ -1055,7 +1103,8 @@ function pw_administration_views_default_views() {
     t('Vorname (Politiker)'),
     t('Nachname (Politiker)'),
     t('Frage veröffentlicht'),
-    t('Genemigter Kommentar'),
+    t('Kommentar veröffentlicht'),
+    t('Ist Standardantwort'),
     t('Page'),
     t('Data export'),
     t('Alle'),
@@ -1626,16 +1675,22 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'title' => 'title',
-    'field_committee_url' => 'field_committee_url',
-    'field_parliament' => 'field_parliament',
+    'name' => 'name',
     'field_topics' => 'field_topics',
+    'uuid' => 'uuid',
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
     'ctools_dropdown' => 'ctools_dropdown',
   );
   $handler->display->display_options['style_options']['default'] = 'title';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
@@ -1643,19 +1698,21 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_committee_url' => array(
-      'sortable' => 0,
+    'name' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_parliament' => array(
+    'field_topics' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_topics' => array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -1681,6 +1738,20 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
   $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'committee';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Ausschüssen';
+  /* Beziehung: Inhalt: Autor */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Beziehung: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['relationships']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['relationships']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['relationships']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['relationships']['field_parliament_tid']['label'] = 'Parlament';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -1752,45 +1823,13 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Feld: Inhalt: Committee URL */
-  $handler->display->display_options['fields']['field_committee_url']['id'] = 'field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['table'] = 'field_data_field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['field'] = 'field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['label'] = 'Ausschuss Webseite';
-  $handler->display->display_options['fields']['field_committee_url']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_committee_url']['type'] = 'link_url';
-  $handler->display->display_options['fields']['field_committee_url']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Feld: Parliament */
-  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
-  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'field_parliament_tid';
+  $handler->display->display_options['fields']['name']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
   /* Feld: Inhalt: Topics */
   $handler->display->display_options['fields']['field_topics']['id'] = 'field_topics';
   $handler->display->display_options['fields']['field_topics']['table'] = 'field_data_field_topics';
@@ -1810,6 +1849,11 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   /* Feld: Inhalt: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -1840,6 +1884,83 @@ function pw_administration_views_default_views() {
     'committee' => 'committee',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterium: Inhalt: Titel */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['title']['group'] = 1;
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Titel';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Topics (field_topics) */
+  $handler->display->display_options['filters']['field_topics_tid']['id'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['table'] = 'field_data_field_topics';
+  $handler->display->display_options['filters']['field_topics_tid']['field'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_topics_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['operator_id'] = 'field_topics_tid_op';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['label'] = 'Themen';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['operator'] = 'field_topics_tid_op';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['identifier'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_topics_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_topics_tid']['vocabulary'] = 'topics';
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_parliament_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator_id'] = 'field_parliament_tid_op';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['label'] = 'Parlament';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator'] = 'field_parliament_tid_op';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['identifier'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
   /* Filterkriterium: Inhalt: Veröffentlicht */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -1865,56 +1986,6 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Feld: Parliament (field_parliament) */
-  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
-  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
-  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
-  $handler->display->display_options['filters']['field_parliament_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator_id'] = 'field_parliament_tid_op';
-  $handler->display->display_options['filters']['field_parliament_tid']['expose']['label'] = 'Parlament';
-  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator'] = 'field_parliament_tid_op';
-  $handler->display->display_options['filters']['field_parliament_tid']['expose']['identifier'] = 'field_parliament_tid';
-  $handler->display->display_options['filters']['field_parliament_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
-  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['operator_id'] = 'field_dialogue_topic_tid_op';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['label'] = 'Thema';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['operator'] = 'field_dialogue_topic_tid_op';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['identifier'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['vocabulary'] = 'dialogue_topics';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -2048,6 +2119,9 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Ausschüssen'),
+    t('Autor'),
+    t('Parlament'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
@@ -2055,18 +2129,18 @@ function pw_administration_views_default_views() {
     t('Werte ändern'),
     t('Veröffentlichen'),
     t('Name'),
-    t('Ausschuss Webseite'),
-    t('Parlament'),
     t('Themen'),
+    t('UUID'),
     t('‚Bearbeiten‘-Link'),
     t('Bearbeiten'),
     t('Link löschen'),
     t('Aktionen'),
+    t('Titel'),
     t('Veröffentlicht'),
-    t('Thema'),
     t('Page'),
     t('Data export'),
     t('ID'),
+    t('Ausschuss Webseite'),
     t('Alle'),
   );
   $export['pw_administration_committees'] = $view;
@@ -2109,16 +2183,23 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'title' => 'title',
     'field_committee_url' => 'field_committee_url',
     'field_parliament' => 'field_parliament',
     'field_topics' => 'field_topics',
+    'uuid' => 'uuid',
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
     'ctools_dropdown' => 'ctools_dropdown',
   );
   $handler->display->display_options['style_options']['default'] = 'title';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
@@ -2134,11 +2215,20 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
     'field_parliament' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'field_topics' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -2164,6 +2254,11 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
   $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'committee';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Ausschüssen';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -2232,26 +2327,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = 'Name';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Feld: Inhalt: Committee URL */
-  $handler->display->display_options['fields']['field_committee_url']['id'] = 'field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['table'] = 'field_data_field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['field'] = 'field_committee_url';
-  $handler->display->display_options['fields']['field_committee_url']['label'] = 'Ausschuss Webseite';
-  $handler->display->display_options['fields']['field_committee_url']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_committee_url']['type'] = 'link_url';
-  $handler->display->display_options['fields']['field_committee_url']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Feld: Parliament */
   $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
   $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
@@ -2290,6 +2365,11 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   /* Feld: Inhalt: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -2337,6 +2417,57 @@ function pw_administration_views_default_views() {
     'committee' => 'committee',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filterkriterium: Inhalt: Titel */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'node';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['title']['group'] = 1;
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Titel';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Inhalt: Topics (field_topics) */
+  $handler->display->display_options['filters']['field_topics_tid']['id'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['table'] = 'field_data_field_topics';
+  $handler->display->display_options['filters']['field_topics_tid']['field'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_topics_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['operator_id'] = 'field_topics_tid_op';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['label'] = 'Themen';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['operator'] = 'field_topics_tid_op';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['identifier'] = 'field_topics_tid';
+  $handler->display->display_options['filters']['field_topics_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_topics_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_topics_tid']['vocabulary'] = 'topics';
   /* Filterkriterium: Inhalt: Veröffentlicht */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
@@ -2362,32 +2493,6 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['operator_id'] = 'field_dialogue_topic_tid_op';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['label'] = 'Thema';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['operator'] = 'field_dialogue_topic_tid_op';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['identifier'] = 'field_dialogue_topic_tid';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_dialogue_topic_tid']['vocabulary'] = 'dialogue_topics';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -2484,6 +2589,11 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontextfilter: Feld: Parliament (field_parliament) */
   $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
@@ -2538,6 +2648,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Ausschüssen'),
     t('Keine Ausschüsse gefunden'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
@@ -2546,20 +2657,21 @@ function pw_administration_views_default_views() {
     t('Werte ändern'),
     t('Veröffentlichen'),
     t('Name'),
-    t('Ausschuss Webseite'),
     t('Parlament'),
     t('Themen'),
+    t('UUID'),
     t('‚Bearbeiten‘-Link'),
     t('Bearbeiten'),
     t('Link löschen'),
     t('Aktionen'),
     t('Alle'),
     t('%1 - Ausschüsse'),
+    t('Titel'),
     t('Veröffentlicht'),
-    t('Thema'),
     t('Page'),
     t('Data export'),
     t('ID'),
+    t('Ausschuss Webseite'),
   );
   $export['pw_administration_committees_by_parliament'] = $view;
 
@@ -2619,6 +2731,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Wahlkreise';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -2980,6 +3097,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Wahlkreise'),
     t('Keine Electoral Regions gefunden'),
     t('Begriff-ID'),
     t('.'),
@@ -3663,6 +3781,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Elecotral Regions';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -3896,6 +4019,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Elecotral Regions'),
     t('Keine Electoral Regions gefunden'),
     t('Begriff-ID'),
     t('.'),
@@ -4261,6 +4385,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Fragen';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -4963,6 +5092,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Fragen'),
     t('Keine Ergebnisse gefunden'),
     t('Politiker'),
     t('Bitte auswählen'),
@@ -5410,18 +5540,16 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['style_options']['columns'] = array(
     'tid' => 'tid',
     'name' => 'name',
-    'field_parliament_election' => 'field_parliament_election',
-    'field_parliament_valid' => 'field_parliament_valid',
-    'field_parliament_valid_1' => 'field_parliament_valid_1',
-    'field_affiliates' => 'field_affiliates',
+    'description' => 'description',
+    'uuid' => 'uuid',
     'nothing_1' => 'nothing_1',
     'nothing' => 'nothing',
     'ctools_dropdown' => 'ctools_dropdown',
   );
-  $handler->display->display_options['style_options']['default'] = 'field_parliament_election';
+  $handler->display->display_options['style_options']['default'] = 'name';
   $handler->display->display_options['style_options']['info'] = array(
     'tid' => array(
-      'sortable' => 0,
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -5434,24 +5562,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_parliament_election' => array(
+    'description' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
       'sortable' => 1,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_parliament_valid' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_parliament_valid_1' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_affiliates' => array(
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -5477,6 +5595,11 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
   $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'party';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Parteien';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -5497,6 +5620,16 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['name']['alter']['path'] = 'taxonomy/term/[tid]/edit';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  /* Feld: Taxonomie-Begriff: Begriffsbeschreibung */
+  $handler->display->display_options['fields']['description']['id'] = 'description';
+  $handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['description']['field'] = 'description';
+  $handler->display->display_options['fields']['description']['label'] = 'Beschreibung';
+  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   /* Feld: Global: Benutzerdefinierter Text */
   $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
   $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
@@ -5559,10 +5692,13 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Parteien'),
     t('Keine Parlamente gefunden'),
     t('ID'),
     t('.'),
     t('Name'),
+    t('Beschreibung'),
+    t('UUID'),
     t('Bearbeiten'),
     t('Löschen'),
     t('Aktionen'),
@@ -5592,6 +5728,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
@@ -5610,17 +5747,22 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
     'uid' => 'uid',
     'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
     'mail' => 'mail',
-    'field_user_party' => 'field_user_party',
-    'field_user_parliament' => 'field_user_parliament',
+    'name' => 'name',
+    'rid' => 'rid',
+    'uuid' => 'uuid',
+    'name_4' => 'name_4',
+    'name_1' => 'name_1',
     'field_user_constituency' => 'field_user_constituency',
-    'field_user_list' => 'field_user_list',
-    'field_user_list_position' => 'field_user_list_position',
+    'name_2' => 'name_2',
+    'name_3' => 'name_3',
     'field_user_joined' => 'field_user_joined',
     'field_user_retired' => 'field_user_retired',
+    'nothing_1' => 'nothing_1',
     'edit_node' => 'edit_node',
     'nothing' => 'nothing',
     'cancel_node' => 'cancel_node',
@@ -5628,6 +5770,11 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_lname';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'uid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -5656,12 +5803,33 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_party' => array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_parliament' => array(
+    'rid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name_4' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name_1' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -5673,14 +5841,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_list' => array(
+    'name_2' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_list_position' => array(
+    'name_3' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -5697,6 +5865,11 @@ function pw_administration_views_default_views() {
     'field_user_retired' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing_1' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -5722,6 +5895,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Politikern';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -5729,6 +5907,26 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Politiker gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Beziehung: Benutzer: Parlament (field_user_parliament) */
+  $handler->display->display_options['relationships']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['relationships']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
+  $handler->display->display_options['relationships']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['relationships']['field_user_parliament_tid']['label'] = 'Parlament';
+  /* Beziehung: Benutzer: Liste (field_user_list) */
+  $handler->display->display_options['relationships']['field_user_list_tid']['id'] = 'field_user_list_tid';
+  $handler->display->display_options['relationships']['field_user_list_tid']['table'] = 'field_data_field_user_list';
+  $handler->display->display_options['relationships']['field_user_list_tid']['field'] = 'field_user_list_tid';
+  $handler->display->display_options['relationships']['field_user_list_tid']['label'] = 'Liste';
+  /* Beziehung: Benutzer: Listenposition (field_user_list_position) */
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['id'] = 'field_user_list_position_tid';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['table'] = 'field_data_field_user_list_position';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['field'] = 'field_user_list_position_tid';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['label'] = 'Listenposition';
+  /* Beziehung: Benutzer: Partei (field_user_party) */
+  $handler->display->display_options['relationships']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['relationships']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['label'] = 'Partei';
   /* Feld: Stapelverarbeitungen: Benutzer */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_user';
@@ -5840,44 +6038,33 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['mail']['field'] = 'mail';
   $handler->display->display_options['fields']['mail']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['mail']['link_to_user'] = '0';
-  /* Feld: Benutzer: Partei */
-  $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['field'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_party']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_party']['delta_offset'] = '0';
-  /* Feld: Benutzer: Parlament */
-  $handler->display->display_options['fields']['field_user_parliament']['id'] = 'field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['table'] = 'field_data_field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['field'] = 'field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['label'] = 'Aktuelles/ letztes Parlament';
-  $handler->display->display_options['fields']['field_user_parliament']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_parliament']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Benutzername';
+  /* Feld: Benutzer: Rollen */
+  $handler->display->display_options['fields']['rid']['id'] = 'rid';
+  $handler->display->display_options['fields']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['fields']['rid']['field'] = 'rid';
+  /* Feld: Benutzer: Benutzer UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'users';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_4']['id'] = 'name_4';
+  $handler->display->display_options['fields']['name_4']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_4']['field'] = 'name';
+  $handler->display->display_options['fields']['name_4']['relationship'] = 'field_user_party_tid';
+  $handler->display->display_options['fields']['name_4']['label'] = 'Partei';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
+  $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_1']['field'] = 'name';
+  $handler->display->display_options['fields']['name_1']['relationship'] = 'field_user_parliament_tid';
+  $handler->display->display_options['fields']['name_1']['label'] = 'Aktuelles/ letztes Parlament';
+  $handler->display->display_options['fields']['name_1']['link_to_taxonomy'] = TRUE;
   /* Feld: Benutzer: Wahlkreis */
   $handler->display->display_options['fields']['field_user_constituency']['id'] = 'field_user_constituency';
   $handler->display->display_options['fields']['field_user_constituency']['table'] = 'field_data_field_user_constituency';
@@ -5897,42 +6084,18 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency']['delta_offset'] = '0';
-  /* Feld: Benutzer: Liste */
-  $handler->display->display_options['fields']['field_user_list']['id'] = 'field_user_list';
-  $handler->display->display_options['fields']['field_user_list']['table'] = 'field_data_field_user_list';
-  $handler->display->display_options['fields']['field_user_list']['field'] = 'field_user_list';
-  $handler->display->display_options['fields']['field_user_list']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer: Listenposition */
-  $handler->display->display_options['fields']['field_user_list_position']['id'] = 'field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['table'] = 'field_data_field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['field'] = 'field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list_position']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_2']['id'] = 'name_2';
+  $handler->display->display_options['fields']['name_2']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_2']['field'] = 'name';
+  $handler->display->display_options['fields']['name_2']['relationship'] = 'field_user_list_tid';
+  $handler->display->display_options['fields']['name_2']['label'] = 'Liste';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_3']['id'] = 'name_3';
+  $handler->display->display_options['fields']['name_3']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_3']['field'] = 'name';
+  $handler->display->display_options['fields']['name_3']['relationship'] = 'field_user_list_position_tid';
+  $handler->display->display_options['fields']['name_3']['label'] = 'Listenposition';
   /* Feld: Benutzer: Parlament beigetreten */
   $handler->display->display_options['fields']['field_user_joined']['id'] = 'field_user_joined';
   $handler->display->display_options['fields']['field_user_joined']['table'] = 'field_data_field_user_joined';
@@ -5981,6 +6144,14 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Links';
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Alle Revisionen';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'user/[uid]/revisions';
   /* Feld: Benutzer: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'users';
@@ -6101,11 +6272,92 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['group'] = 1;
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Benutzername';
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Benutzer: Rollen */
+  $handler->display->display_options['filters']['rid_1']['id'] = 'rid_1';
+  $handler->display->display_options['filters']['rid_1']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid_1']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid_1']['value'] = array(
+    140336230 => '140336230',
+    185431326 => '185431326',
+  );
+  $handler->display->display_options['filters']['rid_1']['group'] = 1;
+  $handler->display->display_options['filters']['rid_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['rid_1']['expose']['operator_id'] = 'rid_1_op';
+  $handler->display->display_options['filters']['rid_1']['expose']['label'] = 'Rollen';
+  $handler->display->display_options['filters']['rid_1']['expose']['operator'] = 'rid_1_op';
+  $handler->display->display_options['filters']['rid_1']['expose']['identifier'] = 'rid_1';
+  $handler->display->display_options['filters']['rid_1']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['rid_1']['expose']['reduce'] = TRUE;
+  /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_parliament_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator_id'] = 'field_user_parliament_tid_op';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['label'] = 'Aktuelles/ letztes Parlament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator'] = 'field_user_parliament_tid_op';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['identifier'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
   /* Filterkriterium: Benutzer: Wahlkreis (field_user_constituency) */
   $handler->display->display_options['filters']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
   $handler->display->display_options['filters']['field_user_constituency_tid']['table'] = 'field_data_field_user_constituency';
   $handler->display->display_options['filters']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
   $handler->display->display_options['filters']['field_user_constituency_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_user_constituency_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_constituency_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['operator_id'] = 'field_user_constituency_tid_op';
   $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['label'] = 'Wahlkreis';
@@ -6127,16 +6379,17 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_constituency_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_constituency_tid']['vocabulary'] = 'constituency';
-  /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
-  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator_id'] = 'field_user_parliament_tid_op';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['label'] = 'Parlament';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator'] = 'field_user_parliament_tid_op';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['identifier'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember_roles'] = array(
+  /* Filterkriterium: Benutzer: Geschlecht (field_user_gender) */
+  $handler->display->display_options['filters']['field_user_gender_value']['id'] = 'field_user_gender_value';
+  $handler->display->display_options['filters']['field_user_gender_value']['table'] = 'field_data_field_user_gender';
+  $handler->display->display_options['filters']['field_user_gender_value']['field'] = 'field_user_gender_value';
+  $handler->display->display_options['filters']['field_user_gender_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_gender_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_gender_value']['expose']['operator_id'] = 'field_user_gender_value_op';
+  $handler->display->display_options['filters']['field_user_gender_value']['expose']['label'] = 'Geschlecht';
+  $handler->display->display_options['filters']['field_user_gender_value']['expose']['operator'] = 'field_user_gender_value_op';
+  $handler->display->display_options['filters']['field_user_gender_value']['expose']['identifier'] = 'field_user_gender_value';
+  $handler->display->display_options['filters']['field_user_gender_value']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -6150,8 +6403,62 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
+  /* Filterkriterium: Benutzer: Listenposition (field_user_list_position) */
+  $handler->display->display_options['filters']['field_user_list_position_tid']['id'] = 'field_user_list_position_tid';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['table'] = 'field_data_field_user_list_position';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['field'] = 'field_user_list_position_tid';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_list_position_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['operator_id'] = 'field_user_list_position_tid_op';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['label'] = 'Listenposition';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['operator'] = 'field_user_list_position_tid_op';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['identifier'] = 'field_user_list_position_tid';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_list_position_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_list_position_tid']['vocabulary'] = 'list_position';
+  /* Filterkriterium: Benutzer: Parlament verlassen (field_user_retired) */
+  $handler->display->display_options['filters']['field_user_retired_value']['id'] = 'field_user_retired_value';
+  $handler->display->display_options['filters']['field_user_retired_value']['table'] = 'field_data_field_user_retired';
+  $handler->display->display_options['filters']['field_user_retired_value']['field'] = 'field_user_retired_value';
+  $handler->display->display_options['filters']['field_user_retired_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_retired_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_retired_value']['expose']['operator_id'] = 'field_user_retired_value_op';
+  $handler->display->display_options['filters']['field_user_retired_value']['expose']['label'] = 'Parlament verlassen (field_user_retired)';
+  $handler->display->display_options['filters']['field_user_retired_value']['expose']['operator'] = 'field_user_retired_value_op';
+  $handler->display->display_options['filters']['field_user_retired_value']['expose']['identifier'] = 'field_user_retired_value';
+  $handler->display->display_options['filters']['field_user_retired_value']['is_grouped'] = TRUE;
+  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['label'] = 'Parlament verlassen';
+  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['identifier'] = 'field_user_retired_value';
+  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['group_items'] = array(
+    1 => array(
+      'title' => 'Ausgeschieden',
+      'operator' => '!=',
+      'value' => 'now',
+    ),
+    2 => array(
+      'title' => '',
+      'operator' => '=',
+      'value' => '',
+    ),
+    3 => array(
+      'title' => '',
+      'operator' => '=',
+      'value' => '',
+    ),
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -6399,7 +6706,12 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('weiter'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Politikern'),
     t('Keine Politiker gefunden'),
+    t('Parlament'),
+    t('Liste'),
+    t('Listenposition'),
+    t('Partei'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Löschen'),
@@ -6408,18 +6720,21 @@ function pw_administration_views_default_views() {
     t('Name'),
     t('[field_user_lname], [field_user_fname]'),
     t('E-Mail'),
-    t('Partei'),
+    t('Benutzername'),
+    t('Rollen'),
+    t('UUID'),
     t('Aktuelles/ letztes Parlament'),
     t('Wahlkreis'),
-    t('Liste'),
-    t('Listenposition'),
     t('Parlament beigetreten'),
     t('Parlament verlassen'),
+    t('Links'),
+    t('Alle Revisionen'),
     t('Bearbeiten'),
     t('Revisionen'),
     t('Aktionen'),
     t('Nachname'),
-    t('Parlament'),
+    t('Geschlecht'),
+    t('Parlament verlassen (field_user_retired)'),
     t('Page'),
     t('Data export'),
     t('Uid'),
@@ -6470,16 +6785,18 @@ function pw_administration_views_default_views() {
     'field_user_fname-revision_id' => 'field_user_fname-revision_id',
     'field_user_lname-revision_id' => 'field_user_lname-revision_id',
     'user_role' => 'user_role',
-    'field_user_party-revision_id' => 'field_user_party-revision_id',
-    'field_user_fraction-revision_id' => 'field_user_fraction-revision_id',
+    'name_5' => 'name_5',
+    'name_1' => 'name_1',
     'field_user_joined-revision_id' => 'field_user_joined-revision_id',
     'field_user_retired-revision_id' => 'field_user_retired-revision_id',
-    'field_user_list-revision_id' => 'field_user_list-revision_id',
+    'name_2' => 'name_2',
     'field_user_list_won-revision_id' => 'field_user_list_won-revision_id',
-    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
+    'name_3' => 'name_3',
     'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
     'field_user_constituency_won-revision_id' => 'field_user_constituency_won-revision_id',
     'field_user_election_result-revision_id' => 'field_user_election_result-revision_id',
+    'uuid' => 'uuid',
+    'name' => 'name',
     'edit_revision' => 'edit_revision',
     'nothing' => 'nothing',
     'ctools_dropdown' => 'ctools_dropdown',
@@ -6514,12 +6831,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_party-revision_id' => array(
+    'name_5' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_fraction-revision_id' => array(
+    'name_1' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -6540,7 +6859,7 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_list-revision_id' => array(
+    'name_2' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -6554,8 +6873,8 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_list_position-revision_id' => array(
-      'sortable' => 1,
+    'name_3' => array(
+      'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
@@ -6580,6 +6899,20 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'edit_revision' => array(
       'align' => '',
       'separator' => '',
@@ -6596,12 +6929,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Kopfzeile: Global: Textbereich */
-  $handler->display->display_options['header']['area']['id'] = 'area';
-  $handler->display->display_options['header']['area']['table'] = 'views';
-  $handler->display->display_options['header']['area']['field'] = 'area';
-  $handler->display->display_options['header']['area']['content'] = 'Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.';
-  $handler->display->display_options['header']['area']['format'] = 'managed_content';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = '<p>Zeigt @start - @end von @total Politiker-Profilen</p>
+
+Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -6615,6 +6949,30 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['relationships']['vid']['field'] = 'vid';
   $handler->display->display_options['relationships']['vid']['label'] = 'User Revision';
   $handler->display->display_options['relationships']['vid']['required'] = TRUE;
+  /* Beziehung: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
+  $handler->display->display_options['relationships']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
+  $handler->display->display_options['relationships']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
+  $handler->display->display_options['relationships']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
+  $handler->display->display_options['relationships']['field_user_fraction_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_fraction_tid']['label'] = 'Fraktion';
+  /* Beziehung: Benutzer (Historische Daten): Liste (field_user_list) */
+  $handler->display->display_options['relationships']['field_user_list_tid']['id'] = 'field_user_list_tid';
+  $handler->display->display_options['relationships']['field_user_list_tid']['table'] = 'field_revision_field_user_list';
+  $handler->display->display_options['relationships']['field_user_list_tid']['field'] = 'field_user_list_tid';
+  $handler->display->display_options['relationships']['field_user_list_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_list_tid']['label'] = 'Liste';
+  /* Beziehung: Benutzer (Historische Daten): Listenposition (field_user_list_position) */
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['id'] = 'field_user_list_position_tid';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['table'] = 'field_revision_field_user_list_position';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['field'] = 'field_user_list_position_tid';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_list_position_tid']['label'] = 'Listenposition';
+  /* Beziehung: Benutzer (Historische Daten): Partei (field_user_party) */
+  $handler->display->display_options['relationships']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['relationships']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['label'] = 'Partei';
   /* Feld: Benutzer: Uid */
   $handler->display->display_options['fields']['uid']['id'] = 'uid';
   $handler->display->display_options['fields']['uid']['table'] = 'users';
@@ -6667,47 +7025,18 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['label'] = 'Profil für';
-  /* Feld: Benutzer (Historische Daten): Partei */
-  $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['field'] = 'field_user_party-revision_id';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['path'] = 'taxonomy/term/[field_user_party-revision_id-tid]/edit';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_party-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => 'taxonomy/term/[field-item:raw]/edit',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_party-revision_id']['delta_offset'] = '0';
-  /* Feld: Benutzer (Historische Daten): Fraktion */
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['id'] = 'field_user_fraction-revision_id';
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['table'] = 'field_revision_field_user_fraction';
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['field'] = 'field_user_fraction-revision_id';
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_fraction-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_5']['id'] = 'name_5';
+  $handler->display->display_options['fields']['name_5']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_5']['field'] = 'name';
+  $handler->display->display_options['fields']['name_5']['relationship'] = 'field_user_party_tid';
+  $handler->display->display_options['fields']['name_5']['label'] = 'Partei';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
+  $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_1']['field'] = 'name';
+  $handler->display->display_options['fields']['name_1']['relationship'] = 'field_user_fraction_tid';
+  $handler->display->display_options['fields']['name_1']['label'] = 'Fraktion';
   /* Feld: Benutzer (Historische Daten): Parlament beigetreten */
   $handler->display->display_options['fields']['field_user_joined-revision_id']['id'] = 'field_user_joined-revision_id';
   $handler->display->display_options['fields']['field_user_joined-revision_id']['table'] = 'field_revision_field_user_joined';
@@ -6758,25 +7087,12 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Benutzer (Historische Daten): Liste */
-  $handler->display->display_options['fields']['field_user_list-revision_id']['id'] = 'field_user_list-revision_id';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['table'] = 'field_revision_field_user_list';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['field'] = 'field_user_list-revision_id';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_2']['id'] = 'name_2';
+  $handler->display->display_options['fields']['name_2']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_2']['field'] = 'name';
+  $handler->display->display_options['fields']['name_2']['relationship'] = 'field_user_list_tid';
+  $handler->display->display_options['fields']['name_2']['label'] = 'Liste';
   /* Feld: Benutzer (Historische Daten): Liste gewonnen */
   $handler->display->display_options['fields']['field_user_list_won-revision_id']['id'] = 'field_user_list_won-revision_id';
   $handler->display->display_options['fields']['field_user_list_won-revision_id']['table'] = 'field_revision_field_user_list_won';
@@ -6799,25 +7115,12 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Benutzer (Historische Daten): Listenposition */
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['id'] = 'field_user_list_position-revision_id';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['table'] = 'field_revision_field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['field'] = 'field_user_list_position-revision_id';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_3']['id'] = 'name_3';
+  $handler->display->display_options['fields']['name_3']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_3']['field'] = 'name';
+  $handler->display->display_options['fields']['name_3']['relationship'] = 'field_user_list_position_tid';
+  $handler->display->display_options['fields']['name_3']['label'] = 'Listenposition';
   /* Feld: Benutzer (Historische Daten): Wahlkreis */
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
@@ -6878,6 +7181,17 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Benutzer: Benutzer UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'users';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'vid';
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['name']['label'] = 'Benutzername';
   /* Feld: User revision: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_revision']['id'] = 'edit_revision';
   $handler->display->display_options['fields']['edit_revision']['table'] = 'user_revision';
@@ -6889,7 +7203,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = 'Alle Revisionen';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Links';
   $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Alle Revisionen';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
@@ -6926,6 +7240,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['group'] = 1;
   $handler->display->display_options['filters']['user_role']['exposed'] = TRUE;
   $handler->display->display_options['filters']['user_role']['expose']['operator_id'] = 'user_role_op';
   $handler->display->display_options['filters']['user_role']['expose']['label'] = 'Profil für';
@@ -6951,6 +7266,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['field_user_fname_value']['field'] = 'field_user_fname_value';
   $handler->display->display_options['filters']['field_user_fname_value']['relationship'] = 'vid';
   $handler->display->display_options['filters']['field_user_fname_value']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_user_fname_value']['group'] = 1;
   $handler->display->display_options['filters']['field_user_fname_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator_id'] = 'field_user_fname_value_op';
   $handler->display->display_options['filters']['field_user_fname_value']['expose']['label'] = 'Vorname';
@@ -6970,11 +7286,65 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer (Historische Daten): Last name (field_user_lname) */
+  $handler->display->display_options['filters']['field_user_lname_value']['id'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['table'] = 'field_revision_field_user_lname';
+  $handler->display->display_options['filters']['field_user_lname_value']['field'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_lname_value']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_user_lname_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_lname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator_id'] = 'field_user_lname_value_op';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['label'] = 'Nachname';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator'] = 'field_user_lname_value_op';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['identifier'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Benutzer (Historische Daten): Partei (field_user_party) */
+  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_party_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
   /* Filterkriterium: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
   $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
   $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
   $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
   $handler->display->display_options['filters']['field_user_fraction_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_fraction_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['operator_id'] = 'field_user_fraction_tid_op';
   $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['label'] = 'Fraktion';
@@ -6996,36 +7366,12 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
-  /* Filterkriterium: Benutzer (Historische Daten): Last name (field_user_lname) */
-  $handler->display->display_options['filters']['field_user_lname_value']['id'] = 'field_user_lname_value';
-  $handler->display->display_options['filters']['field_user_lname_value']['table'] = 'field_revision_field_user_lname';
-  $handler->display->display_options['filters']['field_user_lname_value']['field'] = 'field_user_lname_value';
-  $handler->display->display_options['filters']['field_user_lname_value']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['field_user_lname_value']['operator'] = 'allwords';
-  $handler->display->display_options['filters']['field_user_lname_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator_id'] = 'field_user_lname_value_op';
-  $handler->display->display_options['filters']['field_user_lname_value']['expose']['label'] = 'Nachname';
-  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator'] = 'field_user_lname_value_op';
-  $handler->display->display_options['filters']['field_user_lname_value']['expose']['identifier'] = 'field_user_lname_value';
-  $handler->display->display_options['filters']['field_user_lname_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
   /* Filterkriterium: Benutzer (Historische Daten): Liste (field_user_list) */
   $handler->display->display_options['filters']['field_user_list_tid']['id'] = 'field_user_list_tid';
   $handler->display->display_options['filters']['field_user_list_tid']['table'] = 'field_revision_field_user_list';
   $handler->display->display_options['filters']['field_user_list_tid']['field'] = 'field_user_list_tid';
   $handler->display->display_options['filters']['field_user_list_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_list_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_list_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_list_tid']['expose']['operator_id'] = 'field_user_list_tid_op';
   $handler->display->display_options['filters']['field_user_list_tid']['expose']['label'] = 'Liste';
@@ -7052,6 +7398,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['field_user_list_won_value']['table'] = 'field_revision_field_user_list_won';
   $handler->display->display_options['filters']['field_user_list_won_value']['field'] = 'field_user_list_won_value';
   $handler->display->display_options['filters']['field_user_list_won_value']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_list_won_value']['group'] = 1;
   $handler->display->display_options['filters']['field_user_list_won_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_list_won_value']['expose']['operator_id'] = 'field_user_list_won_value_op';
   $handler->display->display_options['filters']['field_user_list_won_value']['expose']['label'] = 'Liste gewonnen';
@@ -7071,37 +7418,12 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Benutzer (Historische Daten): Partei (field_user_party) */
-  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_revision_field_user_party';
-  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
-  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
   /* Filterkriterium: Benutzer (Historische Daten): Wahlkreis (field_user_constituency) */
   $handler->display->display_options['filters']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
   $handler->display->display_options['filters']['field_user_constituency_tid']['table'] = 'field_revision_field_user_constituency';
   $handler->display->display_options['filters']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
   $handler->display->display_options['filters']['field_user_constituency_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_constituency_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_constituency_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['operator_id'] = 'field_user_constituency_tid_op';
   $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['label'] = 'Wahlkreis';
@@ -7149,28 +7471,33 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
-    t('Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.'),
+    t('<p>Zeigt @start - @end von @total Politiker-Profilen</p>
+
+Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn ein/e Politiker/in doppelt aufgeführt ist, sollte das daran liegen, dass jeweils das Profil für die Kandidatur und für das gewonnene Mandat aufgelistet werden.'),
     t('Keine Politiker gefunden'),
     t('User Revision'),
+    t('Fraktion'),
+    t('Liste'),
+    t('Listenposition'),
+    t('Partei'),
     t('Uid'),
     t('First Name'),
     t('Nachname'),
     t('[field_user_lname-revision_id], [field_user_fname-revision_id]'),
     t('Profil für'),
-    t('Partei'),
-    t('Fraktion'),
     t('Parlament beigetreten'),
     t('Parlament verlassen'),
-    t('Liste'),
     t('Liste gewonnen'),
     t('Ja'),
     t('Nein'),
-    t('Listenposition'),
     t('Wahlkreis'),
     t('Wahlkreis gewonnen'),
     t('Wahlkreisergebnis'),
+    t('Benutzer UUID'),
+    t('Benutzername'),
     t('‚Bearbeiten‘-Link'),
     t('Bearbeiten'),
+    t('Links'),
     t('Alle Revisionen'),
     t('Aktionen'),
     t('Alle'),
@@ -7218,16 +7545,34 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
+    'nid' => 'nid',
     'title' => 'title',
-    'field_parliament' => 'field_parliament',
-    'field_poll_committees' => 'field_poll_committees',
+    'name_1' => 'name_1',
     'status' => 'status',
-    'field_voted' => 'field_voted',
     'field_poll_date' => 'field_poll_date',
     'changed' => 'changed',
+    'name' => 'name',
+    'uuid' => 'uuid',
+    'edit_node' => 'edit_node',
+    'delete_node' => 'delete_node',
+    'nothing' => 'nothing',
+    'ctools_dropdown' => 'ctools_dropdown',
   );
   $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
@@ -7235,24 +7580,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_parliament' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_poll_committees' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'status' => array(
+    'name_1' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_voted' => array(
+    'status' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -7273,6 +7608,40 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'delete_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'ctools_dropdown' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
   );
   /* Kopfzeile: Global: PW Administration - Create new */
   $handler->display->display_options['header']['pw_administration_create_new']['id'] = 'pw_administration_create_new';
@@ -7280,6 +7649,20 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['empty'] = TRUE;
   $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'poll';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Abstimmungen';
+  /* Beziehung: Inhalt: Autor */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  /* Beziehung: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['relationships']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['relationships']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['relationships']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['relationships']['field_parliament_tid']['label'] = 'Parlament';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -7357,69 +7740,18 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-  /* Feld: Feld: Parliament */
-  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['label'] = 'Parlament';
-  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
-  /* Feld: Inhalt: Committees */
-  $handler->display->display_options['fields']['field_poll_committees']['id'] = 'field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['table'] = 'field_data_field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['field'] = 'field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['label'] = 'Ausschüsse';
-  $handler->display->display_options['fields']['field_poll_committees']['settings'] = array(
-    'bypass_access' => 0,
-    'link' => 0,
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_poll_committees']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
+  $handler->display->display_options['fields']['name_1']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name_1']['field'] = 'name';
+  $handler->display->display_options['fields']['name_1']['relationship'] = 'field_parliament_tid';
+  $handler->display->display_options['fields']['name_1']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['name_1']['link_to_taxonomy'] = TRUE;
   /* Feld: Inhalt: Veröffentlicht */
   $handler->display->display_options['fields']['status']['id'] = 'status';
   $handler->display->display_options['fields']['status']['table'] = 'node';
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['not'] = 0;
-  /* Feld: Inhalt: Voted */
-  $handler->display->display_options['fields']['field_voted']['id'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['fields']['field_voted']['field'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['fields']['field_voted']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Inhalt: Poll Date */
   $handler->display->display_options['fields']['field_poll_date']['id'] = 'field_poll_date';
   $handler->display->display_options['fields']['field_poll_date']['table'] = 'field_data_field_poll_date';
@@ -7452,6 +7784,17 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
   $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Autor';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   /* Feld: Inhalt: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -7470,7 +7813,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
   $handler->display->display_options['fields']['nothing']['table'] = 'views';
   $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
-  $handler->display->display_options['fields']['nothing']['label'] = 'Stimmen/ Votes';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Links';
   $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Übersicht Stimmen/ Votes';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'node/[nid]/votes';
@@ -7568,7 +7911,7 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
   /* Filterkriterium: Inhalt: Veröffentlicht */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -7595,17 +7938,18 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Inhalt: Voted (field_voted) */
-  $handler->display->display_options['filters']['field_voted_value']['id'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['filters']['field_voted_value']['field'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_voted_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator_id'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['identifier'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['remember_roles'] = array(
+  /* Filterkriterium: Benutzer: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Autor';
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -7650,6 +7994,11 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid_1']['id'] = 'uuid_1';
+  $handler->display->display_options['fields']['uuid_1']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid_1']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid_1']['label'] = 'UUID';
   /* Feld: Inhalt: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -7752,6 +8101,17 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
   $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Autor';
+  /* Feld: Benutzer: Benutzer UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'users';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'uid';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontextfilter: Inhalt: Beitrags-ID */
   $handler->display->display_options['arguments']['nid']['id'] = 'nid';
@@ -7787,6 +8147,9 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Abstimmungen'),
+    t('Autor'),
+    t('Parlament'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
@@ -7794,21 +8157,22 @@ function pw_administration_views_default_views() {
     t('Werte ändern'),
     t('Veröffentlichen'),
     t('Titel'),
-    t('Parlament'),
-    t('Ausschüsse'),
     t('Veröffentlicht'),
-    t('Stimmverhalten'),
     t('Datum Abstimmung'),
     t('Letztes Update'),
+    t('UUID'),
     t('‚Bearbeiten‘-Link'),
     t('Bearbeiten'),
-    t('Stimmen/ Votes'),
+    t('Links'),
     t('Übersicht Stimmen/ Votes'),
     t('Aktionen'),
     t('Themen'),
     t('Page'),
     t('Data export'),
     t('ID'),
+    t('Ausschüsse'),
+    t('Stimmverhalten'),
+    t('Benutzer UUID'),
     t('Alle'),
   );
   $export['pw_administration_polls'] = $view;
@@ -7851,16 +8215,34 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
+    'nid' => 'nid',
     'title' => 'title',
     'field_parliament' => 'field_parliament',
-    'field_poll_committees' => 'field_poll_committees',
     'status' => 'status',
-    'field_voted' => 'field_voted',
     'field_poll_date' => 'field_poll_date',
     'changed' => 'changed',
+    'name' => 'name',
+    'uuid' => 'uuid',
+    'edit_node' => 'edit_node',
+    'delete_node' => 'delete_node',
+    'nothing' => 'nothing',
+    'ctools_dropdown' => 'ctools_dropdown',
   );
   $handler->display->display_options['style_options']['default'] = 'changed';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
@@ -7869,23 +8251,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
     'field_parliament' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_poll_committees' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'status' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_voted' => array(
+    'status' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -7906,12 +8278,51 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'delete_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'ctools_dropdown' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
   );
   /* Kopfzeile: Global: PW Administration - Create new */
   $handler->display->display_options['header']['pw_administration_create_new']['id'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
   $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
   $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'poll';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Abstimmungen';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -7919,6 +8330,10 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Abstimmungen gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Beziehung: Inhalt: Autor */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'node';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -8006,50 +8421,11 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
-  /* Feld: Inhalt: Committees */
-  $handler->display->display_options['fields']['field_poll_committees']['id'] = 'field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['table'] = 'field_data_field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['field'] = 'field_poll_committees';
-  $handler->display->display_options['fields']['field_poll_committees']['label'] = 'Ausschüsse';
-  $handler->display->display_options['fields']['field_poll_committees']['settings'] = array(
-    'bypass_access' => 0,
-    'link' => 0,
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_poll_committees']['delta_offset'] = '0';
   /* Feld: Inhalt: Veröffentlicht */
   $handler->display->display_options['fields']['status']['id'] = 'status';
   $handler->display->display_options['fields']['status']['table'] = 'node';
   $handler->display->display_options['fields']['status']['field'] = 'status';
   $handler->display->display_options['fields']['status']['not'] = 0;
-  /* Feld: Inhalt: Voted */
-  $handler->display->display_options['fields']['field_voted']['id'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['fields']['field_voted']['field'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['fields']['field_voted']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Inhalt: Poll Date */
   $handler->display->display_options['fields']['field_poll_date']['id'] = 'field_poll_date';
   $handler->display->display_options['fields']['field_poll_date']['table'] = 'field_data_field_poll_date';
@@ -8082,6 +8458,17 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
   $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Autor';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
   /* Feld: Inhalt: ‚Bearbeiten‘-Link */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -8215,17 +8602,18 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  /* Filterkriterium: Inhalt: Voted (field_voted) */
-  $handler->display->display_options['filters']['field_voted_value']['id'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['filters']['field_voted_value']['field'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_voted_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator_id'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['identifier'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['remember_roles'] = array(
+  /* Filterkriterium: Benutzer: Name */
+  $handler->display->display_options['filters']['uid']['id'] = 'uid';
+  $handler->display->display_options['filters']['uid']['table'] = 'users';
+  $handler->display->display_options['filters']['uid']['field'] = 'uid';
+  $handler->display->display_options['filters']['uid']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['uid']['value'] = '';
+  $handler->display->display_options['filters']['uid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uid']['expose']['operator_id'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['label'] = 'Autor';
+  $handler->display->display_options['filters']['uid']['expose']['operator'] = 'uid_op';
+  $handler->display->display_options['filters']['uid']['expose']['identifier'] = 'uid';
+  $handler->display->display_options['filters']['uid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -8270,6 +8658,11 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nid']['table'] = 'node';
   $handler->display->display_options['fields']['nid']['field'] = 'nid';
   $handler->display->display_options['fields']['nid']['label'] = 'ID';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid_1']['id'] = 'uuid_1';
+  $handler->display->display_options['fields']['uuid_1']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid_1']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid_1']['label'] = 'UUID';
   /* Feld: Inhalt: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -8372,6 +8765,18 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
   $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Autor';
+  /* Feld: Benutzer: Benutzer UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'users';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'Autor UUID';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontextfilter: Feld: Parliament (field_parliament) */
   $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
@@ -8422,7 +8827,9 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Abstimmungen'),
     t('Keine Abstimmungen gefunden'),
+    t('Autor'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
@@ -8431,11 +8838,10 @@ function pw_administration_views_default_views() {
     t('Veröffentlichen'),
     t('Titel'),
     t('Parlament'),
-    t('Ausschüsse'),
     t('Veröffentlicht'),
-    t('Stimmverhalten'),
     t('Datum Abstimmung'),
     t('Letztes Update'),
+    t('UUID'),
     t('‚Bearbeiten‘-Link'),
     t('Bearbeiten'),
     t('Stimmen/ Votes'),
@@ -8447,6 +8853,9 @@ function pw_administration_views_default_views() {
     t('Page'),
     t('Data export'),
     t('ID'),
+    t('Ausschüsse'),
+    t('Stimmverhalten'),
+    t('Autor UUID'),
   );
   $export['pw_administration_polls_by_parliament'] = $view;
 
@@ -8492,15 +8901,16 @@ function pw_administration_views_default_views() {
     'uid' => 'uid',
     'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
-    'field_user_party' => 'field_user_party',
+    'name' => 'name',
     'field_job' => 'field_job',
     'field_sidejob_organization' => 'field_sidejob_organization',
+    'field_sidejob_job_category' => 'field_sidejob_job_category',
     'field_topics' => 'field_topics',
-    'field_sidejob_classification' => 'field_sidejob_classification',
     'field_sidejob_date_end' => 'field_sidejob_date_end',
     'field_sidejob_date_start' => 'field_sidejob_date_start',
-    'field_sidejob_job_category' => 'field_sidejob_job_category',
+    'field_sidejob_classification' => 'field_sidejob_classification',
     'field_sidejob_income_interval' => 'field_sidejob_income_interval',
+    'sidejobs_income' => 'sidejobs_income',
     'changed' => 'changed',
     'view_user' => 'view_user',
     'edit_node' => 'edit_node',
@@ -8535,7 +8945,9 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_party' => array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -8554,14 +8966,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_topics' => array(
+    'field_sidejob_job_category' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_sidejob_classification' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
+    'field_topics' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -8580,7 +8992,7 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_sidejob_job_category' => array(
+    'field_sidejob_classification' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -8590,6 +9002,11 @@ function pw_administration_views_default_views() {
     'field_sidejob_income_interval' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'sidejobs_income' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -8622,6 +9039,16 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: PW Administration - Create new */
+  $handler->display->display_options['header']['pw_administration_create_new']['id'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
+  $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'sidejob';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Nebentätigkeiten';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -8634,6 +9061,12 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['relationships']['field_politician_target_id']['table'] = 'field_data_field_politician';
   $handler->display->display_options['relationships']['field_politician_target_id']['field'] = 'field_politician_target_id';
   $handler->display->display_options['relationships']['field_politician_target_id']['label'] = 'Politiker';
+  /* Beziehung: Benutzer: Partei (field_user_party) */
+  $handler->display->display_options['relationships']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['relationships']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['relationships']['field_user_party_tid']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['relationships']['field_user_party_tid']['label'] = 'Partei';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -8751,26 +9184,12 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Benutzer: Partei */
-  $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['field'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['relationship'] = 'field_politician_target_id';
-  $handler->display->display_options['fields']['field_user_party']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_party']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_party']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'field_user_party_tid';
+  $handler->display->display_options['fields']['name']['label'] = 'Partei';
   /* Feld: Inhalt: Job */
   $handler->display->display_options['fields']['field_job']['id'] = 'field_job';
   $handler->display->display_options['fields']['field_job']['table'] = 'field_data_field_job';
@@ -9563,15 +9982,16 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Nebentätigkeiten'),
     t('Keine Einträge gefunden'),
     t('Politiker'),
+    t('Partei'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
     t('Löschen'),
     t('Werte ändern'),
     t('[field_user_lname], [field_user_fname]'),
-    t('Partei'),
     t('Job'),
     t('Organisation'),
     t('Job category'),
@@ -10249,6 +10669,11 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['style_options']['sticky'] = TRUE;
   $handler->display->display_options['style_options']['empty_table'] = TRUE;
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Benutzern';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Ungefilterter Text */
   $handler->display->display_options['empty']['area_text_custom']['id'] = 'area_text_custom';
   $handler->display->display_options['empty']['area_text_custom']['table'] = 'views';
@@ -10316,6 +10741,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Benutzername';
   /* Feld: Benutzer: Last name */
   $handler->display->display_options['fields']['field_user_lname']['id'] = 'field_user_lname';
   $handler->display->display_options['fields']['field_user_lname']['table'] = 'field_data_field_user_lname';
@@ -10326,77 +10752,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_user_fname']['table'] = 'field_data_field_user_fname';
   $handler->display->display_options['fields']['field_user_fname']['field'] = 'field_user_fname';
   $handler->display->display_options['fields']['field_user_fname']['label'] = 'Vorname';
-  /* Feld: Benutzer: Partei */
-  $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['field'] = 'field_user_party';
-  $handler->display->display_options['fields']['field_user_party']['label'] = 'Party';
-  $handler->display->display_options['fields']['field_user_party']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_party']['delta_offset'] = '0';
-  /* Feld: Benutzer: Parlament */
-  $handler->display->display_options['fields']['field_user_parliament']['id'] = 'field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['table'] = 'field_data_field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['field'] = 'field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer: Wahlkreis */
-  $handler->display->display_options['fields']['field_user_constituency']['id'] = 'field_user_constituency';
-  $handler->display->display_options['fields']['field_user_constituency']['table'] = 'field_data_field_user_constituency';
-  $handler->display->display_options['fields']['field_user_constituency']['field'] = 'field_user_constituency';
-  $handler->display->display_options['fields']['field_user_constituency']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_constituency']['delta_offset'] = '0';
-  /* Feld: Benutzer: Listenposition */
-  $handler->display->display_options['fields']['field_user_list_position']['id'] = 'field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['table'] = 'field_data_field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['field'] = 'field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Benutzer: E-Mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
@@ -10419,30 +10774,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['rid']['table'] = 'users_roles';
   $handler->display->display_options['fields']['rid']['field'] = 'rid';
   $handler->display->display_options['fields']['rid']['type'] = 'ul';
-  /* Feld: Benutzer: Parlament verlassen */
-  $handler->display->display_options['fields']['field_user_retired']['id'] = 'field_user_retired';
-  $handler->display->display_options['fields']['field_user_retired']['table'] = 'field_data_field_user_retired';
-  $handler->display->display_options['fields']['field_user_retired']['field'] = 'field_user_retired';
-  $handler->display->display_options['fields']['field_user_retired']['label'] = 'Ausgeschieden am';
-  $handler->display->display_options['fields']['field_user_retired']['settings'] = array(
-    'format_type' => 'date_only_short',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_remaining_days' => 0,
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Benutzer: Letzter Zugriff */
   $handler->display->display_options['fields']['access']['id'] = 'access';
   $handler->display->display_options['fields']['access']['table'] = 'users';
@@ -10457,24 +10788,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['name_1']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['name_1']['link_to_user'] = FALSE;
   $handler->display->display_options['fields']['name_1']['format_username'] = FALSE;
-  /* Feld: Benutzer: Data URL */
-  $handler->display->display_options['fields']['field_user_data_url']['id'] = 'field_user_data_url';
-  $handler->display->display_options['fields']['field_user_data_url']['table'] = 'field_data_field_user_data_url';
-  $handler->display->display_options['fields']['field_user_data_url']['field'] = 'field_user_data_url';
-  $handler->display->display_options['fields']['field_user_data_url']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_user_data_url']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Benutzer: Erstellungsdatum */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'users';
@@ -10485,24 +10798,28 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'users';
   $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
-  $handler->display->display_options['fields']['edit_node']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['edit_node']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['edit_node']['text'] = 'Bearbeiten';
   /* Feld: Benutzer: Link zum Account löschen */
   $handler->display->display_options['fields']['cancel_node']['id'] = 'cancel_node';
   $handler->display->display_options['fields']['cancel_node']['table'] = 'users';
   $handler->display->display_options['fields']['cancel_node']['field'] = 'cancel_node';
   $handler->display->display_options['fields']['cancel_node']['label'] = '';
+  $handler->display->display_options['fields']['cancel_node']['exclude'] = TRUE;
   $handler->display->display_options['fields']['cancel_node']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['cancel_node']['hide_alter_empty'] = FALSE;
-  /* Feld: Benutzer: Adresse - Ort (z. B. Stadt) */
-  $handler->display->display_options['fields']['field_user_address_locality']['id'] = 'field_user_address_locality';
-  $handler->display->display_options['fields']['field_user_address_locality']['table'] = 'field_data_field_user_address';
-  $handler->display->display_options['fields']['field_user_address_locality']['field'] = 'field_user_address_locality';
-  $handler->display->display_options['fields']['field_user_address_locality']['label'] = 'Wohnort';
-  /* Sortierkriterien: Benutzer: Erstellungsdatum */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'users';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['fields']['cancel_node']['text'] = 'Löschen';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'edit_node' => 'edit_node',
+    'cancel_node' => 'cancel_node',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
   /* Filterkriterium: Nachname */
   $handler->display->display_options['filters']['field_user_lname_value']['id'] = 'field_user_lname_value';
   $handler->display->display_options['filters']['field_user_lname_value']['table'] = 'field_data_field_user_lname';
@@ -10607,28 +10924,6 @@ function pw_administration_views_default_views() {
     178386088 => 0,
     40118511 => 0,
   );
-  /* Filterkriterium: Benutzer: Adresse - Ort (z. B. Stadt) */
-  $handler->display->display_options['filters']['field_user_address_locality']['id'] = 'field_user_address_locality';
-  $handler->display->display_options['filters']['field_user_address_locality']['table'] = 'field_data_field_user_address';
-  $handler->display->display_options['filters']['field_user_address_locality']['field'] = 'field_user_address_locality';
-  $handler->display->display_options['filters']['field_user_address_locality']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_address_locality']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_address_locality']['expose']['operator_id'] = 'field_user_address_locality_op';
-  $handler->display->display_options['filters']['field_user_address_locality']['expose']['label'] = 'Wohnort';
-  $handler->display->display_options['filters']['field_user_address_locality']['expose']['operator'] = 'field_user_address_locality_op';
-  $handler->display->display_options['filters']['field_user_address_locality']['expose']['identifier'] = 'field_user_address_locality';
-  $handler->display->display_options['filters']['field_user_address_locality']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-  );
   /* Filterkriterium: Benutzer: Aktiv */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'users';
@@ -10652,145 +10947,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['filters']['rid']['expose']['operator'] = 'rid_op';
   $handler->display->display_options['filters']['rid']['expose']['identifier'] = 'rid';
   $handler->display->display_options['filters']['rid']['expose']['remember'] = TRUE;
-  /* Filterkriterium: Benutzer: Listenposition (field_user_list_position) */
-  $handler->display->display_options['filters']['field_user_list_position_tid']['id'] = 'field_user_list_position_tid';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['table'] = 'field_data_field_user_list_position';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['field'] = 'field_user_list_position_tid';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_list_position_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['operator_id'] = 'field_user_list_position_tid_op';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['label'] = 'Listenposition (field_user_list_position)';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['use_operator'] = TRUE;
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['operator'] = 'field_user_list_position_tid_op';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['identifier'] = 'field_user_list_position_tid';
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['multiple'] = TRUE;
-  $handler->display->display_options['filters']['field_user_list_position_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_list_position_tid']['vocabulary'] = 'list_position';
-  /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
-  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_parliament_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator_id'] = 'field_user_parliament_tid_op';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['label'] = 'Parliament';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator'] = 'field_user_parliament_tid_op';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['identifier'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember'] = TRUE;
-  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    40118511 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: Benutzer: Partei (field_user_party) */
-  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_data_field_user_party';
-  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['value'] = '';
-  $handler->display->display_options['filters']['field_user_party_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
-  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
-  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Benutzer: Wahlkreis (field_user_constituency) */
-  $handler->display->display_options['filters']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['table'] = 'field_data_field_user_constituency';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['value'] = '';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_constituency_tid']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['operator_id'] = 'field_user_constituency_tid_op';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['label'] = 'Wahlkreis';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['operator'] = 'field_user_constituency_tid_op';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['identifier'] = 'field_user_constituency_tid';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_constituency_tid']['type'] = 'textfield';
-  $handler->display->display_options['filters']['field_user_constituency_tid']['vocabulary'] = 'constituency';
-  /* Filterkriterium: Benutzer: Parlament verlassen (field_user_retired) */
-  $handler->display->display_options['filters']['field_user_retired_value']['id'] = 'field_user_retired_value';
-  $handler->display->display_options['filters']['field_user_retired_value']['table'] = 'field_data_field_user_retired';
-  $handler->display->display_options['filters']['field_user_retired_value']['field'] = 'field_user_retired_value';
-  $handler->display->display_options['filters']['field_user_retired_value']['operator'] = '<=';
-  $handler->display->display_options['filters']['field_user_retired_value']['value'] = array(
-    'min' => NULL,
-    'max' => NULL,
-    'value' => NULL,
-    'type' => 'date',
-  );
-  $handler->display->display_options['filters']['field_user_retired_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_user_retired_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['operator_id'] = 'field_user_retired_value_op';
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['label'] = 'Ausgeschieden bis?';
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['use_operator'] = TRUE;
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['operator'] = 'field_user_retired_value_op';
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['identifier'] = 'field_user_retired_value';
-  $handler->display->display_options['filters']['field_user_retired_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-  );
-  $handler->display->display_options['filters']['field_user_retired_value']['is_grouped'] = TRUE;
-  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['label'] = 'Parlament verlassen (field_user_retired)';
-  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['identifier'] = 'field_user_retired_value';
-  $handler->display->display_options['filters']['field_user_retired_value']['group_info']['group_items'] = array(
-    1 => array(
-      'title' => 'Ausgeschieden',
-      'operator' => '!=',
-      'value' => 'now',
-    ),
-  );
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -11110,6 +11266,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('weiter'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Benutzern'),
     t('Keine Benutzer verfügbar.'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
@@ -11117,33 +11274,30 @@ function pw_administration_views_default_views() {
     t('Delete'),
     t('Change value'),
     t('Change user roles'),
-    t('Name'),
+    t('Benutzername'),
     t('Nachname'),
     t('Vorname'),
+    t('UUID'),
+    t('Aktiv'),
+    t('Rollen'),
+    t('Letzter Zugriff'),
+    t('User-Name'),
+    t('Mitglied seit'),
+    t('Bearbeiten'),
+    t('Löschen'),
+    t('Aktionen'),
+    t('E-Mail'),
+    t('Rolle'),
+    t('Data export'),
+    t('UID'),
+    t('Name'),
     t('Party'),
     t('Parlament'),
     t('Wahlkreis'),
     t('Listenposition'),
-    t('UUID'),
-    t('Aktiv'),
-    t('Rollen'),
     t('Ausgeschieden am'),
-    t('Letzter Zugriff'),
-    t('User-Name'),
     t('Data URL'),
-    t('Mitglied seit'),
-    t('Aktionen'),
     t('Wohnort'),
-    t('Benutzername'),
-    t('E-Mail'),
-    t('Rolle'),
-    t('Listenposition (field_user_list_position)'),
-    t('Parliament'),
-    t('Partei'),
-    t('Ausgeschieden bis?'),
-    t('Parlament verlassen (field_user_retired)'),
-    t('Data export'),
-    t('UID'),
     t('Alle'),
     t('Seite'),
     t('Seite - Default Tab'),
@@ -11192,12 +11346,11 @@ function pw_administration_views_default_views() {
     'uid' => 'uid',
     'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
-    'field_parliament' => 'field_parliament',
-    'field_vote_node' => 'field_vote_node',
+    'name' => 'name',
+    'title' => 'title',
     'type' => 'type',
     'field_poll_date' => 'field_poll_date',
     'field_vote' => 'field_vote',
-    'field_voted' => 'field_voted',
     'changed' => 'changed',
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
@@ -11231,12 +11384,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_parliament' => array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_vote_node' => array(
+    'title' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -11258,13 +11413,6 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
     'field_vote' => array(
-      'sortable' => 1,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_voted' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -11294,6 +11442,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Stimmen/ Votes';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -11315,7 +11468,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['relationships']['field_parliament_tid']['id'] = 'field_parliament_tid';
   $handler->display->display_options['relationships']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['relationships']['field_parliament_tid']['field'] = 'field_parliament_tid';
-  $handler->display->display_options['relationships']['field_parliament_tid']['label'] = 'Parliament Term';
+  $handler->display->display_options['relationships']['field_parliament_tid']['label'] = 'Parlament';
   /* Feld: Stapelverarbeitungen: Inhalt */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'views_entity_node';
@@ -11433,44 +11586,19 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Feld: Parliament */
-  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
-  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
-  /* Feld: Inhalt: Abstimmung */
-  $handler->display->display_options['fields']['field_vote_node']['id'] = 'field_vote_node';
-  $handler->display->display_options['fields']['field_vote_node']['table'] = 'field_data_field_vote_node';
-  $handler->display->display_options['fields']['field_vote_node']['field'] = 'field_vote_node';
-  $handler->display->display_options['fields']['field_vote_node']['label'] = 'Abstimmung/ Petition';
-  $handler->display->display_options['fields']['field_vote_node']['settings'] = array(
-    'bypass_access' => 0,
-    'link' => 1,
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'field_parliament_tid';
+  $handler->display->display_options['fields']['name']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
+  /* Feld: Inhalt: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['relationship'] = 'field_vote_node_target_id';
+  $handler->display->display_options['fields']['title']['label'] = 'Abstimmung/ Petition';
   /* Feld: Inhalt: Typ */
   $handler->display->display_options['fields']['type']['id'] = 'type';
   $handler->display->display_options['fields']['type']['table'] = 'node';
@@ -11509,25 +11637,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_vote']['label'] = 'Stimme';
   $handler->display->display_options['fields']['field_vote']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['fields']['field_vote']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Inhalt: Voted */
-  $handler->display->display_options['fields']['field_voted']['id'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['fields']['field_voted']['field'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['fields']['field_voted']['type'] = 'list_key';
-  $handler->display->display_options['fields']['field_voted']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -11683,7 +11792,7 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
   /* Filterkriterium: Inhalt: Veröffentlicht */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -11736,30 +11845,6 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_vote_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_vote_tid']['vocabulary'] = 'votes';
-  /* Filterkriterium: Inhalt: Voted (field_voted) */
-  $handler->display->display_options['filters']['field_voted_value']['id'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['filters']['field_voted_value']['field'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_voted_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator_id'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['identifier'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
   /* Filterkriterium: Inhalt: Typ */
   $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
   $handler->display->display_options['filters']['type_1']['table'] = 'node';
@@ -12027,36 +12112,36 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Stimmen/ Votes'),
     t('Keine Einträge gefunden'),
     t('Politiker'),
     t('Abstimmung'),
-    t('Parliament Term'),
+    t('Parlament'),
     t('Bitte auswählen'),
     t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
     t('Löschen'),
     t('Werte ändern'),
     t('[field_user_lname], [field_user_fname]'),
-    t('Parliament'),
     t('Abstimmung/ Petition'),
     t('Typ'),
     t('Datum Abstimmung'),
     t('Stimme'),
-    t('Stimmverhalten'),
     t('Letztes Update'),
     t('[edit_node] [delete_node] '),
     t('Bearbeiten'),
     t('Aktionen'),
     t('Vorname'),
     t('Nachname'),
-    t('Parlament'),
     t('Veröffentlicht'),
     t('Page'),
     t('Data export'),
     t('Vote Id'),
     t('Politiker Id'),
+    t('Parliament'),
     t('Parliament Id'),
     t('.'),
+    t('Stimmverhalten'),
     t('Alle'),
   );
   $export['pw_administration_votings'] = $view;
@@ -12205,6 +12290,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Stimmen/ Votes';
   /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
   $handler->display->display_options['empty']['area']['id'] = 'area';
   $handler->display->display_options['empty']['area']['table'] = 'views';
@@ -12341,25 +12431,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_vote']['label'] = 'Stimme';
   $handler->display->display_options['fields']['field_vote']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['fields']['field_vote']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Inhalt: Voted */
-  $handler->display->display_options['fields']['field_voted']['id'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['fields']['field_voted']['field'] = 'field_voted';
-  $handler->display->display_options['fields']['field_voted']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['fields']['field_voted']['type'] = 'list_key';
-  $handler->display->display_options['fields']['field_voted']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -12532,30 +12603,6 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_vote_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_vote_tid']['vocabulary'] = 'votes';
-  /* Filterkriterium: Inhalt: Voted (field_voted) */
-  $handler->display->display_options['filters']['field_voted_value']['id'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['table'] = 'field_data_field_voted';
-  $handler->display->display_options['filters']['field_voted_value']['field'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['group'] = 1;
-  $handler->display->display_options['filters']['field_voted_value']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator_id'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['label'] = 'Stimmverhalten';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['operator'] = 'field_voted_value_op';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['identifier'] = 'field_voted_value';
-  $handler->display->display_options['filters']['field_voted_value']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    30037204 => 0,
-    51622513 => 0,
-    181527986 => 0,
-    140336230 => 0,
-    185431326 => 0,
-    178386088 => 0,
-    29859578 => 0,
-    127500594 => 0,
-    52344559 => 0,
-    109923392 => 0,
-  );
   /* Filterkriterium: Inhalt: Typ */
   $handler->display->display_options['filters']['type_1']['id'] = 'type_1';
   $handler->display->display_options['filters']['type_1']['table'] = 'node';
@@ -12837,6 +12884,7 @@ function pw_administration_views_default_views() {
     t('‹ vorherige Seite'),
     t('nächste Seite ›'),
     t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Stimmen/ Votes'),
     t('Keine Einträge gefunden'),
     t('Politiker'),
     t('Abstimmung'),
@@ -12848,7 +12896,6 @@ function pw_administration_views_default_views() {
     t('Werte ändern'),
     t('[field_user_lname], [field_user_fname]'),
     t('Stimme'),
-    t('Stimmverhalten'),
     t('Letztes Update'),
     t('[edit_node] [delete_node] '),
     t('Bearbeiten'),
@@ -12868,6 +12915,7 @@ function pw_administration_views_default_views() {
     t('.'),
     t('Typ'),
     t('Datum Abstimmung'),
+    t('Stimmverhalten'),
   );
   $export['pw_administration_votings_by_poll'] = $view;
 

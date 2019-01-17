@@ -93,6 +93,9 @@ class ModtoolMessage {
     return $this->getData('text');
   }
 
+  public function getIsStandardAnswer() {
+    return $this->getData('isStandard');
+  }
 
   /**
    * Get the politician UUID depending on the type of message
@@ -217,6 +220,15 @@ class ModtoolMessage {
       throw new InvalidSourceException('The message type '. $this->jsonData->type .' found in sent JSON is not a valid type.');
     }
 
+    // validate isStandard
+    // - for answers it needs to be set and it needs to have a boolean value
+    if (!isset($this->jsonData->isStandard) && $this->jsonData->type == 'answer') {
+      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
+    }
+    else if (isset($this->jsonData->isStandard)  && $this->jsonData->type == 'answer' && !is_bool($this->jsonData->isStandard) ) {
+      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
+    }
+
     // validate inserted dated
     if (!isset($this->jsonData->inserted_date) || is_null($this->jsonData->inserted_date)) {
       throw new InvalidSourceException('Required inserted date field missing in sent JSON.');
@@ -251,7 +263,7 @@ class ModtoolMessage {
    *
    *
    * @param string $date_string
-   * The date string, e.g. "2018-12-19T13:40:05"
+   * The date string, e.g. "2018-12-19T13:40:05+01:00"
    *
    * @param string|FALSE $format
    * The format of the date string. Optional, default is 'c'
@@ -260,7 +272,7 @@ class ModtoolMessage {
    */
   protected function isValidDate($date_string, $format = FALSE) {
     if (!$format) {
-      $format = 'c';
+      $format = 'Y-m-d\TG:i:sP';
     }
 
     $d = DateTime::createFromFormat($format, $date_string);

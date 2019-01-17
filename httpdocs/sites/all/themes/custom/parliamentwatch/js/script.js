@@ -402,66 +402,6 @@
   };
 
   /**
-   * Attaches header sticky behavior.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   *   Add class to header element
-   */
-  Drupal.behaviors.stickyPageHeader = {
-    attach: function () {
-      if (!$('body').hasClass('blank-theme') || isIE11 == false) {
-        var lastScrollTop = 0, delta = 2;
-        $(window).scroll(function(event){
-          var scrollPosition = Math.max($(this).scrollTop(), 0);
-          if(Math.abs(lastScrollTop - scrollPosition) <= delta)
-            return;
-
-          if (scrollPosition > lastScrollTop){
-            // Header
-            $('#header').addClass('sticky');
-          } else if(scrollPosition < 20) {
-            // Header
-            $('#header').removeClass('sticky');
-          }
-
-          // Filter
-
-          if (windowWidth >= breakpointLMin) {
-            var filterbarOffsetAdmin = $('#header').outerHeight() + $('#admin-menu').outerHeight() - 2;
-            var filterbarOffset = $('#header').outerHeight() - 2;
-            var filterbarScrollOffsetAdmin = $('#header').outerHeight() + $('#admin-menu').outerHeight() + $('.intro').outerHeight() - 2;
-            var filterbarScrollOffset = $('.intro').outerHeight() + $('.filter-bar').outerHeight() - 2;
-
-            // Filter - with admin bar
-            if ($('body').hasClass('admin-menu') && !$('body').hasClass('blank-theme')) {
-              if(scrollPosition > filterbarScrollOffsetAdmin) {
-                $('.filterbar').css('margin-top', filterbarOffsetAdmin).addClass('is_stuck');
-              } else {
-                $('.filterbar').css('margin-top', 0).removeClass('is_stuck');
-              }
-            }
-
-            // Filter - without admin bar
-            if (!$('body').hasClass('admin-menu') && !$('body').hasClass('blank-theme')) {
-              if(scrollPosition > filterbarScrollOffset + 20) {
-                $('.filterbar').css('margin-top', filterbarOffset).addClass('is_stuck');
-                $('.filterbar-placeholder').css('height', $('.filterbar').outerHeight() - 20);
-              } else {
-                $('.filterbar').css('margin-top', 0).removeClass('is_stuck');
-              }
-            }
-          } else {
-            $('.filterbar').css('margin-top', 0).removeClass('is_stuck');
-          }
-          lastScrollTop = scrollPosition;
-        });
-      }
-    }
-  };
-
-  /**
    * Attaches the main navigation behavior.
    *
    * @type {Drupal~behavior}
@@ -471,7 +411,7 @@
    */
   Drupal.behaviors.mainNavigation = {
     attach: function () {
-      var activeMenuItem = $('.nav__item.nav__item--active').index();
+      var activeMenuItem = $('.header__bottom__inner .nav__item.nav__item--active').index();
 
       /* 2nd-Navigation level with optional swiper integration */
       var secondLevel = $('.header__bottom nav');
@@ -571,7 +511,7 @@
       $('[data-sidebar-trigger]', context).once('mainNavigationTrigger', function () {
         $('[data-sidebar-trigger]').click(function () {
           $(this).toggleClass('lines-button-close');
-          $('[data-sidebar-container]').toggleClass('sidebar-open');
+          $('[data-sidebar-container]').parent('body').toggleClass('sidebar-open');
         });
       });
     }
@@ -639,35 +579,6 @@
   };
 
   /**
-   * Attaches the content offset behavior.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   */
-  Drupal.behaviors.contentOffset = {
-    attach: function () {
-      function contentOffset() {
-        windowWidth = window.innerWidth;
-        windowHeight = window.outerHeight;
-        var mainNavHeight = $('.header__nav').height(),
-          subNavHeight = $('.header__subnav').height(),
-          headerHeight = $('#header').height(),
-          contentOffset = 0;
-        var lastScrollTop = 0, delta = 2;
-        contentOffset = headerHeight - 1;
-        $('#content').css('margin-top', contentOffset);
-        setTimeout(docReadyClass, 200);
-      }
-      contentOffset();
-      var windowResize = debounce(function () {
-        contentOffset();
-      }, 150);
-      window.addEventListener('resize', windowResize);
-    }
-  };
-
-  /**
    * Attaches the local scroll behavior.
    *
    * @type {Drupal~behavior}
@@ -679,12 +590,7 @@
       $('[data-localScroll]', context).once('initLocalScroll', function () {
         $(this).on('click', function (event) {
           var hrefValue = $(this).attr('href');
-          var scrollOffset = $('#header').height() * -1;
-          $(window).scrollTo($(hrefValue), 800, {
-            offset: {
-              top: scrollOffset
-            }
-          });
+          $(window).scrollTo($(hrefValue), 800);
 
           // trigger possible tab-elements
 
@@ -699,6 +605,34 @@
           event.preventDefault();
         });
       });
+    }
+  };
+
+  /**
+   * Attaches local scroll behavior on page load.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.initLocalScrollPageLoad = {
+    attach: function (context) {
+      function scrollToAnchor(hash) {
+        var target = $(hash);
+
+        target = target.length ? target : $('[name=' + hash.slice(1) +']');
+
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top
+          }, 100);
+          return false;
+        }
+      }
+
+      if(window.location.hash) {
+        scrollToAnchor(window.location.hash);
+      }
     }
   };
 
@@ -2017,19 +1951,15 @@
         });
 
         $(window).load(function () {
-          var sideBarOffset = $('#header').outerHeight() + 20;
-          var sideBarOffsetAdmin = $('#header').outerHeight() + $('#admin-menu').outerHeight() + 16;
-
           if (windowWidth >= breakpointSMin) {
             // Init stickyKit
             if ($("body").hasClass("admin-menu")) {
               $(".sidebar").stick_in_parent({
-                offset_top: sideBarOffsetAdmin,
+                offset_top: 45,
                 parent: '.sidebar-container'
               });
             } else {
               $(".sidebar").stick_in_parent({
-                offset_top: sideBarOffset,
                 parent: '.sidebar-container'
               });
             }

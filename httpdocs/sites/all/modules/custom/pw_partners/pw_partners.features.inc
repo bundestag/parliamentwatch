@@ -24,7 +24,7 @@ function pw_partners_node_info() {
       'base' => 'node_content',
       'description' => t('List of media partners'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titel'),
       'help' => '',
     ),
   );

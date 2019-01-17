@@ -2,7 +2,6 @@
 
 namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
 
-use DateTime;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use stdClass;
 
@@ -45,11 +44,13 @@ class DataQuestion extends DataEntityBase {
     $modtoolMessage = $this->modtoolMessage;
     $dialogue_id = $modtoolMessage->getDialogueId();
 
-
-    $date_created = new DateTime($modtoolMessage->getInsertedDate());
+    $timezone = new \DateTimeZone('UTC');
+    $date_created = new \DateTime($modtoolMessage->getInsertedDate());
+    $date_created->setTimezone($timezone);
     $node->created = $date_created->format('U');
 
-    $date_updated = new DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated = new \DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated->setTimezone($timezone);
     $node->changed = $date_updated->format('U');
 
     // set the parliament
@@ -214,5 +215,23 @@ class DataQuestion extends DataEntityBase {
    */
   public function getDrupalAnswerId() {
     return NULL;
+  }
+
+
+  /**
+   * @inheritdoc
+   */
+  public static function loadDrupalEntityById($id) {
+    $node = node_load($id);
+
+    if (!$node) {
+      return FALSE;
+    }
+
+    if (!isset($node->type) || $node->type != 'dialogue') {
+      return FALSE;
+    }
+
+    return $node;
   }
 }
