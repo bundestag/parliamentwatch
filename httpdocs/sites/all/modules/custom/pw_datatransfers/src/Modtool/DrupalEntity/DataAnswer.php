@@ -3,7 +3,6 @@
 
 namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
 
-use DateTime;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use stdClass;
 
@@ -71,10 +70,13 @@ class DataAnswer extends DataEntityBase {
     $dialogue_id = $modtoolMessage->getDialogueId();
 
 
-    $date_created = new DateTime($modtoolMessage->getInsertedDate());
+    $timezone = new \DateTimeZone('UTC');
+    $date_created = new \DateTime($modtoolMessage->getInsertedDate());
+    $date_created->setTimezone($timezone);
     $comment->created = $date_created->format('U');
 
-    $date_updated = new DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated = new \DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated->setTimezone($timezone);
     $comment->changed = $date_updated->format('U');
 
 
@@ -106,6 +108,10 @@ class DataAnswer extends DataEntityBase {
 
     $comment->field_dialogue_sender_fullname = [LANGUAGE_NONE => [0 => [
       'value' => $modtoolMessage->getData('sender'),
+    ]]];
+
+    $comment->field_dialogue_is_standard_reply =[LANGUAGE_NONE => [0 => [
+      'value' => (int) $modtoolMessage->getIsStandardAnswer(),
     ]]];
 
     // @todo - documents import implementieren
@@ -155,5 +161,22 @@ class DataAnswer extends DataEntityBase {
    */
   public function getDrupalAnswerId() {
     return $this->getEntity()->cid;
+  }
+
+
+  /**
+   * @inheritdoc
+   */
+  public static function loadDrupalEntityById($id) {
+    $comment = comment_load($id);
+    if (!$comment) {
+      return FALSE;
+    }
+    // assure that it is a comment of a dialogue
+    if (!isset($comment->node_type) || $comment->node_type != 'comment_node_dialogue') {
+      return FALSE;
+    }
+
+    return $comment;
   }
 }

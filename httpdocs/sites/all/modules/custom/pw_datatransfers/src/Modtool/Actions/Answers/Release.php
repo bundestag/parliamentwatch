@@ -6,6 +6,7 @@ namespace Drupal\pw_datatransfers\Modtool\Actions\Answers;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
 use Drupal\pw_datatransfers\Modtool\Actions\ActionBaseAnswer;
+use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
@@ -46,6 +47,31 @@ class Release extends ActionBaseAnswer {
    */
   public function check() {
     $this->checkMessageStatus(ModtoolMessageStatus::RELEASED);
+    $this->checkIfQuestionIsReleased();
+  }
+
+
+  /**
+   * Check if the question for the answer is released. If not we do not
+   * release the answer either.
+   *
+   * @return bool
+   *
+   * @throws \Drupal\pw_datatransfers\Exception\DataActionException
+   */
+  protected function checkIfQuestionIsReleased() {
+    $question_nid = $this->dataAnswer->getDrupalQuestionId();
+    $question = DataQuestion::loadDrupalEntityById($question_nid);
+
+    if (!$question) {
+      throw new DataActionException('There is no question found for the answer.');
+    }
+
+    if (!$question->status) {
+      throw new DataActionException('The answer could not be released because the corresponing question is not released yet.');
+    }
+
+    return TRUE;
   }
 
 }

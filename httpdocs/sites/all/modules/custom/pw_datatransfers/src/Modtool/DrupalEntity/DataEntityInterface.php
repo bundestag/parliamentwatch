@@ -56,4 +56,16 @@ interface DataEntityInterface {
    * @return int|string|null
    */
   public function getDrupalAnswerId();
+
+
+  /**
+   * Static helper to load the corresponding Drupal entity for a question or answer
+   * even if we do not have a ModtoolMessage
+   *
+   * @param $id
+   *
+   * @return object|boolean
+   * The node object for questions, the comment object for answers. FALSE if none was found.
+   */
+  public static function loadDrupalEntityById($id);
 }
