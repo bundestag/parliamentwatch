@@ -222,7 +222,7 @@ function pw_vote_field_default_fields() {
   $fields['node-vote-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
