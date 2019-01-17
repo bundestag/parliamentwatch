@@ -54,7 +54,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -80,7 +79,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -101,7 +99,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -140,11 +137,154 @@ function pw_election_programmes_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-election_programme-field_election_programme_open'.
+  $fields['node-election_programme-field_election_programme_open'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_election_programme_open',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'link',
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => 'default',
+        ),
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+        'enable_tokens' => 1,
+        'title' => 'optional',
+        'title_maxlength' => 128,
+        'title_value' => '',
+        'url' => 0,
+      ),
+      'translatable' => '0',
+      'type' => 'link_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'election_programme',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'This link will open a new window with the election programme.',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'module' => 'link',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'link_default',
+          'weight' => '1',
+        ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'module' => 'link',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'link_default',
+          'weight' => '1',
+        ),
+        'tile' => array(
+          'label' => 'hidden',
+          'module' => 'link',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'link_default',
+          'weight' => '1',
+        ),
+      ),
+      'ds_extras_field_template' => '',
+      'entity_type' => 'node',
+      'exclude_cv' => 0,
+      'field_name' => 'field_election_programme_open',
+      'label' => 'Link',
+      'required' => 0,
+      'settings' => array(
+        'absolute_url' => 1,
+        'attributes' => array(
+          'class' => 'read-more',
+          'configurable_title' => 1,
+          'rel' => '',
+          'target' => '_blank',
+          'title' => '',
+        ),
+        'display' => array(
+          'url_cutoff' => '80',
+        ),
+        'enable_tokens' => 1,
+        'exclude_cv' => FALSE,
+        'linkit' => array(
+          'button_text' => 'Search',
+          'enable' => 0,
+          'profile' => '',
+        ),
+        'rel_remove' => 'default',
+        'title' => 'value',
+        'title_label_use_field_label' => FALSE,
+        'title_maxlength' => '128',
+        'title_value' => 'Wahlprogramm durchblättern',
+        'url' => 0,
+        'user_register_form' => FALSE,
+        'validate_url' => 1,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'link',
+        'settings' => array(
+          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
+        ),
+        'type' => 'link_field',
+        'weight' => '6',
+      ),
+    ),
+  );
+
   // Exported field: 'node-election_programme-field_parliament'.
   $fields['node-election_programme-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -264,7 +404,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'mediafield',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'default',
             'linked_field' => array(
               'advanced' => array(
@@ -285,7 +424,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'mediafield',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'default',
             'linked_field' => array(
               'advanced' => array(
@@ -306,7 +444,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'mediafield',
           'settings' => array(
-            'field_delimiter' => '',
             'file_view_mode' => 'default',
             'linked_field' => array(
               'advanced' => array(
@@ -485,7 +622,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'large',
             'linked_field' => array(
@@ -507,7 +643,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'pw_landscape_m',
             'linked_field' => array(
@@ -529,7 +664,6 @@ function pw_election_programmes_field_default_fields() {
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'width_medium',
             'linked_field' => array(
@@ -599,10 +733,12 @@ function pw_election_programmes_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Body');
   t('Landscape image style will be used.');
+  t('Link');
   t('PDF download');
   t('Parliament');
   t('Party');
   t('Teaser image');
+  t('This link will open a new window with the election programme.');
 
   return $fields;
 }

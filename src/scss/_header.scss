@@ -4,16 +4,10 @@
 * Defines the global header section with logo and navigtion (primary-/secondary)
 */
 
-#header {
+.header__top {
+  @include container();
   background: $beige;
   border-bottom: 1px solid $darkBeige;
-  width: 100%;
-  position: fixed;
-  z-index: 99999;
-}
-
-.header__inner {
-  @include container();
 }
 
 /* Logo */
@@ -62,7 +56,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 999999;
+  z-index: 9999;
   height: 100vh;
   width: 280px;
   box-shadow: 0 0 20px rgba(0, 0, 0, .3);
@@ -292,7 +286,6 @@
   .dropdown__list__item:nth-child(16) .dropdown__list__item__link:before { content: '\e81c'; }
 }
 
-
 .nav--main-menu--misc {
   float: right;
 }
@@ -300,8 +293,9 @@
 /* Sub-Navigation */
 .header__bottom {
   background: $white;
-  margin-top: -1px;
+  margin-top: -2px;
   border-top: 1px solid $darkBeige;
+  border-bottom: 1px solid $darkBeige;
   .header__bottom__inner {
     position: relative;
     display: flex;
@@ -309,12 +303,6 @@
     @include grid-container();
     @include breakpoint($breakpoint-m-min) {
       @include container-regular();
-    }
-  }
-  @media (max-width: $breakpoint-m-max) {
-    &:hover {
-      position: relative;
-      z-index: 99999;
     }
   }
 }
@@ -475,7 +463,7 @@
 }
 
 /* Open Navigation for Mobile devices */
-[data-sidebar-container] {
+body {
   &:after {
     content: '';
     opacity: 0;
@@ -485,12 +473,13 @@
     right: 0;
     width: 0;
     height: 0;
-    z-index: 97;
+    z-index: 9997;
     will-change: opacity, width, height;
     transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
   }
 }
 .sidebar-open {
+  overflow: hidden;
   &:after {
     width: 100%;
     height: 100%;
@@ -718,6 +707,10 @@
 /* Sticky header */
 
 #header.sticky {
+  .header__top {
+    height: 0;
+    overflow: hidden;
+  }
   .header__logo {
     @include breakpoint($breakpoint-l-min) {
       @include padding($space-small null 0);

@@ -95,6 +95,5 @@ function pw_sidejobs_feeds_tamper_default() {
   $feeds_tamper->description = 'Replace â€œ';
   $export['gdata_sidejobs_importer-xpathparser_3-find_replace'] = $feeds_tamper;
 
-
   return $export;
 }

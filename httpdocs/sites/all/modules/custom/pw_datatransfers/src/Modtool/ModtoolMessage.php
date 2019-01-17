@@ -116,7 +116,7 @@ class ModtoolMessage {
   }
 
   public function getTopic() {
-    return $this->getData('topic');
+    return $this->getData('message_topic');
   }
 
   public function getParliament() {
@@ -272,7 +272,7 @@ class ModtoolMessage {
    */
   protected function isValidDate($date_string, $format = FALSE) {
     if (!$format) {
-      $format = 'c';
+      $format = 'Y-m-d\TG:i:sP';
     }
 
     $d = DateTime::createFromFormat($format, $date_string);
