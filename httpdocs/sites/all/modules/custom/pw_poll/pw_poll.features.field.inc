@@ -335,7 +335,7 @@ function pw_poll_field_default_fields() {
   $fields['node-poll-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -454,9 +454,7 @@ function pw_poll_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(
-          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
-        ),
+        'settings' => array(),
         'type' => 'options_select',
         'weight' => '1',
       ),
