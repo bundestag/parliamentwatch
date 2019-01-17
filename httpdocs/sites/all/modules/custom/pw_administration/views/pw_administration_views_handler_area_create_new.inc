@@ -22,6 +22,11 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
       'options_label' => 'Party',
       'linktext' => 'Neue Partei erstellen',
       'path' => 'admin/structure/taxonomy/party/add'
+    ],
+    'sidejob' => [
+      'options_label' => 'Nebentätigkeit',
+      'linktext' => 'Neue Nebentätigkeit erstellen',
+      'path' => 'node/add/sidejob'
     ]
   ];
 
@@ -60,7 +65,7 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
     if (isset($this->entityCreation[$entity_to_create])) {
       $info_array = $this->entityCreation[$entity_to_create];
       $link_options = $this->getLinkOptions();
-      $output = l($info_array['linktext'], $info_array['path'], $link_options);
+      $output = '<ul class="action-links"><li>'. l($info_array['linktext'], $info_array['path'], $link_options) .'</li></ul>';
     }
     return $output;
   }
