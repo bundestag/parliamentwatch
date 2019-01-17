@@ -18,6 +18,14 @@ class Import implements ImportInterface {
    */
   protected $id;
 
+
+  /**
+   * @var null|string
+   * A label for the import
+   */
+  protected $label = NULL;
+
+
   /**
    * @var int|string
    * The term id of the parliament
@@ -53,8 +61,9 @@ class Import implements ImportInterface {
   protected $status;
 
 
-  public function __construct($id = NULL, $parliamentId = NULL, $fileId = NULL, $type = NULL, $status = NULL) {
+  public function __construct($id = NULL, $label = NULL, $parliamentId = NULL, $fileId = NULL, $type = NULL, $status = NULL) {
     $this->id = $id;
+    $this->label = $label;
     $this->parliamentId = $parliamentId;
     $this->fileId = $fileId;
     $this->status = $status;
@@ -129,6 +138,20 @@ class Import implements ImportInterface {
     $this->setFileId($file->fid);
   }
 
+  /**
+   * @return string|null
+   */
+  public function getLabel() {
+    return $this->label;
+  }
+
+  /**
+   * @param string $label
+   */
+  public function setLabel(string $label) {
+    $this->label = $label;
+  }
+
 
   /**
    * @return string|null
@@ -194,6 +217,7 @@ class Import implements ImportInterface {
           ->condition('id', $this->getId())
           ->fields([
             'parliament' => $this->getParliamentId(),
+            'label' => $this->getLabel(),
             'type' => $this->getType(),
             'status' => $this->getStatus(),
             'file' => $this->getFileId()
@@ -204,6 +228,7 @@ class Import implements ImportInterface {
         $id = db_insert('pw_parliaments_admin_imports')
           ->fields([
             'parliament' => $this->getParliamentId(),
+            'label' => $this->getLabel(),
             'type' => $this->getType(),
             'status' => $this->getStatus(),
             'file' => $this->getFileId()
@@ -276,7 +301,7 @@ class Import implements ImportInterface {
     $result = $query->fetchAssoc();
 
     if (!empty($result)) {
-      return new Import($result['id'], $result['parliament'], $result['file'], $result['type'], $result['status']);
+      return new Import($result['id'], $result['label'], $result['parliament'], $result['file'], $result['type'], $result['status']);
     }
 
     return FALSE;

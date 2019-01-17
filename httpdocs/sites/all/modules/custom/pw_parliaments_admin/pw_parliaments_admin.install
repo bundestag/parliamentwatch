@@ -18,6 +18,12 @@ function pw_parliaments_admin_schema() {
         'unsigned' => TRUE,
         'not null' => TRUE
       ],
+      'label' => [
+        'description' => 'A label for the import',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 255
+      ],
       'parliament' => [
         'description' => 'The {taxonomy_term_data} tid of the parliament',
         'type' => 'int',

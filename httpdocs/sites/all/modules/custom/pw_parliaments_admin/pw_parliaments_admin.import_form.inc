@@ -28,16 +28,25 @@ function pw_parliaments_admin_import_form($form, &$form_state, \Drupal\pw_parlia
     $parliaments_options[$tid] = $term->name;
   }
 
+  $form['label'] = [
+    '#type' => 'textfield',
+    '#title' => t('Label'),
+    '#maxlength' => 255,
+    '#required' => TRUE
+  ];
+
   $form['parliament'] = [
     '#type' => 'select',
     '#title' => t('Parliament'),
-    '#options' => $parliaments_options
+    '#options' => $parliaments_options,
+    '#required' => TRUE
   ];
 
   $form['type'] = [
     '#type' => 'select',
     '#title' => t('Type of data to import'),
-    '#options' => \Drupal\pw_parliaments_admin\Entity\Import::getPossibleImportsOptions()
+    '#options' => \Drupal\pw_parliaments_admin\Entity\Import::getPossibleImportsOptions(),
+    '#required' => TRUE
   ];
 
   $form['file'] = [
@@ -47,6 +56,7 @@ function pw_parliaments_admin_import_form($form, &$form_state, \Drupal\pw_parlia
     '#upload_validators' => array(
       'file_validate_extensions' => array('csv')
     ),
+    '#required' => TRUE
   ];
 
   $form['actions'] = [
@@ -90,6 +100,7 @@ function pw_parliaments_admin_import_form_submit(&$form, &$form_state) {
   try {
     /** @var \Drupal\pw_parliaments_admin\Entity\Import $import */
     $import = new \Drupal\pw_parliaments_admin\Entity\Import();
+    $import->setLabel($form_state['values']['label']);
     $import->setParliamentId($form_state['values']['parliament']);
     $import->setFile($form_state['values']['file']);
     $import->setType($form_state['values']['type']);
