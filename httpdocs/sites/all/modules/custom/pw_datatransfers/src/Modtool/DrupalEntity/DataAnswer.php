@@ -3,7 +3,6 @@
 
 namespace Drupal\pw_datatransfers\Modtool\DrupalEntity;
 
-use DateTime;
 use Drupal\pw_datatransfers\Exception\DatatransfersException;
 use stdClass;
 
@@ -71,10 +70,13 @@ class DataAnswer extends DataEntityBase {
     $dialogue_id = $modtoolMessage->getDialogueId();
 
 
-    $date_created = new DateTime($modtoolMessage->getInsertedDate());
+    $timezone = new \DateTimeZone('UTC');
+    $date_created = new \DateTime($modtoolMessage->getInsertedDate());
+    $date_created->setTimezone($timezone);
     $comment->created = $date_created->format('U');
 
-    $date_updated = new DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated = new \DateTime($modtoolMessage->getUpdatedDate());
+    $date_updated->setTimezone($timezone);
     $comment->changed = $date_updated->format('U');
 
 
