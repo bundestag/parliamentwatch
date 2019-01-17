@@ -9,34 +9,34 @@
 /**
  * Implements hook_menu().
  */
-function pw_imports_menu() {
+function pw_parliaments_admin_menu() {
   $items = [];
 
   $items['admin/abgeordnetenwatch/imports/add'] = [
     'title' => 'Add new import',
-    'page callback' => 'pw_imports_addform_pagecallback',
+    'page callback' => 'pw_parliaments_admin_addform_pagecallback',
     'access arguments' => ['administrate an import'],
     'type' => MENU_CALLBACK,
-    'file' => 'pw_imports.pagecallbacks.inc'
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
   ];
 
   $items['admin/abgeordnetenwatch/imports/%pw_import/edit'] = [
     'title' => 'Edit import',
-    'page callback' => 'pw_imports_editorm_pagecallback',
+    'page callback' => 'pw_parliaments_admin_editorm_pagecallback',
     'page arguments' => [3],
     'access arguments' => ['administrate an import'],
     'type' => MENU_CALLBACK,
-    'file' => 'pw_imports.pagecallbacks.inc'
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
   ];
 
 
   $items['admin/abgeordnetenwatch/imports/%pw_import'] = [
     'title' => 'Administrate import',
-    'page callback' => 'pw_imports_view_pagecallback',
+    'page callback' => 'pw_parliaments_admin_view_pagecallback',
     'page arguments' => [3],
     'access arguments' => ['administrate an import'],
     'type' => MENU_CALLBACK,
-    'file' => 'pw_imports.pagecallbacks.inc'
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
   ];
 
 
@@ -50,17 +50,17 @@ function pw_imports_menu() {
  * @param int|string $id
  * The id of the import
  *
- * @return \Drupal\pw_imports\Import\Import
+ * @return \Drupal\pw_parliaments_admin\Import\Import
  */
 function pw_import_load($id) {
-  return \Drupal\pw_imports\Import\Import::load($id);
+  return \Drupal\pw_parliaments_admin\Import\Import::load($id);
 }
 
 
 /**
  * Implements hook_permission().
  */
-function pw_imports_permission() {
+function pw_parliaments_admin_permission() {
   return [
     'administrate an import' => [
       'title' => t('Administrate an import'),

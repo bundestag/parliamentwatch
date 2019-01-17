@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\pw_imports;
+namespace Drupal\pw_parliaments_admin;
 
 /**
  * Defines functions needed for Import classes. An Import class describes
@@ -34,7 +34,7 @@ interface ImportInterface {
   /**
    * Get the CSV parser class for the CSV uploaded for this import.
    *
-   * @return \Drupal\pw_imports\CsvParser
+   * @return \Drupal\pw_parliaments_admin\CsvParser
    */
   public function getCSVParser();
 

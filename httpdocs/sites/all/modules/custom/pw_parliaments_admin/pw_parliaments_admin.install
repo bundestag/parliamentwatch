@@ -5,11 +5,11 @@
  * Update hooks, install and uninstall hooks, schema hook for PW Imports
  */
 
-function pw_imports_schema() {
+function pw_parliaments_admin_schema() {
   $schema = [];
 
   // database table for the imports
-  $schema['pw_imports'] = [
+  $schema['pw_parliaments_admin'] = [
     'description' => 'Table stores the settings for each import',
     'fields' => [
       'id' => [

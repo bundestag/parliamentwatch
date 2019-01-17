@@ -11,12 +11,12 @@
  *
  * @param $form
  * @param $form_state
- * @param \Drupal\pw_imports\Import\Import|NULL $import
+ * @param \Drupal\pw_parliaments_admin\Import\Import|NULL $import
  * Optional the Import class of the import edited
  *
  * @return array
  */
-function pw_imports_import_form($form, &$form_state, \Drupal\pw_imports\Import\Import $import = NULL) {
+function pw_parliaments_admin_import_form($form, &$form_state, \Drupal\pw_parliaments_admin\Import\Import $import = NULL) {
   $form = [];
 
   $form_state['storage']['import'] = $import;
@@ -37,7 +37,7 @@ function pw_imports_import_form($form, &$form_state, \Drupal\pw_imports\Import\I
   $form['type'] = [
     '#type' => 'select',
     '#title' => t('Type of data to import'),
-    '#options' => \Drupal\pw_imports\Import\Import::getPossibleImportsOptions()
+    '#options' => \Drupal\pw_parliaments_admin\Import\Import::getPossibleImportsOptions()
   ];
 
   $form['file'] = [
@@ -67,7 +67,7 @@ function pw_imports_import_form($form, &$form_state, \Drupal\pw_imports\Import\I
  * @param $form
  * @param $form_state
  */
-function pw_imports_import_form_validate(&$form, &$form_state) {
+function pw_parliaments_admin_import_form_validate(&$form, &$form_state) {
   if (isset($form_state["input"]["file"]["fid"]) && $form_state["input"]["file"]["fid"] == 0) {
     $file = file_save_upload('file');
     if (!$file) {
@@ -86,10 +86,10 @@ function pw_imports_import_form_validate(&$form, &$form_state) {
  * @param $form
  * @param $form_state
  */
-function pw_imports_import_form_submit(&$form, &$form_state) {
+function pw_parliaments_admin_import_form_submit(&$form, &$form_state) {
   try {
-    /** @var \Drupal\pw_imports\Import\Import $import */
-    $import = new \Drupal\pw_imports\Import\Import();
+    /** @var \Drupal\pw_parliaments_admin\Import\Import $import */
+    $import = new \Drupal\pw_parliaments_admin\Import\Import();
     $import->setParliamentId($form_state['values']['parliament']);
     $import->setFile($form_state['values']['file']);
     $import->setType($form_state['values']['type']);

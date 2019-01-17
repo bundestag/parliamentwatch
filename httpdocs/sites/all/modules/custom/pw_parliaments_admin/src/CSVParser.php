@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Drupal\pw_imports;
+namespace Drupal\pw_parliaments_admin;
 
 class CsvParser {
 
   /**
-   * @var \Drupal\pw_imports\ImportInterface
+   * @var \Drupal\pw_parliaments_admin\ImportInterface
    */
   protected $pwImport;
 
@@ -14,7 +14,7 @@ class CsvParser {
   /**
    * CsvParser constructor.
    *
-   * @param \Drupal\pw_imports\ImportInterface $pw_import
+   * @param \Drupal\pw_parliaments_admin\ImportInterface $pw_import
    */
   public function __construct(ImportInterface $pw_import) {
     $this->pwImport = $pw_import;

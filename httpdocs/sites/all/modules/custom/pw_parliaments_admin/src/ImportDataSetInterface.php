@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_imports;
+namespace Drupal\pw_parliaments_admin;
 
 
 /**
@@ -19,7 +19,7 @@ interface ImportDataSetInterface {
    * @return TRUE
    * True if everything worked fine. Otherwise it throws an exception
    *
-   * @throws \Drupal\pw_imports\Exception\ImportException
+   * @throws \Drupal\pw_parliaments_admin\Exception\ImportException
    */
   public function import();
 

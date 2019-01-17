@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Drupal\pw_imports\Import;
+namespace Drupal\pw_parliaments_admin\Import;
 
-use Drupal\pw_imports\CsvParser;
-use Drupal\pw_imports\ImportInterface;
+use Drupal\pw_parliaments_admin\CsvParser;
+use Drupal\pw_parliaments_admin\ImportInterface;
 
 /**
  * Base class for Import type classes.
@@ -62,7 +62,7 @@ class Import implements ImportInterface {
   }
 
   /**
-   * @return \Drupal\pw_imports\Import\CsvParser
+   * @return \Drupal\pw_parliaments_admin\Import\CsvParser
    */
   public function getCSVParser() {
     return new CsvParser($this);
@@ -190,7 +190,7 @@ class Import implements ImportInterface {
         $this->setStatus('default');
       }
       if (is_numeric($this->getId())) {
-        db_update('pw_imports')
+        db_update('pw_parliaments_admin')
           ->condition('id', $this->getId())
           ->fields([
             'parliament' => $this->getParliamentId(),
@@ -201,7 +201,7 @@ class Import implements ImportInterface {
           ->execute();
       }
       else {
-        $id = db_insert('pw_imports')
+        $id = db_insert('pw_parliaments_admin')
           ->fields([
             'parliament' => $this->getParliamentId(),
             'type' => $this->getType(),
@@ -215,7 +215,7 @@ class Import implements ImportInterface {
     }
     catch (\Exception $e) {
       $transaction->rollback();
-      watchdog_exception('pw_imports', $e);
+      watchdog_exception('pw_parliaments_admin', $e);
       throw $e;
     }
   }
@@ -245,12 +245,12 @@ class Import implements ImportInterface {
             $csv->status = FILE_STATUS_PERMANENT;
             file_save($csv);
             $this->setFile($csv);
-            file_usage_add($csv, 'pw_imports', 'import', $this->getId());
+            file_usage_add($csv, 'pw_parliaments_admin', 'import', $this->getId());
           }
         }
         // Delete the previous csv if it was deleted or replaced.
         if ($originalImport && is_numeric($originalImport->getFileId())) {
-          file_usage_delete($originalImport->getLoadFile(), 'pw_imports', 'import', $originalImport->getId());
+          file_usage_delete($originalImport->getLoadFile(), 'pw_parliaments_admin', 'import', $originalImport->getId());
           file_delete($originalImport->getLoadFile());
         }
       }
@@ -264,11 +264,11 @@ class Import implements ImportInterface {
    * @param int|string $id
    * The id of the import
    *
-   * @return \Drupal\pw_imports\Import\Import|FALSE
+   * @return \Drupal\pw_parliaments_admin\Import\Import|FALSE
    * False if no import found for the id
    */
   public static function load($id) {
-    $query = db_select('pw_imports', 'i')
+    $query = db_select('pw_parliaments_admin', 'i')
       ->condition('id', $id)
       ->fields('i')
       ->execute();
