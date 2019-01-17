@@ -782,7 +782,6 @@ function parliamentwatch_container__filterbar($variables) {
   $output .= '<a href="#" class="filterbar__view_options__item__link"><i class="icon icon-th"></i></a>';
   $output .= '</li></ul>';
   $output .= '</div></div>';
-  $output .= '<div class="filterbar-placeholder"></div>';
 
   return $output;
 }
