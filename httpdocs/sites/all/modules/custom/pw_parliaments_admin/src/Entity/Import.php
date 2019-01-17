@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin\Import;
+namespace Drupal\pw_parliaments_admin\Entity;
 
 use Drupal\pw_parliaments_admin\CsvParser;
 use Drupal\pw_parliaments_admin\ImportInterface;
@@ -190,7 +190,7 @@ class Import implements ImportInterface {
         $this->setStatus('default');
       }
       if (is_numeric($this->getId())) {
-        db_update('pw_parliaments_admin')
+        db_update('pw_parliaments_admin_imports')
           ->condition('id', $this->getId())
           ->fields([
             'parliament' => $this->getParliamentId(),
@@ -201,7 +201,7 @@ class Import implements ImportInterface {
           ->execute();
       }
       else {
-        $id = db_insert('pw_parliaments_admin')
+        $id = db_insert('pw_parliaments_admin_imports')
           ->fields([
             'parliament' => $this->getParliamentId(),
             'type' => $this->getType(),
@@ -264,11 +264,11 @@ class Import implements ImportInterface {
    * @param int|string $id
    * The id of the import
    *
-   * @return \Drupal\pw_parliaments_admin\Import\Import|FALSE
+   * @return \Drupal\pw_parliaments_admin\Entity\Import|FALSE
    * False if no import found for the id
    */
   public static function load($id) {
-    $query = db_select('pw_parliaments_admin', 'i')
+    $query = db_select('pw_parliaments_admin_imports', 'i')
       ->condition('id', $id)
       ->fields('i')
       ->execute();

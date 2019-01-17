@@ -9,7 +9,7 @@ function pw_parliaments_admin_schema() {
   $schema = [];
 
   // database table for the imports
-  $schema['pw_parliaments_admin'] = [
+  $schema['pw_parliaments_admin_imports'] = [
     'description' => 'Table stores the settings for each import',
     'fields' => [
       'id' => [

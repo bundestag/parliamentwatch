@@ -50,10 +50,10 @@ function pw_parliaments_admin_menu() {
  * @param int|string $id
  * The id of the import
  *
- * @return \Drupal\pw_parliaments_admin\Import\Import
+ * @return \Drupal\pw_parliaments_admin\Entity\Import
  */
 function pw_import_load($id) {
-  return \Drupal\pw_parliaments_admin\Import\Import::load($id);
+  return \Drupal\pw_parliaments_admin\Entity\Import::load($id);
 }
 
 
@@ -69,3 +69,13 @@ function pw_parliaments_admin_permission() {
   ];
 }
 
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_parliaments_admin_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'pw_parliaments_admin') . '/views',
+  );
+}
