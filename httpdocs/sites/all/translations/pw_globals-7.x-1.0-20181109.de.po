@@ -1704,7 +1704,7 @@ msgid ""
 "In our annual report, we publish the names of the donors who supported us in "
 "the previous year with a total amount of € 1,000 and above."
 msgstr ""
-"Wir veröffentlichen in unserem Jahresbericht die Namen der Spender/innen,"
+"Wir veröffentlichen in unserem Jahresbericht die Namen der Spender/innen, "
 "die uns mit einer Gesamtsumme ab 1.000 Euro im Jahr unterstützen."
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--10508.tpl.php:132
@@ -1712,7 +1712,7 @@ msgid ""
 "Please provide your full address for bank transfers so that we can send you "
 "a donation receipt."
 msgstr ""
-"Bitte geben Sie bei Überweisungen Ihre vollständige Anschrift an,"
+"Bitte geben Sie bei Überweisungen Ihre vollständige Anschrift an, "
 "damit wir Ihnen eine Spendenbescheinigung zusenden können."
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--10508.tpl.php:181;188;195
