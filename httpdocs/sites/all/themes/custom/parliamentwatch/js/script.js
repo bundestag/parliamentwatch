@@ -1007,13 +1007,13 @@
       });
 
       $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
-        if (!$(this).val()) {
+        if ($(this).val() == false) {
           $(this).siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
         }
       });
 
       $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
-        if ($(this).val()) {
+        if ($(this).val() != false) {
           $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
         }
       });
