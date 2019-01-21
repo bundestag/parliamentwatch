@@ -30,7 +30,7 @@
     @include grid-column(8, $neat-grid-no-gutter);
   }
   .fieldset-description {
-    margin-bottom: $space-large;
+    margin-bottom: $space;
     line-height: 1.5em;
   }
   .field-suffix {
