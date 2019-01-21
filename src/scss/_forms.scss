@@ -42,7 +42,7 @@
     &::-moz-placeholder,
     &:-ms-input-placeholder,
     &:-moz-placeholder {
-      color: $gray;
+      color: $darkGray;
     }
 
     &:focus {
@@ -278,6 +278,7 @@ textarea.form__item__control {
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding: ($space-xsmall - 1px) ($space-large - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
   line-height: $space;
+  color: inherit;
 }
 .select2-container .select2-selection--single .select2-selection__arrow {
   height: auto;
