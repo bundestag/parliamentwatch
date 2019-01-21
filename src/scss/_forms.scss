@@ -52,16 +52,18 @@
     top: calc(1.15rem + 1px + #{$space-xsmall});
     color: $darkGray;
     pointer-events: none;
+    transform-origin: left;
+    backface-visibility: hidden;
     transition-duration: 300ms;
     transition-timing-function: ease;
-    transition-property: left, top, font-size;
+    transition-property: left, top, transform;
   }
 
   &__label--floating,
   &--select &__label:not(.sr-only) {
     left: 0 !important;
     top: 0 !important;
-    font-size: .8em !important;
+    transform: scale(0.8) !important;
     font-weight: 600 !important;
   }
 
