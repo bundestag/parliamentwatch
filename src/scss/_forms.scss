@@ -313,16 +313,18 @@ textarea.form__item__control {
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: $space-xsmall;
 }
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: $darkGray;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $orange;
+  color: $white;
+}
 .select2-container--open .select2-dropdown--below {
   min-width: 200px;
 }
 .select2-selection__placeholder {
   @include text-overflow();
-}
-
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: $orange;
-  color: $white;
 }
 
 /* Form-Item Horizontal */
