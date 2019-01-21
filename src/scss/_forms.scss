@@ -246,7 +246,7 @@ textarea.form__item__control {
   padding-top: $space;
   .form__item__label + div {
     position: absolute;
-    bottom: calc(100% - #{$space});
+    top: $space;
     right: 0;
     display: inline-block;
     background: #fff;
