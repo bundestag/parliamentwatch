@@ -1012,6 +1012,24 @@
   };
 
   /**
+   * Attaches keyboard entry behavior to form labels.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.keyboardLabels = {
+    attach: function (context) {
+      $('.form__item__label').on('keydown', function (event) {
+        if (event.which == 13) {
+          $(this).trigger('click');
+          event.preventDefault();
+        }
+      });
+    }
+  };
+
+  /**
    * Attaches the typeahead plugin to the politician search.
    *
    * @type {Drupal~behavior}

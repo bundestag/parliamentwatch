@@ -1174,6 +1174,11 @@ function parliamentwatch_form_element_label($variables) {
     $attributes['for'] = $element['#id'];
   }
 
+  // Make label focusable for radio buttons and checkboxes
+  if ($element['#type'] == 'radio' || $element['#type'] == 'checkbox') {
+    $attributes['tabindex'] = '0';
+  }
+
   // The leading whitespace helps visually separate fields from inline labels.
   return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', ['!title' => $title, '!required' => $required]) . "</label>\n";
 }
