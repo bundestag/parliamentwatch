@@ -2182,6 +2182,27 @@
   };
 
   /**
+   * Attaches lightbox behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.lightbox = {
+    attach: function () {
+      $(function() {
+        lightbox.option({
+          'resizeDuration': 400,
+          'imageFadeDuration': 400,
+          'fadeDuration': 400,
+          'albumLabel': 'Bild %1 von %2',
+          'alwaysShowNavOnTouchDevices': true
+        });
+      });
+    }
+  };
+
+  /**
    * Attaches modal behavior.
    *
    * @type {Drupal~behavior}
