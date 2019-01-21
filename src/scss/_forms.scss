@@ -119,8 +119,7 @@
     }
   }
 
-  &--checkbox &__control:checked + &__label,
-  &--checkbox &__label:focus {
+  &--checkbox &__control:checked + &__label {
     &::after {
       content: "\e87a";
       font-family: awfont;
@@ -137,8 +136,7 @@
     }
   }
 
-  &--radio &__control:checked + &__label,
-  &--radio &__label:focus {
+  &--radio &__control:checked + &__label {
     &::after {
       content: "";
       display: block;
@@ -152,19 +150,12 @@
     }
   }
 
-  &--checkbox &__control:checked + &__label,
-  &--radio &__control:checked + &__label {
-    &::after {
-      opacity: 1 !important;
-    }
-  }
-
   &--checkbox &__label:focus,
   &--radio &__label:focus {
     outline: 0;
 
-    &::after {
-      opacity: .3;
+    &::before {
+      border-color: $orange;
     }
   }
 }
