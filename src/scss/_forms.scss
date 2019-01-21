@@ -265,6 +265,11 @@ textarea.form__item__control {
   height: $space * 2;
   border-radius: 0;
   border-color: $gray;
+  outline: 0;
+
+  &:focus {
+    border-color: $orange;
+  }
 }
 .select2-container .select2-selection .select2-selection__rendered {
   display: block;
