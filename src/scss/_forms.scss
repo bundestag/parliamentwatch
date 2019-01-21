@@ -65,8 +65,7 @@
     transition-property: left, top, transform;
   }
 
-  &__label--floating,
-  &--select &__label:not(.sr-only) {
+  &__label--floating {
     left: 0 !important;
     top: 0 !important;
     transform: scale(0.8) !important;

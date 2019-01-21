@@ -978,13 +978,16 @@
         } else {
           $(this).select2({
             minimumResultsForSearch: 20,
-            placeholder: 'Bitte wählen',
+            placeholder: $(this).siblings('label').text(),
             dropdownParent: $('.page-container')
           });
         }
         $(this).on('select2:open', function (e) {
           // close all dropdowns
           $('.dropdown__list').removeClass('dropdown__list--open');
+        });
+        $(this).on('select2:select', function (e) {
+          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
         });
       });
     }
@@ -1009,7 +1012,7 @@
         }
       });
 
-      $('.form__item__control:not(.form__item__control--special), .form-email').each(function () {
+      $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
         if ($(this).val()) {
           $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
         }
