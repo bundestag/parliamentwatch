@@ -319,6 +319,11 @@ textarea.form__item__control {
   @include text-overflow();
 }
 
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $orange;
+  color: $white;
+}
+
 /* Form-Item Horizontal */
 
 .form__item--horizontal {
