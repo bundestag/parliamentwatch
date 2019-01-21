@@ -35,9 +35,9 @@
   }
   .field-suffix {
     position: absolute;
+    line-height: $space;
     right: $space-xsmall;
-    top: 50%;
-    transform: translate(0,-50%);
+    top: $space + $space-xsmall;
   }
 }
 .container-small > .webform {
