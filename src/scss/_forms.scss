@@ -44,6 +44,10 @@
     &:-moz-placeholder {
       color: $gray;
     }
+
+    &:focus {
+      border-color: $orange;
+    }
   }
 
   &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
