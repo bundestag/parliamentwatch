@@ -510,6 +510,11 @@
         @include grid-column(6);
       }
     }
+    & > .form__item--submitted-option-newsletter {
+      @include breakpoint($breakpoint-s-min) {
+        padding-top: $space - 4px;
+      }
+    }
     #edit-submitted-pflichtfelder {
       @include breakpoint($breakpoint-m-min) {
         position: absolute;
