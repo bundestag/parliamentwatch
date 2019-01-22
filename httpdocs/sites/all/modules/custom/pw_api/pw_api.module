@@ -417,7 +417,7 @@ function pw_api_meta_data_terms($termset, $vocabulary) {
         'vocabulary' => [
           'machine_name' => $vocabulary->machine_name,
           'name' => $vocabulary->name,
-          'vid' => $vocabulary->vid
+          'id' => $vocabulary->vid
         ]
       ],
       'terms' => $termset
@@ -427,7 +427,7 @@ function pw_api_meta_data_terms($termset, $vocabulary) {
     $xml_termset = [];
     foreach ($termset as $tid => $term) {
       $xml_termset['term_'. $tid] = [
-        'tid' => $tid,
+        'id' => $tid,
         'name' => $term
       ];
     }
@@ -443,7 +443,7 @@ function pw_api_meta_data_terms($termset, $vocabulary) {
             'vocabulary' => [
               'machine_name' => $vocabulary->machine_name,
               'name' => $vocabulary->name,
-              'vid' => $vocabulary->vid
+              'id' => $vocabulary->vid
             ]
           ]
       ] + $xml_termset
