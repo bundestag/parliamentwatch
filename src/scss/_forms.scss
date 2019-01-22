@@ -23,7 +23,8 @@
     padding: $space-xsmall - 1px;
     line-height: $space;
     font-family: $font-sans-serif;
-    font-weight: 300;
+    font-weight: 500;
+    color: $darkGray;
     outline: 0;
     box-shadow: none;
     border-radius: 0;
@@ -42,7 +43,7 @@
     &::-moz-placeholder,
     &:-ms-input-placeholder,
     &:-moz-placeholder {
-      color: $darkGray;
+      font-weight: 300;
     }
 
     &:focus {
@@ -278,7 +279,8 @@ textarea.form__item__control {
 .select2-container .select2-selection--single .select2-selection__rendered {
   padding: ($space-xsmall - 1px) ($space-large - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
   line-height: $space;
-  color: inherit;
+  color: $darkGray;
+  font-weight: 500;
 }
 .select2-container .select2-selection--single .select2-selection__arrow {
   height: auto;
@@ -315,6 +317,7 @@ textarea.form__item__control {
 }
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
   color: $darkGray;
+  font-weight: 300;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: $orange;
