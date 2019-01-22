@@ -1002,21 +1002,33 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      $('.form__item__control:not(.form__item__control--special), .form-email').on('focus', function () {
-        $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+      $('.form__item__control:not(.form__item__control--special), .form-email').on('focus input change', function () {
+        startFloatingLabel($(this));
       });
 
       $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
         if ($(this).val() == false) {
-          $(this).siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
+          stopFloatingLabel($(this));
         }
       });
 
       $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
         if ($(this).val() != false) {
-          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          startFloatingLabel($(this));
         }
       });
+
+      function startFloatingLabel($input) {
+        var $label = $input.siblings('.form__item__label:not(.sr-only)');
+
+        if (!$label.hasClass('form__item__label--floating')) {
+          $input.siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+        }
+      }
+
+      function stopFloatingLabel($input) {
+        $input.siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
+      }
     }
   };
 
