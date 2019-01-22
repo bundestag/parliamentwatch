@@ -41,6 +41,7 @@
 
     @include placeholder {
       font-weight: 300;
+      color: $darkGray;
     }
 
     &:focus {
