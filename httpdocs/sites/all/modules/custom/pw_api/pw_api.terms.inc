@@ -6,15 +6,15 @@
  */
 
 
-
 /**
  *
- * @return array $topics
- *   Returns all topics.
+ * @param object $vocabulary
+ * The vocabulary object
+ *
+ * @return array
  */
 
 function pw_api_terms($vocabulary) {
-
   $terms = [];
 
   // load topics
@@ -26,5 +26,5 @@ function pw_api_terms($vocabulary) {
   asort($terms);
 
   // add meta data and return
-  return pw_api_meta_data($terms, $vocabulary->machine_name);
+  return pw_api_meta_data_terms($terms, $vocabulary);
 }
