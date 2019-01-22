@@ -7,6 +7,8 @@
   border-top: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
   background: $white;
+  position: relative;
+  z-index: 9;
   @include container();
   @include breakpoint($breakpoint-l-min) {
     min-height: 62px;
