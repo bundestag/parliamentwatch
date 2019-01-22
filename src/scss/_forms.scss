@@ -39,10 +39,7 @@
       width: 100%;
     }
 
-    &::-webkit-input-placeholder,
-    &::-moz-placeholder,
-    &:-ms-input-placeholder,
-    &:-moz-placeholder {
+    @include placeholder {
       font-weight: 300;
     }
 
