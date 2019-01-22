@@ -1,5 +1,5 @@
 name = PW Data Transfers
-description = The aim oif this module is to centralize all data transfer management between our tools including help for debugging and logging
+description = The aim of this module is to centralize all data transfer management between our tools including help for debugging and logging
 core = 7.x
 package = Parliamentwatch
 

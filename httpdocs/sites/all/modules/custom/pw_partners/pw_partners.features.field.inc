@@ -54,7 +54,6 @@ function pw_partners_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -74,7 +73,6 @@ function pw_partners_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -333,7 +331,6 @@ function pw_partners_field_default_fields() {
           'label' => 'hidden',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -382,7 +379,7 @@ function pw_partners_field_default_fields() {
   $fields['node-partners-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -502,7 +499,6 @@ function pw_partners_field_default_fields() {
           'label' => 'hidden',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',

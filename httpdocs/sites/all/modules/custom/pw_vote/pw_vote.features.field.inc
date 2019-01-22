@@ -60,7 +60,6 @@ function pw_vote_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -223,7 +222,7 @@ function pw_vote_field_default_fields() {
   $fields['node-vote-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -274,7 +273,6 @@ function pw_vote_field_default_fields() {
           'label' => 'above',
           'module' => 'shs',
           'settings' => array(
-            'field_delimiter' => '',
             'linked' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -361,7 +359,6 @@ function pw_vote_field_default_fields() {
           'label' => 'hidden',
           'module' => 'taxonomy',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -381,7 +378,6 @@ function pw_vote_field_default_fields() {
           'label' => 'above',
           'module' => 'shs',
           'settings' => array(
-            'field_delimiter' => '',
             'linked' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -480,7 +476,6 @@ function pw_vote_field_default_fields() {
           'label' => 'hidden',
           'module' => 'entityreference',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -504,7 +499,6 @@ function pw_vote_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -526,7 +520,7 @@ function pw_vote_field_default_fields() {
       'entity_type' => 'node',
       'exclude_cv' => 0,
       'field_name' => 'field_vote_node',
-      'label' => 'Node Reference',
+      'label' => 'Abstimmung',
       'required' => 1,
       'settings' => array(
         'exclude_cv' => FALSE,
@@ -535,9 +529,7 @@ function pw_vote_field_default_fields() {
       'widget' => array(
         'active' => 1,
         'module' => 'options',
-        'settings' => array(
-          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
-        ),
+        'settings' => array(),
         'type' => 'options_select',
         'weight' => '2',
       ),
@@ -605,7 +597,6 @@ function pw_vote_field_default_fields() {
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => FALSE,
             'linked_field' => array(
               'advanced' => array(
@@ -690,7 +681,6 @@ function pw_vote_field_default_fields() {
           'label' => 'above',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -777,11 +767,11 @@ function pw_vote_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Abstimmung');
   t('Argumentation');
   t('Deviant Vote');
   t('Label');
   t('Marks if a vote is deviant from the majority of the fraction.');
-  t('Node Reference');
   t('Parliament');
   t('Politician Reference');
   t('Vote');

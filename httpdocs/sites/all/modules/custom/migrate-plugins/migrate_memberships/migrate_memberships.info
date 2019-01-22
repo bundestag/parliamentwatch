@@ -1,9 +1,0 @@
-name = "Migrate Memberships"
-description = "Migrate Memberships"
-package = "Development"
-
-files[] = migrate_memberships.module
-
-version = "7.x-1.0-20130913"
-core = "7.x"
-project = "migrate_memberships"
