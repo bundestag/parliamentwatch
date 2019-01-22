@@ -155,14 +155,17 @@ function pw_api_menu() {
   }
 
   // add topics hooks
+  // example path: /api/topics/terms.json
   foreach (array('xml', 'json') as $file_type) {
-    $key = 'api/topics.'.$file_type;
+    $key = 'api/%taxonomy_vocabulary_machine_name/terms.'.$file_type;
     $item = array(
-      'page callback' => 'pw_api_topics',
-      'access callback' => TRUE,
+      'page callback' => 'pw_api_terms',
+      'page arguments' => array(1),
+      'access callback' => 'pw_api_terms_access',
+      'access arguments' => array(1),
       'delivery callback' => 'pw_api_deliver_'.$file_type,
       'type' => MENU_CALLBACK,
-      'file' => 'pw_api.topics.inc',
+      'file' => 'pw_api.terms.inc',
       );
     $items[$key] = $item;
   }
@@ -185,6 +188,30 @@ function pw_api_permission() {
     );
 }
 
+
+/**
+ * Access check for API path api/path/VOCABULARY/terms
+ *  - Just allow access for some of the vocabularies not all
+ *
+ * @param $vocabulary
+ *
+ * @return bool
+ */
+function pw_api_terms_access($vocabulary) {
+
+  $allowed_vocabularies = [
+    'fraction',
+    'list',
+    'parliaments',
+    'party',
+    'topics'
+  ];
+
+  if (!in_array($vocabulary->machine_name, $allowed_vocabularies)) {
+    return FALSE;
+  }
+  return TRUE;
+}
 
 /**
  * Delivery callback; returns XML.
@@ -357,5 +384,69 @@ function pw_api_meta_data($dataset, $dataset_name = FALSE, $subsets = [], $contr
           'subsets' => $subsets
         ]
       ] + $dataset];
+  }
+}
+
+
+
+/**
+ * Sets meta data for vocabulary/ term api path
+ *
+ * @param array $termset
+ *   terms within the vocabulary
+ *
+ * @param object $vocabulary
+ *   The Drupal vocabulary object
+ *
+ * @return array
+ *   modified termset
+ */
+
+function pw_api_meta_data_terms($termset, $vocabulary) {
+  $pathinfo = pathinfo(current_path());
+
+  if($pathinfo['extension'] == 'json'){
+    return [
+      'meta' => [
+        'license' => [
+          'name' => 'Open Database License (ODbL) v1.0',
+          'url' => 'https://opendatacommons.org/licenses/odbl/1.0/'
+        ],
+        'contributer' => '',
+        'subsets' => '',
+        'vocabulary' => [
+          'machine_name' => $vocabulary->machine_name,
+          'name' => $vocabulary->name,
+          'id' => $vocabulary->vid
+        ]
+      ],
+      'terms' => $termset
+    ];
+  }
+  else{
+    $xml_termset = [];
+    foreach ($termset as $tid => $term) {
+      $xml_termset['term_'. $tid] = [
+        'id' => $tid,
+        'name' => $term
+      ];
+    }
+    return [
+      $vocabulary->machine_name => [
+          'meta' => [
+            'license' => [
+              'name' => 'Open Database License (ODbL) v1.0',
+              'url' => 'https://opendatacommons.org/licenses/odbl/1.0/'
+            ],
+            'contributer' => '',
+            'subsets' => '',
+            'vocabulary' => [
+              'machine_name' => $vocabulary->machine_name,
+              'name' => $vocabulary->name,
+              'id' => $vocabulary->vid
+            ]
+          ]
+      ] + $xml_termset
+    ];
   }
 }
