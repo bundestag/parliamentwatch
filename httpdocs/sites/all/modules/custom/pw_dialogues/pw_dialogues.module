@@ -267,7 +267,7 @@ function pw_dialogues_webform_submission_insert($node, $submission) {
       'sender_email' => $submission->data[7][0],
       'sender_city' => $submission->data[10][0],
       'sender_ip' => $submission->remote_addr,
-      'inserted_date' => date('Y-m-d\TH:i:s', $submission->submitted)
+      'inserted_date' => date('c', $submission->submitted)
     );
     $queue->createItem($payload);
   }
