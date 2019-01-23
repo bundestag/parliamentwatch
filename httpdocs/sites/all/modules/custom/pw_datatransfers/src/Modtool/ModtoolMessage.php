@@ -223,7 +223,7 @@ class ModtoolMessage {
     // validate isStandard
     // - for answers it needs to be set and it needs to have a boolean value
     if (!isset($this->jsonData->isStandard) && $this->jsonData->type == 'answer') {
-      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
+      throw new InvalidSourceException('No isStandard field was found in sent JSON.');
     }
     else if (isset($this->jsonData->isStandard)  && $this->jsonData->type == 'answer' && !is_bool($this->jsonData->isStandard) ) {
       throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
