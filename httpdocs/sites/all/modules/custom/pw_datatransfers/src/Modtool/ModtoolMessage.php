@@ -237,7 +237,7 @@ class ModtoolMessage {
       throw new InvalidSourceException('Inserted date field in sent JSON is not a string.');
     }
     else if (!$this->isValidDate($this->jsonData->inserted_date)) {
-      throw new InvalidSourceException('Inserted date field in sent JSON is not a valid date.');
+      throw new InvalidSourceException('Inserted date field value '. $this->jsonData->inserted_date .' in sent JSON is not a valid date.');
     }
 
 
@@ -246,7 +246,7 @@ class ModtoolMessage {
       throw new InvalidSourceException('Updated date field in sent JSON is not a string.');
     }
     else if (!$this->isValidDate($this->jsonData->updated)) {
-      throw new InvalidSourceException('Updated date field in sent JSON is not a valid date.');
+      throw new InvalidSourceException('Updated date field value '. $this->jsonData->inserted_date .' in sent JSON is not a valid date.');
     }
 
     // validate annotation
