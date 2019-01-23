@@ -1,4 +1,4 @@
-@mixin placeholder {
+@mixin placeholder-text {
   &::-webkit-input-placeholder {
     @content;
   }
