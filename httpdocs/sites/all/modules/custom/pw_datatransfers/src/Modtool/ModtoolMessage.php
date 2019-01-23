@@ -210,6 +210,9 @@ class ModtoolMessage {
     if (!isset($this->jsonData->keyworded_text) || !is_string($this->jsonData->keyworded_text)) {
       throw new InvalidSourceException('No valid summary text was found in sent JSON.');
     }
+    else if (isset($this->jsonData->keyworded_text) && empty($this->jsonData->keyworded_text)) {
+      throw new InvalidSourceException('The excerpt cannot be empty.');
+    }
 
     // validate type
     $allowed_types = ['question', 'answer'];
