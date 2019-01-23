@@ -688,6 +688,21 @@ function _pw_globals_politician_search_role_condition($parliament_term) {
 }
 
 /**
+ * Returns TRUE if the context is a newsletter-specific page
+ */
+function _pw_globals_is_newsletter_page() {
+  if (
+    current_path() === 'node/10380' ||
+    current_path() === 'node/10508' ||
+    current_path() === 'node/111893'
+  ) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+/**
  * Checks if given profile is open for questions.
  *
  * @param object $account
