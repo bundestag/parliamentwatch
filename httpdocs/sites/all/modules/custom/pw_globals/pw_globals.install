@@ -712,3 +712,15 @@ function pw_globals_update_7138() {
   }
   drupal_uninstall_modules(array('eu_cookie_compliance'));
 }
+
+
+
+/**
+ * Deactivate and (deinstall) webform hints module
+ */
+function pw_globals_update_7139() {
+  if(module_exists('webform_hints')) {
+    module_disable(['webform_hints']);
+    //drupal_uninstall_modules(['webform_hints']);
+  }
+}
