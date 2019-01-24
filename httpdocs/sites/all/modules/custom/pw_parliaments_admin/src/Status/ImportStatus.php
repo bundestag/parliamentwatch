@@ -8,20 +8,24 @@ use Drupal\pw_globals\OptionsInterface;
 
 class ImportStatus implements OptionsInterface {
 
-  const NOT_IMPORTED = 'not_imported';
-  const PRE_CHECK = 'pre_check';
+  const CREATED = 'created';
   const OK = 'ok';
-  const NEEDS_REVIEW = 'needs_review';
+  const FAILED = 'failed';
+  const DATA_STRUCTURED_FAILED = 'structure_failed';
+  const DATA_STRUCTURED_OK = 'structured';
   const IMPORTED = 'imported';
+  const IMPORT_FAILED = 'import_failed';
 
 
   public static function getPossibleOptions() {
     return [
-      self::NOT_IMPORTED => t('Not imported'),
-      self::PRE_CHECK => t('Pre check'),
-      self::OK => t('Can be imported'),
-      self::NEEDS_REVIEW => t('Needs review'),
-      self::IMPORTED => t('Imported')
+      self::CREATED => t('Just created'),
+      self::OK => t('Data sets validated'),
+      self::FAILED => t('Errors appeared - import failed'),
+      self::DATA_STRUCTURED_OK => t('Data is structured'),
+      self::DATA_STRUCTURED_FAILED => t('Data structuring failed'),
+      self::IMPORTED => t('Imported'),
+      self::IMPORT_FAILED => t('Import failed')
     ];
   }
 

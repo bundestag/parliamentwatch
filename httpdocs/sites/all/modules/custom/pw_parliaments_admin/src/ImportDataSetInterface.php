@@ -12,16 +12,18 @@ use Drupal\pw_parliaments_admin\Import\Import;
  * PreDrupalEntity class it describes how a Drupal entity will be gained from
  * the CSV entry. The PreDrupalEntity will then really creating the Drupal entities.
  */
-interface ImportDataSetInterface extends EntityInterface {
+interface ImportDataSetInterface extends EntityInterface, ImportValidation {
 
 
   /**
    *
-   * Turn the ImportDataSet into an PreEntity and save it to the database. This
+   * Turn the ImportDataSet into an structuredData and save it to the database. This
    * function needs to do all the stuff needed to prepare the data for a later
    * import into Drupal.
+   *
+   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\Entity\EntityInterface
    */
-  public function preEntity();
+  public function structuredData();
 
 
 
@@ -51,33 +53,13 @@ interface ImportDataSetInterface extends EntityInterface {
    */
   public static function createFromCSVArray(array $dataFromCsv, Import $import);
 
-  /**
-   * Validate if the field values of the dataset are valid. Add errors to a
-   * validationErrors[] array
-   *
-   *
-   * @return void
-   */
-  public function validate();
-
 
   /**
-   * Get the validation errors. Should call validate in case that validation
-   * did not run yet.
-   *
-   * @return array
-   * An array of validation errors. Empty if none was found
-   */
-  public function getValidationErrors();
-
-
-  public function hasErrors();
-
-
-  /**
-   * get the label for a dataset
+   * Get the fully namespaced class name of the related structured data
    *
    * @return string
+   * Empty of no structured data
    */
-  public function getLabel();
+  public static function getStructuredDataClassName();
+
 }

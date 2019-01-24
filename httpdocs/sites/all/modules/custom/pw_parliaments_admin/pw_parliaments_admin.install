@@ -46,7 +46,7 @@ function pw_parliaments_admin_schema() {
         'description' => 'The status of the import',
         'type' => 'varchar',
         'not null' => TRUE,
-        'length' => 15
+        'length' => 25
       ]
     ],
     'primary key' => [
@@ -86,7 +86,7 @@ function pw_parliaments_admin_schema() {
         'type' => 'text'
       ],
       'area_code_descriptor' => [
-        'description' => 'Area code descriptors',
+        'description' => 'Area code descriptor',
         'type' => 'text'
       ],
       'street' => [
@@ -96,11 +96,11 @@ function pw_parliaments_admin_schema() {
       'status' => [
         'description' => 'Streets connected to the constituency',
         'type' => 'varchar',
-        'length' => 15,
+        'length' => 25,
         'no null' => TRUE
       ],
       'errors' => [
-        'description' => 'Streets connected to the constituency',
+        'description' => 'Errors',
         'type' => 'text'
       ],
       'import' => [
@@ -108,6 +108,10 @@ function pw_parliaments_admin_schema() {
         'type' => 'int',
         'not null' => TRUE
       ],
+      'structured_data_id' => [
+        'description' => 'Id of the structured data',
+        'type' => 'int'
+      ]
     ],
     'primary key' => [
       'id'
@@ -115,7 +119,7 @@ function pw_parliaments_admin_schema() {
   ];
 
   // database table for the constituency imports
-  $schema['pw_parliaments_admin_imports_constituencies_preentities'] = [
+  $schema['pw_parliaments_admin_imports_constituencies_structured'] = [
     'description' => 'Table stores the constituencies in the form they will be imported',
     'fields' => [
       'id' => [
@@ -157,10 +161,25 @@ function pw_parliaments_admin_schema() {
         'description' => 'The parliament connected to the constituency',
         'type' => 'text'
       ],
+      'entity_id' => [
+        'description' => 'When imported stores it the entity id ',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
       'import' => [
         'description' => 'Id of the import',
         'type' => 'int'
       ],
+      'errors' => [
+        'description' => 'Errors',
+        'type' => 'text'
+      ],
+      'status' => [
+        'description' => 'Status of the pre entity',
+        'type' => 'varchar',
+        'length' => 25,
+        'no null' => TRUE
+      ]
     ],
     'primary key' => [
       'id'

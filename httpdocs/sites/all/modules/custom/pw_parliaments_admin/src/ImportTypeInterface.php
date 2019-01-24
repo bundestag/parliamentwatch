@@ -35,7 +35,23 @@ interface ImportTypeInterface {
    *
    * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
    */
-  public function createNewImportDataSet(array $dataSet, Import $import);
+  public function createNewImportDataSetFromCSVArray(array $dataSet, Import $import);
+
+
+  /**
+   * @param array $database_array
+   *
+   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
+   */
+  public function getImportDataSetFromDataBaseArray(array $database_array);
+
+  /**
+   * Get the autoloading path for the actual ImportDataSet class used for the
+   * type of import.
+   *
+   * @return string
+   */
+  public function getImportDataSetClassName();
 
 
   /**
@@ -44,8 +60,15 @@ interface ImportTypeInterface {
    *
    * @return string
    */
-  public function getImportDataSetClass();
+  public function getStructuredDataClassName();
 
+
+  /**
+   * @param array $database_array
+   *
+   * @return \Drupal\pw_parliaments_admin\StructuredDataInterface
+   */
+  public function getStructuredDataFromDataBaseArray(array $database_array);
 
   /**
    * Get all required CSV fields which are needed for the specific type of import
@@ -55,5 +78,8 @@ interface ImportTypeInterface {
    * Array of CSV fields required for a specific import type
    */
   public function getRequiredFieldsForCSV();
+
+
+  public function loadAllDataSetsByImport($import_id, $status = 'all');
 
 }

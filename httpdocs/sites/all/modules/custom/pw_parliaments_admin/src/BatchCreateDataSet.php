@@ -29,7 +29,7 @@ class BatchCreateDataSet  {
         $importDataSet = $pw_import->createNewImportDataSet($single_dataset);
         $importDataSet->validate();
         $importDataSet->save();
-        $message = 'Datensatz '.  $importDataSet->getLabel() .' importiert';
+        $message = 'Datensatz '.  $importDataSet->getLabel() .' erstellt';
 
         if ($importDataSet->hasErrors()) {
           $error_item = $context['sandbox']['progress'];
@@ -46,9 +46,15 @@ class BatchCreateDataSet  {
     }
     else {
       $context['finished'] = 1;
-      $pw_import->setStatus(ImportStatus::PRE_CHECK);
-      $pw_import->save();
+      $hasErrors = !empty( $context['sandbox']['errors']);
+      if ($hasErrors) {
+        $pw_import->setStatus(ImportStatus::FAILED);
+      }
+      else {
+        $pw_import->setStatus(ImportStatus::OK);
+      }
 
+      $pw_import->save();
     }
   }
 

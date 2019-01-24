@@ -5,6 +5,7 @@
  * Module file for PW Imports modules for Drupal hooks
  */
 
+use Drupal\pw_parliaments_admin\Import\Import;
 use Drupal\pw_parliaments_admin\Status\ImportStatus;
 
 require_once(DRUPAL_ROOT .'/'. drupal_get_path('module', 'pw_parliaments_admin') .'/library/League/Csv/functions_include.php');
@@ -23,30 +24,53 @@ function pw_parliaments_admin_menu() {
     'file' => 'pw_parliaments_admin.pagecallbacks.inc'
   ];
 
-  $items['admin/abgeordnetenwatch/imports/%pw_import/edit'] = [
-    'title' => 'Edit import',
-    'page callback' => 'pw_parliaments_admin_editorm_pagecallback',
+  $items['admin/abgeordnetenwatch/imports/%pw_import'] = [
+    'title' => 'Administrate import',
+    'page callback' => 'pw_parliaments_import_pagecallback',
     'page arguments' => [3],
     'access arguments' => ['administrate an import'],
     'type' => MENU_CALLBACK,
     'file' => 'pw_parliaments_admin.pagecallbacks.inc'
   ];
 
+  $items['admin/abgeordnetenwatch/imports/%pw_import/overview'] = array(
+    'title' => 'Overview',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  );
 
-  $items['admin/abgeordnetenwatch/imports/%pw_import'] = [
-    'title' => 'Administrate import',
-    'page callback' => 'pw_parliaments_admin_view_pagecallback',
+  $items['admin/abgeordnetenwatch/imports/%pw_import/datasets'] = [
+    'title' => 'Datsensätze',
+    'page callback' => 'pw_parliaments_import_pagecallback_datasets',
+    'page arguments' => [3],
+    'access callback' => 'pw_parliaments_import_pagecallback_datasets_access',
+    'access arguments' => [3],
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  ];
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import/edit'] = [
+    'title' => 'Edit import',
+    'page callback' => 'pw_parliaments_admin_editorm_pagecallback',
     'page arguments' => [3],
     'access arguments' => ['administrate an import'],
-    'type' => MENU_CALLBACK,
-    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc',
+    'weight' => 100
   ];
 
 
   return $items;
 }
 
+function pw_parliaments_import_pagecallback_datasets_access(Import $import) {
+  if ($import->getStatus() !== ImportStatus::DATA_STRUCTURED_OK) {
+    return FALSE;
+  }
 
+  return user_access('administrate an import');
+}
 /**
  * Loader function for Imports
  *
@@ -120,7 +144,7 @@ function pw_parliaments_admin_import_form($form, &$form_state, \Drupal\pw_parlia
   }
 
   $importDone = FALSE;
-  if ($import !== NULL && $import->getStatus() != ImportStatus::NOT_IMPORTED) {
+  if ($import !== NULL && $import->getStatus() != ImportStatus::CREATED) {
     $importDone = TRUE;
   }
 
@@ -247,10 +271,10 @@ function pw_parliaments_admin_import_form_submit(&$form, &$form_state) {
     $import = $form_state['storage']['import'];
     $import->save();
     drupal_set_message('The import was successfully saved');
-    $redirect_path = 'admin/abgeordnetenwatch/imports/'. $import->getId();
+    $form_state['redirect'] = 'admin/abgeordnetenwatch/imports/'. $import->getId();
 
     // we always start to Batch import datasets when the import was created
-    $batchImport = ($import->getStatus() == ImportStatus::NOT_IMPORTED);
+    $batchImport = ($import->getStatus() == ImportStatus::CREATED);
     if ($batchImport) {
       $batch = [
         'title'      => t('Importing data'),
@@ -262,12 +286,7 @@ function pw_parliaments_admin_import_form_submit(&$form, &$form_state) {
         ],
         'finished'   => '\Drupal\pw_parliaments_admin\BatchCreateDataSet::finished',
       ];
-      $batch['form_state']['redirect']['path'] = $redirect_path;
       batch_set($batch);
-    }
-    // if no batch needs to run we redirect to the detail page of the import
-    else {
-      $form_state['redirect'] = $redirect_path;
     }
   }
   catch (\Exception $e) {
@@ -276,4 +295,24 @@ function pw_parliaments_admin_import_form_submit(&$form, &$form_state) {
     drupal_set_message('An error occured: '. $e->getMessage(), 'error');
   }
 
+}
+
+
+/**
+ * implements hook_form_alter() for views exposed forms
+ *
+ * We need to change the action for the views rendered on import pages
+ *
+ * @param $form
+ * @param $form_state
+ */
+function pw_parliaments_admin_form_views_exposed_form_alter(&$form, &$form_state) {
+  $change_form_action_views = [
+    'pw_administration_imports_constituency_datasets',
+    'pw_administration_imports_constituency_structured_data'
+  ];
+
+  if (in_array($form_state["view"]->name, $change_form_action_views)) {
+    $form["#action"] = '/'. current_path();
+  }
 }

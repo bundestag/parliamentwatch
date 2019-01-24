@@ -8,3 +8,5 @@ dependencies[] = xautoload
 
 files[] = views/handler/views_handler_field_import_status.inc
 files[] = views/handler/views_handler_field_import_type.inc
+files[] = views/handler/views_handler_filter_dataset_status.inc
+files[] = views/handler/views_handler_field_dataset_status.inc

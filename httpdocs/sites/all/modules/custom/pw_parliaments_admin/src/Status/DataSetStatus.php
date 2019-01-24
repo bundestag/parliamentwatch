@@ -10,13 +10,16 @@ class DataSetStatus implements OptionsInterface {
 
   const OK = 'ok';              // validation found no errors
   const ERROR = 'error';        // validation found errors
-  const IMPORTED = 'imported';  // Pre entity was already created
+  const IMPORTED = 'imported';  // imported to Drupal
+  const STRUCTURED = 'structured'; // was successfully structured
+
 
   public static function getPossibleOptions() {
     return [
       self::OK => t('No errors'),
       self::ERROR => t('Errors found'),
-      self::IMPORTED => t('Precheck done')
+      self::IMPORTED => t('Imported'),
+      self::STRUCTURED => t('Structured')
     ];
   }
 
