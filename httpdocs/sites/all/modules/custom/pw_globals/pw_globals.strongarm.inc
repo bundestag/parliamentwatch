@@ -1307,47 +1307,9 @@ node/*/edit';
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
-  $strongarm->name = 'webform_hints_forms';
-  $strongarm->value = array(
-    6313 => 0,
-    6578 => 0,
-    10369 => 0,
-    10380 => 0,
-    10446 => 0,
-    10482 => 0,
-    10508 => 0,
-    57286 => 0,
-    65995 => 0,
-  );
-  $export['webform_hints_forms'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'webform_hints_legacy_support';
-  $strongarm->value = 0;
-  $export['webform_hints_legacy_support'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'webform_hints_required';
-  $strongarm->value = ' *';
-  $export['webform_hints_required'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
   $strongarm->name = 'webform_hints_reverse';
   $strongarm->value = 1;
   $export['webform_hints_reverse'] = $strongarm;
-
-  $strongarm = new stdClass();
-  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
-  $strongarm->api_version = 1;
-  $strongarm->name = 'webform_hints_use_description';
-  $strongarm->value = 0;
-  $export['webform_hints_use_description'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
