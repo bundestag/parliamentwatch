@@ -210,6 +210,9 @@ class ModtoolMessage {
     if (!isset($this->jsonData->keyworded_text) || !is_string($this->jsonData->keyworded_text)) {
       throw new InvalidSourceException('No valid summary text was found in sent JSON.');
     }
+    else if (isset($this->jsonData->keyworded_text) && empty($this->jsonData->keyworded_text)) {
+      throw new InvalidSourceException('The excerpt cannot be empty.');
+    }
 
     // validate type
     $allowed_types = ['question', 'answer'];
@@ -223,7 +226,7 @@ class ModtoolMessage {
     // validate isStandard
     // - for answers it needs to be set and it needs to have a boolean value
     if (!isset($this->jsonData->isStandard) && $this->jsonData->type == 'answer') {
-      throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
+      throw new InvalidSourceException('No isStandard field was found in sent JSON.');
     }
     else if (isset($this->jsonData->isStandard)  && $this->jsonData->type == 'answer' && !is_bool($this->jsonData->isStandard) ) {
       throw new InvalidSourceException('No valid isStandard field value was found in sent JSON.');
@@ -237,7 +240,7 @@ class ModtoolMessage {
       throw new InvalidSourceException('Inserted date field in sent JSON is not a string.');
     }
     else if (!$this->isValidDate($this->jsonData->inserted_date)) {
-      throw new InvalidSourceException('Inserted date field in sent JSON is not a valid date.');
+      throw new InvalidSourceException('Inserted date field value '. $this->jsonData->inserted_date .' in sent JSON is not a valid date.');
     }
 
 
@@ -246,7 +249,7 @@ class ModtoolMessage {
       throw new InvalidSourceException('Updated date field in sent JSON is not a string.');
     }
     else if (!$this->isValidDate($this->jsonData->updated)) {
-      throw new InvalidSourceException('Updated date field in sent JSON is not a valid date.');
+      throw new InvalidSourceException('Updated date field value '. $this->jsonData->inserted_date .' in sent JSON is not a valid date.');
     }
 
     // validate annotation

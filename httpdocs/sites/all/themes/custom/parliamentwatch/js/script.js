@@ -906,13 +906,13 @@
         } else if ($(this).parents('.filterbar__secondary').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
-            placeholder: 'Bitte wählen',
+            placeholder: $(this).siblings('label').text(),
             dropdownParent: $('.filterbar__secondary__inner')
           });
         } else {
           $(this).select2({
             minimumResultsForSearch: 20,
-            placeholder: 'Bitte wählen',
+            placeholder: $(this).siblings('label').text(),
             dropdownParent: $('.page-container')
           });
         }
@@ -920,6 +920,66 @@
           // close all dropdowns
           $('.dropdown__list').removeClass('dropdown__list--open');
         });
+        $(this).on('select2:select', function (e) {
+          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+        });
+      });
+    }
+  };
+
+  /**
+   * Attaches the floating behavior to form labels.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.floatingLabels = {
+    attach: function (context) {
+      $('.form__item__control:not(.form__item__control--special), .form-email').on('focus input change', function () {
+        startFloatingLabel($(this));
+      });
+
+      $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
+        if ($(this).val() == false) {
+          stopFloatingLabel($(this));
+        }
+      });
+
+      $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
+        if ($(this).val() != false) {
+          startFloatingLabel($(this));
+        }
+      });
+
+      function startFloatingLabel($input) {
+        var $label = $input.siblings('.form__item__label:not(.sr-only)');
+
+        if (!$label.hasClass('form__item__label--floating')) {
+          $input.siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+        }
+      }
+
+      function stopFloatingLabel($input) {
+        $input.siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
+      }
+    }
+  };
+
+  /**
+   * Attaches keyboard entry behavior to form labels.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.keyboardLabels = {
+    attach: function (context) {
+      $('.form__item__label').on('keydown', function (event) {
+        if (event.which == 13) {
+          $(this).trigger('click');
+          event.preventDefault();
+        }
       });
     }
   };

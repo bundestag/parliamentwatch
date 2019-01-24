@@ -1,21 +1,26 @@
 <?php
 
 /**
- * @file
- * Sets the module weight.
+ * Delete all submission json from file_managed
  */
-
-/**
- * Implements hook_enable().
- */
-function pw_cron_export_submissions_enable() {
-	$private_path = variable_get('file_private_path');
-	$path_submissions = $private_path.'/webforms/submissions/newsletter/';
-	drupal_mkdir($path_submissions, NULL, TRUE);
-}
-
-/**
- * Implements hook_uninstall().
- */
-function pw_cron_export_submissions_uninstall() {
+function pw_cron_export_submissions_update_7000(&$sandbox) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'file')
+    ->propertyCondition('filename', 'submissions_%.json', 'LIKE')
+    ->propertyOrderBy('fid', 'ASC');
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $result = $query->execute();
+    $sandbox['max'] = count($result['file']);
+    $sandbox['current_fid'] = -1;
+  }
+  $query->range(0, 1000);
+  $result = $query->execute();
+  $files = file_load_multiple(array_keys($result['file']));
+  foreach ($files as $file) {
+    file_delete($file);
+    $sandbox['progress']++;
+    $sandbox['current_fid'] = $file->fid;
+  }
+  $sandbox['#finished'] = $sandbox['progress'] >= $sandbox['max'] ? TRUE : $sandbox['progress'] / $sandbox['max'];
 }
