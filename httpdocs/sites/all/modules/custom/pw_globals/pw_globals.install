@@ -724,3 +724,21 @@ function pw_globals_update_7139() {
     drupal_uninstall_modules(['webform_hints']);
   }
 }
+
+/**
+ * Configure new poll charts block.
+ */
+function pw_globals_update_7140() {
+  $config = [
+    'module' => 'pw_vote',
+    'delta' => 'poll_filters',
+    'weight' => -82,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '',
+    'cache' => DRUPAL_NO_CACHE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'content'],
+    'node_types' => ['poll']
+  ];
+  _pw_globals_configure_block($config);
+}
