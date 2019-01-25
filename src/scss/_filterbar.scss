@@ -1,6 +1,7 @@
 /**
 * Filterbar
 */
+
 .filterbar {
   margin-bottom: -1px;
   border-top: 1px solid $darkBeige;
@@ -12,19 +13,6 @@
   @include breakpoint($breakpoint-l-min) {
     min-height: 62px;
   }
-  &.is_stuck {
-    z-index: 999;
-    position: fixed;
-    left: 0;
-    top: 0;
-    right: 0;
-    + .filterbar-placeholder {
-      display: block;
-    }
-  }
-}
-.filterbar-placeholder {
-  display: none;
 }
 .filterbar__inner {
   min-height: 60px;
@@ -115,10 +103,7 @@
     transform: translate(0, 0);
     &:before {
       color: $gray;
-      line-height: 57px;
-      @include breakpoint($breakpoint-xs-min) {
-        line-height: 60px;
-      }
+      line-height: $space * 2 + $space-xsmall * 2;
     }
   }
   .swiper-button-next {
@@ -213,6 +198,7 @@ _:-ms-fullscreen,
         display: none;
         @include breakpoint($breakpoint-m-min) {
           display: block;
+          line-height: $space;
           font-weight: 600;
           white-space: nowrap;
           float: left;
@@ -243,8 +229,6 @@ _:-ms-fullscreen,
           float: left;
           border-color: $darkBeige;
           border-right: 0;
-          height: $space * 2;
-          line-height: normal;
           @include breakpoint($breakpoint-s-min) {
             display: block;
           }
@@ -269,10 +253,7 @@ _:-ms-fullscreen,
           padding: $space $space;
           display: block;
           color: $mediumGray;
-          line-height: $space - 1;
-          @include breakpoint($breakpoint-l-min) {
-            line-height: $space;
-          }
+          line-height: $space;
           .badge {
             display: inline-block;
             background: $orangeBG;
@@ -424,6 +405,17 @@ _:-ms-fullscreen,
     border-bottom: 1px solid $beige;
     .filterbar__view_options__item__link {
       color: $darkGray;
+    }
+    &:after {
+      content: '';
+
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 1px;
+
+      background: $beige;
     }
   }
 }

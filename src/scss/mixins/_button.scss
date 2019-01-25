@@ -21,6 +21,8 @@
   }
   &:disabled {
     opacity: .4;
+    pointer-events: none;
+    cursor: not-allowed;
   }
 }
 @mixin button--block() {
@@ -34,4 +36,3 @@
     float: none;
   }
 }
-

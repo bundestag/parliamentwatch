@@ -21,6 +21,7 @@ scripts[] = js/contrib/d3.min.js
 scripts[] = js/contrib/jquery.matchHeight-min.js
 scripts[] = js/contrib/select2.min.js
 scripts[] = js/contrib/swiper.min.js
+scripts[] = js/contrib/lightbox.min.js
 scripts[] = js/contrib/stupidtable.min.js
 scripts[] = js/contrib/jquery.scrollTo.min.js
 scripts[] = js/contrib/jquery.sticky-kit.min.js

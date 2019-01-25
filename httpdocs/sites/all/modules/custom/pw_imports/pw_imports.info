@@ -1,0 +1,7 @@
+name = PW Imports
+description = Manages mass imports for data related to elections and parliaments
+core = 7.x
+package = Parliamentwatch
+
+dependencies[] = file
+dependencies[] = xautoload

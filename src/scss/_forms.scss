@@ -2,67 +2,109 @@
 * Forms
 */
 
+
+
 .form__item {
-  margin-bottom: $space-small;
+  margin-bottom: $space-xsmall;
   position: relative;
+
   .description {
     padding: $space-xsmall-mobile 0;
     font-size: .8em;
     line-height: 1.4em;
   }
-}
-.form__item--inline {
-  display: inline-block;
-}
-.form-text,
-.form-email,
-.form__item__control {
-  border: 1px solid $gray;
-  display: block;
-  padding: $space-xsmall;
-  font-family: $font-sans-serif;
-  font-weight: 300;
-  outline: 0;
-  box-shadow: none;
-  border-radius: 0;
-  &[type="search"],
-  &[type="password"],
-  &[type="email"],
-  &[type="text"] {
-    appearance: none;
-    width: 100%;
-  }
-  &::-webkit-input-placeholder,
-  &::-moz-placeholder,
-  &:-ms-input-placeholder,
-  &:-moz-placeholder {
-    color: $gray;
-  }
-}
 
-.form__item--checkboxes,
-.form__item--radios {
-  & > .form__item__label {
+  &--inline {
+    display: inline-block;
+  }
+
+  &__control,
+  .form-email {
+    border: 1px solid $gray;
+    display: block;
+    padding: $space-xsmall - 1px;
+    line-height: $space;
+    font-family: $font-sans-serif;
+    font-weight: 500;
+    color: $darkGray;
+    outline: 0;
+    box-shadow: none;
+    border-radius: 0;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &[type="search"],
+    &[type="password"],
+    &[type="email"],
+    &[type="text"] {
+      height: $space * 2;
+      width: 100%;
+    }
+
+    @include placeholder-text {
+      font-weight: 300;
+      color: $darkGray;
+      opacity: 1;
+    }
+    
+    &:focus {
+      border-color: $orange;
+    }
+  }
+
+  &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
+    display: block;
+    line-height: $space;
+    position: relative;
+    left: $space-xsmall;
+    top: $space + $space-xsmall;
+    color: $darkGray;
+    pointer-events: none;
+    transform-origin: left;
+    backface-visibility: hidden;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+    transition-property: left, top, transform;
+  }
+
+  &__label--floating {
+    left: 0 !important;
+    top: 0 !important;
+    transform: scale(0.8) !important;
+    font-weight: 600 !important;
+  }
+
+  &--checkboxes > &__label:not(.sr-only),
+  &--radios > &__label:not(.sr-only) {
     display: block;
     margin-bottom: $space-xsmall;
+    font-size: 1em;
     font-weight: 600;
+    color: $darkGray;
   }
-}
 
-.form__item--checkbox,
-.form__item--radio {
-  position: relative;
-  margin-bottom: 0;
-  &:not(:last-child) {
-    margin-bottom: $space-xsmall;
+  &--checkbox,
+  &--radio {
+    position: relative;
+    margin-bottom: 0;
+
+    &:not(:last-child) {
+      margin-bottom: $space-xsmall;
+    }
   }
-  .form__item__control {
+
+  &--checkbox &__control,
+  &--radio &__control {
     display: none;
   }
-  .form__item__label {
+
+  &--checkbox &__label,
+  &--radio &__label {
     display: block;
     padding-left: $space + $space-xsmall-mobile;
     line-height: 1.5em;
+    color: inherit;
+
     &::before {
       content: "";
       display: block;
@@ -75,10 +117,14 @@
       background-color: $white;
     }
   }
-}
 
-.form__item--checkbox {
-  :checked + .form__item__label {
+  &--radio &__label {
+    &::before {
+      border-radius: 50%;
+    }
+  }
+
+  &--checkbox &__control:checked + &__label {
     &::after {
       content: "\e87a";
       font-family: awfont;
@@ -94,16 +140,8 @@
       color: $orange;
     }
   }
-}
 
-.form__item--radio {
-  .form__item__label {
-    &::before {
-      border-radius: 50%;
-    }
-  }
-
-  :checked + .form__item__label {
+  &--radio &__control:checked + &__label {
     &::after {
       content: "";
       display: block;
@@ -116,7 +154,18 @@
       background-color: $orange;
     }
   }
+
+  &--checkbox &__label:focus,
+  &--radio &__label:focus {
+    outline: 0;
+
+    &::before {
+      border-color: $orange;
+    }
+  }
 }
+
+
 
 .form__item--alert {
   display: none;
@@ -184,21 +233,6 @@ textarea.form__item__control {
   width: 100%;
   resize: vertical;
 }
-.form__item--textarea {
-  .form__item__label {
-    margin-bottom: $space-xsmall-mobile;
-    display: block;
-  }
-}
-
-/* Text fields */
-
-.form__item--textfield {
-  .form__item__label {
-    margin-bottom: $space-xsmall-mobile;
-    display: block;
-  }
-}
 
 
 .form__item--multi {
@@ -213,7 +247,7 @@ textarea.form__item__control {
   padding-top: $space;
   .form__item__label + div {
     position: absolute;
-    bottom: calc(100% - #{$space});
+    top: $space;
     right: 0;
     display: inline-block;
     background: #fff;
@@ -230,17 +264,24 @@ textarea.form__item__control {
 
 .select2-container .select2-selection {
   min-height: 0;
-  height: auto;
+  height: $space * 2;
   border-radius: 0;
   border-color: $gray;
+  outline: 0;
+
+  &:focus {
+    border-color: $orange;
+  }
 }
 .select2-container .select2-selection .select2-selection__rendered {
   display: block;
   padding: 0;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
-  padding: $space-xsmall $space-large $space-xsmall $space-xsmall;
-  line-height: 1.15;
+  padding: ($space-xsmall - 1px) ($space-large - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
+  line-height: $space;
+  color: $darkGray;
+  font-weight: 500;
 }
 .select2-container .select2-selection--single .select2-selection__arrow {
   height: auto;
@@ -274,6 +315,14 @@ textarea.form__item__control {
 }
 .select2-container--default .select2-selection--multiple .select2-selection__clear {
   margin-top: $space-xsmall;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: $darkGray;
+  font-weight: 300;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: $orange;
+  color: $white;
 }
 .select2-container--open .select2-dropdown--below {
   min-width: 200px;

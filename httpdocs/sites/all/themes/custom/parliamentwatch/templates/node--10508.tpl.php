@@ -112,6 +112,10 @@
       <p><small><strong>Hinweis für SEPA-Lastschrift:</strong> Wenn Sie bis zum 13. des Monats spenden, dann ziehen wir die Spende am 15. des Monats oder am darauffolgenden Bankarbeitstag ein. Nach dem 13. des Monats ziehen wir Ihre Spende am 25. des Monats oder dem darauffolgenden Bankarbeitstag ein.</small></p>
     </div>
     <div class="sidebar__box">
+      <h3 class="sidebar__box__headline"><?php print t('Transparency') ?></h3>
+      <p><?php print t('In our annual report, we publish the names of the donors who supported us in the previous year with a total amount of € 1,000 and above.') ?></p>
+    </div>
+    <div class="sidebar__box">
       <h3 class="sidebar__box__headline">Weitere Spendenmöglichkeiten</h3>
       <div class="sidebar__box__accordion">
         <div class="sidebar__box__accordion__item sidebar__box__accordion__item--open">
@@ -125,6 +129,7 @@
               IBAN: DE03 4306 0967 2011 1200 00<br>
               BIC: GENODEM1GLS<br>
             </p>
+            <p><?php print t('Please provide your full address for bank transfers so that we can send you a donation receipt.') ?></p>
           </div>
         </div>
         <div class="sidebar__box__accordion__item">
