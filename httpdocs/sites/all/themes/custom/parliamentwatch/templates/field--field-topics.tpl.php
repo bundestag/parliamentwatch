@@ -51,7 +51,7 @@
       <?php print render($item); if ($delta < (sizeof($items) - 1)) print ', '; ?>
     <?php endforeach; ?>
   <?php else: ?>
-    <ul class="tag-list">
+    <ul id="topic-tags" class="tag-list">
       <?php foreach ($items as $delta => $item): ?>
         <li><?php print render($item); ?></li>
       <?php endforeach; ?>
