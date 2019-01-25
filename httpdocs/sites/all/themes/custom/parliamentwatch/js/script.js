@@ -2242,6 +2242,25 @@
   };
 
   /**
+   * Attaches topic-tag tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.topicTagTracking = {
+    attach: function () {
+      $(function() {
+        var page_url = window.location.href;
+
+        $('#topic-tags a').click(function() {
+          _paq.push(['trackEvent', 'Topic Tag', 'Click', page_url]);
+        });
+      });
+    }
+  };
+
+  /**
    * Attaches user gallery tracking behavior.
    *
    * @type {Drupal~behavior}
