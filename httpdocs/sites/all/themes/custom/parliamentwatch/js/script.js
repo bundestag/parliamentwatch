@@ -2182,6 +2182,33 @@
   };
 
   /**
+   * Attaches user gallery tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.deputyGallery = {
+    attach: function () {
+      $(function() {
+        var deputy_name = $('.deputy__title').text();
+
+        $('.deputy__gallery a[data-lightbox]').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open Image', deputy_name]);
+        });
+
+        $('.page-user .lb-next').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open next Image', deputy_name]);
+        });
+
+        $('.page-user .lb-prev').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open previous Image', deputy_name]);
+        });
+      });
+    }
+  };
+
+  /**
    * Attaches lightbox behavior.
    *
    * @type {Drupal~behavior}
