@@ -2242,6 +2242,54 @@
   };
 
   /**
+   * Attaches user gallery tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.deputyGallery = {
+    attach: function () {
+      $(function() {
+        var deputy_name = $('.deputy__title').text();
+
+        $('.deputy__gallery a[data-lightbox]').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open Image', deputy_name]);
+        });
+
+        $('.page-user .lb-next').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open next Image', deputy_name]);
+        });
+
+        $('.page-user .lb-prev').click(function() {
+          _paq.push(['trackEvent', 'User-Gallery', 'Open previous Image', deputy_name]);
+        });
+      });
+    }
+  };
+
+  /**
+   * Attaches lightbox behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.lightbox = {
+    attach: function () {
+      $(function() {
+        lightbox.option({
+          'resizeDuration': 400,
+          'imageFadeDuration': 400,
+          'fadeDuration': 400,
+          'albumLabel': 'Bild %1 von %2',
+          'alwaysShowNavOnTouchDevices': true
+        });
+      });
+    }
+  };
+
+  /**
    * Attaches modal behavior.
    *
    * @type {Drupal~behavior}
