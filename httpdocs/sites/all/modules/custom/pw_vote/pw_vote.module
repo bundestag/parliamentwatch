@@ -620,13 +620,19 @@ function pw_vote_poll_filters_block() {
   $block = [];
 
   $node = menu_get_object();
+  $parliament_tid = $node->field_parliament[LANGUAGE_NONE][0]['tid'];
+  $block['parliament_eu'] = FALSE;
 
   if (!$node || $node->type != 'poll') {
     return $block;
   }
+  if ($parliament_tid === '16117') {
+    $block['parliament_eu'] = TRUE;
+  }
 
   $facets = pw_vote_by_poll_search($node)->execute()['search_api_facets'];
   $block['content'] = drupal_get_form('pw_vote_poll_filters', $facets);
+  $block['parliament_tid'] = $parliament_tid;
 
   return $block;
 }
