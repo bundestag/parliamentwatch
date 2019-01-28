@@ -936,32 +936,29 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      $('.form__item__control:not(.form__item__control--special), .form-email').on('focus input change', function () {
-        stopFloatingLabel($(this));
+      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible');
+
+      $inputs.each(function () {
+        setFloatingLabel($(this));
       });
 
-      $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
-        if ($(this).val() == false) {
-          startFloatingLabel($(this));
-        }
+      $inputs.on('focus input change', function () {
+        setFloatingLabel($(this), false);
       });
 
-      $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
-        if ($(this).val() == false) {
-          startFloatingLabel($(this));
-        }
+      $inputs.on('blur', function () {
+        setFloatingLabel($(this));
       });
 
-      function startFloatingLabel($input) {
+      function setFloatingLabel($input, floating = true) {
         var $label = $input.siblings('.form__item__label:not(.sr-only)');
+        var modifier = 'form__item__label--floating';
 
-        if (!$label.hasClass('form__item__label--floating')) {
-          $label.addClass('form__item__label--floating');
+        if (floating && $input.val() == false) {
+          $label.addClass(modifier);
+        } else {
+          $label.removeClass(modifier);
         }
-      }
-
-      function stopFloatingLabel($input) {
-        $input.siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
       }
     }
   };
