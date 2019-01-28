@@ -57,8 +57,8 @@
     display: block;
     line-height: $space;
     position: relative;
-    left: $space-xsmall;
-    top: $space + $space-xsmall;
+    left: 0;
+    top: 0;
     color: $darkGray;
     pointer-events: none;
     transform-origin: left;
@@ -66,13 +66,15 @@
     transition-duration: 300ms;
     transition-timing-function: ease;
     transition-property: left, top, transform;
+    transform: scale(0.8);
+    font-weight: 600;
   }
 
   &__label--floating {
-    left: 0 !important;
-    top: 0 !important;
-    transform: scale(0.8) !important;
-    font-weight: 600 !important;
+    left: $space-xsmall !important;
+    top: $space + $space-xsmall !important;
+    transform: scale(1) !important;
+    font-weight: 300 !important;
   }
 
   &--checkboxes > &__label:not(.sr-only),
