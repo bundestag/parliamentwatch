@@ -171,9 +171,11 @@
   }
   .select2-container--default .select2-selection--single {
     border-color: $darkBeige;
+    box-shadow: none;
   }
   .select2-container .select2-selection--single .select2-selection__arrow {
     border-color: $darkBeige;
+    box-shadow: none;
   }
   &--active {
     color: $black;
@@ -228,6 +230,7 @@ _:-ms-fullscreen,
         .form__item__control {
           float: left;
           border-color: $darkBeige;
+          box-shadow: none;
           border-right: 0;
           @include breakpoint($breakpoint-s-min) {
             display: block;
