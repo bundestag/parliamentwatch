@@ -49,7 +49,8 @@
 
     &:focus {
       border-color: $orange;
-      box-shadow: 0 0 0 1px $orange;
+      border-width: 2px;
+      padding: $space-xsmall - 2px;
     }
   }
 
@@ -274,7 +275,11 @@ textarea.form__item__control {
 
   &:focus {
     border-color: $orange;
-    box-shadow: 0 0 0 1px $orange;
+    border-width: 2px;
+
+    .select2-selection__rendered {
+      padding: ($space-xsmall - 2px) ($space-large - 2px) ($space-xsmall - 2px) ($space-xsmall - 2px);
+    }
   }
 }
 .select2-container .select2-selection .select2-selection__rendered {
@@ -405,7 +410,6 @@ textarea.form__item__control {
   }
   .form__item__control {
     border: 0;
-    box-shadow: none;
   }
   .btn {
     float: left;
