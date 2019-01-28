@@ -46,9 +46,10 @@
       color: $darkGray;
       opacity: 1;
     }
-    
+
     &:focus {
       border-color: $orange;
+      box-shadow: 0 0 0 1px $orange;
     }
   }
 
@@ -161,6 +162,7 @@
 
     &::before {
       border-color: $orange;
+      box-shadow: 0 0 0 1px $orange;
     }
   }
 }
@@ -271,6 +273,7 @@ textarea.form__item__control {
 
   &:focus {
     border-color: $orange;
+    box-shadow: 0 0 0 1px $orange;
   }
 }
 .select2-container .select2-selection .select2-selection__rendered {
