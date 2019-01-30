@@ -1,10 +1,10 @@
 # German translation of Simple hierarchical select (7.x-1.7)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Simple hierarchical select (7.x-1.7)\n"
-"POT-Creation-Date: 2018-08-17 07:23+0000\n"
+"POT-Creation-Date: 2019-01-12 21:18+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -57,4 +57,4 @@ msgstr ""
 "Ein ungültiges Vokabular wurde ausgewählt. Bitte in den Optionen "
 "ändern."
 msgid "Chosen"
-msgstr "Ausgewählt"
+msgstr "Chosen"
