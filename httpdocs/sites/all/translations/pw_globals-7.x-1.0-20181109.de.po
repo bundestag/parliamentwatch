@@ -1317,7 +1317,7 @@ msgstr "Weiterführende Links von @full_name"
 
 #: sites/all/themes/custom/parliamentwatch/templates/user-profile--full.tpl.php:287
 msgid "Image gallery of @full_name"
-msgstr "Bilder-Galerie von @full_name"
+msgstr "Bildergalerie von @full_name"
 
 #: sites/all/themes/custom/parliamentwatch/templates/user-profile--full.tpl.php:296
 msgid "Share this deputy"
