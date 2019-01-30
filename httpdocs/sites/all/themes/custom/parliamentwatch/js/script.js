@@ -751,21 +751,6 @@
   };
 
   /**
-   * Attaches the newsletter cookie.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   */
-  Drupal.behaviors.newsletterCookies = {
-    attach: function (context) {
-      if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
-        $.cookie('modal_newsletter', '1', {path: '/'});
-      }
-    }
-  };
-
-  /**
    * Attaches the tabs behavior.
    *
    * @type {Drupal~behavior}
@@ -2312,6 +2297,11 @@
               $('body').addClass('block-scrolling');
             }
           });
+        }
+
+        // Hide Newsletter-Overlay on sign-up/out pages
+        if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
+          $.cookie('modal_newsletter', '1', {path: '/'});
         }
       });
     }
