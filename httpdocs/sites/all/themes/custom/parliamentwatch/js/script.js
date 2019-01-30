@@ -2369,6 +2369,11 @@
             }
           });
         }
+
+        // Hide Newsletter-Overlay on sign-up/out pages
+        if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
+          $.cookie('modal_newsletter', '1', {path: '/'});
+        }
       });
     }
   };
