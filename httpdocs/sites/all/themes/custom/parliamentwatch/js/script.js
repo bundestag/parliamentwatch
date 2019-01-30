@@ -2251,11 +2251,13 @@
   Drupal.behaviors.topicTagTracking = {
     attach: function () {
       $(function() {
-        var page_url = window.location.href;
+        if(typeof _paq !== "undefined") {
+          var page_url = window.location.href;
 
-        $('#topic-tags a').click(function() {
-          _paq.push(['trackEvent', 'Topic Tag', 'Click', page_url]);
-        });
+          $('#topic-tags a').click(function() {
+            _paq.push(['trackEvent', 'Topic Tag', 'Click', page_url]);
+          });
+        }
       });
     }
   };
