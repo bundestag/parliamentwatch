@@ -498,9 +498,7 @@ body {
   color: $gray;
   position: relative;
   z-index: 9999999;
-  padding: 5px;
-  right: $space-small;
-  @include margin(($space - 5px) null);
+  padding: $space;
   @include breakpoint($breakpoint-m-min) {
     display: none;
   }
