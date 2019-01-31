@@ -609,34 +609,6 @@
   };
 
   /**
-   * Attaches local scroll behavior on page load.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   */
-  Drupal.behaviors.initLocalScrollPageLoad = {
-    attach: function (context) {
-      function scrollToAnchor(hash) {
-        var target = $(hash);
-
-        target = target.length ? target : $('[name=' + hash.slice(1) +']');
-
-        if (target.length) {
-          $('html,body').animate({
-            scrollTop: target.offset().top
-          }, 100);
-          return false;
-        }
-      }
-
-      if(window.location.hash) {
-        scrollToAnchor(window.location.hash);
-      }
-    }
-  };
-
-  /**
    * Attaches the tooltip behavior.
    *
    * @type {Drupal~behavior}
