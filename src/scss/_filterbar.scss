@@ -180,11 +180,6 @@
   }
 }
 
-_:-ms-fullscreen,
-:root .filterbar__item--input .btn {
-  text-indent: 999px;
-}
-
 .filterbar {
   &:not(&--expanded) {
     .filterbar__heading {
@@ -235,8 +230,10 @@ _:-ms-fullscreen,
         }
         .btn {
           text-indent: calc(100% + #{$space-xsmall-mobile});
+          color: transparent;
           &:after {
             content: '\e901';
+            color: $darkGray;
             position: absolute;
             left: 0;
             right: 0;
