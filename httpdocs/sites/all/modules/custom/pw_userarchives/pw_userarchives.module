@@ -273,6 +273,7 @@ function pw_userarchives_comment_delete($comment) {
  * 4. Update fields, index, etc.
  */
 function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
+  // $tracked_items_query -> hole das profile mit der höchsten vid je user/ parlament/ rolle aus der User Archive
   $tracked_items_query = db_select('user_archive_cache', 'uac');
   $tracked_items_query->addExpression('MAX(uac.vid)');
   $tracked_items_query->groupBy('uac.uid, uac.parliament_name, uac.user_role');
@@ -366,6 +367,8 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
     // join parliament valid AND question form closed to check if the profile is open for questions or not
     $query->leftJoin('field_revision_field_parliament_valid', 'pv', "pv.entity_type='taxonomy_term' AND pv.entity_id = u_parl.field_user_parliament_tid AND pv.field_parliament_valid_value < NOW() AND (pv.field_parliament_valid_value2 IS NULL OR pv.field_parliament_valid_value2 > NOW())");
     $query->leftJoin('field_revision_field_user_question_form_closed', 'qf_closed', "qf_closed.entity_type='user' AND qf_closed.revision_id = ur.vid");
+
+    // CHECK if question form is open
     $query->addExpression("
       COUNT(pv.field_parliament_valid_value) > 0 AND
       (user_joined.field_user_joined_value IS NULL OR user_joined.field_user_joined_value < NOW()) AND
