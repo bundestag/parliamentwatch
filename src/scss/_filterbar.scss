@@ -65,7 +65,7 @@
     top: $space-xsmall;
     bottom: $space-xsmall;
     background: $white;
-    padding: $space-xsmall $space-xsmall-mobile;
+    padding: $space-xsmall 0;
     color: $mediumGray;
     overflow: hidden;
     white-space: nowrap;
@@ -229,17 +229,14 @@
           }
         }
         .btn {
-          text-indent: calc(100% + #{$space-xsmall-mobile});
-          color: transparent;
+          @include hide-text;
           &:after {
             content: '\e901';
-            color: $darkGray;
             position: absolute;
             left: 0;
             right: 0;
-            text-indent: 0;
-
             font-family: 'awfont';
+            text-indent: 0;
           }
         }
       }
