@@ -85,7 +85,7 @@ class UserArchiveManager {
 
     foreach ($user_revision_vids as $vid) {
       $politicianUserRevision = PoliticianUserRevision::loadFromUidAndVid($this->politician->getId(), $vid);
-      $user_role = $politicianUserRevision->getRole();
+      $user_role = $politicianUserRevision->getPoliticianRole();
 
       $fraction_name = NULL;
       $fraction = $politicianUserRevision->getFraction();

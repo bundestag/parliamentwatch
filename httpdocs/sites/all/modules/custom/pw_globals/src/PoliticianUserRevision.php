@@ -74,10 +74,11 @@ class PoliticianUserRevision {
   /**
    * Get the role of the politician
    *
-   * @return string
-   * Can be 'candidate' or 'deputy'
+   * @return string|bool
+   * Can be 'candidate' or 'deputy'. If the user revision was not one
+   * of a politician it returns FALSE
    */
-  public function getRole() {
+  public function getPoliticianRole() {
     $userRevisionWrapper = entity_metadata_wrapper('user', $this->userRevision);
     foreach ($userRevisionWrapper->field_user_roles_for_view_mode_s->getIterator() as $delta => $term_wrapper) {
       $tid = $term_wrapper->tid->value();
@@ -89,6 +90,8 @@ class PoliticianUserRevision {
         return self::CANDIDATE_ROLE_STRING;
       }
     }
+
+    return FALSE;
   }
 
 
@@ -182,11 +185,11 @@ class PoliticianUserRevision {
         ->fieldCondition('field_dialogue_recipient', 'target_id', $this->getId())
         ->fieldCondition('field_parliament', 'tid', $parliament->getId());
 
-      if ($this->getRole() == self::DEPUTY_ROLE_STRING) {
+      if ($this->getPoliticianRole() == self::DEPUTY_ROLE_STRING) {
         $entityFieldQuery->fieldCondition('field_dialogue_before_election', 'value', 0);
       }
 
-      if ($this->getRole() == self::CANDIDATE_ROLE_STRING) {
+      if ($this->getPoliticianRole() == self::CANDIDATE_ROLE_STRING) {
         $entityFieldQuery->fieldCondition('field_dialogue_before_election', 'value', 1);
       }
 
@@ -245,7 +248,7 @@ class PoliticianUserRevision {
    * connected parliament
    */
   public function isActiveMandate($time = '') {
-    return ($this->getRole() == self::DEPUTY_ROLE_STRING && $this->isActiveMember($time));
+    return ($this->getPoliticianRole() == self::DEPUTY_ROLE_STRING && $this->isActiveMember($time));
   }
 
   /**
@@ -253,7 +256,7 @@ class PoliticianUserRevision {
    * parliament
    */
   public function isActiveCandidacy($time = '') {
-    return ($this->getRole() == self::CANDIDATE_ROLE_STRING && $this->isActiveMember($time));
+    return ($this->getPoliticianRole() == self::CANDIDATE_ROLE_STRING && $this->isActiveMember($time));
   }
 
 
