@@ -58,7 +58,9 @@ class UserArchiveManager {
     }
     catch (\Exception $e) {
       $transaction->rollback();
-      throw $e;
+      $error_message = 'An error appeared while rebuilding user archive entries for user '. $this->politician->getId() .' ('. check_plain($this->politician->getFullName()) .'): '. $e->getMessage();
+      drupal_set_message($error_message, 'error');
+      watchdog_exception('PW User Archives', $e, $error_message);
     }
   }
 
