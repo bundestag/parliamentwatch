@@ -1018,6 +1018,8 @@ function _pw_send_debug_mail($subject, $body) {
  *   user object
  * @return string
  *   Fullname of user.
+ *
+ * @deprecated use Politician->getFullname()
  */
 function _pw_get_fullname($user) {
   $fullname = '';

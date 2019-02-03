@@ -54,4 +54,30 @@ class Politician {
   public function getAccount() {
     return $this->account;
   }
+
+
+  /**
+   * Get full name of the politician. Taken from _pw_get_fullname
+   *
+   * @todo Use Entity Meta data Wrapper
+   *
+   * @return string
+   */
+  public function getFullName() {
+    $fullname = '';
+
+    if (!empty($user)) {
+      $title = field_get_items('user', $user, 'field_user_prefix');
+      $first_name = field_get_items('user', $user, 'field_user_fname');
+      $last_name = field_get_items('user', $user, 'field_user_lname');
+
+      if ($title) {
+        $fullname .= $title[0]['value'] . ' ';
+      }
+
+      $fullname .= $first_name[0]['value'] . ' ' . $last_name[0]['value'];
+    }
+
+    return trim($fullname);
+  }
 }
