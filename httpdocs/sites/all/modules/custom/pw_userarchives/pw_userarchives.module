@@ -117,21 +117,6 @@ function pw_userarchives_user_revision_admin_access($account) {
 
 
 /**
- *
- * Load a user revision by user name and vid
- *
- * @param int|string $vid
- * @param string $pw_profiles_username
- *
- * @return object|false
- */
-function pw_user_revision_load($vid, $pw_profiles_username) {
-  $account = pw_profiles_username_load($pw_profiles_username);
-  return user_revision_load($account->uid, $vid);
-}
-
-
-/**
  * Implements hook_admin_paths().
  */
 function pw_userarchives_admin_paths() {
