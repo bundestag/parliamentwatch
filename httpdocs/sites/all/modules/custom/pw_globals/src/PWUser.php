@@ -45,10 +45,17 @@ class PWUser {
 
 
   /**
+   * @var string
+   * The Drupal account user name
+   */
+  public $name;
+
+
+  /**
    * PWUser constructor.
    *
    * @param bool|int|string|object $account
-   * If false the currently logged in user will be used. It this is an integer
+   * If false the currently logged in user will be used. If this is an integer
    * or a numeric string it is the user uid and the user account will be loaded.
    * If it is an object it need to be the Drupal user object. It should be
    * the user revision of the Politician.
@@ -66,6 +73,7 @@ class PWUser {
     }
 
     $this->uid = $this->account->uid;
+    $this->name = $this->account->name;
   }
 
 
@@ -105,5 +113,36 @@ class PWUser {
       drupal_set_message('An error appeared. Please contact the site administrator', 'warning');
       return FALSE;
     }
+  }
+
+  public function getAccount() {
+    return $this->account;
+  }
+
+
+  /**
+   * Get full name of the user. Taken from _pw_get_fullname
+   *
+   * @todo Use Entity Meta data Wrapper
+   *
+   * @return string
+   */
+  public function getFullName() {
+    $fullname = '';
+
+    $account = $this->account;
+    if (!empty($account)) {
+      $title = field_get_items('user', $account, 'field_user_prefix');
+      $first_name = field_get_items('user', $account, 'field_user_fname');
+      $last_name = field_get_items('user', $account, 'field_user_lname');
+
+      if ($title) {
+        $fullname .= $title[0]['value'] . ' ';
+      }
+
+      $fullname .= $first_name[0]['value'] . ' ' . $last_name[0]['value'];
+    }
+
+    return trim($fullname);
   }
 }

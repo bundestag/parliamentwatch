@@ -59,6 +59,7 @@ function pw_vote_node_load($nodes, $types) {
  * Implements hook_user_view().
  */
 function pw_vote_user_view($account, $view_mode, $langcode) {
+
   if ($view_mode == 'full' && _pw_user_has_role($account, 'Deputy')) {
     $nids = pw_vote_by_user_query($account)->execute()->fetchCol();
 

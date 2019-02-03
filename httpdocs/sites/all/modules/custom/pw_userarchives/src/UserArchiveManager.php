@@ -11,7 +11,6 @@ use Drupal\pw_globals\PoliticianUserRevision;
  * Manages all UserArchiveEntry items for a single politician. This class is used
  * to update, create or delete entries in user_archive_cache table
  *
- * @todo pw_reset_actuale_profile() Aufrufen
  * @todo pw_delete_old_user_revisions() integrieren (irgendwo)
  *
  */
@@ -22,6 +21,12 @@ class UserArchiveManager {
    */
   protected $politician;
 
+
+  protected $insertedVids = [];
+
+  protected $updatedVids = [];
+
+  protected $deletedVids = [];
 
   /**
    * UserArchiveManager constructor.
@@ -45,7 +50,7 @@ class UserArchiveManager {
   public function updateEntries($reset_actual_profile = TRUE) {
     $transaction = db_transaction();
     try {
-      $entriesToArchive = $this->getEntriesToArchiveByRevisions();
+      $entriesToArchive = $this->createEntriesToArchiveByRevisions();
       $existingArchiveEntries = $this->getExistingUserArchiveEntriesByUid($this->politician->getId());
 
       $this->deleteOutdatedArchiveEntries($entriesToArchive, $existingArchiveEntries);
@@ -55,12 +60,14 @@ class UserArchiveManager {
       if ($reset_actual_profile) {
         pw_reset_actuale_profile($this->politician->getId());
       }
+
+      $this->updateSearchAPI();
     }
     catch (\Exception $e) {
       $transaction->rollback();
       $error_message = 'An error appeared while rebuilding user archive entries for user '. $this->politician->getId() .' ('. check_plain($this->politician->getFullName()) .'): '. $e->getMessage();
-      drupal_set_message($error_message, 'error');
-      watchdog_exception('PW User Archives', $e, $error_message);
+      drupal_set_message('An error appeared. Please contact the site administrator', 'warning');
+      watchdog_exception('pw_userarchives', $e, $error_message);
     }
   }
 
@@ -79,7 +86,7 @@ class UserArchiveManager {
    *
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
-  protected function getEntriesToArchiveByRevisions() {
+  protected function createEntriesToArchiveByRevisions() {
     $user_revision_vids = $this->loadUserRevisionsVids();
     $items_to_archive = [];
 
@@ -95,7 +102,7 @@ class UserArchiveManager {
 
       $question_form_open = (int) $this->checkIfQuestionFormOpen($politicianUserRevision);
       $uid = $this->politician->getId();
-      $user_name = $this->politician->getAccount()->name;
+      $user_name = $this->politician->getPwUser()->name;
 
       $parliament = $politicianUserRevision->getParliament();
       $parliament_name = $parliament->getName();
@@ -241,10 +248,7 @@ class UserArchiveManager {
         }
       }
 
-      $politician_index = search_api_index_load('politician_archive_index');
-      if ($politician_index && !empty($deleted_vids)) {
-        search_api_track_item_delete('user_revision', $deleted_vids);
-      }
+      $this->deletedVids = $deleted_vids;
     }
     catch (\Exception $e) {
       $transaction->rollback();
@@ -286,10 +290,7 @@ class UserArchiveManager {
         }
       }
 
-      $politician_index = search_api_index_load('politician_archive_index');
-      if ($politician_index && !empty($updated_vids)) {
-        search_api_track_item_change('user_revision', $updated_vids);
-      }
+      $this->updatedVids = $updated_vids;
     }
     catch (\Exception $e) {
       $transaction->rollback();
@@ -327,14 +328,25 @@ class UserArchiveManager {
         }
       }
 
-      $politician_index = search_api_index_load('politician_archive_index');
-      if ($politician_index && !empty($inserted_vids)) {
-        search_api_track_item_insert('user_revision', $inserted_vids);
-      }
+      $this->insertedVids = $inserted_vids;
     }
     catch (\Exception $e) {
       $transaction->rollback();
       throw $e;
+    }
+  }
+
+  protected function updateSearchAPI() {
+    // put inserted and updated user revision vids in one array
+    $change_items = array_merge($this->updatedVids, $this->insertedVids);
+    if (!empty($change_items)) {
+      $searchApiChange = new UserArchiveSearchAPI($change_items, 'change');
+      $searchApiChange->updateSearchIndex();
+    }
+
+    if (!empty($this->deletedVids)) {
+      $searchApiDelete = new UserArchiveSearchAPI($this->deletedVids, 'delete');
+      $searchApiDelete->updateSearchIndex();
     }
   }
 }

@@ -90,7 +90,6 @@ function pw_userarchives_user_revision_edit_form_submit($form, &$form_state) {
   // Update user_revision
   entity_form_submit_build_entity('user', $user_revision, $form, $form_state);
   _pw_userarchives_user_revision_edit_save($user_revision, $form_state['values']);
-  pw_userarchives_cron($user_revision->uid);
 
 
   // add redirect just in case no destination is set

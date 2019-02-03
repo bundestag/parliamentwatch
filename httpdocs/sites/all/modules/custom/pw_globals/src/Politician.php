@@ -4,7 +4,6 @@
 namespace Drupal\pw_globals;
 
 use Drupal\pw_globals\Exception\PwGlobalsException;
-use Drupal\pw_userarchives\UserArchiveManager;
 
 /**
  * Representing a single politican
@@ -13,10 +12,10 @@ class Politician {
 
 
   /**
-   * @var object
-   * The DRupal user object
+   * @var \Drupal\pw_globals\PWUser
+   * The PWUser object for the Drupal user account
    */
-  protected $account;
+  protected $pwUser;
 
 
   /**
@@ -31,7 +30,12 @@ class Politician {
     if (!is_object($account) || !isset($account->uid)) {
       throw new PwGlobalsException('Invalid argument "account" (value: '.  $account .' for Politician');
     }
-    $this->account = $account;
+
+    $pwUser = new PWUser($account);
+    if (!$pwUser->isPolitician()) {
+      throw new PwGlobalsException('The user with id '.  $account->uid .' is not a politician');
+    }
+    $this->pwUser = $pwUser;
   }
 
 
@@ -42,7 +46,7 @@ class Politician {
    * The Drupal user uid
    */
   public function getId() {
-    return $this->account->uid;
+    return $this->pwUser->uid;
   }
 
 
@@ -51,8 +55,8 @@ class Politician {
    *
    * @return object
    */
-  public function getAccount() {
-    return $this->account;
+  public function getPwUser() {
+    return $this->pwUser;
   }
 
 
@@ -64,20 +68,43 @@ class Politician {
    * @return string
    */
   public function getFullName() {
-    $fullname = '';
+    return $this->pwUser->getFullName();
+  }
 
-    if (!empty($user)) {
-      $title = field_get_items('user', $user, 'field_user_prefix');
-      $first_name = field_get_items('user', $user, 'field_user_fname');
-      $last_name = field_get_items('user', $user, 'field_user_lname');
 
-      if ($title) {
-        $fullname .= $title[0]['value'] . ' ';
+  /**
+   * Load a Politician by uid and optionally by vid
+   *
+   * @param int|string $uid
+   * The Drupal user uid
+   *
+   * @param bool|int|string $vid
+   * The user revision vid
+   *
+   * @return \Drupal\pw_globals\Politician|null
+   * Null if it was not possible to load the user object or if
+   * the user is not a politician
+   */
+  public static function loadFromUid($uid, $vid = FALSE) {
+    try {
+      if (!$vid) {
+        $account = user_load($uid);
+      }
+      else {
+        $account = user_revision_load($uid, $vid);
       }
 
-      $fullname .= $first_name[0]['value'] . ' ' . $last_name[0]['value'];
+      if ($account) {
+        return new Politician($account);
+      }
+      else {
+        return NULL;
+      }
     }
-
-    return trim($fullname);
+    catch (\Exception $e) {
+      watchdog_exception('pw_globals', $e, $e->getMessage());
+      return NULL;
+    }
   }
+
 }

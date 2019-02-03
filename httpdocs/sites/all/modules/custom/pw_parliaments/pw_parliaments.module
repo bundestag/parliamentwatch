@@ -24,7 +24,7 @@ function pw_parliaments_taxonomy_term_presave($term) {
 function pw_parliaments_taxonomy_term_update($term) {
   // check if is parliaments vocabulary
   if ($term->vid == 18 && module_exists('pw_userarchives')) {
-    pw_userarchives_cron();
+    pw_userarchives_cron_ALT();
     if (module_exists('pw_cache')) {
       $query = db_select('user_archive_cache', 'uac')
         ->fields('uac', array('user_name', 'vid', 'actual_profile'))

@@ -5,8 +5,10 @@ namespace Drupal\pw_userarchives;
 
 
 /**
- * A single entry in the user archives table. Please assure that properties which
- * are stored to the user_archive_cache are named in the same way as in the table.
+ * A single entry in the user archive cache table. Please assure that properties which
+ * are stored to the user_archive_cache table are named in the same way as
+ * the column in the table. See UserArchiveEntry->save() where the class properties
+ * are turned to an array used for the insert/ update query
  */
 class UserArchiveEntry {
 
@@ -181,7 +183,7 @@ class UserArchiveEntry {
    * @return \Drupal\pw_userarchives\UserArchiveEntry
    */
   public static function createFromDataBaseArray(array $data) {
-    return new UserArchiveEntry($data['uid'], $data['user_name'], $data['user:_ole'], $data['vid'], $data['parliament_name'], $data['timestamp'], $data['fraction_name'], $data['actual_profile'], $data['user_joined'], $data['user_retired'], $data['question_form_open'], $data['number_of_questions'], $data['nummber_of_answers'], $data['number_of_standard_replies'], $data['id']);
+    return new UserArchiveEntry($data['uid'], $data['user_name'], $data['user_role'], $data['vid'], $data['parliament_name'], $data['timestamp'], $data['fraction_name'], $data['actual_profile'], $data['user_joined'], $data['user_retired'], $data['question_form_open'], $data['number_of_questions'], $data['number_of_answers'], $data['number_of_standard_replies'], $data['id']);
   }
 
 

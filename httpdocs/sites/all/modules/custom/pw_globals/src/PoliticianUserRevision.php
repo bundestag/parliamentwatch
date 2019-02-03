@@ -222,21 +222,23 @@ class PoliticianUserRevision {
    */
   public function getAnswersCids($filter = 'all') {
     $question_nids = $this->getQuestionsNids();
-    $entityFieldQuery = new \EntityFieldQuery();
-    $entityFieldQuery->entityCondition('entity_type', 'comment')
-      ->propertyCondition('status', COMMENT_PUBLISHED)
-      ->propertyCondition('nid', $question_nids);
+    if (!empty($question_nids)) {
+      $entityFieldQuery = new \EntityFieldQuery();
+      $entityFieldQuery->entityCondition('entity_type', 'comment')
+        ->propertyCondition('status', COMMENT_PUBLISHED)
+        ->propertyCondition('nid', $question_nids);
 
-    if ($filter == 'standard') {
-      $entityFieldQuery->fieldCondition('field_dialogue_is_standard_reply', 'value', 1);
-    }
-    if ($filter == 'non-standard') {
-      $entityFieldQuery->fieldCondition('field_dialogue_is_standard_reply', 'value', 0);
-    }
+      if ($filter == 'standard') {
+        $entityFieldQuery->fieldCondition('field_dialogue_is_standard_reply', 'value', 1);
+      }
+      if ($filter == 'non-standard') {
+        $entityFieldQuery->fieldCondition('field_dialogue_is_standard_reply', 'value', 0);
+      }
 
-    $result = $entityFieldQuery->execute();
-    if (isset($result['comment'])) {
-      return count($result['comment']);
+      $result = $entityFieldQuery->execute();
+      if (isset($result['comment'])) {
+        return count($result['comment']);
+      }
     }
 
     return 0;
