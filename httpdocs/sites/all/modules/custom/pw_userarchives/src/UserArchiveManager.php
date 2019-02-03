@@ -37,9 +37,12 @@ class UserArchiveManager {
    * Call this function to update, insert or delete user archive entries
    * for a politician
    *
+   * @param bool $reset_actual_profile
+   * Default is true. If true pw_reset_actuale_profile() will be called
+   *
    * @throws \Exception
    */
-  public function updateEntries() {
+  public function updateEntries($reset_actual_profile = TRUE) {
     $transaction = db_transaction();
     try {
       $entriesToArchive = $this->getEntriesToArchiveByRevisions();
@@ -48,6 +51,10 @@ class UserArchiveManager {
       $this->deleteOutdatedArchiveEntries($entriesToArchive, $existingArchiveEntries);
       $this->updateExistingArchiveEntries($entriesToArchive, $existingArchiveEntries);
       $this->insertNewArchiveEntries($entriesToArchive, $existingArchiveEntries);
+
+      if ($reset_actual_profile) {
+        pw_reset_actuale_profile($this->politician->getId());
+      }
     }
     catch (\Exception $e) {
       $transaction->rollback();
