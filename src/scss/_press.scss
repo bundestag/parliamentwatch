@@ -1,0 +1,33 @@
+/**
+* Press
+*/
+
+.press-article {
+  @include grid-column(12);
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+  @include breakpoint($breakpoint-m-min) {
+    @include grid-column(4);
+  }
+  .tile__title--date {
+    padding-bottom: $space;
+    margin-bottom: $space;
+    .date {
+      top: 0;
+    }
+    h3 {
+      margin-bottom: $space-xsmall-mobile;
+    }
+    p {
+      margin-bottom: 0;
+      padding-left: 70px;
+      font-size: 14px;
+      color: $mediumGray;
+    }
+  }
+  .link-list__item {
+    @include grid-column(12);
+  }
+}

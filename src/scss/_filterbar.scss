@@ -75,6 +75,11 @@
     &:hover {
       background: $beige;
     }
+    &[disabled] {
+      opacity: 1;
+      background: $brightBeige;
+      color: $gray;
+    }
   }
 }
 
