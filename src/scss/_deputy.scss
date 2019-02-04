@@ -746,7 +746,16 @@ $abstimmverhalten-node-item-width: 18px;
 .sidejob-overview {
   @include box-padded-large($white);
   @include grid-column(12);
-  tbody
+  .sidejob-overview__item {
+    @media (max-width: $breakpoint-s-max) {
+      &:not(:first-child) {
+        padding-top: $space;
+      }
+      &:not(:last-child) {
+        padding-bottom: $space;
+      }
+    }
+  }
   .sidejob-overview__item__customer {
     vertical-align: top;
     font-weight: 500;
@@ -770,6 +779,10 @@ $abstimmverhalten-node-item-width: 18px;
   }
   .sidejob-overview__item__activity {
     vertical-align: top;
+    @media (max-width: $breakpoint-s-max) {
+      padding-top: $space-small;
+      padding-bottom: $space-small;
+    }
     @media (min-width: $breakpoint-s-min) {
       padding-right: $space-xsmall-mobile;
     }
@@ -788,9 +801,12 @@ $abstimmverhalten-node-item-width: 18px;
   .sidejob-overview__item__total {
     vertical-align: top;
     white-space: nowrap;
-    padding-left: $space-large;
     @media (max-width: $breakpoint-s-max) {
       clear: both;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item--active {
