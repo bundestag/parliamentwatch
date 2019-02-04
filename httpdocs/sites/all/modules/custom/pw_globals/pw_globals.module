@@ -110,6 +110,10 @@ function pw_globals_entity_info_alter(&$entity_info) {
     'label' => t('Width large'),
     'custom settings' => TRUE,
   );
+  $entity_info['file']['view modes']['url'] = array(
+    'label' => t('URL'),
+    'custom settings' => FALSE,
+  );
 }
 
 /**
