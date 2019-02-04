@@ -42,7 +42,7 @@
     }
 
     @include placeholder-text {
-      font-weight: 300;
+      font-weight: 400;
       color: $darkGray;
       opacity: 1;
     }
@@ -318,7 +318,7 @@ textarea.form__item__control {
 }
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
   color: $darkGray;
-  font-weight: 300;
+  font-weight: 400;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: $orange;

@@ -52,7 +52,7 @@ dl {
   @include text-overflow();
   @include breakpoint($breakpoint-xs-min) {
     @include padding($space-small-mobile null);
-    font-weight: 300;
+    font-weight: 400;
   }
   @include breakpoint($breakpoint-m-min) {
     @include padding($space-small null);

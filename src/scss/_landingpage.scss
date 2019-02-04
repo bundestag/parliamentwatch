@@ -126,7 +126,7 @@
     font-size: 1.2em;
   }
   .link-icon {
-    font-weight: 300;
+    font-weight: 400;
     display: inline-block;
     margin-right: auto;
     margin-left: $space;
@@ -543,7 +543,7 @@
   }
   .btn {
     display: block;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1em;
     @include breakpoint($breakpoint-s-min) {
       float: right;

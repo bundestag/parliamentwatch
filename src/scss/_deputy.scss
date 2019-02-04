@@ -471,7 +471,7 @@
     @include breakpoint($breakpoint-l-min) {
       margin-bottom: -($space-large * 2);
     }
-    h2, h2 a { color: $darkGray; font-family: $font-sans-serif; font-weight: 300; }
+    h2, h2 a { color: $darkGray; font-family: $font-sans-serif; font-weight: 400; }
     .messages.messages--warning {
       background-color: $white;
       margin: 0;
@@ -974,7 +974,7 @@ $abstimmverhalten-node-item-width: 18px;
   float: left;
   margin-top: $space;
   font-family: $font-sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.8em;
   @include breakpoint($breakpoint-xs-min) {
     font-size: 1em;
