@@ -190,7 +190,7 @@ function pw_press_strongarm() {
         'custom_settings' => FALSE,
       ),
       'tile' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'list_item' => array(
         'custom_settings' => FALSE,
@@ -224,9 +224,17 @@ function pw_press_strongarm() {
             'weight' => '36',
             'visible' => FALSE,
           ),
+          'tile' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
         ),
         'sharethis' => array(
           'default' => array(
+            'weight' => '-100',
+            'visible' => TRUE,
+          ),
+          'tile' => array(
             'weight' => '-100',
             'visible' => TRUE,
           ),
