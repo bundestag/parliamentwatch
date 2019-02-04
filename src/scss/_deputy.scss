@@ -748,6 +748,7 @@ $abstimmverhalten-node-item-width: 18px;
   @include grid-column(12);
   .sidejob-overview__item {
     @media (max-width: $breakpoint-s-max) {
+      padding-right: $space-small;
       &:not(:first-child) {
         padding-top: $space;
       }
