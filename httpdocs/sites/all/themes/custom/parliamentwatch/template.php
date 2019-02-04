@@ -28,6 +28,14 @@ function parliamentwatch_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['#type'] = 'container';
     $form['actions']['#attributes'] = ['class' => ['form__item']];
   }
+
+  // Add Placeholder to views exposed filter
+
+  if($form_id == "views_exposed_form"){
+    if (isset($form['search'])) {
+      $form['search']['#attributes'] = array('placeholder' => array($form['#info']['filter-combine']['label']));
+    }
+  }
 }
 
 /**
