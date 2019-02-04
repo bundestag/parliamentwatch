@@ -116,8 +116,14 @@ function parliamentwatch_page_alter(&$page) {
     $is_profile_page = in_array(menu_get_item()['page_callback'], ['user_view_page', 'user_revision_show']);
     $is_comment_reply_page = menu_get_item()['page_callback'] == 'comment_reply';
     $is_topic_page = menu_get_item()['page_callback'] == 'pw_globals_taxonomy_term_page';
+    $press_page_view = views_get_page_view();
+    if ($press_page_view->name === 'press_articles') {
+      $is_press_page = true;
+    } else {
+      $is_press_page = false;
+    };
 
-    if (!$has_container && !$has_filters && !$is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page) {
+    if (!$has_container && !$has_filters && !$is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page && !$is_press_page) {
       $page['content']['system_main']['#prefix'] = '<div class="container">';
       $page['content']['system_main']['#suffix'] = '</div>';
     }

@@ -59,6 +59,7 @@ function pw_globals_menu() {
 function pw_globals_menu_alter(&$items) {
   $items['admin/content/antispam']['page arguments'] = ['nodes'];
   $items['taxonomy/term/%taxonomy_term']['page callback'] = 'pw_globals_taxonomy_term_page';
+  $items['/ueber-uns/presse/pressespiegel']['page callback'] = 'pw_globals_press_page';
   unset($items['taxonomy/term/%taxonomy_term_load']['file']);
 }
 
