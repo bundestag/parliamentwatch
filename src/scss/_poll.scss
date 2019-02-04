@@ -46,9 +46,9 @@
     @include grid-column(6, $neat-grid-no-gutter);
     text-align: center;
     font-size: 1.2em;
-    font-weight: 600;
     color: $gray;
     font-family: $font-serif;
+    font-weight: 700;
     &.won {
       color: $darkGray;
     }
@@ -502,6 +502,7 @@
   width: 280px;
   padding: $space 0;
   font-family: $font-serif;
+  font-weight: 400;
   float: left;
 }
 
@@ -553,7 +554,7 @@
 .poll__timeline__item__poll__title {
   display: block;
   font-size: .9em;
-  font-weight: 300;
+  font-weight: 400;
   padding-left: $space-large;
   position: relative;
   @include text-overflow();
@@ -630,7 +631,7 @@
     color: $mediumGray;
     @include grid-container();
     strong {
-      font-weight: 900;
+      font-weight: 700;
     }
     .icon {
       position: absolute;
@@ -710,6 +711,7 @@
   position: relative;
   p {
     font-family: $font-serif;
+    font-weight: 400;
     font-size: 1.3em;
     color: $gray;
     margin-bottom: 0;

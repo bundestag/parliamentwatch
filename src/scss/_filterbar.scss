@@ -569,7 +569,6 @@ _:-ms-fullscreen,
       background: $white;
       color: $darkGray;
       border-color: $white;
-      font-weight: 300;
       font-size: .8em;
       clear: both;
       @include breakpoint($breakpoint-xs-min) {

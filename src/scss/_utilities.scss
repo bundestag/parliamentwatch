@@ -165,6 +165,7 @@ textarea {
   h3 {
     @include h4();
     font-family: $font-sans-serif;
+    font-weight: 600;
     padding-left: $space;
     @include breakpoint($breakpoint-xs-min) {
       margin: 0;
@@ -268,6 +269,7 @@ textarea {
   .intro__date {
     color: $gray;
     font-family: $font-serif;
+    font-weight: 400;
     margin-top: $space-xsmall;
     @media(max-width: $breakpoint-xl-max) {
       @include date-inline();
@@ -513,7 +515,7 @@ textarea {
   padding: 0;
   margin: 0;
   list-style: none;
-  font-weight: 500;
+  font-weight: 600;
   &.inline {
     li {
       display: inline-block;

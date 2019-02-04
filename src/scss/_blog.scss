@@ -94,7 +94,7 @@
     }
     p {
       font-size: 1.2em;
-      font-weight: 500;
+      font-weight: 600;
       text-shadow: 1px 1px 0 #000;
     }
   }
@@ -164,7 +164,7 @@
         @include grid-column(7, $neat-grid-large-gutter);
       }
       h3 {
-        font-weight: 900;
+        font-weight: 700;
       }
     }
     .form {

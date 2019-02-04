@@ -126,6 +126,7 @@
   color: $white;
   h2 {
     font-family: $font-sans-serif;
+    font-weight: 300;
     color: $white;
     margin-bottom: 0;
   }
@@ -305,7 +306,7 @@
     &__name {
       @include h4();
       font-family: $font-serif;
-      font-weight: 300;
+      font-weight: 400;
       color: $darkGray;
       display: block;
       margin-bottom: $space-xsmall-mobile;
