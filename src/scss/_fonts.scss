@@ -38,6 +38,24 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'Noto Serif';
+  src: local('Noto Serif Regular'), local('NotoSerif-Regular'),
+       url('../fonts/noto_serif/noto-serif-v6-latin-regular.woff2') format('woff2'),
+       url('../fonts/noto_serif/noto-serif-v6-latin-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Noto Serif';
+  src: local('Noto Serif Bold'), local('NotoSerif-Bold'),
+       url('../fonts/noto_serif/noto-serif-v6-latin-700.woff2') format('woff2'),
+       url('../fonts/noto_serif/noto-serif-v6-latin-700.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
 
 
 
