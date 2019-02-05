@@ -242,7 +242,7 @@ function pw_maintenance_user_merge_submit($form, &$form_state) {
   field_cache_clear();
 
   // rebuild meta table
-  pw_userarchives_cron_ALT($user_target->uid);
+  pw_userarchives_update_by_user($user_target->uid);
 
   // message to the frontend
   $msg = 'User '.$user_source_fullname.' (UUID: '.$user_source->uuid.') merged into '.l(_pw_get_fullname($user_target), 'user/'.$user_target->uid).' (UUID: '.$user_target->uuid.')';
