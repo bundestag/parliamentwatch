@@ -4,6 +4,8 @@
 namespace Drupal\pw_userarchives;
 
 
+use Drupal\pw_globals\PoliticianUserRevision;
+
 /**
  * A single entry in the user archive cache table. Please assure that properties which
  * are stored to the user_archive_cache table are named in the same way as
@@ -104,6 +106,14 @@ class UserArchiveEntry {
    */
   protected $question_form_open;
 
+
+  /**
+   * @var int
+   * Timestamp which indicated when the $question_form_open value needs to
+   * be revalidated
+   */
+  protected $question_form_open_change;
+
   /**
    * @var int
    * Number is answers flagged as standard reply
@@ -122,6 +132,13 @@ class UserArchiveEntry {
    * Number of answers not flagged as standard reply
    */
   protected $number_of_answers;
+
+
+  /**
+   * @var PoliticianUserRevision
+   * The politicianUserRevision instance for the user archive entry
+   */
+  protected $politicianUserRevision;
 
   /**
    * UserArchiveEntry constructor.
@@ -146,6 +163,7 @@ class UserArchiveEntry {
    * @param int $question_form_open
    * Can be 0 if form is closed for any reason or 1 when it is open
    *
+   * @param null $question_form_open_change
    * @param int $number_of_questions
    *
    * @param int $number_of_answers
@@ -156,7 +174,7 @@ class UserArchiveEntry {
    *
    * @param null $id
    */
-  public function __construct($uid, $user_name, $user_role, $vid, $parliament_name, $timestamp, $fraction_name = NULL, $actual_profile = 0, $user_joined = NULL, $user_retired = NULL, $question_form_open = 0, $number_of_questions = 0, $number_of_answers = 0, $number_of_standard_replies = 0, $id = NULL) {
+  public function __construct($uid, $user_name, $user_role, $vid, $parliament_name, $timestamp, $fraction_name = NULL, $actual_profile = 0, $user_joined = NULL, $user_retired = NULL, $question_form_open = 0, $question_form_open_change = NULL, $number_of_questions = 0, $number_of_answers = 0, $number_of_standard_replies = 0, $id = NULL) {
     $this->id = $id;
     $this->uid = $uid;
     $this->user_name = $user_name;
@@ -169,6 +187,7 @@ class UserArchiveEntry {
     $this->user_joined = $user_joined;
     $this->user_retired = $user_retired;
     $this->question_form_open = $question_form_open;
+    $this->question_form_open_change = $question_form_open_change;
     $this->number_of_questions = $number_of_questions;
     $this->number_of_standard_replies = $number_of_standard_replies;
     $this->number_of_answers = $number_of_answers;
@@ -183,7 +202,7 @@ class UserArchiveEntry {
    * @return \Drupal\pw_userarchives\UserArchiveEntry
    */
   public static function createFromDataBaseArray(array $data) {
-    return new UserArchiveEntry($data['uid'], $data['user_name'], $data['user_role'], $data['vid'], $data['parliament_name'], $data['timestamp'], $data['fraction_name'], $data['actual_profile'], $data['user_joined'], $data['user_retired'], $data['question_form_open'], $data['number_of_questions'], $data['number_of_answers'], $data['number_of_standard_replies'], $data['id']);
+    return new UserArchiveEntry($data['uid'], $data['user_name'], $data['user_role'], $data['vid'], $data['parliament_name'], $data['timestamp'], $data['fraction_name'], $data['actual_profile'], $data['user_joined'], $data['user_retired'], $data['question_form_open'], $data['question_form_open_change'], $data['number_of_questions'], $data['number_of_answers'], $data['number_of_standard_replies'], $data['id']);
   }
 
 
@@ -408,7 +427,7 @@ class UserArchiveEntry {
   /**
    * @return mixed
    */
-  public function getQuestionFormOpen() {
+  public function isQuestionFormOpen() {
     return $this->question_form_open;
   }
 
@@ -434,4 +453,181 @@ class UserArchiveEntry {
   }
 
 
+  /**
+   * @param string $timezone
+   * Optional parameter to set the timezone. If none defined the timestamp
+   * in the default timezone will be returned. @see date_default_timezone_get()
+   *
+   * @return int
+   * The timestamp in the default timezone or in the set timezone
+   *
+   * @throws \Exception
+   */
+  public function getQuestionFormOpenChange($timezone = '') {
+    $change_date = NULL;
+    if (is_numeric($this->question_form_open_change)) {
+      if (empty($timezone)) {
+        $timezone = date_default_timezone_get();
+      }
+      $dateTime = new \DateTime(date('Y-m-d:H:i:s', $this->question_form_open_change), new \DateTimeZone('UTC'));
+      if ($timezone != 'UTC') {
+        $dateTime->setTimezone(new \DateTimeZone($timezone));
+      }
+
+      return $dateTime->getTimestamp();
+    }
+
+    return $change_date;
+  }
+
+
+  /**
+   * @param int $question_form_open_change
+   * The timestamp of the date in UTC
+   *
+   * @param string $timezone
+   * The timezone in which the given timestamp is defined
+   *
+   * @throws \Exception
+   */
+  public function setQuestionFormOpenChange(int $question_form_open_change, $timezone) {
+    $dateTime = new \DateTime(date('Y-m-d:H:i:s', $question_form_open_change), new \DateTimeZone($timezone));
+    if ($timezone != 'UTC') {
+      $dateTime->setTimezone(new \DateTimeZone('UTC'));
+    }
+
+    $this->question_form_open_change = $dateTime->getTimestamp();
+  }
+
+
+  /**
+   * @return int
+   */
+  public function getNumberOfAnswers() {
+    return $this->number_of_answers;
+  }
+
+
+  /**
+   * @param int $number_of_answers
+   */
+  public function setNumberOfAnswers(int $number_of_answers) {
+    $this->number_of_answers = $number_of_answers;
+  }
+
+
+  /**
+   * @return \Drupal\pw_globals\PoliticianUserRevision|FALSE
+   * FALSE if none was found
+   *
+   * @throws \Drupal\pw_globals\Exception\PwGlobalsException
+   */
+  public function getPoliticianUserRevision() {
+    if ($this->politicianUserRevision === NULL) {
+      $this->politicianUserRevision = PoliticianUserRevision::loadFromUidAndVid($this->getUid(), $this->getVid());
+    }
+    return $this->politicianUserRevision;
+  }
+
+
+  /**
+   * @param \Drupal\pw_globals\PoliticianUserRevision $politicianUserRevision
+   */
+  public function setPoliticianUserRevision(PoliticianUserRevision $politicianUserRevision) {
+    $this->politicianUserRevision = $politicianUserRevision;
+  }
+
+
+  public function updateQuestionFormSettings() {
+    $politicianUserRevision = $this->getPoliticianUserRevision();
+    $question_form_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
+    $question_form_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
+
+    $this->setQuestionFormOpen($question_form_open);
+    $this->setQuestionFormOpenChange($question_form_open_change);
+  }
+
+
+  /**
+   * Helper to get a new UserArchiveEntry instance from a PoliticianUserRevision
+   *
+   * @param \Drupal\pw_globals\PoliticianUserRevision $politicianUserRevision
+   *
+   * @return \Drupal\pw_userarchives\UserArchiveEntry|NULL
+   * NULL if it was not possible to collect all data
+   *
+   */
+  public static function createFromPolicitianUserRevision(PoliticianUserRevision $politicianUserRevision) {
+    try {
+      $user_role = $politicianUserRevision->getPoliticianRole();
+
+      $fraction_name = NULL;
+      $fraction = $politicianUserRevision->getFraction();
+      if ($fraction !== NULL) {
+        $fraction_name = $fraction->getName();
+      }
+
+      $question_form_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
+      $question_form_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
+
+      $uid = $politicianUserRevision->getUid();
+      $vid = $politicianUserRevision->getVid();
+      $user_name = $politicianUserRevision->getUserName();
+
+      $parliament = $politicianUserRevision->getParliament();
+      $parliament_name = $parliament->getName();
+      $timestamp = $parliament->getElectionDate();
+      $number_of_questions = count($politicianUserRevision->getQuestionsNids());
+      $number_of_answers = $politicianUserRevision->getAnswersCids('non-standard');
+      $number_of_standard_replies = $politicianUserRevision->getAnswersCids('standard');
+
+      $user_joined = $politicianUserRevision->getJoinedDate();
+      if ($user_joined !== NULL) {
+        $user_joined = date('Y-m-d', $user_joined);
+      }
+      $user_retired = $politicianUserRevision->getRetiredDate();
+      if ($user_retired !== NULL) {
+        $user_retired = date('Y-m-d', $user_retired);
+      }
+
+      $actual_profile = (int) $politicianUserRevision->isActualProfile();
+
+      return new UserArchiveEntry($uid, $user_name, $user_role, $vid, $parliament_name, $timestamp, $fraction_name, $actual_profile , $user_joined, $user_retired, $question_form_open, $question_form_open_change, $number_of_questions, $number_of_answers, $number_of_standard_replies );
+    }
+    catch (\Exception $e) {
+      watchdog_exception('pw_userarchives', $e, $e->getMessage());
+      return NULL;
+    }
+  }
+
+
+  /**
+   * @param \Drupal\pw_globals\PoliticianUserRevision $politicianUserRevision
+   *
+   * @return bool|\Drupal\pw_userarchives\UserArchiveEntry
+   * FALSE if it was not possible to load one
+   */
+  public static function loadForPoliticianUserRevision(PoliticianUserRevision $politicianUserRevision) {
+    try {
+      $query = db_select('user_archive_cache', 'uac')
+        ->condition('uid', $politicianUserRevision->getUid())
+        ->condition('vid', $politicianUserRevision->getVid())
+        ->fields('uac')
+        ->execute();
+      $result = $query->fetchAssoc();
+
+      if (!empty($result)) {
+        $userArchiveCache = self::createFromDataBaseArray($result);
+        $userArchiveCache->setPoliticianUserRevision($politicianUserRevision);
+        return $userArchiveCache;
+      }
+      else {
+        return FALSE;
+      }
+    }
+    catch (\Exception $e) {
+      watchdog_exception('pw_userarchives', $e, $e->getMessage());
+      return FALSE;
+    }
+  }
 }

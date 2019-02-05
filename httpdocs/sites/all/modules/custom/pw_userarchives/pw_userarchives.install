@@ -3,95 +3,92 @@
 /*
  * Implements hook_schema().
  */
+
+use Drupal\pw_globals\PWUser;
+
 function pw_userarchives_schema() {
 
   $schema['user_archive_cache'] = array(
-    'description' => 'TODO: please describe this table!',
+    'description' => 'Table storing the user revisions valid for different candidacies and mandates of politicians',
     'fields' => array(
       'id' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Unique id of a user archive cache entry',
         'type' => 'serial',
         'not null' => TRUE,
       ),
       'uid' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'The {users} uid of the politician',
         'type' => 'int',
         'not null' => TRUE,
       ),
       'user_name' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'The {users} name of the politician',
         'type' => 'varchar',
         'length' => '100',
         'not null' => TRUE,
       ),
       'vid' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'The {user_revision} vid of the user revision',
         'type' => 'int',
         'not null' => TRUE,
       ),
       'parliament_name' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'The term name of the parliament',
         'type' => 'varchar',
         'length' => '100',
         'not null' => TRUE,
       ),
       'number_of_questions' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Number of questions related to the politician and parliament',
         'type' => 'int',
         'not null' => FALSE,
       ),
       'number_of_answers' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Number of non-standard answers from the politician related to the parliament',
         'type' => 'int',
         'not null' => FALSE,
       ),
-      'number_of_sideline_jobs' => array(
-        'description' => 'TODO: please describe this field!',
-        'type' => 'int',
-        'not null' => FALSE,
-      ),
-      'number_of_speeches' => array(
-        'description' => 'TODO: please describe this field!',
-        'type' => 'int',
-        'not null' => FALSE,
-      ),
-      'number_of_missed_votings' => array(
-        'description' => 'TODO: please describe this field!',
+      'number_of_standard_replies' => array(
+        'description' => 'Number of standard answers from the politician related to the parliament',
         'type' => 'int',
         'not null' => FALSE,
       ),
       'fraction_name' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'The name of the fraction',
         'type' => 'varchar',
         'length' => 100,
         'not null' => FALSE,
       ),
       'actual_profile' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Boolean if profile is newest.',
         'mysql_type' => 'tinyint',
         'length' => 4,
         'not null' => TRUE,
         'default' => 0,
       ),
       'question_form_open' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Boolean if form is open for questions',
         'mysql_type' => 'tinyint',
         'length' => 4,
         'not null' => FALSE,
         'default' => 0,
       ),
+      'question_form_open_change' => array(
+        'description' => 'Timestamp of the day when the question form open state needs to be revalidated',
+        'type' => 'int'
+      ),
       'user_joined' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Date entering the parliament.',
         'mysql_type' => 'date',
         'not null' => FALSE,
       ),
       'user_retired' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Date leaving the parliament.',
         'mysql_type' => 'date',
         'not null' => FALSE,
       ),
       'timestamp' => array(
-        'description' => 'TODO: please describe this field!',
+        'description' => 'Actually the date of parliament election but falsy used as date of user revision',
         'type' => 'int',
         'not null' => FALSE,
       ),
@@ -209,19 +206,145 @@ function pw_userarchives_update_7109() {
 
 
 /**
- * Completely rebuild the user archive cache table
+ * Delete unused columns from user archive cache
  *
  **/
 function pw_userarchives_update_7110() {
-  db_truncate('user_archive_cache')->execute();
-  search_api_index_clear('politician_archive_index');
-  $batch = [
-    'title'      => t('Reset user archive cache table'),
-    'operations' => [
-      ['\Drupal\pw_userarchives\BatchResetUserArchiveCacheTable::runBatch', []]
-    ],
-    'finished'   => '\Drupal\pw_userarchives\BatchResetUserArchiveCacheTable::finished',
+  $table = 'user_archive_cache';
+  $columns_to_drop = [
+    'number_of_sideline_jobs',
+    'number_of_speeches',
+    'number_of_missed_votings'
   ];
-
-  batch_set($batch);
+  foreach ($columns_to_drop as $column) {
+    if (db_field_exists($table, $column)) {
+      db_drop_field($table, $column);
+    }
+  }
 }
+
+
+/**
+ * Add a question_form_open_change field to user archive cache table
+ *
+ **/
+function pw_userarchives_update_7111() {
+  db_add_field('user_archive_cache', 'question_form_open_change', array('type' => 'int', 'description' => 'Timestamp of the day when the question form open state needs to be revalidated.'));
+}
+
+
+/**
+ * Completely rebuild the user archive cache table
+ *
+ **/
+function pw_userarchives_update_7112(&$sandbox) {
+
+  if (!isset($sandbox['progress'])) {
+    db_truncate('user_archive_cache')->execute();
+    search_api_index_reindex('politician_archive_index');
+    $sandbox['last_id'] = 1;
+
+    $query = db_select('user_revision', 'ur');
+    // join revisionable roles for user_roles
+    $query->join('field_revision_field_user_roles_for_view_mode_s', 'role_tid', "role_tid.entity_type = 'user' AND role_tid.revision_id = ur.vid");
+    $query->join('taxonomy_term_data', 'role', 'role.tid = role_tid.field_user_roles_for_view_mode_s_tid');
+    $query->condition('ur.status', '1');
+    $query->condition('role.name', array('Deputy', 'Candidate'));
+    $query->condition('uid', $sandbox['last_id'], '>');
+    $query->addField('ur', 'uid');
+    $query->groupBy('uid');
+    $result = $query->execute()->fetchAll();
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = count($result);
+    $sandbox['messages'] = [];
+  }
+
+
+  $limit = 10;
+  $query = db_select('user_revision', 'ur');
+  // join revisionable roles for user_roles
+  $query->join('field_revision_field_user_roles_for_view_mode_s', 'role_tid', "role_tid.entity_type = 'user' AND role_tid.revision_id = ur.vid");
+  $query->join('taxonomy_term_data', 'role', 'role.tid = role_tid.field_user_roles_for_view_mode_s_tid');
+  $query->condition('ur.status', '1');
+  $query->condition('role.name', array('Deputy', 'Candidate'));
+  $query->condition('uid', $sandbox['last_id'], '>');
+  $query->addField('ur', 'uid');
+  $query->groupBy('uid');
+  $query->orderBy('uid');
+  $query->range(0, $limit);
+  $result = $query->execute()->fetchAllAssoc('uid');
+
+  $accounts = user_load_multiple(array_keys($result));
+
+  // it can happen that an user could not be loaded as there might
+  // be a wrong revision vid in users table - or it does not exist in
+  // users table. To clean up this we check
+  // if any user found in user revision query above was not loaded by
+  // user_load_multiple() and if so we update the vid in users table
+  // to be the highest vid in user revisions
+  $diffs = array_diff(array_keys($result), array_keys($accounts));
+  if (!empty($diffs)) {
+    $query = db_select('user_revision', 'ur');
+    $query->condition('uid', array_values($diffs));
+    $query->addField('ur', 'uid');
+    $query->groupBy('uid');
+    $query->addExpression('MAX(ur.vid)', 'vid');
+    $result = $query->execute();
+    while ($record = $result->fetchAssoc()) {
+      db_update('users')
+        ->condition('uid', $record['uid'])
+        ->fields([
+          'vid' => $record['vid']
+        ])
+        ->execute();
+
+      watchdog('pw_userarchives', 'The revision vid for user '. $record['uid'] .' was updated in users table to vid '. $record['vid']);
+      $account = user_load($record['uid'], TRUE);
+
+      if ($account) {
+        $accounts[$record['uid']] = $account;
+      }
+      else {
+        // if we were not able to load the user object although we updated
+        // the vid in users table the user does not exist in users table.
+        // This uid is a relict in user_revisions table
+        db_delete('user_revision')
+          ->condition('uid', $record['uid'])
+          ->execute();
+        watchdog('pw_userarchives', 'The user with the uid '. $record['uid'] .' which was found in user_revision table did not exist in users table. The entry in user_revision table was deleted.');
+        $sandbox['progress']++;
+        $sandbox['last_id'] = $record['uid'];
+      }
+    }
+  }
+
+
+  // go through the found user accounts and rebuild the user archive entries
+  foreach ($accounts as $uid => $account) {
+    if ($account) {
+      pw_userarchives_update_by_user($account);
+      $PWUser = new PWUser($account);
+      $message = 'Entries updated for '. $PWUser->getFullName();
+
+      $sandbox['message'] = $message;
+    }
+    $sandbox['progress']++;
+    $sandbox['last_id'] = $uid;
+  }
+
+
+  if ($sandbox['progress'] != $sandbox['max'] && $sandbox['progress'] < $sandbox['max']) {
+    $sandbox['#finished'] = $sandbox['progress'] / $sandbox['max'];
+  }
+  else {
+    $sandbox['#finished'] = 1;
+  }
+
+  if ($sandbox['#finished'] == 1) {
+    return 'The user archive table was updated for '.  $sandbox['progress'] .' politicians. it was sucessfully finished.';
+  }
+  else {
+    return 'The user archive table was updated for '.  $sandbox['progress'] .' politicians. It is still running.';
+  }
+}
+

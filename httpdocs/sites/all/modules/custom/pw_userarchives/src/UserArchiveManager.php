@@ -3,6 +3,7 @@
 
 namespace Drupal\pw_userarchives;
 
+use Drupal\pw_globals\Parliament;
 use Drupal\pw_globals\Politician;
 use Drupal\pw_globals\PoliticianUserRevision;
 
@@ -22,10 +23,27 @@ class UserArchiveManager {
   protected $politician;
 
 
+  /**
+   * @var array
+   * Array of user revision vids for which a new entry in user archive cache
+   * was created
+   */
   protected $insertedVids = [];
 
+
+  /**
+   * @var array
+   * Array of user revision vids for which user archive entries already existed
+   * and which were updated
+   */
   protected $updatedVids = [];
 
+
+  /**
+   * @var array
+   * Array of user revision vids for which user archive entries already existed
+   * and which were deleted from user archive cache
+   */
   protected $deletedVids = [];
 
   /**
@@ -92,37 +110,10 @@ class UserArchiveManager {
 
     foreach ($user_revision_vids as $vid) {
       $politicianUserRevision = PoliticianUserRevision::loadFromUidAndVid($this->politician->getId(), $vid);
-      $user_role = $politicianUserRevision->getPoliticianRole();
-
-      $fraction_name = NULL;
-      $fraction = $politicianUserRevision->getFraction();
-      if ($fraction !== NULL) {
-        $fraction_name = $fraction->getName();
+      $userArchiveEntry = UserArchiveEntry::createFromPolicitianUserRevision($politicianUserRevision);
+      if ($userArchiveEntry !== NULL) {
+        $items_to_archive[$vid] = $userArchiveEntry;
       }
-
-      $question_form_open = (int) $this->checkIfQuestionFormOpen($politicianUserRevision);
-      $uid = $this->politician->getId();
-      $user_name = $this->politician->getPwUser()->name;
-
-      $parliament = $politicianUserRevision->getParliament();
-      $parliament_name = $parliament->getName();
-      $timestamp = $parliament->getElectionDate();
-      $number_of_questions = count($politicianUserRevision->getQuestionsNids());
-      $number_of_answers = $politicianUserRevision->getAnswersCids('non-standard');
-      $number_of_standard_replies = $politicianUserRevision->getAnswersCids('standard');
-
-      $user_joined = $politicianUserRevision->getJoinedDate();
-      if ($user_joined !== NULL) {
-        $user_joined = date('Y-m-d', $user_joined);
-      }
-      $user_retired = $politicianUserRevision->getRetiredDate();
-      if ($user_retired !== NULL) {
-        $user_retired = date('Y-m-d', $user_retired);
-      }
-
-      $actual_profile = (int) $politicianUserRevision->isActualProfile();
-
-      $items_to_archive[$vid] = new UserArchiveEntry($uid, $user_name, $user_role, $vid, $parliament_name, $timestamp, $fraction_name, $actual_profile , $user_joined, $user_retired, $question_form_open, $number_of_questions, $number_of_answers, $number_of_standard_replies );
     }
 
     return $items_to_archive;
@@ -175,7 +166,7 @@ class UserArchiveManager {
    *
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
-  public function checkIfQuestionFormOpen(PoliticianUserRevision $userRevision) {
+  public static function checkIfQuestionFormOpen(PoliticianUserRevision $userRevision) {
     if ($userRevision->isQuestionFormClosed()) {
       return FALSE;
     }
@@ -193,6 +184,68 @@ class UserArchiveManager {
     return FALSE;
   }
 
+
+  /**
+   * Calculate on which day in the future we need to re-validate if the
+   * question form is open or closed. It delivers the date in UTC
+   *
+   */
+  public static function calcQuestionFormOpenChange(PoliticianUserRevision $userRevision) {
+    // we do not need to re-validate the date when the form is closed by
+    // configuration in user revision
+    if ($userRevision->isQuestionFormClosed()) {
+      return NULL;
+    }
+
+    $parliament = $userRevision->getParliament();
+    $current_time = REQUEST_TIME;
+
+    // check for user revisions with active mandate. This is also true for archive
+    // profiles of mandates in the past
+    if ($userRevision->isActiveMandate()) {
+      $period = $parliament->getLegislatureValidTimePeriod();
+      $period_in_UTC = $parliament->getLegislatureValidTimePeriod('UTC');
+      if (empty($period) || !isset($period['start']) || !isset($period['end'])) {
+        return NULL;
+      }
+
+      // if the politician has an active mandate and the legislature did already start
+      // we need to change the question form open state at the end of the legislature
+      if ($parliament->isActiveLegislatureProject()) {
+        return $period_in_UTC['end'];
+      }
+
+      // if the politician has an active mandate for a future legislature
+      // we need to change the question form open state when the legislature starts
+      if (!$parliament->isActiveLegislatureProject() && $current_time < $period['start']) {
+        return $period_in_UTC['start'];
+      }
+    }
+
+    // check for user revisions with active candidacy. This is also true for archive
+    // profiles of candidacies in the past
+    if ($userRevision->isActiveCandidacy()) {
+      $period = $parliament->getElectionValidTimePeriod();
+      $period_in_UTC = $parliament->getElectionValidTimePeriod('UTC');
+      if (empty($period) || !isset($period['start']) || !isset($period['end'])) {
+        return NULL;
+      }
+
+      // if the politician has an active candidacy and the election period did already start
+      // we need to change the question form open state at the end of the election period
+      if ($parliament->isActiveElectionProject()) {
+        return $period_in_UTC['end'];
+      }
+
+      // if the politician has an active candidacy for a future election project
+      // we need to change the question form open state when the election starts
+      if (!$parliament->isActiveElectionProject() && $current_time < $period['start']) {
+        return $period_in_UTC['start'];
+      }
+    }
+
+    return NULL;
+  }
 
   /**
    * Load the user archive items which are currently stored in table
@@ -336,6 +389,12 @@ class UserArchiveManager {
     }
   }
 
+
+  /**
+   * Acts as a bridge to UserArchiveSearchAPI class. Collect the inserted and
+   * updated user archive entries' vids and those of the entries deleted and call
+   * UserArchiveSearchAPI to update the search index.
+   */
   protected function updateSearchAPI() {
     // put inserted and updated user revision vids in one array
     $change_items = array_merge($this->updatedVids, $this->insertedVids);
@@ -348,5 +407,52 @@ class UserArchiveManager {
       $searchApiDelete = new UserArchiveSearchAPI($this->deletedVids, 'delete');
       $searchApiDelete->updateSearchIndex();
     }
+  }
+
+
+  /**
+   * Checks if updates are needed when a parliament term was updated
+   *
+   * @param object $parliament
+   * The term object of the parliament
+   *
+   * @return bool
+   * True if an update is needed, fals if not or if an error appeared.
+   */
+  public static function updatesNeededOnParliamentUpdate($parliament) {
+    if (!is_object($parliament) || !isset($parliament->tid) ) {
+      return FALSE;
+    }
+
+    try {
+      $originalParliament = new Parliament($parliament->original);
+      $changedParliament = new Parliament($parliament);
+
+      if ($originalParliament->getName() != $changedParliament->getName()) {
+        return TRUE;
+      }
+
+      // check if election period has changed somehow
+      $electionPeriodOriginal = $originalParliament->getElectionValidTimePeriod();
+      $electionPeriodChanged = $changedParliament->getElectionValidTimePeriod();
+      if ($electionPeriodOriginal !== $electionPeriodChanged) {
+        return TRUE;
+      }
+
+      // check if legislature period has changed somehow
+      $legislaturePeriodOriginal = $originalParliament->getLegislatureValidTimePeriod();
+      $legislaturePeriodChanged = $changedParliament->getLegislatureValidTimePeriod();
+      if ($legislaturePeriodOriginal !== $legislaturePeriodChanged) {
+        return TRUE;
+      }
+    }
+    catch (\Exception $e) {
+      $error_message = 'An error appeared while trying to check if user archive needs update after parliament update: ';
+      watchdog_exception('pw_userarchives', $e, $error_message . $e->getMessage());
+      drupal_set_message($error_message .'Please contact the amdin', 'warning');
+      return FALSE;
+    }
+
+    return FALSE;
   }
 }

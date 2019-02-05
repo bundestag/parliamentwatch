@@ -122,13 +122,22 @@ class PoliticianUserRevision {
    * @param int|string $vid
    * The Drupal user revision vid
    *
-   * @return \Drupal\pw_globals\PoliticianUserRevision
+   * @return \Drupal\pw_globals\PoliticianUserRevision|null
+   * NULL if no user revision was loaded or the the loaded user
+   * revision was not one of a politician
    *
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
   public static function loadFromUidAndVid($uid, $vid) {
     $user_revision = user_revision_load($uid, $vid);
-    return new PoliticianUserRevision($user_revision);
+    if ($user_revision) {
+      $pwUser = new PWUser($user_revision);
+      if ($pwUser->isPolitician()) {
+        return new PoliticianUserRevision($user_revision);
+      }
+    }
+
+    return NULL;
   }
 
 
@@ -182,7 +191,7 @@ class PoliticianUserRevision {
       $entityFieldQuery->entityCondition('entity_type', 'node')
         ->propertyCondition('status', NODE_PUBLISHED)
         ->entityCondition('bundle', 'dialogue')
-        ->fieldCondition('field_dialogue_recipient', 'target_id', $this->getId())
+        ->fieldCondition('field_dialogue_recipient', 'target_id', $this->getUid())
         ->fieldCondition('field_parliament', 'tid', $parliament->getId());
 
       if ($this->getPoliticianRole() == self::DEPUTY_ROLE_STRING) {
@@ -253,6 +262,7 @@ class PoliticianUserRevision {
     return ($this->getPoliticianRole() == self::DEPUTY_ROLE_STRING && $this->isActiveMember($time));
   }
 
+
   /**
    * Checks if the user revision represents an active/ valid candidacy for the
    * parliament
@@ -275,7 +285,7 @@ class PoliticianUserRevision {
    */
   public function isActiveMember($check_date = '') {
     if (empty($check_date)) {
-      $check_date = time();
+      $check_date = REQUEST_TIME;
     }
     $joined_date = $this->getJoinedDate();
     $retired_date = $this->getRetiredDate();
@@ -319,7 +329,27 @@ class PoliticianUserRevision {
    *
    * @return int|string
    */
-  public function getId() {
-    return$this->userRevision->uid;
+  public function getUid() {
+    return $this->userRevision->uid;
+  }
+
+
+
+  /**
+   * Get the user revision vid
+   *
+   * @return int|string
+   */
+  public function getVid() {
+    return $this->userRevision->vid;
+  }
+
+  /**
+   * Get the Drupal user name
+   *
+   * @return string
+   */
+  public function getUserName() {
+    return $this->userRevision->name;
   }
 }

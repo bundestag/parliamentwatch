@@ -73,7 +73,11 @@ class PWUser {
     }
 
     $this->uid = $this->account->uid;
-    $this->name = $this->account->name;
+
+    // for uid = 0 there is no name
+    if (isset($this->account->name)) {
+      $this->name = $this->account->name;
+    }
   }
 
 

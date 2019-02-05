@@ -4,6 +4,9 @@
  * Code for the PW Parliaments feature.
  */
 
+use Drupal\pw_globals\Parliament;
+use Drupal\pw_userarchives\UserArchiveManager;
+
 include_once 'pw_parliaments.features.inc';
 
 /**
@@ -24,7 +27,11 @@ function pw_parliaments_taxonomy_term_presave($term) {
 function pw_parliaments_taxonomy_term_update($term) {
   // check if is parliaments vocabulary
   if ($term->vid == 18 && module_exists('pw_userarchives')) {
-    pw_userarchives_cron_ALT();
+    if (UserArchiveManager::updatesNeededOnParliamentUpdate($term)) {
+      $parliament = new Parliament($term);
+      pw_userarchives_update_by_parliament($parliament, $term->original->name, FALSE);
+    }
+
     if (module_exists('pw_cache')) {
       $query = db_select('user_archive_cache', 'uac')
         ->fields('uac', array('user_name', 'vid', 'actual_profile'))

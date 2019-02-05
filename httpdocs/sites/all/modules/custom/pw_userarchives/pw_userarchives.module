@@ -1,12 +1,11 @@
 <?php
 
-/**
- * @file
- * Includes main hooks.
- */
 
+use Drupal\pw_globals\Parliament;
 use Drupal\pw_globals\Politician;
+use Drupal\pw_globals\PoliticianUserRevision;
 use Drupal\pw_globals\PWUser;
+use Drupal\pw_userarchives\UserArchiveEntry;
 use Drupal\pw_userarchives\UserArchiveManager;
 
 
@@ -296,14 +295,90 @@ function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile 
   }
 }
 
+/**
+ * Helper to rebuild user archive entries for an updated parliament
+ *
+ * @todo use unique term tid instead of parliament name
+ * @todo use queue for updating
+ *
+ * @param \Drupal\pw_globals\Parliament $parliament
+ * The Parliament object of the updated parliament term
+ *
+ * @param string $original_name
+ * The original term name. When a parliament name was changed this assures that
+ * we can change the user archive entries connected to this parliament. Take this from
+ * $term->original->name
+ *
+ * @param bool $reset_actual_profile
+ */
+function pw_userarchives_update_by_parliament(Parliament $parliament, $original_name, $reset_actual_profile = TRUE) {
+  $query = db_select('user_archive_cache', 'uac')
+    ->condition('parliament', $original_name)
+    ->fields('uac')
+    ->execute();
+
+  while ($record = $query->fetchAssoc()) {
+    $transaction = db_transaction();
+    try {
+      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($record);
+      $politicianUserRevision = PoliticianUserRevision::loadFromUidAndVid($userArchiveEntry->getUid(), $userArchiveEntry->getVid());
+      $userArchiveEntry->setParliamentName($parliament->getName());
+
+      $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
+      $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
+      $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, 'UTC');
+      $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
+      $userArchiveEntry->save();
+    }
+    catch (\Exception $e) {
+      $transaction->rollback();
+      $error_message = 'An error appeared while trying to update user archive cache entry uid ' . $userArchiveEntry->getUid() . '/ vid ' . $userArchiveEntry->getVid() . ' for parliament ' . $parliament->getName() . ': ' . $e->getMessage();
+      watchdog_exception('pw_userarchives', $e, $error_message);
+      drupal_set_message($error_message, 'error');
+    }
+  }
+}
+
 
 /**
  * Implements hook_cron().
- *  - at night we run through all user archive entries and check if
- *    the questions form is still open/ closed
+ *  - at night we run through all user archive entries and check for entries
+ *    which need a revalidation of question form open
  */
 function pw_userarchives_cron() {
 
+  if(date("H:i") != '01:00'){
+    return;
+  }
+
+  $string_of_current_time = strtotime(REQUEST_TIME);
+  $currentDateTime = new \DateTime($string_of_current_time, new \DateTimeZone(date_default_timezone_get()));
+  $currentDateTime->setTimezone(new \DateTimeZone('UTC'));
+  $current_timestamp = $currentDateTime->getTimestamp();
+
+  $query = db_select('user_archive_cron', 'uac')
+    ->condition('question_form_open_change', $current_timestamp, '<')
+    ->fields('uac')
+    ->execute();
+
+  while ($record = $query->fetchAssoc()) {
+    $transaction = db_transaction();
+    try {
+      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($record);
+      $userArchiveEntry->updateQuestionFormSettings();
+      $userArchiveEntry->save();
+    }
+
+    catch (\Exception $e) {
+      $transaction->rollback();
+      $error_message = 'An error appeared during cron when trying to revalidate question form open value.';
+      if (is_array($record) && !empty($record)) {
+        $error_message .= ' Array values: '. http_build_query($record) .'.';
+      }
+      $error_message .= ' Exception message: '. $e->getMessage();
+      watchdog_exception('pw_userarchives', $e, $error_message);
+    }
+  }
 }
 
 /**

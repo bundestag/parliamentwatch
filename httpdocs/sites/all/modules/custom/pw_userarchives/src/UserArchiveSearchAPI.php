@@ -67,7 +67,8 @@ class UserArchiveSearchAPI {
 
 
   /**
-   *
+   * Call this to start the search index update. It checks if the user revisions
+   * are indexed and calls the appropriate search api callbacks.
    */
   public function updateSearchIndex() {
     $transaction = db_transaction();
