@@ -313,7 +313,7 @@ function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile 
  */
 function pw_userarchives_update_by_parliament(Parliament $parliament, $original_name, $reset_actual_profile = TRUE) {
   $query = db_select('user_archive_cache', 'uac')
-    ->condition('parliament', $original_name)
+    ->condition('parliament_name', $original_name)
     ->fields('uac')
     ->execute();
 

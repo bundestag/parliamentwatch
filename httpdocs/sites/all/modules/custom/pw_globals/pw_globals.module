@@ -706,7 +706,11 @@ function _pw_globals_politician_search_role_condition($parliament_term) {
 function _pw_is_profile_consultable($account) {
   $politicianUserRevision = new PoliticianUserRevision($account);
   $userArchiveEntry = UserArchiveEntry::loadForPoliticianUserRevision($politicianUserRevision);
-  return (bool) $userArchiveEntry->isQuestionFormOpen();
+  if ($userArchiveEntry) {
+    return (bool) $userArchiveEntry->isQuestionFormOpen();
+  }
+
+  return FALSE;
 }
 
 
