@@ -408,12 +408,12 @@ function pw_userarchives_cron() {
     return;
   }
 
-  $string_of_current_time = strtotime(REQUEST_TIME);
+  $string_of_current_time = date('Y-m-d\TH:i:s', REQUEST_TIME);
   $currentDateTime = new \DateTime($string_of_current_time, new \DateTimeZone(date_default_timezone_get()));
   $currentDateTime->setTimezone(new \DateTimeZone('UTC'));
   $current_timestamp = $currentDateTime->getTimestamp();
 
-  $query = db_select('user_archive_cron', 'uac')
+  $query = db_select('user_archive_cache', 'uac')
     ->condition('question_form_open_change', $current_timestamp, '<')
     ->fields('uac')
     ->execute();
