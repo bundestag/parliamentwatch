@@ -376,7 +376,13 @@ function pw_userarchives_update_entries_by_parliament(Parliament $parliament, $o
 
         $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
         $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
-        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, 'UTC');
+        if ($question_form_is_open_change !== NULL) {
+          $timezone = 'UTC';
+        }
+        else {
+          $timezone = '';
+        }
+        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, $timezone);
         $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
         $userArchiveEntry->save();
       }
