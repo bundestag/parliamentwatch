@@ -1025,6 +1025,8 @@ function _pw_get_fullname($user) {
  * Custom: Helper to load only actual profiles from user archive cache
  * @param SelectQuery $query
  *   query object by reference
+ *
+ * @deprecated try to use UserArchiveDatabase instead
  */
 function _pw_uac_add_conditions(&$query, $conditions = array()) {
   foreach ($query->getTables() as $index => $table) {

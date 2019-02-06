@@ -328,7 +328,7 @@ function pw_userarchives_update_by_user_batch($uid, &$context) {
 /**
  * batch finished callback for rebuild user archive entries for politicians
  * related to a parliament
- * 
+ *
  * @param $success
  * @param $results
  * @param $operations
