@@ -227,7 +227,7 @@ _:-ms-fullscreen,
         }
         .form__item__control {
           float: left;
-          border-color: $darkBeige;
+          border: 1px solid $darkBeige;
           border-right: 0;
           @include breakpoint($breakpoint-s-min) {
             display: block;

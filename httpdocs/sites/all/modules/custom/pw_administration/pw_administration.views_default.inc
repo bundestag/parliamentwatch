@@ -45,7 +45,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -218,7 +218,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Datei-ID'),
     t('Typ'),
@@ -264,7 +264,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -1076,7 +1076,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Antworten'),
     t('Keine Ergebnisse gefunden'),
@@ -1147,7 +1147,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -1608,7 +1608,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Beitrag'),
     t('Autor'),
@@ -1671,7 +1671,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -2117,7 +2117,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Ausschüssen'),
     t('Autor'),
@@ -2179,7 +2179,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -2646,12 +2646,11 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Ausschüssen'),
     t('Keine Ausschüsse gefunden'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
     t('Löschen'),
     t('Werte ändern'),
@@ -2709,7 +2708,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -3095,14 +3094,13 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Wahlkreise'),
     t('Keine Electoral Regions gefunden'),
     t('Begriff-ID'),
     t('.'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Löschen'),
     t('Werte ändern'),
     t('Name'),
@@ -3156,7 +3154,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -3694,7 +3692,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Keine Einträge gefunden'),
     t('Autor'),
@@ -3759,7 +3757,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -4017,14 +4015,13 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Elecotral Regions'),
     t('Keine Electoral Regions gefunden'),
     t('Begriff-ID'),
     t('.'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Löschen'),
     t('Werte ändern'),
     t('Name'),
@@ -4074,7 +4071,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -4254,7 +4251,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Keine Einträge gefunden'),
     t('Datei-ID'),
@@ -4301,7 +4298,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -5090,7 +5087,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Fragen'),
     t('Keine Ergebnisse gefunden'),
@@ -5160,7 +5157,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -5471,7 +5468,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Keine Parlamente gefunden'),
     t('ID'),
@@ -5534,7 +5531,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -5690,7 +5687,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Parteien'),
     t('Keine Parlamente gefunden'),
@@ -6777,7 +6774,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -7469,7 +7466,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('<p>Zeigt @start - @end von @total Politiker-Profilen</p>
 
@@ -7541,7 +7538,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -8145,7 +8142,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Abstimmungen'),
     t('Autor'),
@@ -8211,7 +8208,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -8825,13 +8822,12 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Abstimmungen'),
     t('Keine Abstimmungen gefunden'),
     t('Autor'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
     t('Löschen'),
     t('Werte ändern'),
@@ -8893,7 +8889,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -9980,7 +9976,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Nebentätigkeiten'),
     t('Keine Einträge gefunden'),
@@ -10292,7 +10288,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -10488,7 +10484,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Es wurden keine Nodes gefunden'),
     t('Titel'),
@@ -11338,7 +11334,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -12110,7 +12106,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Stimmen/ Votes'),
     t('Keine Einträge gefunden'),
@@ -12180,7 +12176,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -12882,7 +12878,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Zeigt @start - @end von @total Stimmen/ Votes'),
     t('Keine Einträge gefunden'),
@@ -12890,7 +12886,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Abstimmung'),
     t('Parliament Term'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Veröffentlichung zurücknehmen'),
     t('Löschen'),
     t('Werte ändern'),

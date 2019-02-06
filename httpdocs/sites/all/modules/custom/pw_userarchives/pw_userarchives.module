@@ -1,10 +1,13 @@
 <?php
 
-/**
- * @file
- * Includes main hooks.
- */
 
+use Drupal\pw_globals\Parliament;
+use Drupal\pw_globals\Politician;
+use Drupal\pw_globals\PoliticianUserRevision;
+use Drupal\pw_globals\PWUser;
+use Drupal\pw_userarchives\UserArchiveDatabase;
+use Drupal\pw_userarchives\UserArchiveEntry;
+use Drupal\pw_userarchives\UserArchiveManager;
 
 
 /**
@@ -29,7 +32,7 @@ function pw_userarchives_menu() {
   $items['user/%user_revision/revisions/%/edit/default'] = array(
     'title' => 'Archiv-Profil bearbeiten',
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => 0
+    'weight' => 0,
   );
   $items['user/%user_revision/revisions/%/edit/view'] = array(
     'title' => 'Archiv-Profil Ansicht',
@@ -57,7 +60,7 @@ function pw_userarchives_menu() {
   $items['profile/%pw_profiles_username/archive/%/view'] = [
     'title' => 'Archiv-Profil Ansicht',
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => -10
+    'weight' => -10,
   ];
 
   $items['profile/%pw_profiles_username/archive/%pw_user_revision/edit'] = [
@@ -84,6 +87,14 @@ function pw_userarchives_menu() {
     'file' => 'pw_userarchives.admin.inc',
   ];
 
+  $items['taxonomy/term/%taxonomy_term/reset-user-archive-cache'] = [
+    'title' => 'User archive Einträge zurücksetzen/ neu aufbauen',
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['pw_userarchives_reset_parliament_form', 2],
+    'access arguments' => ['can reset user archive table'],
+    'file' => 'pw_userarchives.admin.inc',
+  ];
 
   return $items;
 }
@@ -117,21 +128,6 @@ function pw_userarchives_user_revision_admin_access($account) {
 
 
 /**
- *
- * Load a user revision by user name and vid
- *
- * @param int|string $vid
- * @param string $pw_profiles_username
- *
- * @return object|false
- */
-function pw_user_revision_load($vid, $pw_profiles_username) {
-  $account = pw_profiles_username_load($pw_profiles_username);
-  return user_revision_load($account->uid, $vid);
-}
-
-
-/**
  * Implements hook_admin_paths().
  */
 function pw_userarchives_admin_paths() {
@@ -161,6 +157,10 @@ function pw_userarchives_permission() {
       'title' => t('Edit own user revisions'),
       'description' => t('Allow users to edit their own user revisions'),
     ),
+    'can reset user archive table' => array(
+      'title' => t('Reset user archive table'),
+      'description' => t('User can reset user archive table'),
+    ),
   );
 }
 
@@ -177,17 +177,28 @@ function pw_userarchives_entity_info_alter(&$entity_info) {
  * Implements hook_user_insert().
  */
 function pw_userarchives_user_insert(&$edit, $account, $category) {
-  $reset_actual_profile = !isset($_REQUEST['form_id']);
-  pw_userarchives_cron($account->uid, $reset_actual_profile);
+  pw_userarchives_update_by_user($account);
+  $account->user_archive_run = TRUE;
 }
 
 /**
  * Implements hook_user_update().
  */
 function pw_userarchives_user_update(&$edit, $account, $category) {
-  $reset_actual_profile = !isset($_REQUEST['form_id']);
-  pw_userarchives_cron($account->uid, $reset_actual_profile);
+  pw_userarchives_update_by_user($account);
+  $account->user_archive_run = TRUE;
 }
+
+
+/**
+ * Implements hook_user_delete().
+ */
+function pw_userarchives_user_delete($account) {
+  db_delete('user_archive_cache')
+    ->condition('uid', $account->uid)
+    ->execute();
+}
+
 
 /**
  * Implements hook_user_revision_delete().
@@ -198,10 +209,17 @@ function pw_userarchives_user_update(&$edit, $account, $category) {
  * @param $revision
  */
 function pw_userarchives_user_revision_delete($revision) {
-  db_delete('user_archive_cache')
-    ->condition('uid', $revision->uid)
-    ->condition('vid', $revision->vid)
-    ->execute();
+  pw_userarchives_update_by_user($revision);
+}
+
+
+/**
+ * Implements hook_pw_user_revision_edit().
+ */
+function pw_userarchives_pw_user_revision_edit($revision) {
+  if (!isset( $revision->user_archive_run) || !$revision->user_archive_run) {
+    pw_userarchives_update_by_user($revision);
+  }
 }
 
 /**
@@ -209,7 +227,7 @@ function pw_userarchives_user_revision_delete($revision) {
  */
 function pw_userarchives_node_insert($node) {
   if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
-    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+    pw_userarchives_update_by_user($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
 
@@ -218,7 +236,7 @@ function pw_userarchives_node_insert($node) {
  */
 function pw_userarchives_node_update($node) {
   if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
-    pw_userarchives_cron($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+    pw_userarchives_update_by_user($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
 
@@ -231,7 +249,7 @@ function pw_userarchives_node_update($node) {
  */
 function pw_userarchives_node_delete($node) {
   if ($node->type == 'dialogue' && !empty($node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'])) {
-    drupal_register_shutdown_function(pw_userarchives_cron, $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
+    drupal_register_shutdown_function('pw_userarchives_update_by_user', $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id']);
   }
 }
 
@@ -240,7 +258,7 @@ function pw_userarchives_node_delete($node) {
  */
 function pw_userarchives_comment_insert($comment) {
   if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
-    pw_userarchives_cron($comment->uid);
+    pw_userarchives_update_by_user($comment->uid);
   }
 }
 
@@ -249,7 +267,7 @@ function pw_userarchives_comment_insert($comment) {
  */
 function pw_userarchives_comment_update($comment) {
   if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
-    pw_userarchives_cron($comment->uid);
+    pw_userarchives_update_by_user($comment->uid);
   }
 }
 
@@ -258,7 +276,165 @@ function pw_userarchives_comment_update($comment) {
  */
 function pw_userarchives_comment_delete($comment) {
   if ($comment->node_type == 'comment_node_dialogue' && !empty($comment->uid)) {
-    pw_userarchives_cron($comment->uid);
+    pw_userarchives_update_by_user($comment->uid);
+  }
+}
+
+
+/**
+ * Helper to rebuild user archive entries for a single politician
+ *
+ * @param bool|int|string|object $account
+ * If false the currently logged in user will be used. If this is an integer
+ * or a numeric string it is the user uid and the user account will be loaded.
+ * If it is an object it need to be the Drupal user object. It should be
+ * the user revision of the Politician.
+ *
+ * @param bool $reset_actual_profile
+ */
+function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile = TRUE) {
+  try {
+    $PWUser = new PWUser($account);
+    if ($PWUser->isPolitician()) {
+      $politician = new Politician($account);
+      $userArchiveManager = new UserArchiveManager($politician);
+      $userArchiveManager->updateEntries($reset_actual_profile);
+    }
+  }
+  catch (\Exception $e) {
+    $error_message = 'An error appeared while trying to rebuild user archive cache for user '. $account->uid .'/ '. $account->name .': '. $e->getMessage();
+    watchdog_exception('pw_userarchives', $e, $error_message);
+    drupal_set_message($error_message, 'error');
+  }
+}
+
+/**
+ * Batch callback for updating user archive entries for a user
+ *
+ * @param $uid
+ * @param $context
+ *
+ * @throws \Exception
+ */
+function pw_userarchives_update_by_user_batch($uid, &$context) {
+  $politician = Politician::loadFromUid($uid);
+  $userArchiveManager = new UserArchiveManager($politician);
+  $userArchiveManager->updateEntries(FALSE);
+
+  $context['results'][] = $politician->getFullName() .' aktualisiert';
+}
+
+
+/**
+ * batch finished callback for rebuild user archive entries for politicians
+ * related to a parliament
+ *
+ * @param $success
+ * @param $results
+ * @param $operations
+ */
+function pw_userarchives_update_by_user_batch_finished($success, $results, $operations) {
+  $counter = count($results);
+
+  if ($success) {
+    drupal_set_message('Die User Archive Einträge wurden für '. $counter .' Politiker erfolgreich aktualisiert');
+  }
+  else {
+    drupal_set_message('Es ist ein Fehler aufgetreten', 'warning');
+  }
+}
+
+
+
+/**
+ * Helper to rebuild user archive entries for an updated parliament
+ *
+ * @todo use unique term tid instead of parliament name
+ * @todo use queue for updating
+ *
+ * @param \Drupal\pw_globals\Parliament $parliament
+ * The Parliament object of the updated parliament term
+ *
+ * @param string $original_name
+ * The original term name. When a parliament name was changed this assures that
+ * we can change the user archive entries connected to this parliament. Take
+ *   this from
+ * $term->original->name
+ *
+ * @param bool $reset_actual_profile
+ */
+function pw_userarchives_update_entries_by_parliament(Parliament $parliament, $original_name, $reset_actual_profile = FALSE) {
+  $entriesFromDatabase = UserArchiveDatabase::getExistingArchiveEntries(['parliament_name' => $original_name]);
+
+  if (!empty($entriesFromDatabase)) {
+    foreach ($entriesFromDatabase as $entryFromDatabase) {
+      $transaction = db_transaction();
+      try {
+        $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($entryFromDatabase);
+        $politicianUserRevision = $userArchiveEntry->getPoliticianUserRevision();
+        $userArchiveEntry->setParliamentName($parliament->getName());
+
+        $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
+        $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
+        if ($question_form_is_open_change !== NULL) {
+          $timezone = 'UTC';
+        }
+        else {
+          $timezone = '';
+        }
+        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, $timezone);
+        $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
+        $userArchiveEntry->save();
+      }
+      catch (\Exception $e) {
+        $transaction->rollback();
+        $error_message = 'An error appeared while trying to update user archive cache entry uid ' . $userArchiveEntry->getUid() . '/ vid ' . $userArchiveEntry->getVid() . ' for parliament ' . $parliament->getName() . ': ' . $e->getMessage();
+        watchdog_exception('pw_userarchives', $e, $error_message);
+        drupal_set_message($error_message, 'error');
+      }
+    }
+  }
+}
+
+
+/**
+ * Implements hook_cron().
+ *  - at night we run through all user archive entries and check for entries
+ *    which need a revalidation of question form open
+ */
+function pw_userarchives_cron() {
+
+  if(date("H:i") != '01:00'){
+    return;
+  }
+
+  $string_of_current_time = date('Y-m-d\TH:i:s', REQUEST_TIME);
+  $currentDateTime = new \DateTime($string_of_current_time, new \DateTimeZone(date_default_timezone_get()));
+  $currentDateTime->setTimezone(new \DateTimeZone('UTC'));
+  $current_timestamp = $currentDateTime->getTimestamp();
+
+  $query = db_select('user_archive_cache', 'uac')
+    ->condition('question_form_open_change', $current_timestamp, '<')
+    ->fields('uac')
+    ->execute();
+
+  while ($record = $query->fetchAssoc()) {
+    $transaction = db_transaction();
+    try {
+      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($record);
+      $userArchiveEntry->updateQuestionFormSettings();
+      $userArchiveEntry->save();
+    }
+
+    catch (\Exception $e) {
+      $transaction->rollback();
+      $error_message = 'An error appeared during cron when trying to revalidate question form open value.';
+      if (is_array($record) && !empty($record)) {
+        $error_message .= ' Array values: '. http_build_query($record) .'.';
+      }
+      $error_message .= ' Exception message: '. $e->getMessage();
+      watchdog_exception('pw_userarchives', $e, $error_message);
+    }
   }
 }
 
@@ -271,8 +447,11 @@ function pw_userarchives_comment_delete($comment) {
  * 2. Modify query object and re-fetch data using the vids.
  * 3. Do the delete and update queries
  * 4. Update fields, index, etc.
+ *
+ * @deprecated
  */
-function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
+function pw_userarchives_cron_ALT($uid = NULL, $reset_actual_profile = TRUE) {
+  // $tracked_items_query -> hole das profile mit der höchsten vid je user/ parlament/ rolle aus der User Archive
   $tracked_items_query = db_select('user_archive_cache', 'uac');
   $tracked_items_query->addExpression('MAX(uac.vid)');
   $tracked_items_query->groupBy('uac.uid, uac.parliament_name, uac.user_role');
@@ -366,6 +545,8 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
     // join parliament valid AND question form closed to check if the profile is open for questions or not
     $query->leftJoin('field_revision_field_parliament_valid', 'pv', "pv.entity_type='taxonomy_term' AND pv.entity_id = u_parl.field_user_parliament_tid AND pv.field_parliament_valid_value < NOW() AND (pv.field_parliament_valid_value2 IS NULL OR pv.field_parliament_valid_value2 > NOW())");
     $query->leftJoin('field_revision_field_user_question_form_closed', 'qf_closed', "qf_closed.entity_type='user' AND qf_closed.revision_id = ur.vid");
+
+    // CHECK if question form is open
     $query->addExpression("
       COUNT(pv.field_parliament_valid_value) > 0 AND
       (user_joined.field_user_joined_value IS NULL OR user_joined.field_user_joined_value < NOW()) AND
@@ -498,7 +679,7 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
     }
 
     // finally check for outdated revisions which can be deleted
-    pw_delete_old_user_revisions($uid);
+   // pw_delete_old_user_revisions($uid);
   }
   catch (Exception $e) {
     $transaction->rollback();
@@ -511,7 +692,7 @@ function pw_userarchives_cron($uid = NULL, $reset_actual_profile = TRUE) {
  */
 function pw_userarchives_search_api_item_type_info() {
   $types['user_revision'] = [
-    'name' => t('User revision'),
+    'name' => t('User archive entries'),
     'datasource controller' => 'UserArchiveDataSourceController',
     'entity_type' => 'user',
   ];
@@ -602,7 +783,8 @@ function pw_userarchives_politician_load_multiple($vids) {
 }
 
 /**
- * check if profiles needs to be refreshed based on parliament valid dates and election date.
+ * check if profiles needs to be refreshed based on parliament valid dates and
+ * election date.
  */
 function pw_userarchives_check_refresh_profiles($parliament) {
 
@@ -679,7 +861,7 @@ function pw_delete_old_user_revisions($uid) {
     // leave a message
     watchdog('pw_userarchives', ':number_of_revisions user revisions deleted which were older than :days_buffer days and were not associated with user_archive_cache', array(
       ':number_of_revisions' => $number_of_revisions,
-      ':days_buffer' => $days_buffer
+      ':days_buffer' => $days_buffer,
     ));
   }
 
@@ -739,7 +921,7 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
     db_delete('user_archive_cache')
       ->condition('uid', $uid)
       ->execute();
-    pw_userarchives_cron($uid, FALSE);
+    pw_userarchives_update_by_user($uid, FALSE);
   }
 }
 
@@ -813,6 +995,6 @@ function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
 function pw_userarchives_politician_roles() {
   return [
     'deputy' => 'Mandat',
-    'candidate' => 'Kandidatur'
+    'candidate' => 'Kandidatur',
   ];
 }

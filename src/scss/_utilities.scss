@@ -43,17 +43,6 @@ textarea {
   border: 0;
 }
 
-/* Local Anchor */
-
-.local-anchor {
-  @include breakpoint($breakpoint-l-min) {
-    position: relative;
-    top: -123px;
-    display: block;
-    visibility: hidden;
-  }
-}
-
 /* Links with icons */
 
 .link-icon {
