@@ -469,7 +469,7 @@ class UserArchiveEntry {
       if (empty($timezone)) {
         $timezone = date_default_timezone_get();
       }
-      $dateTime = new \DateTime(date('Y-m-d:H:i:s', $this->question_form_open_change), new \DateTimeZone('UTC'));
+      $dateTime = new \DateTime(date('Y-m-d\TH:i:s', $this->question_form_open_change), new \DateTimeZone('UTC'));
       if ($timezone != 'UTC') {
         $dateTime->setTimezone(new \DateTimeZone($timezone));
       }
@@ -496,7 +496,7 @@ class UserArchiveEntry {
       if (empty($timezone)) {
         $timezone = date_default_timezone_get();
       }
-      $dateTime = new \DateTime(date('Y-m-d:H:i:s', $question_form_open_change), new \DateTimeZone($timezone));
+      $dateTime = new \DateTime(date('Y-m-d\TH:i:s', $question_form_open_change), new \DateTimeZone($timezone));
       if ($timezone != 'UTC') {
         $dateTime->setTimezone(new \DateTimeZone('UTC'));
       }
