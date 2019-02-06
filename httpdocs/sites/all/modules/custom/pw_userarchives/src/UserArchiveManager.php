@@ -153,6 +153,10 @@ class UserArchiveManager {
    * Calculate on which day in the future we need to re-validate if the
    * question form is open or closed. It delivers the date in UTC
    *
+   * @return NULl|int
+   * NULL or a timestamp in UTC
+   *
+   * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
   public static function calcQuestionFormOpenChange(PoliticianUserRevision $userRevision) {
     // we do not need to re-validate the date when the form is closed by

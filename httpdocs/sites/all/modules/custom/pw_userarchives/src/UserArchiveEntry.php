@@ -469,7 +469,7 @@ class UserArchiveEntry {
       if (empty($timezone)) {
         $timezone = date_default_timezone_get();
       }
-      $dateTime = new \DateTime(date('Y-m-d:H:i:s', $this->question_form_open_change), new \DateTimeZone('UTC'));
+      $dateTime = new \DateTime(date('Y-m-d\TH:i:s', $this->question_form_open_change), new \DateTimeZone('UTC'));
       if ($timezone != 'UTC') {
         $dateTime->setTimezone(new \DateTimeZone($timezone));
       }
@@ -482,21 +482,30 @@ class UserArchiveEntry {
 
 
   /**
-   * @param int $question_form_open_change
+   * @param int|NULL $question_form_open_change
    * The timestamp of the date in UTC
    *
    * @param string $timezone
-   * The timezone in which the given timestamp is defined
+   * The timezone in which the given timestamp is defined. If nothing is defined
+   * and $question_form_open_change has a value the default page timezone will be used
    *
    * @throws \Exception
    */
-  public function setQuestionFormOpenChange(int $question_form_open_change, $timezone) {
-    $dateTime = new \DateTime(date('Y-m-d:H:i:s', $question_form_open_change), new \DateTimeZone($timezone));
-    if ($timezone != 'UTC') {
-      $dateTime->setTimezone(new \DateTimeZone('UTC'));
-    }
+  public function setQuestionFormOpenChange($question_form_open_change = NULL, $timezone = '') {
+    if ($question_form_open_change !== NULL && is_int($question_form_open_change)) {
+      if (empty($timezone)) {
+        $timezone = date_default_timezone_get();
+      }
+      $dateTime = new \DateTime(date('Y-m-d\TH:i:s', $question_form_open_change), new \DateTimeZone($timezone));
+      if ($timezone != 'UTC') {
+        $dateTime->setTimezone(new \DateTimeZone('UTC'));
+      }
 
-    $this->question_form_open_change = $dateTime->getTimestamp();
+      $this->question_form_open_change = $dateTime->getTimestamp();
+    }
+    else {
+      $this->question_form_open_change = $question_form_open_change;
+    }
   }
 
 
@@ -542,9 +551,14 @@ class UserArchiveEntry {
     $politicianUserRevision = $this->getPoliticianUserRevision();
     $question_form_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
     $question_form_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
-
+    if ($question_form_open_change !== NULL) {
+      $timezone = 'UTC';
+    }
+    else {
+      $timezone = '';
+    }
     $this->setQuestionFormOpen($question_form_open);
-    $this->setQuestionFormOpenChange($question_form_open_change);
+    $this->setQuestionFormOpenChange($question_form_open_change, $timezone);
   }
 
 

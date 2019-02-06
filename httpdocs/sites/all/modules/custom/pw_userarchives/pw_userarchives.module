@@ -328,7 +328,7 @@ function pw_userarchives_update_by_user_batch($uid, &$context) {
 /**
  * batch finished callback for rebuild user archive entries for politicians
  * related to a parliament
- * 
+ *
  * @param $success
  * @param $results
  * @param $operations
@@ -376,7 +376,13 @@ function pw_userarchives_update_entries_by_parliament(Parliament $parliament, $o
 
         $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
         $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
-        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, 'UTC');
+        if ($question_form_is_open_change !== NULL) {
+          $timezone = 'UTC';
+        }
+        else {
+          $timezone = '';
+        }
+        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, $timezone);
         $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
         $userArchiveEntry->save();
       }
@@ -402,12 +408,12 @@ function pw_userarchives_cron() {
     return;
   }
 
-  $string_of_current_time = strtotime(REQUEST_TIME);
+  $string_of_current_time = date('Y-m-d\TH:i:s', REQUEST_TIME);
   $currentDateTime = new \DateTime($string_of_current_time, new \DateTimeZone(date_default_timezone_get()));
   $currentDateTime->setTimezone(new \DateTimeZone('UTC'));
   $current_timestamp = $currentDateTime->getTimestamp();
 
-  $query = db_select('user_archive_cron', 'uac')
+  $query = db_select('user_archive_cache', 'uac')
     ->condition('question_form_open_change', $current_timestamp, '<')
     ->fields('uac')
     ->execute();
