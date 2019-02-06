@@ -171,4 +171,56 @@ class Parliament {
 
     return FALSE;
   }
+
+
+  /**
+   *
+   * @param string $role
+   * Can be "Deputy" or "Candidate". Optional, if empty all candidacies and mandates will
+   * be loaded
+   *
+   * @return array
+   * An array of uid and vids
+   *
+   * @deprecated maybe better use UserArchiveDatabase::loadUserRevisionVidsForArchive()
+   * as it is quite the same query
+   */
+  public function getRelatedPoliticianUserRevisions($role = '') {
+    $records = [];
+
+    if (empty($role)) {
+      $role = ['Deputy', 'Candidate'];
+    }
+    // db_select: user revision
+    $query = db_select('user_revision', 'ur');
+    $query->addExpression('MAX(ur.vid)', 'vid');
+    $query->addField('ur', 'uid');
+
+    // join taxonomy terms for parliament names
+    $query->join('field_revision_field_user_parliament', 'u_parl', "u_parl.entity_type = 'user' AND ur.vid = u_parl.revision_id");
+    $query->join('taxonomy_term_data', 'parliament', 'parliament.tid = u_parl.field_user_parliament_tid');
+
+    $query->leftJoin('field_revision_field_user_fraction', 'fraction_tid', "fraction_tid.entity_type = 'user' AND fraction_tid.revision_id = ur.vid");
+    $query->leftJoin('taxonomy_term_data', 'fraction', 'fraction.tid = fraction_tid.field_user_fraction_tid');
+
+    // join revisionable roles for user_roles
+    $query->join('field_revision_field_user_roles_for_view_mode_s', 'role_tid', "role_tid.entity_type = 'user' AND role_tid.revision_id = ur.vid");
+    $query->join('taxonomy_term_data', 'role', 'role.tid = role_tid.field_user_roles_for_view_mode_s_tid');
+
+    $query->condition('ur.status', '1');
+    $query->condition('u_parl.field_user_parliament_tid', $this->getId());
+    $query->condition('role.name', $role);
+    $query->groupBy('ur.uid, u_parl.field_user_parliament_tid, role_tid.field_user_roles_for_view_mode_s_tid, fraction_tid.field_user_fraction_tid');
+
+    $result = $query->execute();
+
+    while ($record = $result->fetchAssoc()) {
+      $records[] = $record;
+    }
+
+    return $records;
+  }
+
+
+
 }

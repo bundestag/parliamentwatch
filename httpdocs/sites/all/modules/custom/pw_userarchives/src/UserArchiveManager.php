@@ -105,7 +105,7 @@ class UserArchiveManager {
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
   protected function createEntriesToArchiveByRevisions() {
-    $user_revision_vids = $this->loadUserRevisionsVids();
+    $user_revision_vids = UserArchiveDatabase::loadUserRevisionVidsForArchive($this->politician->getId());
     $items_to_archive = [];
 
     foreach ($user_revision_vids as $vid) {
@@ -117,42 +117,6 @@ class UserArchiveManager {
     }
 
     return $items_to_archive;
-  }
-
-  /**
-   * Load the user revisions vids of those revisions with the highest vid of
-   * each combination of parliament, fraction and user role
-   *
-   * @return array
-   * Array of user revision vids or empty if none was found
-   */
-  protected function loadUserRevisionsVids() {
-    // db_select: user revision
-    $query = db_select('user_revision', 'ur');
-    $query->addExpression('MAX(ur.vid)', 'vid');
-
-    // join taxonomy terms for parliament names
-    $query->join('field_revision_field_user_parliament', 'u_parl', "u_parl.entity_type = 'user' AND ur.vid = u_parl.revision_id");
-    $query->join('taxonomy_term_data', 'parliament', 'parliament.tid = u_parl.field_user_parliament_tid');
-
-    // join fractions for fraction tids
-    $query->leftJoin('field_revision_field_user_fraction', 'fraction_tid', "fraction_tid.entity_type = 'user' AND fraction_tid.revision_id = ur.vid");
-    $query->leftJoin('taxonomy_term_data', 'fraction', 'fraction.tid = fraction_tid.field_user_fraction_tid');
-
-    // join revisionable roles for user_roles
-    $query->join('field_revision_field_user_roles_for_view_mode_s', 'role_tid', "role_tid.entity_type = 'user' AND role_tid.revision_id = ur.vid");
-    $query->join('taxonomy_term_data', 'role', 'role.tid = role_tid.field_user_roles_for_view_mode_s_tid');
-
-    // query conditions
-    $query->condition('ur.status', '1');
-    $query->condition('ur.uid', $this->politician->getId());
-    $query->condition('role.name', array('Deputy', 'Candidate'));
-
-    // add fields
-    $query->groupBy('ur.uid, u_parl.field_user_parliament_tid, role_tid.field_user_roles_for_view_mode_s_tid, fraction_tid.field_user_fraction_tid');
-
-    // fetch all relevant vids as flat array
-    return $query->execute()->fetchCol();
   }
 
 
@@ -257,15 +221,11 @@ class UserArchiveManager {
    * An array of UserArchiveEntry objects. Empty if none was found
    */
   protected function getExistingUserArchiveEntriesByUid($uid) {
-    $query = db_select('user_archive_cache', 'uac')
-      ->condition('uac.uid', $uid)
-      ->fields('uac')
-      ->execute();
-
     $entries = [];
+    $entriesFromDatabase = UserArchiveDatabase::getExistingArchiveEntries(['uid' => $uid]);
 
-    while ($record = $query->fetchAssoc()) {
-      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($record);
+    foreach ($entriesFromDatabase as $entriyFromDatabase) {
+      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($entriyFromDatabase);
       $entries[$userArchiveEntry->getVid()] = $userArchiveEntry;
     }
 

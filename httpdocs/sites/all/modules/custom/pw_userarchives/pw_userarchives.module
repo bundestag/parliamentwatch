@@ -5,6 +5,7 @@ use Drupal\pw_globals\Parliament;
 use Drupal\pw_globals\Politician;
 use Drupal\pw_globals\PoliticianUserRevision;
 use Drupal\pw_globals\PWUser;
+use Drupal\pw_userarchives\UserArchiveDatabase;
 use Drupal\pw_userarchives\UserArchiveEntry;
 use Drupal\pw_userarchives\UserArchiveManager;
 
@@ -31,7 +32,7 @@ function pw_userarchives_menu() {
   $items['user/%user_revision/revisions/%/edit/default'] = array(
     'title' => 'Archiv-Profil bearbeiten',
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => 0
+    'weight' => 0,
   );
   $items['user/%user_revision/revisions/%/edit/view'] = array(
     'title' => 'Archiv-Profil Ansicht',
@@ -59,7 +60,7 @@ function pw_userarchives_menu() {
   $items['profile/%pw_profiles_username/archive/%/view'] = [
     'title' => 'Archiv-Profil Ansicht',
     'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => -10
+    'weight' => -10,
   ];
 
   $items['profile/%pw_profiles_username/archive/%pw_user_revision/edit'] = [
@@ -86,6 +87,14 @@ function pw_userarchives_menu() {
     'file' => 'pw_userarchives.admin.inc',
   ];
 
+  $items['taxonomy/term/%taxonomy_term/reset-user-archive-cache'] = [
+    'title' => 'User archive Einträge zurücksetzen/ neu aufbauen',
+    'type' => MENU_CALLBACK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => ['pw_userarchives_reset_parliament_form', 2],
+    'access arguments' => ['can reset user archive table'],
+    'file' => 'pw_userarchives.admin.inc',
+  ];
 
   return $items;
 }
@@ -147,6 +156,10 @@ function pw_userarchives_permission() {
     'edit own user revisions' => array(
       'title' => t('Edit own user revisions'),
       'description' => t('Allow users to edit their own user revisions'),
+    ),
+    'can reset user archive table' => array(
+      'title' => t('Reset user archive table'),
+      'description' => t('User can reset user archive table'),
     ),
   );
 }
@@ -296,6 +309,44 @@ function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile 
 }
 
 /**
+ * Batch callback for updating user archive entries for a user
+ *
+ * @param $uid
+ * @param $context
+ *
+ * @throws \Exception
+ */
+function pw_userarchives_update_by_user_batch($uid, &$context) {
+  $politician = Politician::loadFromUid($uid);
+  $userArchiveManager = new UserArchiveManager($politician);
+  $userArchiveManager->updateEntries(FALSE);
+
+  $context['results'][] = $politician->getFullName() .' aktualisiert';
+}
+
+
+/**
+ * batch finished callback for rebuild user archive entries for politicians
+ * related to a parliament
+ * 
+ * @param $success
+ * @param $results
+ * @param $operations
+ */
+function pw_userarchives_update_by_user_batch_finished($success, $results, $operations) {
+  $counter = count($results);
+
+  if ($success) {
+    drupal_set_message('Die User Archive Einträge wurden für '. $counter .' Politiker erfolgreich aktualisiert');
+  }
+  else {
+    drupal_set_message('Es ist ein Fehler aufgetreten', 'warning');
+  }
+}
+
+
+
+/**
  * Helper to rebuild user archive entries for an updated parliament
  *
  * @todo use unique term tid instead of parliament name
@@ -306,35 +357,35 @@ function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile 
  *
  * @param string $original_name
  * The original term name. When a parliament name was changed this assures that
- * we can change the user archive entries connected to this parliament. Take this from
+ * we can change the user archive entries connected to this parliament. Take
+ *   this from
  * $term->original->name
  *
  * @param bool $reset_actual_profile
  */
-function pw_userarchives_update_by_parliament(Parliament $parliament, $original_name, $reset_actual_profile = TRUE) {
-  $query = db_select('user_archive_cache', 'uac')
-    ->condition('parliament_name', $original_name)
-    ->fields('uac')
-    ->execute();
+function pw_userarchives_update_entries_by_parliament(Parliament $parliament, $original_name, $reset_actual_profile = FALSE) {
+  $entriesFromDatabase = UserArchiveDatabase::getExistingArchiveEntries(['parliament_name' => $original_name]);
 
-  while ($record = $query->fetchAssoc()) {
-    $transaction = db_transaction();
-    try {
-      $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($record);
-      $politicianUserRevision = PoliticianUserRevision::loadFromUidAndVid($userArchiveEntry->getUid(), $userArchiveEntry->getVid());
-      $userArchiveEntry->setParliamentName($parliament->getName());
+  if (!empty($entriesFromDatabase)) {
+    foreach ($entriesFromDatabase as $entryFromDatabase) {
+      $transaction = db_transaction();
+      try {
+        $userArchiveEntry = UserArchiveEntry::createFromDataBaseArray($entryFromDatabase);
+        $politicianUserRevision = $userArchiveEntry->getPoliticianUserRevision();
+        $userArchiveEntry->setParliamentName($parliament->getName());
 
-      $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
-      $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
-      $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, 'UTC');
-      $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
-      $userArchiveEntry->save();
-    }
-    catch (\Exception $e) {
-      $transaction->rollback();
-      $error_message = 'An error appeared while trying to update user archive cache entry uid ' . $userArchiveEntry->getUid() . '/ vid ' . $userArchiveEntry->getVid() . ' for parliament ' . $parliament->getName() . ': ' . $e->getMessage();
-      watchdog_exception('pw_userarchives', $e, $error_message);
-      drupal_set_message($error_message, 'error');
+        $question_form_is_open = (int) UserArchiveManager::checkIfQuestionFormOpen($politicianUserRevision);
+        $question_form_is_open_change = UserArchiveManager::calcQuestionFormOpenChange($politicianUserRevision);
+        $userArchiveEntry->setQuestionFormOpenChange($question_form_is_open_change, 'UTC');
+        $userArchiveEntry->setQuestionFormOpen($question_form_is_open);
+        $userArchiveEntry->save();
+      }
+      catch (\Exception $e) {
+        $transaction->rollback();
+        $error_message = 'An error appeared while trying to update user archive cache entry uid ' . $userArchiveEntry->getUid() . '/ vid ' . $userArchiveEntry->getVid() . ' for parliament ' . $parliament->getName() . ': ' . $e->getMessage();
+        watchdog_exception('pw_userarchives', $e, $error_message);
+        drupal_set_message($error_message, 'error');
+      }
     }
   }
 }
@@ -726,7 +777,8 @@ function pw_userarchives_politician_load_multiple($vids) {
 }
 
 /**
- * check if profiles needs to be refreshed based on parliament valid dates and election date.
+ * check if profiles needs to be refreshed based on parliament valid dates and
+ * election date.
  */
 function pw_userarchives_check_refresh_profiles($parliament) {
 
@@ -803,7 +855,7 @@ function pw_delete_old_user_revisions($uid) {
     // leave a message
     watchdog('pw_userarchives', ':number_of_revisions user revisions deleted which were older than :days_buffer days and were not associated with user_archive_cache', array(
       ':number_of_revisions' => $number_of_revisions,
-      ':days_buffer' => $days_buffer
+      ':days_buffer' => $days_buffer,
     ));
   }
 
@@ -937,6 +989,6 @@ function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
 function pw_userarchives_politician_roles() {
   return [
     'deputy' => 'Mandat',
-    'candidate' => 'Kandidatur'
+    'candidate' => 'Kandidatur',
   ];
 }
