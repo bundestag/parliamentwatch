@@ -463,6 +463,11 @@ msgctxt "Bayern"
 msgid "Constituency"
 msgstr "Stimmkreis"
 
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:368;793
+msgctxt "Bremen"
+msgid "Constituency"
+msgstr "Wahlbereich"
+
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:75
 msgid "The formatted constituency of the user account."
 msgstr ""
@@ -472,6 +477,12 @@ msgstr ""
 msgctxt "Bayern"
 msgid "Constituency @number: @title"
 msgstr "Stimmkreis @number: @title"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:99
+#: sites/all/themes/custom/parliamentwatch/template.php:402
+msgctxt "Bremen"
+msgid "Constituency @number: @title"
+msgstr "Wahlbereich @number: @title"
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:101
 #: sites/all/themes/custom/parliamentwatch/template.php:405
@@ -600,6 +611,11 @@ msgctxt "Bayern"
 msgid "Constituency result"
 msgstr "Stimmkreisergebnis"
 
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:1284
+msgctxt "Bremen"
+msgid "Constituency result"
+msgstr "Wahlbereichsergebnis"
+
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:1285
 msgid "@result % (via constituency)"
 msgstr "@result % (eingezogen über den Wahlkreis)"
@@ -608,6 +624,11 @@ msgstr "@result % (eingezogen über den Wahlkreis)"
 msgctxt "Bayern"
 msgid "@result % (via constituency)"
 msgstr "@result % (eingezogen über den Stimmkreis)"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:1286
+msgctxt "Bremen"
+msgid "@result % (via constituency)"
+msgstr "@result % (eingezogen über den Wahlbereich)"
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:1287
 msgid "@result % (via list)"
@@ -643,6 +664,14 @@ msgid "1 constituency"
 msgid_plural "@count constituencies"
 msgstr[0] "einem Stimmkreis"
 msgstr[1] "@count Stimmkreisen"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1599
+msgctxt "Bremen"
+msgid "1 constituency"
+msgid_plural "@count constituencies"
+msgstr[0] "einem Wahlbereich"
+msgstr[1] "@count Wahlbereichen"
+
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:1161
 msgid "Found 1 candidate from !parties and !constituencies"
@@ -913,7 +942,17 @@ msgid ""
 "\">constituency @name</a>"
 msgstr ""
 "<span>im</span> <a href=\"@url\" class=\"filter-summary__content__link"
-"\">Stimmkreis @name</a>"
+"\">Bremen @name</a>"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1597
+msgctxt "Bayern"
+msgid ""
+"<span>in</span> <a href=\"@url\" class=\"filter-summary__content__link"
+"\">constituency @name</a>"
+msgstr ""
+"<span>im</span> <a href=\"@url\" class=\"filter-summary__content__link"
+"\">Wahlbereich @name</a>"
+
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1414
 msgid "<span> having </span>!position<span> of </span>!list"
@@ -1136,6 +1175,13 @@ msgid "in constituency @name"
 msgid_plural "and @count constituencies"
 msgstr[0] "im Stimmkreis @name"
 msgstr[1] "und @count Stimmkreisen"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1601
+msgctxt "Bremen"
+msgid "in constituency @name"
+msgid_plural "and @count constituencies"
+msgstr[0] "im Wahlbereich @name"
+msgstr[1] "und @count Wahlbereichen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--poll--intro.tpl.php:100
 #: sites/all/themes/custom/parliamentwatch/templates/page--test.tpl.php:688;735

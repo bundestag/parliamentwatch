@@ -97,7 +97,11 @@ function pw_profiles_tokens($type, $tokens, array $data = [], array $options = [
             $parliament = pw_profiles_parliament($data['user']);
             if (strpos($parliament->name, 'Bayern') === 0) {
               $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => 'Bayern']) . ',';
-            } else {
+            }
+            elseif (strpos($parliament->name, 'Bremen') === 0) {
+              $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => 'Bremen']) . ',';
+            }
+            else {
               $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => '']) . ',';
             }
           }
@@ -793,6 +797,9 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
     $list_title = t('List', [], ['context' => 'Bayern']);
     $list_position_title = t('List position', [], ['context' => 'Bayern']);
   }
+  elseif (strpos($parliament->name, 'Bremen') === 0) {
+    $constituency_title = t('Constituency', [], ['context' => 'Bremen']);
+  }
   else {
     $constituency_title = t('Constituency', [], ['context' => '']);
     $list_title = t('List', [], ['context' => '']);
@@ -1281,8 +1288,10 @@ function _pw_profiles_filter_options(array $options, $account) {
 
 t('Constituency result', [], ['context' => '']);
 t('Constituency result', [], ['context' => 'Bayern']);
+t('Constituency result', [], ['context' => 'Bremen']);
 t('@result % (via constituency)', ['@result' => 0], ['context' => '']);
 t('@result % (via constituency)', ['@result' => 0], ['context' => 'Bayern']);
+t('@result % (via constituency)', ['@result' => 0], ['context' => 'Bremen']);
 t('@result % (via list)', ['@result' => 0], ['context' => '']);
 t('@result % (via list)', ['@result' => 0], ['context' => 'Baden-Württemberg']);
 t('@result % (via list)', ['@result' => 0], ['context' => 'Bayern']);
