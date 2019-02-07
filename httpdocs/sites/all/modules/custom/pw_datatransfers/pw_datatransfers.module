@@ -20,11 +20,13 @@ function pw_datatransfers_menu() {
   ];
 
   // Path for new Modtool way to import dialogues
-  $items['api/dialogues'] = [
+  $items['data/modtool/dialogue/%/%/%/%'] = [
     'page callback' => 'pw_datatransfers_dialogue_import',
+    'page arguments' => array(3,4,5,6),
     'access callback' => TRUE,
     'type' => MENU_CALLBACK,
-    'file' => 'pw_datatransfers.pagecallbacks.inc'
+    'file' => 'pw_datatransfers.pagecallbacks.inc',
+    'delivery callback' => 'drupal_json_output',
   ];
   return $items;
 }

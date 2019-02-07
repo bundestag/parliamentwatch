@@ -1,6 +1,7 @@
 name = PW Partners
 core = 7.x
 package = Features
+php = 5.2.4
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = node
@@ -35,3 +36,4 @@ features[variable][] = node_preview_partners
 features[variable][] = node_submitted_partners
 features[variable][] = pathauto_node_partners_pattern
 features[variable][] = xmlsitemap_settings_node_partners
+mtime = 1539674493

@@ -23,5 +23,53 @@ function pw_administration_menu() {
     'menu_name' => 'management'
   ];
 
+
+  $items['admin/abgeordnetenwatch/wahlen-parlamente'] = [
+    'title' => 'Wahlen & Parlamente',
+    'page callback' => 'pw_administration_wahlenparlamente_pagecallback',
+    'access callback' => 'pw_administration_wahlenparlamente_pagecallback_access',
+    'file' => 'pw_administration.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management'
+  ];
+
+
+
   return $items;
+}
+
+
+/**
+ * Implements hook_menu_alter().
+ *
+ * Move the "Merge terms" tab to the end of the tab list
+ */
+function pw_administration_menu_alter(&$items) {
+  if (isset($items['taxonomy/term/%taxonomy_term/merge'])) {
+    $items['taxonomy/term/%taxonomy_term/merge']['weight'] = 100;
+  }
+}
+
+
+/**
+ * Implements hook_admin_paths().
+ *
+ * Define some paths to use the admin theme
+ */
+function pw_administration_admin_paths() {
+  $paths = array(
+    'taxonomy/term/*/politicians' => TRUE,
+    'taxonomy/term/*/polls' => TRUE,
+    'taxonomy/term/*/politicians/export' => TRUE,
+    'taxonomy/term/*/polls/export' => TRUE,
+    'node/*/votes' => TRUE,
+    'node/*/votes/export' => TRUE,
+    'taxonomy/term/*/committees' => TRUE,
+    'taxonomy/term/*/committees/export' => TRUE,
+    'taxonomy/term/*/nodes' => TRUE,
+    'taxonomy/term/*/electoral-regions' => TRUE,
+    'taxonomy/term/*/constituencies' => TRUE,
+    'taxonomy/term/*/reset-user-archive-cache' => TRUE
+  );
+  return $paths;
 }

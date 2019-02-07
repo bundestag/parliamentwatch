@@ -12,3 +12,11 @@ function pw_administration_dashboard_pagecallback() {
 
   return $output;
 }
+
+
+function pw_administration_wahlenparlamente_pagecallback() {
+  $output = 'Hier kommen demnächst hilfreiche Übersichten - z.B. aktuelle Wahlprojekte, noch zu recherchierende Kandidaten u.ä.';
+
+
+  return $output;
+}

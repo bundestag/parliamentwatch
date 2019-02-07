@@ -17,6 +17,7 @@
     "jquery-hoverintent": "1.8.x",
     "jquery-stupid-table": "1.0.x",
     "swiper": "3.4.x",
+    "lightbox": "2.x.0",
     "typeahead.js": "0.11.x",
     "d3": "4.8.x",
     "dynatable": "0.3.1"

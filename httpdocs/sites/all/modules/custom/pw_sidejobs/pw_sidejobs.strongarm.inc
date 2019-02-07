@@ -62,6 +62,27 @@ function pw_sidejobs_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'diff_enable_revisions_page_node_sidejob';
+  $strongarm->value = 1;
+  $export['diff_enable_revisions_page_node_sidejob'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_show_preview_changes_node_sidejob';
+  $strongarm->value = 1;
+  $export['diff_show_preview_changes_node_sidejob'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'diff_view_mode_preview_node_sidejob';
+  $strongarm->value = 'full';
+  $export['diff_view_mode_preview_node_sidejob'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__sidejob';
   $strongarm->value = array(
     'view_modes' => array(
@@ -227,6 +248,16 @@ function pw_sidejobs_strongarm() {
   $strongarm->name = 'rh_node_redirect_sidejob';
   $strongarm->value = 'profile/[node:field_politician]';
   $export['rh_node_redirect_sidejob'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'xmlsitemap_settings_node_sidejob';
+  $strongarm->value = array(
+    'status' => '0',
+    'priority' => '0.5',
+  );
+  $export['xmlsitemap_settings_node_sidejob'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

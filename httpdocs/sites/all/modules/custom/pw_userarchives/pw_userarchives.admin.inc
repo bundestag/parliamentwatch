@@ -4,6 +4,9 @@
  * Admin related pages for user revisions and user archives
  */
 
+use Drupal\pw_globals\Parliament;
+use Drupal\pw_userarchives\UserArchiveManager;
+
 
 /**
  * Form to edit an user revision. All the user revision edit logic is mostly taken
@@ -90,7 +93,6 @@ function pw_userarchives_user_revision_edit_form_submit($form, &$form_state) {
   // Update user_revision
   entity_form_submit_build_entity('user', $user_revision, $form, $form_state);
   _pw_userarchives_user_revision_edit_save($user_revision, $form_state['values']);
-  pw_userarchives_cron($user_revision->uid);
 
 
   // add redirect just in case no destination is set
@@ -165,4 +167,68 @@ function pw_userarchives_all_revision_page_callback($user_revision) {
  */
 function pw_userarchives_goto_view_revision($user_revision) {
   drupal_goto('profile/'. $user_revision->name .'/archive/'. $user_revision->vid);
+}
+
+
+/**
+ * Confirmation form to let admins rebuild user archive cache entries for
+ * politicians related to the parliament
+ *
+ * @param $form
+ * @param $form_state
+ * @param $parliament_term
+ *
+ * @return mixed
+ * @throws \Drupal\pw_globals\Exception\PwGlobalsException
+ */
+function pw_userarchives_reset_parliament_form($form, &$form_state, $parliament_term) {
+  $parliament = new Parliament($parliament_term);
+  $form_state['storage']['parliament'] = $parliament;
+
+  drupal_set_title('User Archive für Politiker in '. $parliament->getName() .' zurücksetzen.');
+
+  $form['description'] = [
+    '#markup' => '<p>Wenn für ein Parlament keine Politiker angezeigt werden oder es sonstige Probleme gibt, kann es helfen, die User Archive Tabelle für die Politiker, die mit dem Parlament verbunden sind, neu aufzubauen.'
+  ];
+  $form['submit'] = [
+    '#type' => 'submit',
+    '#value' => 'Starten'
+  ];
+
+  return $form;
+}
+
+
+/**
+ * Form submit handler
+ *  - starts a batch to update user archive entries by users
+ *
+ * @param $form
+ * @param $form_state
+ */
+function pw_userarchives_reset_parliament_form_submit(&$form, &$form_state) {
+  /** @var Parliament $parliament */
+  $parliament = $form_state['storage']['parliament'];
+
+  $relatedRevisions = $parliament->getRelatedPoliticianUserRevisions();
+  $uids = [];
+  foreach ($relatedRevisions as $relatedRevision) {
+    $uids[$relatedRevision['uid']] = $relatedRevision['uid'];
+  }
+  $operations = [];
+  foreach ($uids as $uid) {
+    $operations[] = [
+      'pw_userarchives_update_by_user_batch', [$uid]
+    ];
+  }
+  $batch = [
+    'title' => 'Rebuild der User Archive Entries für Politiker in '. $parliament->getName() . ' läuft...',
+    'operations' => $operations,
+    'finished' => 'pw_userarchives_update_by_user_batch_finished',
+    'init_message' => 'User Archive Rebuild wird vorbereitet',
+    'progress_message' => 'Für @current von @total Politikern wurden die User Archive Entries aktualisiert.',
+  ];
+
+  batch_set($batch);
+
 }

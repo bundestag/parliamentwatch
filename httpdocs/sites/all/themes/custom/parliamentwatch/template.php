@@ -782,7 +782,6 @@ function parliamentwatch_container__filterbar($variables) {
   $output .= '<a href="#" class="filterbar__view_options__item__link"><i class="icon icon-th"></i></a>';
   $output .= '</li></ul>';
   $output .= '</div></div>';
-  $output .= '<div class="filterbar-placeholder"></div>';
 
   return $output;
 }
@@ -1174,6 +1173,11 @@ function parliamentwatch_form_element_label($variables) {
     $attributes['for'] = $element['#id'];
   }
 
+  // Make label focusable for radio buttons and checkboxes
+  if ($element['#type'] == 'radio' || $element['#type'] == 'checkbox') {
+    $attributes['tabindex'] = '0';
+  }
+
   // The leading whitespace helps visually separate fields from inline labels.
   return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', ['!title' => $title, '!required' => $required]) . "</label>\n";
 }
@@ -1236,11 +1240,8 @@ function parliamentwatch_textarea($variables) {
  */
 function parliamentwatch_select($variables) {
   $element = $variables['element'];
-  if (isset($element['#title'])) {
-    $element['#attributes']['data-placeholder'] = $element['#title'];
-  }
   element_set_attributes($element, ['id', 'name', 'size']);
-  _parliamentwatch_form_set_class($element, ['form__item__control']);
+  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<select data-width="100%" ' . drupal_attributes($element['#attributes']) . '>' . form_select_options($element) . '</select>';
 }
@@ -1264,7 +1265,7 @@ function parliamentwatch_checkbox($variables) {
   if (!empty($element['#checked'])) {
     $element['#attributes']['checked'] = 'checked';
   }
-  _parliamentwatch_form_set_class($element, ['form__item__control']);
+  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
@@ -1280,7 +1281,7 @@ function parliamentwatch_radio($variables) {
   if (isset($element['#return_value']) && $element['#value'] !== FALSE && $element['#value'] == $element['#return_value']) {
     $element['#attributes']['checked'] = 'checked';
   }
-  _form_set_class($element, ['form__item__control']);
+  _form_set_class($element, ['form__item__control', 'form__item__control--special']);
 
   return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }

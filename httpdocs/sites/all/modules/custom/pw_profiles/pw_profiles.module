@@ -309,7 +309,6 @@ function pw_profiles_user_load($users) {
  *  Implements hook_user_update().
  */
 function pw_profiles_user_update(&$edit, $account, $category) {
-
   // custom abort flag to prevent circular updates
   if(isset($account->abort_update) && $account->abort_update){
     return;

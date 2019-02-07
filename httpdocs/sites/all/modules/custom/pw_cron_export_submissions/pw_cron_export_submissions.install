@@ -1,21 +1,2 @@
 <?php
 
-/**
- * @file
- * Sets the module weight.
- */
-
-/**
- * Implements hook_enable().
- */
-function pw_cron_export_submissions_enable() {
-	$private_path = variable_get('file_private_path');
-	$path_submissions = $private_path.'/webforms/submissions/newsletter/';
-	drupal_mkdir($path_submissions, NULL, TRUE);
-}
-
-/**
- * Implements hook_uninstall().
- */
-function pw_cron_export_submissions_uninstall() {
-}

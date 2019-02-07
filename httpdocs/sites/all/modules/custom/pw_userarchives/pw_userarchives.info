@@ -10,3 +10,8 @@ files[] = UserArchiveController.inc
 files[] = UserArchiveDataSourceController.inc
 files[] = views/views_handler_field_user_revision_link_edit.inc
 files[] = views/views_handler_field_user_archive_profile_link.inc
+files[] = views/views_handler_filter_user_archive_role.inc
+files[] = views/views_handler_field_user_archive_role.inc
+
+dependencies[] = pw_globals
+dependencies[] = xautoload
