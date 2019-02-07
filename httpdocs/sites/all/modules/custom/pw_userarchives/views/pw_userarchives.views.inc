@@ -113,10 +113,10 @@ function pw_userarchives_views_data() {
     'title' => t('Question form open'),
     'help' => t('Question form open.'),
     'field' => array(
-      'handler' => 'views_handler_field_boolean'
+      'handler' => 'views_handler_field_question_form_open'
     ),
     'filter' => array(
-      'handler'=> 'views_handler_filter_boolean_operator'
+      'handler'=> 'views_handler_filter_question_form_open'
     )
   );
 
