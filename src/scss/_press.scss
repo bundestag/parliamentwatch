@@ -2,6 +2,8 @@
 * Press
 */
 
+/* Press-Statements */
+
 .press-article {
   @include grid-column(12);
   margin-bottom: $space;
@@ -32,6 +34,7 @@
   }
 }
 
+/* Press-Releases */
 
 .press-release.tile {
   @include grid-column(12);
@@ -79,5 +82,128 @@
   }
   .press-release__header__submitted {
     color: $gray;
+  }
+}
+
+/* Press-Links */
+
+.press-links {
+  margin-top: $space;
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-m-min) {
+    margin-top: $space-large;
+    margin-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-l-min) {
+    margin-top: $space-large * 2;
+    margin-bottom: $space-large;
+  }
+}
+.press-links__list {
+  border-top: 1px solid $darkBeige;
+  border-bottom: 1px solid $darkBeige;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include clearfix;
+}
+.press-links__list__item {
+  margin: 0;
+  @include grid-column(12, $neat-grid-no-gutter);
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(4, $neat-grid-no-gutter);
+  }
+  @include breakpoint($breakpoint-l-min) {
+    @include grid-column(2, $neat-grid-no-gutter);
+  }
+  a {
+    display: block;
+    border-bottom: 1px solid $darkBeige;
+    border-left: 0;
+    padding: $space-xsmall 0;
+    color: $darkGray;
+    font-family: $font-serif;
+    will-change: background-color;
+    transition: background-color 300ms ease;
+    @include breakpoint($breakpoint-s-min) {
+      padding-top: $space-large;
+      padding-bottom: $space-large;
+      border-right: 1px solid $darkBeige;
+      text-align: center;
+      border-bottom: 0;
+    }
+    @include breakpoint($breakpoint-l-min) {
+      padding-top: $space-large * 2;
+      padding-bottom: $space-large * 2;
+    }
+    &:hover {
+      background: $beige;
+    }
+  }
+  .icon {
+    color: $orange;
+    width: $space-large;
+    display: inline-block;
+    text-align: center;
+    @include breakpoint($breakpoint-s-min) {
+      display: block;
+      font-size: 39px;
+      margin-bottom: $space-xsmall;
+      width: auto;
+    }
+    @include breakpoint($breakpoint-l-min) {
+      margin-bottom: $space-small;
+    }
+  }
+  &:nth-child(n + 4) {
+    a {
+      @include breakpoint($breakpoint-s-min) {
+        border-top: 1px solid $darkBeige;
+        border-bottom: 0;
+      }
+      @include breakpoint($breakpoint-l-min) {
+        border-top: 0;
+      }
+    }
+  }
+  &:nth-child(3) {
+    a {
+      @include breakpoint($breakpoint-s-min) {
+        border-right: 0;
+      }
+      @include breakpoint($breakpoint-l-min) {
+        border-right: 1px solid $darkBeige;
+      }
+    }
+  }
+  &:last-child {
+    a {
+      @include breakpoint($breakpoint-s-min) {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+.press-contact {
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-m-min) {
+    margin-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-l-min) {
+    margin-bottom: $space-large * 2 ;
+  }
+  .container-regular {
+    position: relative;
+    @include breakpoint($breakpoint-s-min) {
+      padding-right: 200px;
+    }
+  }
+  .btn {
+    @include breakpoint($breakpoint-s-min) {
+      position: absolute;
+      right: $space;
+      top: 0;
+    }
   }
 }
