@@ -5,3 +5,41 @@
  */
 
 include_once 'pw_press.features.inc';
+
+/**
+ * Implements hook_block_info().
+ */
+function pw_press_block_info() {
+  $blocks['press_links'] = [
+    'info' => t('Presse Links'),
+    'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
+  ];
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function pw_press_block_view($delta = '') {
+  switch ($delta) {
+    case 'press_links':
+      return pw_press_links();
+    default:
+      return [];
+  }
+}
+
+/**
+ * Displays press related links.
+ *
+ * @return array
+ *   The block render array.
+ */
+function pw_press_links() {
+  $block = [
+    'subject' => t('Presse Links'),
+    'content' => ' ',
+  ];
+
+  return $block;
+}
