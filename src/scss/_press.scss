@@ -207,3 +207,38 @@
     }
   }
 }
+
+
+/* Presse-Verteiler */
+
+.webform-client-form-972122 {
+  margin-bottom: $space-large;
+  @include grid-collapse();
+  @include clearfix();
+  > .form__item:nth-child(-n + 7) {
+    @include grid-column(12);
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(6);
+    }
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten,
+  .form__item--submitted-first-name {
+    clear: both;
+  }
+  > .form__item:nth-child(n + 8) {
+    @include grid-column(12);
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten {
+    margin: $space 0;
+    @include breakpoint($breakpoint-s-min) {
+      margin: $space-large 0;
+    }
+  }
+  .form__item--markup,
+  .form__item--submitted-zusatzangaben {
+    margin-bottom: $space;
+    @include breakpoint($breakpoint-s-min) {
+      margin-bottom: $space-large;
+    }
+  }
+}
