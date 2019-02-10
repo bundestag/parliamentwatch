@@ -178,6 +178,7 @@
   }
   &:last-child {
     a {
+      border-bottom: 0;
       @include breakpoint($breakpoint-s-min) {
         border-right: 0;
       }
