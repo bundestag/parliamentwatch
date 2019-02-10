@@ -242,3 +242,32 @@
     }
   }
 }
+
+/* Press Downloads */
+
+.press-download {
+  margin-top: $space-large;
+  @include grid-container();
+  @include grid-collapse();
+  @include breakpoint($breakpoint-s-min) {
+    margin-top: $space-large * 2;
+  }
+}
+.press-download__item {
+  @include grid-column(12);
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+}
+.press-download__item__image {}
+.press-download__item__footer {
+  @include clearfix();
+  span {
+    float: left;
+    padding-top: 12px;
+    color: $gray;
+  }
+  .btn {
+    float: right;
+  }
+}
