@@ -266,7 +266,7 @@ class UserArchiveEntry {
     return $this->id;
   }
 
-  public function setId(int $id) {
+  public function setId($id) {
     $this->id = $id;
   }
 
@@ -520,7 +520,7 @@ class UserArchiveEntry {
   /**
    * @param int $number_of_answers
    */
-  public function setNumberOfAnswers(int $number_of_answers) {
+  public function setNumberOfAnswers($number_of_answers) {
     $this->number_of_answers = $number_of_answers;
   }
 
