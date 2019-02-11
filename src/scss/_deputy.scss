@@ -767,22 +767,22 @@ $abstimmverhalten-node-item-width: 18px;
   }
   .sidejob-overview__item__level {
     vertical-align: top;
-    padding-left: $space-large;
     small {
       white-space: nowrap;
       color: $mediumGray;
       display: block;
     }
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 70%;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__activity {
     vertical-align: top;
     @media (max-width: $breakpoint-s-max) {
       padding-top: $space-small;
-      padding-bottom: $space-small;
     }
     @media (min-width: $breakpoint-s-min) {
       padding-right: $space-xsmall-mobile;
@@ -795,15 +795,13 @@ $abstimmverhalten-node-item-width: 18px;
   .sidejob-overview__item__date {
     vertical-align: top;
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 30%;
+      padding-top: $space-small;
     }
   }
   .sidejob-overview__item__total {
     vertical-align: top;
     white-space: nowrap;
     @media (max-width: $breakpoint-s-max) {
-      clear: both;
       padding-top: $space-small;
     }
     @media (min-width: $breakpoint-s-min) {
