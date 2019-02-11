@@ -60,7 +60,7 @@ class UserArchiveSearchAPI {
    * Use "change" for updating or insertig the user revisions in(to) the index or
    * "delete" when the given user revisions should be deleted from search index
    */
-  public function __construct(array $vids, string $action) {
+  public function __construct(array $vids, $action) {
     $this->vidsGiven = $vids;
     $this->action = $action;
   }
