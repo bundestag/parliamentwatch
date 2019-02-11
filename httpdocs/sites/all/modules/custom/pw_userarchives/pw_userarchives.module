@@ -295,6 +295,7 @@ function pw_userarchives_comment_delete($comment) {
 function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile = TRUE) {
   try {
     $PWUser = new PWUser($account);
+    $account = $PWUser->getAccount();
     if ($PWUser->isPolitician()) {
       $politician = new Politician($account);
       $userArchiveManager = new UserArchiveManager($politician);
