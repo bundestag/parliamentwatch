@@ -501,12 +501,7 @@ function pw_globals_politician_search_form($form, &$form_state, $parliament_term
   $form['#action'] = url("profiles/$parliament_term->tid/$role_condition");
   $form['#method'] = 'get';
 
-  if (strpos($parliament_term->name, 'EU') === 0) {
-    $placeholder = t('Enter name');
-  }
-  else {
-    $placeholder = t('Enter a postal code, locality or name');
-  }
+  $placeholder = t('Enter a postal code, locality or name');
 
   $form['keys'] = [
     '#type' => 'textfield',
