@@ -302,7 +302,13 @@ function pw_userarchives_update_by_user($account = FALSE, $reset_actual_profile 
     }
   }
   catch (\Exception $e) {
-    $error_message = 'An error appeared while trying to rebuild user archive cache for user '. $account->uid .'/ '. $account->name .': '. $e->getMessage();
+    if (is_object($account)) {
+      $error_message = 'An error appeared while trying to rebuild user archive cache for user '. $account->uid .'/ '. $account->name .': '. $e->getMessage();
+    }
+    else {
+      $error_message = 'An error appeared while trying to rebuild user archive cache for account value '. $account .': '. $e->getMessage();
+    }
+
     watchdog_exception('pw_userarchives', $e, $error_message);
     drupal_set_message($error_message, 'error');
   }
