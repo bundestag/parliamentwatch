@@ -785,7 +785,7 @@ $abstimmverhalten-node-item-width: 18px;
       padding-top: $space-small;
     }
     @media (min-width: $breakpoint-s-min) {
-      padding-right: $space-xsmall-mobile;
+      padding-left: $space-large;
     }
     small {
       color: $mediumGray;
@@ -796,6 +796,9 @@ $abstimmverhalten-node-item-width: 18px;
     vertical-align: top;
     @media (max-width: $breakpoint-s-max) {
       padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__total {
