@@ -34,11 +34,14 @@
 }
 .election-manifesto__tag_cloud {
   pointer-events: none;
-  margin-top: $space-large;
-  padding-top: $space-large;
-  border-top: 1px solid $brightGray;
+  margin-top: $space;
   font-size: 0.6em;
   opacity: .6;
+  @include breakpoint($breakpoint-s-min) {
+    margin-top: $space-large;
+    padding-top: $space-large;
+    border-top: 1px solid $brightGray;
+  }
   p {
     line-height: 2.2em;
   }
