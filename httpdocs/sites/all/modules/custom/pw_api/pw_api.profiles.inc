@@ -5,6 +5,8 @@
  * pw_api.profile.inc
  */
 
+use Drupal\pw_globals\PoliticianUserRevision;
+
 
 /**
  * Page callback; returns single profile based on given filters.
@@ -176,7 +178,10 @@ function pw_api_user_to_array($user, $subsets = array()) {
     if(user_access('access authorized api')){
       $roles = array();
       foreach($w_user->field_user_roles_for_view_mode_s as $role){
-        $roles[] = $role->value()->name;
+        if ($role->value()->tid == PoliticianUserRevision::CANDIDATE_ROLE_TERM_TID ||
+          $role->value()->tid == PoliticianUserRevision::DEPUTY_ROLE_TERM_TID) {
+          $roles[$role->value()->name] = $role->value()->name;
+        }
       }
       $profile['meta']['roles'] = $roles;
     }
