@@ -90,7 +90,6 @@
   </div>
   <?php print render(field_get_items('node', $node, 'body')[0]['summary']); ?>
   <p><a href="#poll-content" class="link-icon" data-localScroll><i class="icon icon-arrow-right"></i> Weiterlesen</a></p>
-  <?php print render($content['field_topics']); ?>
 </div>
 <?php if (isset($result)): ?>
 <div class="intro__right">
