@@ -113,6 +113,11 @@ dl {
       }
     }
   }
+  &--committee {
+    a::before {
+      content: '\e835' !important;
+    }
+  }
 }
 
 /* Link-list */

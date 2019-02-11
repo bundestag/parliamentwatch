@@ -100,6 +100,14 @@
         </div>
       </div>
       <?php endif; ?>
+      <?php if (!empty($content['field_poll_committees'])): ?>
+      <div class="sidebar__box">
+        <h3 class="sidebar__box__headline"><?php print format_plural(count($content['field_poll_committees']['#items']), 'Responsible Committee', 'Responsible Committees'); ?></h3>
+        <div class="sidebar__box__tag_list">
+          <?php print render($content['field_poll_committees']); ?>
+        </div>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
   <div class="share">
