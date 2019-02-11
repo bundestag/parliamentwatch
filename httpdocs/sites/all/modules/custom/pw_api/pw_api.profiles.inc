@@ -126,10 +126,13 @@ function pw_api_multiple_profiles($parliament, $file_type) {
 
   $contributer = [];
   $field_contributer = field_get_items('taxonomy_term', reset($parliament_terms), 'field_contributer');
-  $i = 0;
-  foreach ($field_contributer as $field_value) {
-    $contributer[] = $field_value['value'];
+
+  if ($field_contributer && is_array($field_contributer)) {
+    foreach ($field_contributer as $field_value) {
+      $contributer[] = $field_value['value'];
+    }
   }
+
 
   $subsets = ['votes', 'dialogues', 'sidejobs'];
 
