@@ -16,7 +16,11 @@
     }
   }
   .tile__title {
+    @include h3();
     border: 0;
+    @include breakpoint($breakpoint-s-min) {
+      @include h2();
+    }
   }
   .tile__content {
     @include grid-column(12, $neat-grid-no-gutter);
