@@ -113,13 +113,56 @@ function pw_userarchives_views_data() {
     'title' => t('Question form open'),
     'help' => t('Question form open.'),
     'field' => array(
-      'handler' => 'views_handler_field_boolean'
+      'handler' => 'views_handler_field_question_form_open'
     ),
     'filter' => array(
-      'handler'=> 'views_handler_filter_boolean_operator'
+      'handler'=> 'views_handler_filter_question_form_open'
     )
   );
 
+
+  $data['user_archive_cache']['number_of_questions'] = array(
+    'title' => t('Number of questions'),
+    'help' => t('Number of questions.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric'
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+  $data['user_archive_cache']['number_of_answers'] = array(
+    'title' => t('Number of answers'),
+    'help' => t('Number of answers.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric'
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+  $data['user_archive_cache']['number_of_standard_replies'] = array(
+    'title' => t('Number of standard replies'),
+    'help' => t('Number of standard replies.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric'
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
 
   $data['user_archive_cache']['link_to_public_profile'] = array(
     'field' => array(

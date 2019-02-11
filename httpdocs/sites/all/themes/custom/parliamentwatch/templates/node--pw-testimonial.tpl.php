@@ -93,7 +93,7 @@
       <?php print render($content['field_testimonial_quote']); ?>
     </blockquote>
     <p class="testimonial__content__name">
-      <?php print t('@name is on of @count people who support the work of abgeordnetenwatch.de', array('@count' => variable_get('pw_globals_supporters'), '@name' => render($content['field_testimonial_fullname']))); ?>
+      <?php print t('@name is on of @count people who support the work of abgeordnetenwatch.de', array('@count' => number_format(variable_get('pw_globals_supporters'), 0, ",", "."), '@name' => render($content['field_testimonial_fullname']))); ?>
     </p>
     <a href="/ueber-uns/spendenformular?recurring=1&pk_campaign=Testimonial-<?php print drupal_html_class(trim(render($content['field_testimonial_fullname']))); ?>&pk_kwd=Landing-Page" class="btn"><?php print t('Jetzt fördern') ?></a>
   </div>

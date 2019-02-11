@@ -46,9 +46,11 @@
       color: $darkGray;
       opacity: 1;
     }
-    
+
     &:focus {
       border-color: $orange;
+      border-width: 2px;
+      padding: $space-xsmall - 2px;
     }
   }
 
@@ -67,7 +69,8 @@
     transition-property: left, top, transform;
   }
 
-  &__label--floating {
+  &__label--floating,
+  html:not(.js) &__label:not(.sr-only) {
     left: 0 !important;
     top: 0 !important;
     transform: scale(0.8) !important;
@@ -161,6 +164,7 @@
 
     &::before {
       border-color: $orange;
+      box-shadow: 0 0 0 1px $orange;
     }
   }
 }
@@ -271,6 +275,11 @@ textarea.form__item__control {
 
   &:focus {
     border-color: $orange;
+    border-width: 2px;
+
+    .select2-selection__rendered {
+      padding: ($space-xsmall - 2px) ($space-large - 2px) ($space-xsmall - 2px) ($space-xsmall - 2px);
+    }
   }
 }
 .select2-container .select2-selection .select2-selection__rendered {
