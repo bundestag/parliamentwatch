@@ -75,6 +75,7 @@
     position: relative;
     padding-left: 45px;
     font-size: 1.45em;
+    line-height: 1;
     @include breakpoint($breakpoint-xs-min) {
       padding-left: 70px;
       font-size: 1.9em;
