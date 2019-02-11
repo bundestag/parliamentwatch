@@ -28,7 +28,7 @@ class Politician {
    */
   public function __construct($account) {
     if (!is_object($account) || !isset($account->uid)) {
-      throw new PwGlobalsException('Invalid argument "account" (value: '.  $account .' for Politician');
+      throw new PwGlobalsException('Invalid argument "account" (value: '.  $account .' for Politician)');
     }
 
     $pwUser = new PWUser($account);
