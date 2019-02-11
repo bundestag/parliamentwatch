@@ -78,9 +78,10 @@
 
 
 @font-face {
-  font-family: 'Open Sans Krypto';
-  src: url('../fonts/open_sans_krypto/opensans-light-krypto-webfont.woff2') format('woff2'),
-  url('../fonts/open_sans_krypto/opensans-light-krypto-webfont.woff') format('woff');
+  font-family: 'Open Sans Crypto';
+  src: local('☺'),
+       url('../fonts/open_sans_crypto/open-sans-v15-latin-regular-crypto.woff2') format('woff2'),
+       url('../fonts/open_sans_crypto/open-sans-v15-latin-regular-crypto.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
