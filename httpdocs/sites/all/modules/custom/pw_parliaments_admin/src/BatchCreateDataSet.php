@@ -6,9 +6,26 @@ namespace Drupal\pw_parliaments_admin;
 use Drupal\pw_parliaments_admin\Import\Import;
 use Drupal\pw_parliaments_admin\Status\ImportStatus;
 
+/**
+ * This class handles the batch process for creating dataset entities from
+ * each line in a CSV
+ */
 class BatchCreateDataSet  {
 
 
+  /**
+   * This method gets called on every batch run.
+   *
+   * @see
+   *
+   * @param \Drupal\pw_parliaments_admin\Import\Import $pw_import
+   * The Import entity class
+   *
+   * @param array $context
+   * The context array from batch process
+   *
+   * @throws \Exception
+   */
   public static function importData(Import $pw_import, &$context) {
     if (empty($context['sandbox'])) {
       $csvParser = $pw_import->getCSVParser();
@@ -21,7 +38,7 @@ class BatchCreateDataSet  {
     $limit = 30;
     /** @var \Drupal\pw_parliaments_admin\CsvParser $csvParser */
     $csvParser = $context['sandbox']['csvparser'];
-    $offset= $context['sandbox']['progress'];
+    $offset = $context['sandbox']['progress'];
     $datasets_to_import_by_batch = $csvParser->getDatasets($limit, $offset);
 
     if (!empty($datasets_to_import_by_batch)) {
@@ -59,6 +76,13 @@ class BatchCreateDataSet  {
   }
 
 
+  /**
+   * This method gets called when the batch process was finished.
+   *
+   * @param $success
+   * @param $results
+   * @param $operations
+   */
   public static function finished($success, $results, $operations) {
     $count_results = count($results);
     drupal_set_message($count_results .' Datensätze wurden importiert');

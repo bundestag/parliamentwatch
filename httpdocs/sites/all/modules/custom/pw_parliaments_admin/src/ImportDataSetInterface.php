@@ -23,7 +23,7 @@ interface ImportDataSetInterface extends EntityInterface, ImportValidation {
    *
    * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\Entity\EntityInterface
    */
-  public function structuredData();
+  public function createStructuredData();
 
 
 

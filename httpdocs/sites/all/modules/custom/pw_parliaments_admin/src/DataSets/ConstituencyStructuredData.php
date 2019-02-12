@@ -36,7 +36,7 @@ class ConstituencyStructuredData extends EntityBase implements StructuredDataInt
 
   protected $status;
 
-  public function __construct($name, $field_parliament, $field_constituency_nr, $import, $field_electoral_region = '', array $field_constituency_area_codes = array(), array $field_constituency_ac_descriptors = array(), array $field_constituency_streets = array(), $id = NULL, $erros = '', $status = '') {
+  public function __construct($name, $field_parliament, $field_constituency_nr, $import, $field_electoral_region = '', array $field_constituency_area_codes = array(), array $field_constituency_ac_descriptors = array(), array $field_constituency_streets = array(), $id = NULL, $errors = '', $status = '') {
     $this->id = $id;
     $this->name = $name;
     $this->field_parliament = $field_parliament;
@@ -46,7 +46,7 @@ class ConstituencyStructuredData extends EntityBase implements StructuredDataInt
     $this->field_constituency_street = $field_constituency_streets;
     $this->field_electoral_region = $field_electoral_region;
     $this->import = $import;
-    $this->errors = $erros;
+    $this->errors = $errors;
     $this->status = $status;
   }
 
@@ -57,9 +57,9 @@ class ConstituencyStructuredData extends EntityBase implements StructuredDataInt
       'name' => $this->name,
       'field_parliament' => $this->field_parliament,
       'field_constituency_nr' => $this->field_constituency_nr,
-      'field_constituency_area_codes' => implode(',', $this->field_constituency_area_codes),
-      'field_constituency_ac_descriptor' => implode(',', $this->field_constituency_ac_descriptor),
-      'field_constituency_street' => implode(',', $this->field_constituency_street),
+      'field_constituency_area_codes' => implode(', ', $this->field_constituency_area_codes),
+      'field_constituency_ac_descriptor' => implode(', ', $this->field_constituency_ac_descriptor),
+      'field_constituency_street' => implode(', ', $this->field_constituency_street),
       'field_electoral_region' => $this->field_electoral_region,
       'import' => $this->import,
       'errors' => $this->errors,

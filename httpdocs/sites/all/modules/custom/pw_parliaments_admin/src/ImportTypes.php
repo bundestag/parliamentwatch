@@ -6,6 +6,10 @@ namespace Drupal\pw_parliaments_admin;
 
 use Drupal\pw_globals\OptionsInterface;
 
+
+/**
+ * Defines the available import types as an Options clas
+ */
 class ImportTypes implements OptionsInterface {
 
   const CONSTITUENCIES = 'constituencies';

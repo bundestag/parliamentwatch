@@ -40,7 +40,7 @@ class BatchStructureData  {
       /** @var \Drupal\pw_parliaments_admin\DataSets\ConstituencyImportDataSet $dataSet */
       $dataSet = $importType->getImportDataSetFromDataBaseArray($record);
 
-      $structuredDataSaved = $dataSet->structuredData();
+      $structuredDataSaved = $dataSet->createStructuredData();
       $message = $structuredDataSaved->getLabel() .' verarbeitet';
 
 

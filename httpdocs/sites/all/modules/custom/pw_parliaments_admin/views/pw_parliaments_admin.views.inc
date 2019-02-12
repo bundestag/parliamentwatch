@@ -372,6 +372,29 @@ function pw_parliaments_admin_views_data() {
     )
   );
 
+  $data['pw_parliaments_admin_imports_constituencies_structured']['errors'] = array(
+    'title' => t('Errors'),
+    'help' => t('Errors'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    )
+  );
+
+
+  $data['pw_parliaments_admin_imports_constituencies_structured']['status'] = array(
+    'title' => t('Status'),
+    'help' => t('Status'),
+    'field' => array(
+      'handler' => 'views_handler_field_structured_data_status',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_structured_data_status',
+    )
+  );
+
   $data['pw_parliaments_admin_imports_constituencies_structured']['field_electoral_region'] = array(
     'title' => t('Electoral region'),
     'help' => t('The electoral region'),

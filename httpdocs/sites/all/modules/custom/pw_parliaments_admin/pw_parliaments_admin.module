@@ -65,11 +65,13 @@ function pw_parliaments_admin_menu() {
 }
 
 function pw_parliaments_import_pagecallback_datasets_access(Import $import) {
-  if ($import->getStatus() !== ImportStatus::DATA_STRUCTURED_OK) {
-    return FALSE;
+  if ($import->getStatus() === ImportStatus::DATA_STRUCTURED_OK ||
+      $import->getStatus() !== ImportStatus::IMPORTED ||
+      $import->getStatus() !== ImportStatus::IMPORT_FAILED) {
+    return user_access('administrate an import');
   }
 
-  return user_access('administrate an import');
+  return FALSE;
 }
 /**
  * Loader function for Imports

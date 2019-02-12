@@ -12,28 +12,86 @@ use EntityFieldQuery;
 
 class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInterface {
 
+  /**
+   * @var int|string|null
+   * The unique if the dataset
+   */
   protected $id;
 
+  /**
+   * @var int|string
+   * The parliaments term id
+   */
   protected $parliament;
 
+  /**
+   * @var string
+   * The name of the constituency
+   */
   protected $constituency;
 
+
+  /**
+   * @var int|string
+   * The number of the constituency
+   */
   protected $constituency_nr;
 
+
+  /**
+   * @var string
+   * The name of the electoral region
+   */
   protected $electoral_region;
 
+
+  /**
+   * @var string
+   * The zipcode
+   */
   protected $area_code;
 
+
+  /**
+   * @var string
+   * The descriptor specifying the constituency/ zipcode combination
+   */
   protected $area_code_descriptor;
 
+
+  /**
+   * @var string
+   * The street specific for the constituency/ zipcode combination
+   */
   protected $street;
 
+
+  /**
+   * @var int|string
+   * The import the dataset belongs to
+   */
   protected $importId;
 
+
+  /**
+   * @var null|string
+   * The status of the dataset
+   */
   protected $status;
 
+
+  /**
+   * @var string
+   * One string defining all errors which were found during
+   * validation or import. Each error is seperated by |
+   */
   protected $errors;
 
+
+  /**
+   * @var null|int|string
+   * The id of the structured data element connected to the dataset
+   */
   protected $structuredDataId;
 
   /**
@@ -41,6 +99,23 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
    */
   protected $importClass;
 
+
+  /**
+   * ConstituencyImportDataSet constructor.
+   *
+   * @param int|string $parliament
+   * @param string $constituency
+   * @param int $constituency_nr
+   * @param string $area_code
+   * @param int|string $import_id
+   * @param string $electoral_region
+   * @param string $area_code_descriptor
+   * @param string $street
+   * @param null|int|string $id
+   * @param null|string $status
+   * @param string $errors
+   * @param null|int|string $structuredDataId
+   */
   public function __construct($parliament, $constituency, $constituency_nr, $area_code, $import_id, $electoral_region = '', $area_code_descriptor = '', $street = '', $id = NULL, $status = NULL, $errors = '', $structuredDataId = NULL) {
     $this->id = $id;
     $this->parliament = $parliament;
@@ -57,27 +132,38 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     $this->structuredDataId = $structuredDataId;
   }
 
+
+  /**
+   * @param string $descriptor
+   */
   public function setAreaCodeDescriptor($descriptor) {
     $this->area_code_descriptor = $descriptor;
   }
 
+
+  /**
+   * @param string $electoral_region
+   */
   public function setElectoralRegion($electoral_region) {
     $this->electoral_region = $electoral_region;
   }
 
+
+  /**
+   * @param string $street
+   */
   public function setStreet($street) {
     $this->street = $street;
   }
 
 
   /**
+   * Create the structured data from the dataset
+   *
    * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\Entity\EntityInterface
    */
-  public function structuredData() {
-
-
+  public function createStructuredData() {
     // first we try to load already defined structuredData
-
     $table = ConstituencyStructuredData::getDatabaseTable();
     $query = db_select($table, 't');
     $query->condition('field_constituency_nr', $this->constituency_nr);
@@ -109,8 +195,10 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
   }
 
 
-
-
+  /**
+   * Validate the dataset. When an error appears $this->setValidationError()
+   * should be called
+   */
   public function validate() {
     $this->validateRequiredFields();
 
@@ -169,6 +257,12 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     }
   }
 
+
+  /**
+   * Set the status of the dataset
+   *
+   * @param string $new_status
+   */
   public function setStatus($new_status) {
     $possibleStatus = DataSetStatus::getPossibleOptions();
     if (array_key_exists($new_status, $possibleStatus)) {
@@ -176,6 +270,10 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     }
   }
 
+
+  /**
+   * Helper to check if required fields are set
+   */
   protected function validateRequiredFields() {
     foreach (self::getFieldsInCSV() as $fieldname => $info) {
       if ($info['required'] && ($this->{$fieldname} === NULL || empty($this->{$fieldname})) ) {
@@ -184,6 +282,12 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     }
   }
 
+
+  /**
+   * Defines the fields which are used from a CSV
+   *
+   * @return array
+   */
   public static function getFieldsInCSV() {
     return [
       'constituency' => [
@@ -225,6 +329,15 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
   }
 
 
+  /**
+   *
+   * Create a Dataset entity from an array fetched from CSV
+   *
+   * @param array $dataset
+   * @param \Drupal\pw_parliaments_admin\Import\Import $import
+   *
+   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyImportDataSet|\Drupal\pw_parliaments_admin\ImportDataSetInterface
+   */
   public static function createFromCSVArray(array $dataset, Import $import) {
     $importDataSet = new ConstituencyImportDataSet($import->getParliamentId(), $dataset['constituency'], $dataset['constituency_nr'], $dataset['area_code'], $import->getId());
 

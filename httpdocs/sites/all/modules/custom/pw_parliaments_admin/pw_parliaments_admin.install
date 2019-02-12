@@ -143,19 +143,23 @@ function pw_parliaments_admin_schema() {
       'field_constituency_area_codes' => [
         'description' => 'The are codes of the constituency',
         'type' => 'text',
+        'size' => 'big',
         'not null' => TRUE
       ],
       'field_constituency_ac_descriptor' => [
         'description' => 'Area code descriptors',
-        'type' => 'text'
+        'type' => 'text',
+        'size' => 'big',
       ],
       'field_constituency_street' => [
         'description' => 'Streets connected to the constituency',
-        'type' => 'text'
+        'type' => 'text',
+        'size' => 'big',
       ],
       'field_electoral_region' => [
         'description' => 'Electoral region connected to the constituency',
-        'type' => 'text'
+        'type' => 'text',
+        'size' => 'big',
       ],
       'field_parliament' => [
         'description' => 'The parliament connected to the constituency',

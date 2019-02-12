@@ -6,7 +6,8 @@ namespace Drupal\pw_parliaments_admin;
 use Drupal\pw_parliaments_admin\Entity\EntityInterface;
 
 /**
- * Describes the entity which will
+ * Structured data may be needed before a CSV dataset may be imported into Drupal.
+ * For example the import of constituencies is done by importing a zip
  */
 interface StructuredDataInterface extends EntityInterface, ImportValidation {
 

@@ -70,6 +70,22 @@ function pw_parliaments_import_pagecallback(Import $import) {
       // list the pre entities
       $view_name = 'pw_administration_imports_constituency_structured_data';
       break;
+    case ImportStatus::IMPORT_FAILED:
+      $output['hint']['#markup'] = '<div style="color: red; font-weight: bold;"><p>Beim Import der Daten scheint etwas schief gelaufen zu sein.</p></div>
+<p>Prüfe die Fehlermeldungen und versuche es dann einfach noch einmal. </p>';
+
+      $output['form'] = drupal_get_form('pw_parliaments_admin_start_constituency_final_import', $import);
+
+      // list the pre entities
+      $view_name = 'pw_administration_imports_constituency_structured_data';
+      break;
+    case ImportStatus::IMPORTED:
+      $output['hint']['#markup'] = '<div style="color: green; font-weight: bold;"><p>Der Import der Daten ist abgeschlossen.</p></div>
+<p>Prüfe die Fehlermeldungen und versuche es dann einfach noch einmal. </p>';
+
+      // list the pre entities
+      $view_name = 'pw_administration_imports_constituency_structured_data';
+      break;
   }
 
   $views = views_get_view($view_name);
@@ -91,7 +107,7 @@ function pw_parliaments_admin_start_constituency_structuring($form, &$form_state
   $form_state['storage']['import'] = $import;
   $form['submit'] = [
     '#type' => 'submit',
-    '#value' => 'Wahlkreis-Import prüfen'
+    '#value' => 'Daten für Import struktuieren'
   ];
 
   return $form;
