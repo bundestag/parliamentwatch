@@ -208,3 +208,67 @@
     }
   }
 }
+
+
+/* Presse-Verteiler */
+
+.webform-client-form-972122 {
+  margin-bottom: $space-large;
+  @include grid-collapse();
+  @include clearfix();
+  > .form__item:nth-child(-n + 7) {
+    @include grid-column(12);
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(6);
+    }
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten,
+  .form__item--submitted-first-name {
+    clear: both;
+  }
+  > .form__item:nth-child(n + 8) {
+    @include grid-column(12);
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten {
+    margin: $space 0;
+    @include breakpoint($breakpoint-s-min) {
+      margin: $space-large 0;
+    }
+  }
+  .form__item--markup,
+  .form__item--submitted-zusatzangaben {
+    margin-bottom: $space;
+    @include breakpoint($breakpoint-s-min) {
+      margin-bottom: $space-large;
+    }
+  }
+}
+
+/* Press Downloads */
+
+.press-download {
+  margin-top: $space-large;
+  @include grid-container();
+  @include grid-collapse();
+  @include breakpoint($breakpoint-s-min) {
+    margin-top: $space-large * 2;
+  }
+}
+.press-download__item {
+  @include grid-column(12);
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+}
+.press-download__item__image {}
+.press-download__item__footer {
+  @include clearfix();
+  span {
+    float: left;
+    padding-top: 12px;
+    color: $gray;
+  }
+  .btn {
+    float: right;
+  }
+}
