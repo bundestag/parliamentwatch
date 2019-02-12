@@ -1,10 +1,10 @@
 # German translation of Taxonomy Manager (7.x-1.0)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Taxonomy Manager (7.x-1.0)\n"
-"POT-Creation-Date: 2018-10-08 22:06+0000\n"
+"POT-Creation-Date: 2019-01-27 15:50+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +259,7 @@ msgstr "Begriffe %terms in das Vokabular %voc verschoben."
 msgid "Terms %terms moved to vocabulary %voc under parents %parents."
 msgstr "Terms %terms moved to vocabulary %voc under parents %parents."
 msgid "Select all children"
-msgstr "Select all children"
+msgstr "Alle untergeordnete auswählen"
 msgid "Go to term page"
 msgstr "Go to term page"
 msgid "Enter a unique term name or a term id with 'term-id:[tid]'"

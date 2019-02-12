@@ -609,34 +609,6 @@
   };
 
   /**
-   * Attaches local scroll behavior on page load.
-   *
-   * @type {Drupal~behavior}
-   *
-   * @prop {Drupal~attachBehavior}
-   */
-  Drupal.behaviors.initLocalScrollPageLoad = {
-    attach: function (context) {
-      function scrollToAnchor(hash) {
-        var target = $(hash);
-
-        target = target.length ? target : $('[name=' + hash.slice(1) +']');
-
-        if (target.length) {
-          $('html,body').animate({
-            scrollTop: target.offset().top
-          }, 100);
-          return false;
-        }
-      }
-
-      if(window.location.hash) {
-        scrollToAnchor(window.location.hash);
-      }
-    }
-  };
-
-  /**
    * Attaches the tooltip behavior.
    *
    * @type {Drupal~behavior}
@@ -936,32 +908,29 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      $('.form__item__control:not(.form__item__control--special), .form-email').on('focus input change', function () {
-        startFloatingLabel($(this));
+      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible');
+
+      $inputs.each(function () {
+        setFloatingLabel($(this), false);
       });
 
-      $('.form__item__control:not(.form__item__control--special), .form-email').on('blur', function () {
-        if ($(this).val() == false) {
-          stopFloatingLabel($(this));
-        }
+      $inputs.on('focus input change', function () {
+        setFloatingLabel($(this));
       });
 
-      $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible').each(function () {
-        if ($(this).val() != false) {
-          startFloatingLabel($(this));
-        }
+      $inputs.on('blur', function () {
+        setFloatingLabel($(this), false);
       });
 
-      function startFloatingLabel($input) {
+      function setFloatingLabel($input, floating = true) {
         var $label = $input.siblings('.form__item__label:not(.sr-only)');
+        var modifier = 'form__item__label--floating';
 
-        if (!$label.hasClass('form__item__label--floating')) {
-          $input.siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+        if (floating || $input.val() != false) {
+          $label.addClass(modifier);
+        } else {
+          $label.removeClass(modifier);
         }
-      }
-
-      function stopFloatingLabel($input) {
-        $input.siblings('.form__item__label:not(.sr-only)').removeClass('form__item__label--floating');
       }
     }
   };
@@ -2242,6 +2211,77 @@
   };
 
   /**
+   * Attaches topic-tag tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.topicTagTracking = {
+    attach: function () {
+      $(function() {
+        if(typeof _paq !== "undefined") {
+          var page_url = window.location.href;
+
+          $('#topic-tags a').click(function() {
+            _paq.push(['trackEvent', 'Topic Tag', 'Click', page_url]);
+          });
+        }
+      });
+    }
+  };
+
+  /**
+   * Attaches user gallery tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.deputyGallery = {
+    attach: function () {
+      $(function() {
+        if(typeof _paq !== "undefined") {
+          var deputy_name = $('.deputy__title').text();
+
+          $('.deputy__gallery a[data-lightbox]').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open Image', deputy_name]);
+          });
+
+          $('.page-user .lb-next').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open next Image', deputy_name]);
+          });
+
+          $('.page-user .lb-prev').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open previous Image', deputy_name]);
+          });
+        }
+      });
+    }
+  };
+
+  /**
+   * Attaches lightbox behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.lightbox = {
+    attach: function () {
+      $(function() {
+        lightbox.option({
+          'resizeDuration': 400,
+          'imageFadeDuration': 400,
+          'fadeDuration': 400,
+          'albumLabel': 'Bild %1 von %2',
+          'alwaysShowNavOnTouchDevices': true
+        });
+      });
+    }
+  };
+
+  /**
    * Attaches modal behavior.
    *
    * @type {Drupal~behavior}
@@ -2297,6 +2337,11 @@
               $('body').addClass('block-scrolling');
             }
           });
+        }
+
+        // Hide Newsletter-Overlay on sign-up/out pages
+        if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
+          $.cookie('modal_newsletter', '1', {path: '/'});
         }
       });
     }

@@ -269,13 +269,13 @@ class ModtoolMessage {
    * The date string, e.g. "2018-12-19T13:40:05+01:00"
    *
    * @param string|FALSE $format
-   * The format of the date string. Optional, default is 'c'
+   * The format of the date string. Optional, default is 'c' or 'Y-m-d\TH:i:sP'
    *
    * @return bool
    */
   protected function isValidDate($date_string, $format = FALSE) {
     if (!$format) {
-      $format = 'Y-m-d\TG:i:sP';
+      $format = 'Y-m-d\TH:i:sP';
     }
 
     $d = DateTime::createFromFormat($format, $date_string);

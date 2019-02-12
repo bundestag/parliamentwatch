@@ -401,6 +401,12 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
       $text = t('Constituency @number: @title', $placeholders, ['context' => 'Bayern']);
     }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
+      $text = t('Constituency @number: @title', $placeholders, ['context' => 'Bremen']);
+    }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'EU') === 0) {
+      $text = t('Constituency @number: @title', $placeholders, ['context' => 'EU']);
+    }
     else {
       $text = t('Constituency @number: @title', $placeholders, ['context' => '']);
     }
@@ -1334,6 +1340,12 @@ function parliamentwatch_profile_search_summary($variables) {
     $constituency_context = 'Bayern';
     $list_context = 'Bayern';
   }
+  elseif (strpos($variables['parliament']->name, 'Bremen') === 0) {
+    $constituency_context = 'Bremen';
+  }
+  elseif (strpos($variables['parliament']->name, 'EU') === 0) {
+    $constituency_context = 'EU';
+  }
   else {
     $constituency_context = '';
     $list_context = '';
@@ -1595,7 +1607,13 @@ t('Deputy', [], ['context' => 'female']);
 t('Deputy', [], ['context' => 'male']);
 t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => '']);
 t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'Bayern']);
+t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'Bremen']);
+t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'EU']);
 format_plural(0, '1 constituency', '@count constituencies', [], ['context' => '']);
 format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'Bayern']);
+format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'Bremen']);
+format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'EU']);
 format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => '']);
 format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'Bayern']);
+format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'Bremen']);
+format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'EU']);

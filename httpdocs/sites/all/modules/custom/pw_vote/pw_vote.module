@@ -59,6 +59,7 @@ function pw_vote_node_load($nodes, $types) {
  * Implements hook_user_view().
  */
 function pw_vote_user_view($account, $view_mode, $langcode) {
+
   if ($view_mode == 'full' && _pw_user_has_role($account, 'Deputy')) {
     $nids = pw_vote_by_user_query($account)->execute()->fetchCol();
 
@@ -94,7 +95,7 @@ function pw_vote_user_update(&$edit, $account, $category) {
 
 
 /**
- * Implements hook_pw_user_revision_update
+ * Implements hook_pw_user_revision_edit
  *
  *  - Update the votes of the user in Vote Search index
  */
@@ -620,13 +621,19 @@ function pw_vote_poll_filters_block() {
   $block = [];
 
   $node = menu_get_object();
+  $parliament_tid = $node->field_parliament[LANGUAGE_NONE][0]['tid'];
+  $block['parliament_eu'] = FALSE;
 
   if (!$node || $node->type != 'poll') {
     return $block;
   }
+  if ($parliament_tid === '16117') {
+    $block['parliament_eu'] = TRUE;
+  }
 
   $facets = pw_vote_by_poll_search($node)->execute()['search_api_facets'];
   $block['content'] = drupal_get_form('pw_vote_poll_filters', $facets);
+  $block['parliament_tid'] = $parliament_tid;
 
   return $block;
 }
@@ -816,6 +823,8 @@ function pw_vote_mark_deviant_votes($nid) {
  *
  * @return EntityFieldQuery
  *   The query object
+ *
+ * @deprecated use create a function in PoliticianUserRevision for that
  */
 function pw_vote_by_user_query($account, $node_target_type = 'poll') {
   $q = db_select('node', 'n');

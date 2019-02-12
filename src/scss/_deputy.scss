@@ -746,7 +746,17 @@ $abstimmverhalten-node-item-width: 18px;
 .sidejob-overview {
   @include box-padded-large($white);
   @include grid-column(12);
-  tbody
+  .sidejob-overview__item {
+    @media (max-width: $breakpoint-s-max) {
+      padding-right: $space-small;
+      &:not(:first-child) {
+        padding-top: $space;
+      }
+      &:not(:last-child) {
+        padding-bottom: $space;
+      }
+    }
+  }
   .sidejob-overview__item__customer {
     vertical-align: top;
     font-weight: 500;
@@ -757,21 +767,25 @@ $abstimmverhalten-node-item-width: 18px;
   }
   .sidejob-overview__item__level {
     vertical-align: top;
-    padding-left: $space-large;
     small {
       white-space: nowrap;
       color: $mediumGray;
       display: block;
     }
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 70%;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__activity {
     vertical-align: top;
+    @media (max-width: $breakpoint-s-max) {
+      padding-top: $space-small;
+    }
     @media (min-width: $breakpoint-s-min) {
-      padding-right: $space-xsmall-mobile;
+      padding-left: $space-large;
     }
     small {
       color: $mediumGray;
@@ -781,14 +795,21 @@ $abstimmverhalten-node-item-width: 18px;
   .sidejob-overview__item__date {
     vertical-align: top;
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 30%;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__total {
     vertical-align: top;
     white-space: nowrap;
-    padding-left: $space-large;
+    @media (max-width: $breakpoint-s-max) {
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
+    }
   }
   .sidejob-overview__item--active {
     background: $orangeBG;
@@ -1095,7 +1116,7 @@ $abstimmverhalten-node-item-width: 18px;
 .deputy__gallery {
   @include grid-column(12, $neat-grid-large-gutter);
   padding: $space-large 0;
-  a {
+  figure {
     margin-bottom: $space;
     display: block;
     @include grid-column(4);
@@ -1106,10 +1127,17 @@ $abstimmverhalten-node-item-width: 18px;
     @include breakpoint($breakpoint-m-min) {
       @include grid-column(2, $neat-grid-large-gutter);
     }
+    a {
+      display: block;
+    }
     img {
       width: 100%;
       display: block;
     }
+  }
+  .figcaption-overlay {
+    width: calc(100% - 5px);
+    left: 0;
   }
 }
 .deputy__gallery__inner {

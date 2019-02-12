@@ -65,7 +65,7 @@
     top: $space-xsmall;
     bottom: $space-xsmall;
     background: $white;
-    padding: $space-xsmall $space-xsmall-mobile;
+    padding: $space-xsmall 0;
     color: $mediumGray;
     overflow: hidden;
     white-space: nowrap;
@@ -180,11 +180,6 @@
   }
 }
 
-_:-ms-fullscreen,
-:root .filterbar__item--input .btn {
-  text-indent: 999px;
-}
-
 .filterbar {
   &:not(&--expanded) {
     .filterbar__heading {
@@ -227,22 +222,21 @@ _:-ms-fullscreen,
         }
         .form__item__control {
           float: left;
-          border-color: $darkBeige;
+          border: 1px solid $darkBeige;
           border-right: 0;
           @include breakpoint($breakpoint-s-min) {
             display: block;
           }
         }
         .btn {
-          text-indent: calc(100% + #{$space-xsmall-mobile});
+          @include hide-text;
           &:after {
             content: '\e901';
             position: absolute;
             left: 0;
             right: 0;
-            text-indent: 0;
-
             font-family: 'awfont';
+            text-indent: 0;
           }
         }
       }
@@ -513,19 +507,34 @@ _:-ms-fullscreen,
 
 /* Filterbar: disabled */
 
-.filterbar--disabled .filterbar__secondary {
-  pointer-events: none;
-}
-.filterbar--disabled .filterbar__item,
-.filterbar--disabled .btn {
-  opacity: .3;
-  pointer-events: none;
-}
-.filterbar--disabled .swiper-button-prev,
-.filterbar--disabled .swiper-button-next {
-  border-color: #f5f4f2;
-  &:before {
-    color: #e6e6e6;
+.filterbar--disabled {
+  .filterbar__secondary,
+  .filterbar__item,
+  .btn {
+    pointer-events: none;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    border-color: #f5f4f2;
+    &:before {
+      color: #e6e6e6;
+    }
+  }
+  .filterbar__view_options {
+    z-index: 99;
+  }
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: $white;
+    opacity: 0.8;
+    z-index: 9;
   }
 }
 

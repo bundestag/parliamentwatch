@@ -5,6 +5,7 @@
 .tabs {
   position: relative;
   background: $beige;
+  overflow: hidden;
 }
 .tabs__navigation {
   background: $white;
@@ -38,15 +39,13 @@
 .tabs__content {
   @include grid-container();
   @include breakpoint($breakpoint-m-min) {
-    @include padding($space-large null);
-
     position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    height: 0;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
 
     border-bottom: 0;
   }
@@ -134,12 +133,14 @@
 .tabs__content--active {
   border-bottom: 1px solid $darkBeige;
   @include breakpoint($breakpoint-m-min) {
-    position: static;
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
+    @include padding($space-large null);
+    display: block;
     border-bottom: 0;
+    position: static;
     height: auto;
+    margin: 0;
+    clip: auto;
+    overflow: visible;
   }
   .tabs__content__content {
     display: block;

@@ -14,7 +14,7 @@ function pw_cron_export_submissions_update_7000(&$sandbox) {
     $sandbox['max'] = count($result['file']);
     $sandbox['current_fid'] = -1;
   }
-  $query->range(0, 1000);
+  $query->range(0, 100);
   $result = $query->execute();
   $files = file_load_multiple(array_keys($result['file']));
   foreach ($files as $file) {

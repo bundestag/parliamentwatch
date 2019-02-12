@@ -885,6 +885,7 @@ function pw_profiles_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'PW Admin User Revisionen';
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
   $handler->display->display_options['access']['type'] = 'role';
@@ -1169,6 +1170,13 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['edit_revision_1']['table'] = 'user_revision';
   $handler->display->display_options['fields']['edit_revision_1']['field'] = 'edit_revision';
   $handler->display->display_options['fields']['edit_revision_1']['exclude'] = TRUE;
+  /* Feld: User revision: ‚Zurück‘-Link */
+  $handler->display->display_options['fields']['revert_revision']['id'] = 'revert_revision';
+  $handler->display->display_options['fields']['revert_revision']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['revert_revision']['field'] = 'revert_revision';
+  $handler->display->display_options['fields']['revert_revision']['label'] = '';
+  $handler->display->display_options['fields']['revert_revision']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['revert_revision']['text'] = 'Zurücksetzen';
   /* Feld: User revision: Link löschen */
   $handler->display->display_options['fields']['delete_revision']['id'] = 'delete_revision';
   $handler->display->display_options['fields']['delete_revision']['table'] = 'user_revision';
@@ -1225,6 +1233,7 @@ function pw_profiles_views_default_views() {
   $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Optionen';
   $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
     'edit_revision_1' => 'edit_revision_1',
+    'revert_revision' => 'revert_revision',
     'delete_revision' => 'delete_revision',
   );
   $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
