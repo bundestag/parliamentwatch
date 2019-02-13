@@ -772,3 +772,11 @@ function pw_globals_update_7142() {
     drupal_uninstall_modules(['pw_diff_formatted']);
   }
 }
+
+
+/**
+ * Delete the rule set pw_diff_tracking to send emails when politicians updated their profile
+ */
+function pw_globals_update_7143() {
+  rules_config_delete([12]);
+}
