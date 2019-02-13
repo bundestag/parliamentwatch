@@ -1375,7 +1375,7 @@ function pw_globals_custom_theme() {
   }
 
   $webform = menu_get_object();
-  if ($webform->nid == 10446 && isset(drupal_get_query_parameters()['recipient']) && is_numeric(drupal_get_query_parameters()['recipient'])) {
+  if ($webform && $webform->nid == 10446 && isset(drupal_get_query_parameters()['recipient']) && is_numeric(drupal_get_query_parameters()['recipient'])) {
     return $blank_theme_name;
   }
 }
