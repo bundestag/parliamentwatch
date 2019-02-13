@@ -787,6 +787,8 @@ function pw_dialogues_do_import_answers($source) {
  *
  * @return EntityFieldQuery
  *   The query object.
+ *
+ * @deprecated use PoliticianUserRevision instead
  */
 function pw_dialogues_by_user_revision_query($account) {
   $q = new EntityFieldQuery();

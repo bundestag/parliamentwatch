@@ -46,7 +46,7 @@
   @include grid-container();
   h3 {
     @include h4();
-    font-weight: 300;
+    font-weight: 400;
     margin: 0;
     padding: $space-small-mobile $space-small;
     @include grid-column(11, $neat-grid-no-gutter);
@@ -87,6 +87,7 @@
     @include h4();
     margin: 0;
     font-family: $font-sans-serif;
+    font-weight: 600;
     padding-left: $space;
     @include breakpoint($breakpoint-xs-min) {
       float: left;
