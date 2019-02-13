@@ -105,9 +105,8 @@
 }
 .question__question__title {
   @include h4();
-  font-weight: 300;
+  font-weight: 400;
   font-style: italic;
-  color: $black;
   margin-bottom: $space;
   p {
     margin-bottom: $space-xsmall;
@@ -126,6 +125,7 @@
   color: $white;
   h2 {
     font-family: $font-sans-serif;
+    font-weight: 400;
     color: $white;
     margin-bottom: 0;
   }
@@ -261,7 +261,7 @@
   &__title {
     @include h4();
     font-family: $font-sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: $space;
     padding: $space;
     border-top: 1px solid $gray;
@@ -305,7 +305,7 @@
     &__name {
       @include h4();
       font-family: $font-serif;
-      font-weight: 300;
+      font-weight: 400;
       color: $darkGray;
       display: block;
       margin-bottom: $space-xsmall-mobile;

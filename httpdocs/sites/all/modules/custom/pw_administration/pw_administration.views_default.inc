@@ -6323,6 +6323,32 @@ function pw_administration_views_default_views() {
     109923392 => 0,
   );
   $handler->display->display_options['filters']['rid_1']['expose']['reduce'] = TRUE;
+  /* Filterkriterium: Benutzer: Partei (field_user_party) */
+  $handler->display->display_options['filters']['field_user_party_tid']['id'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_data_field_user_party';
+  $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator'] = 'field_user_party_tid_op';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['identifier'] = 'field_user_party_tid';
+  $handler->display->display_options['filters']['field_user_party_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
   /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
   $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
   $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
@@ -7178,6 +7204,12 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
       ),
     ),
   );
+  /* Feld: PW User archive: Question form open */
+  $handler->display->display_options['fields']['question_form_open']['id'] = 'question_form_open';
+  $handler->display->display_options['fields']['question_form_open']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['question_form_open']['field'] = 'question_form_open';
+  $handler->display->display_options['fields']['question_form_open']['label'] = 'Frageformular';
+  $handler->display->display_options['fields']['question_form_open']['not'] = 0;
   /* Feld: Benutzer: Benutzer UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'users';
@@ -7215,6 +7247,12 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     'nothing' => 'nothing',
   );
   $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
+  /* Feld: PW User archive: Question form open */
+  $handler->display->display_options['fields']['question_form_open_1']['id'] = 'question_form_open_1';
+  $handler->display->display_options['fields']['question_form_open_1']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['question_form_open_1']['field'] = 'question_form_open';
+  $handler->display->display_options['fields']['question_form_open_1']['label'] = 'Frageformular';
+  $handler->display->display_options['fields']['question_form_open_1']['not'] = 0;
   /* Kontextfilter: Benutzer (Historische Daten): Parlament (field_user_parliament) */
   $handler->display->display_options['arguments']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
   $handler->display->display_options['arguments']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
@@ -7442,6 +7480,30 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   );
   $handler->display->display_options['filters']['field_user_constituency_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_constituency_tid']['vocabulary'] = 'constituency';
+  /* Filterkriterium: PW User archive: Question form open */
+  $handler->display->display_options['filters']['question_form_open']['id'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['table'] = 'user_archive_cache';
+  $handler->display->display_options['filters']['question_form_open']['field'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['value'] = 'All';
+  $handler->display->display_options['filters']['question_form_open']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['question_form_open']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['question_form_open']['expose']['label'] = 'Frageformular';
+  $handler->display->display_options['filters']['question_form_open']['expose']['operator'] = 'question_form_open_op';
+  $handler->display->display_options['filters']['question_form_open']['expose']['identifier'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -7490,6 +7552,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Wahlkreis'),
     t('Wahlkreis gewonnen'),
     t('Wahlkreisergebnis'),
+    t('Frageformular'),
     t('Benutzer UUID'),
     t('Benutzername'),
     t('‚Bearbeiten‘-Link'),

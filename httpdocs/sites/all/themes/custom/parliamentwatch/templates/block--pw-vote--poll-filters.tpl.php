@@ -44,15 +44,18 @@
  * @ingroup themeable
  */
 ?>
-<div class="filterbar filterbar--disabled">
+
+<div class="filterbar<?php if ($block->parliament_eu === FALSE): ?> filterbar--disabled<?php endif; ?>">
   <div class="filterbar__inner">
     <?php print render($title_suffix); ?>
     <?php print $content; ?>
     <ul class="filterbar__view_options">
+      <?php if ($block->parliament_eu != TRUE): ?>
       <li class="filterbar__view_options__item active">
         <a href="#block-pw-vote-poll-charts" class="filterbar__view_options__item__link"><i class="icon icon-bar-chart"></i></a>
       </li>
-      <li class="filterbar__view_options__item">
+      <?php endif; ?>
+      <li class="filterbar__view_options__item<?php if ($block->parliament_eu === TRUE): ?> active<?php endif; ?>">
         <a href="#block-pw-vote-poll" class="filterbar__view_options__item__link"><i class="icon icon-th-list"></i></a>
       </li>
     </ul>

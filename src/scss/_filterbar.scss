@@ -65,7 +65,7 @@
     top: $space-xsmall;
     bottom: $space-xsmall;
     background: $white;
-    padding: $space-xsmall $space-xsmall-mobile;
+    padding: $space-xsmall 0;
     color: $mediumGray;
     overflow: hidden;
     white-space: nowrap;
@@ -176,13 +176,8 @@
     border-color: $darkBeige;
   }
   &--active {
-    color: $black;
+    color: $darkGray;
   }
-}
-
-_:-ms-fullscreen,
-:root .filterbar__item--input .btn {
-  text-indent: 999px;
 }
 
 .filterbar {
@@ -234,15 +229,14 @@ _:-ms-fullscreen,
           }
         }
         .btn {
-          text-indent: calc(100% + #{$space-xsmall-mobile});
+          @include hide-text;
           &:after {
             content: '\e901';
             position: absolute;
             left: 0;
             right: 0;
-            text-indent: 0;
-
             font-family: 'awfont';
+            text-indent: 0;
           }
         }
       }
@@ -513,19 +507,34 @@ _:-ms-fullscreen,
 
 /* Filterbar: disabled */
 
-.filterbar--disabled .filterbar__secondary {
-  pointer-events: none;
-}
-.filterbar--disabled .filterbar__item,
-.filterbar--disabled .btn {
-  opacity: .3;
-  pointer-events: none;
-}
-.filterbar--disabled .swiper-button-prev,
-.filterbar--disabled .swiper-button-next {
-  border-color: #f5f4f2;
-  &:before {
-    color: #e6e6e6;
+.filterbar--disabled {
+  .filterbar__secondary,
+  .filterbar__item,
+  .btn {
+    pointer-events: none;
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    border-color: #f5f4f2;
+    &:before {
+      color: #e6e6e6;
+    }
+  }
+  .filterbar__view_options {
+    z-index: 99;
+  }
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background: $white;
+    opacity: 0.8;
+    z-index: 9;
   }
 }
 
@@ -569,7 +578,6 @@ _:-ms-fullscreen,
       background: $white;
       color: $darkGray;
       border-color: $white;
-      font-weight: 300;
       font-size: .8em;
       clear: both;
       @include breakpoint($breakpoint-xs-min) {
@@ -597,7 +605,7 @@ _:-ms-fullscreen,
     display: inline-block;
     vertical-align: top;
     max-width: calc(100vw - #{2 * $space});
-    font-weight: 300;
+    font-weight: 400;
     color: $darkGray;
     border: 1px solid $darkBeige;
     padding: 2px ($space + $space-xsmall-mobile) 2px $space-xsmall-mobile;

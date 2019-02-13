@@ -2211,6 +2211,27 @@
   };
 
   /**
+   * Attaches topic-tag tracking behavior.
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.topicTagTracking = {
+    attach: function () {
+      $(function() {
+        if(typeof _paq !== "undefined") {
+          var page_url = window.location.href;
+
+          $('#topic-tags a').click(function() {
+            _paq.push(['trackEvent', 'Topic Tag', 'Click', page_url]);
+          });
+        }
+      });
+    }
+  };
+
+  /**
    * Attaches user gallery tracking behavior.
    *
    * @type {Drupal~behavior}
@@ -2220,19 +2241,21 @@
   Drupal.behaviors.deputyGallery = {
     attach: function () {
       $(function() {
-        var deputy_name = $('.deputy__title').text();
+        if(typeof _paq !== "undefined") {
+          var deputy_name = $('.deputy__title').text();
 
-        $('.deputy__gallery a[data-lightbox]').click(function() {
-          _paq.push(['trackEvent', 'User-Gallery', 'Open Image', deputy_name]);
-        });
+          $('.deputy__gallery a[data-lightbox]').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open Image', deputy_name]);
+          });
 
-        $('.page-user .lb-next').click(function() {
-          _paq.push(['trackEvent', 'User-Gallery', 'Open next Image', deputy_name]);
-        });
+          $('.page-user .lb-next').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open next Image', deputy_name]);
+          });
 
-        $('.page-user .lb-prev').click(function() {
-          _paq.push(['trackEvent', 'User-Gallery', 'Open previous Image', deputy_name]);
-        });
+          $('.page-user .lb-prev').click(function () {
+            _paq.push(['trackEvent', 'User-Gallery', 'Open previous Image', deputy_name]);
+          });
+        }
       });
     }
   };
@@ -2314,6 +2337,11 @@
               $('body').addClass('block-scrolling');
             }
           });
+        }
+
+        // Hide Newsletter-Overlay on sign-up/out pages
+        if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
+          $.cookie('modal_newsletter', '1', {path: '/'});
         }
       });
     }
