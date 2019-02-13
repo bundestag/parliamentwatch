@@ -46,7 +46,7 @@ class UserArchiveSearchAPI {
   /**
    * The interal id of the Search API index to use
    */
-  const SEARCH_API_INDEX_ID = 160;
+  const SEARCH_API_INDEX_ID = 164;
 
 
   /**
