@@ -37,7 +37,9 @@
   margin-top: $space;
   font-size: 0.6em;
   opacity: .6;
+  display: none;
   @include breakpoint($breakpoint-s-min) {
+    display: block;
     margin-top: $space-large;
     padding-top: $space-large;
     border-top: 1px solid $brightGray;
