@@ -65,7 +65,7 @@ function pw_content_authoring_layout_ckeditor_profile_defaults() {
       'name' => 'CKEditor Global Profile',
       'settings' => array(
         'skin' => 'moono',
-        'ckeditor_path' => '%m/ckeditor',
+        'ckeditor_path' => '%l/ckeditor',
         'ckeditor_local_path' => '',
         'ckeditor_plugins_path' => '%m/plugins',
         'ckeditor_plugins_local_path' => '',
