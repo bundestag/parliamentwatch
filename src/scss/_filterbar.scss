@@ -176,7 +176,7 @@
     border-color: $darkBeige;
   }
   &--active {
-    color: $black;
+    color: $darkGray;
   }
 }
 
@@ -578,7 +578,6 @@
       background: $white;
       color: $darkGray;
       border-color: $white;
-      font-weight: 300;
       font-size: .8em;
       clear: both;
       @include breakpoint($breakpoint-xs-min) {
@@ -606,7 +605,7 @@
     display: inline-block;
     vertical-align: top;
     max-width: calc(100vw - #{2 * $space});
-    font-weight: 300;
+    font-weight: 400;
     color: $darkGray;
     border: 1px solid $darkBeige;
     padding: 2px ($space + $space-xsmall-mobile) 2px $space-xsmall-mobile;
