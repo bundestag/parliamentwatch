@@ -1357,6 +1357,30 @@ function _pw_globals_antispam_prepare_comment_data($comment, $server_vars, $is_t
   return $comment_data;
 }
 
+/**
+ * Implements hook_custom_theme().
+ *
+ * Define the blank theme for some subdomains and paths
+ */
+function pw_globals_custom_theme() {
+  $blank_theme_name = 'blank';
+  $subdomains_with_blank_theme = [
+    'affiliate.abgeordnetenwatch.de',
+    'affiliate.stage.abgeordnetenwatch.de',
+    'affiliate.r2017.abgeordnetenwatch.de',
+    'embed.abgeordnetenwatch.de'
+  ];
+  if (in_array($_SERVER["SERVER_NAME"], $subdomains_with_blank_theme)) {
+    return $blank_theme_name;
+  }
+
+  $webform = menu_get_object();
+  if ($webform->nid == 10446 && isset(drupal_get_query_parameters()['recipient']) && is_numeric(drupal_get_query_parameters()['recipient'])) {
+    return $blank_theme_name;
+  }
+}
+
+
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bundestag']);
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Baden-Württemberg']);
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bayern']);
