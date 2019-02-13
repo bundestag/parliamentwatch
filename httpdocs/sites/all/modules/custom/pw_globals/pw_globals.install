@@ -780,3 +780,14 @@ function pw_globals_update_7142() {
 function pw_globals_update_7143() {
   rules_config_delete([12]);
 }
+
+
+/**
+ * Uninstall pw cleanup module
+ */
+function pw_globals_update_7144() {
+  if(module_exists('pw_cleanup')) {
+    module_disable(['pw_cleanup']);
+    drupal_uninstall_modules(['pw_cleanup']);
+  }
+}
