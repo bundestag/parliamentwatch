@@ -753,3 +753,22 @@ function pw_globals_update_7141() {
     drupal_uninstall_modules(['themekey']);
   }
 }
+
+
+/**
+ * Deactivate and uninstall User Diff, PW Diff Formatted und PW Diff Tracking module
+ */
+function pw_globals_update_7142() {
+  if(module_exists('user_diff')) {
+    module_disable(['user_diff']);
+    drupal_uninstall_modules(['user_diff']);
+  }
+  if(module_exists('pw_diff_tracking')) {
+    module_disable(['pw_diff_tracking']);
+    drupal_uninstall_modules(['pw_diff_tracking']);
+  }
+  if(module_exists('pw_diff_formatted')) {
+    module_disable(['pw_diff_formatted']);
+    drupal_uninstall_modules(['pw_diff_formatted']);
+  }
+}
