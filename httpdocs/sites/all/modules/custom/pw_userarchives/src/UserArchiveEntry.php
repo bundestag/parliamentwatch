@@ -592,8 +592,8 @@ class UserArchiveEntry {
       $parliament_name = $parliament->getName();
       $timestamp = $parliament->getElectionDate();
       $number_of_questions = count($politicianUserRevision->getQuestionsNids());
-      $number_of_answers = $politicianUserRevision->getAnswersCids('non-standard');
-      $number_of_standard_replies = $politicianUserRevision->getAnswersCids('standard');
+      $number_of_answers = $politicianUserRevision->getAnswersNumbers('non-standard');
+      $number_of_standard_replies = $politicianUserRevision->getAnswersNumbers('standard');
 
       $user_joined = $politicianUserRevision->getJoinedDate();
       if ($user_joined !== NULL) {
