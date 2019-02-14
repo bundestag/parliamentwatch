@@ -1,4 +1,4 @@
-<article id="press-release-<?php print $node->nid; ?>" class="<?php print $classes; ?> press-release tile clearfix"<?php print $attributes; ?>>
+<article id="press-release-<?php print $node->nid; ?>" class="<?php print $classes; ?> tile tile--press-release clearfix"<?php print $attributes; ?>>
   <header class="tile__title tile__title--date mh-item">
     <?php print $date ?>
     <h3><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h3>

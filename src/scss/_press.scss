@@ -33,7 +33,7 @@
 }
 
 
-.press-release.tile {
+.tile--press-release {
   @include grid-column(12);
   margin-bottom: $space;
   @include breakpoint($breakpoint-s-min) {
