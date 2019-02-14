@@ -4,8 +4,8 @@
 namespace Drupal\pw_parliaments_admin\Import;
 
 use Drupal\pw_parliaments_admin\CsvParser;
-use Drupal\pw_parliaments_admin\Entity\EntityBase;
-use Drupal\pw_parliaments_admin\ImportTypes;
+use Drupal\pw_parliaments_admin\PWEntity\EntityBase;
+use Drupal\pw_parliaments_admin\Import\ImportTypes;
 use Drupal\pw_parliaments_admin\Status\ImportStatus;
 
 /**
@@ -52,23 +52,49 @@ class Import extends EntityBase {
 
   /**
    * @var null|string
-   * The type of import - describes what kind of data will be imported
+   * The type of import - describes what kind of data will be imported.
+   * @see ImportTypes
    */
   protected $type = NULL;
 
   /**
    * @var string
    * The status of the import
+   * @see ImportStatus
    */
   protected $status = ImportStatus::CREATED;
 
 
   /**
-   * @var null|\Drupal\pw_parliaments_admin\ImportTypeInterface
+   * The ImportType class implementation suitable for the chosen type of import
+   * @see ImportTypes
+   *
+   * @var null|\Drupal\pw_parliaments_admin\Import\Interfaces\ImportTypeInterface
    */
   protected $importTypeClass = NULL;
 
 
+  /**
+   * Import constructor.
+   *
+   * @param string $label
+   * Label/ name of the import
+   *
+   * @param int|string $parliamentId
+   * The Drupal term tid of the parliament
+   *
+   * @param int|string $fileId
+   * The Drupal file entity fid of the CSV
+   *
+   * @param string $type
+   * The type of import. @see ImportTypes
+   *
+   * @param null|string $status
+   * The status of the Import, @see ImportStatus
+   *
+   * @param null|int|string $id
+   * The unique id of the import.
+   */
   public function __construct($label, $parliamentId, $fileId , $type, $status = NULL, $id = NULL) {
     $this->id = $id;
     $this->label = $label;
@@ -85,6 +111,8 @@ class Import extends EntityBase {
   }
 
   /**
+   * Get the CSVParser class for the CSV file
+   *
    * @return \Drupal\pw_parliaments_admin\CsvParser
    */
   public function getCSVParser() {
@@ -99,7 +127,10 @@ class Import extends EntityBase {
 
 
   /**
+   * Get the file entity for the CSV
+   *
    * @return FALSE|object
+   * The Drupal file entity representation of the CSV
    */
   public function getLoadFile() {
     if (!is_null($this->file)) {
@@ -115,6 +146,11 @@ class Import extends EntityBase {
   }
 
 
+  /**
+   * Get the id of the file entity for the CSV
+   *
+   * @return int|string
+   */
   public function getFileId() {
     if (is_numeric($this->fileId)) {
       return $this->fileId;
@@ -189,7 +225,9 @@ class Import extends EntityBase {
 
 
   /**
-   * @return \Drupal\pw_parliaments_admin\ImportTypeInterface|null
+   * Get the ImportType implementation suitable for the chosen type of import
+   *
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportTypeInterface|null
    */
   public function getImportTypeClass() {
     if ($this->importTypeClass != NULL) {
@@ -218,14 +256,6 @@ class Import extends EntityBase {
     return $this->status;
   }
 
-  public static function possibleStatus() {
-    return [
-      'created' => t('Created'),
-      'review' => t('Needs review'),
-      'ok' => t('Can be imported'),
-      'imported' => t('Imported')
-    ];
-  }
 
   /**
    * @param string $status
@@ -235,6 +265,13 @@ class Import extends EntityBase {
   }
 
 
+  /**
+   * Load an Import by it's id
+   *
+   * @param int|string $id
+   *
+   * @return \Drupal\pw_parliaments_admin\Import\Import|\Drupal\pw_parliaments_admin\Import\Interfaces\StructuredDataInterface|\Drupal\pw_parliaments_admin\PWEntity\EntityInterface|NULL
+   */
   public static function load($id) {
     $result = self::loadFromDatabase(self::getDatabaseTable(), array('id' => $id));
     if (!empty($result)) {
@@ -245,6 +282,14 @@ class Import extends EntityBase {
     }
   }
 
+
+  /**
+   * Create a new Import instance from an array received from a database db_select query
+   *
+   * @param array $database_data
+   *
+   * @return \Drupal\pw_parliaments_admin\Import\Import|\Drupal\pw_parliaments_admin\PWEntity\EntityInterface
+   */
   public static function createFromDataBaseArray(array $database_data) {
     return new Import($database_data['label'], $database_data['parliament'], $database_data['file'], $database_data['type'], $database_data['status'], $database_data['id']);
   }
@@ -316,7 +361,7 @@ class Import extends EntityBase {
    *
    * @param array $dataSet
    *
-   *
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface
    */
   public function createNewImportDataSet(array $dataSet) {
     $importType = $this->getImportTypeClass();
@@ -324,7 +369,11 @@ class Import extends EntityBase {
   }
 
 
-
+  /**
+   * Turn the class into an array suitbale for saving to database
+   *
+   * @return array
+   */
   protected function toArrayForSaving() {
     return [
       'label' => $this->label,
@@ -354,6 +403,10 @@ class Import extends EntityBase {
     return TRUE;
   }
 
+
+  /**
+   * @return string
+   */
   public static function getDatabaseTable() {
     return 'pw_parliaments_admin_imports';
   }
@@ -375,25 +428,14 @@ class Import extends EntityBase {
     return $this->getImportTypeClass()->getStructuredDataClassName()::getDatabaseTable();
   }
 
+
   /**
-   * @param string $status
+   * Delete the structured data connected to the import
    *
-   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface[]
+   * @return int
+   * Number of rows deleted
    */
-  public function getAllDataSets($status = 'all') {
-    $datasets = $this->getImportTypeClass()->loadAllDataSetsByImport($this->id, $status);
-
-    $dataSetClass = $this->getImportTypeClass()->getImportDataSetClassName();
-    $dataSetsClasses = [];
-    foreach ($datasets as $id => $dataset_array) {
-      $dataSetsClasses[$id] = $dataSetClass::createFromDataBaseArray($dataset_array);
-    }
-
-    return $dataSetsClasses;
-  }
-
-
-  public function deletePreEntities() {
+  public function deleteStructuredData() {
     $table = $this->getDatabaseTableForStructuredData();
     $rows_deleted = db_delete($table)
       ->condition('import', $this->getId())
@@ -402,6 +444,13 @@ class Import extends EntityBase {
     return $rows_deleted;
   }
 
+
+  /**
+   * Delete the datasets connected to the import
+   *
+   * @return int
+   * Number of rows deleted
+   */
   public function deleteDataSets() {
     $table = $this->getDatabaseTableForDataSets();
     $rows_deleted = db_delete($table)
@@ -411,21 +460,25 @@ class Import extends EntityBase {
     return $rows_deleted;
   }
 
+
+  /**
+   * Delete the import from database
+   *
+   * @throws \Exception
+   */
   public function delete() {
     $transaction = db_transaction();
     try {
-      db_delete(self::getDatabaseTable(), 't')
+      db_delete(self::getDatabaseTable())
         ->condition('id', $this->getId())
         ->execute();
 
       $this->deleteDataSets();
-      $this->deletePreEntities();
+      $this->deleteStructuredData();
     }
     catch(\Exception $e) {
       $transaction->rollback();
       throw $e;
     }
   }
-
-
 }

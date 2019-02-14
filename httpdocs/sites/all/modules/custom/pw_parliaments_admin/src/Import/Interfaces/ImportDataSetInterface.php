@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Interfaces;
 
 
-use Drupal\pw_parliaments_admin\Entity\EntityInterface;
+use Drupal\pw_parliaments_admin\PWEntity\EntityInterface;
 use Drupal\pw_parliaments_admin\Import\Import;
+use Drupal\pw_parliaments_admin\Import\Interfaces\ImportValidation;
 
 /**
  * ImportDataSet classes describe a single entry from a CSV. Together with a
@@ -21,7 +22,7 @@ interface ImportDataSetInterface extends EntityInterface, ImportValidation {
    * function needs to do all the stuff needed to prepare the data for a later
    * import into Drupal.
    *
-   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\Entity\EntityInterface
+   * @return \Drupal\pw_parliaments_admin\Import\ConstituencyImport\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\PWEntity\EntityInterface
    */
   public function createStructuredData();
 
@@ -62,4 +63,11 @@ interface ImportDataSetInterface extends EntityInterface, ImportValidation {
    */
   public static function getStructuredDataClassName();
 
+
+  public function setStatus($status);
+
+  /**
+   * Reset the status when an import starts
+   */
+  public function resetStatus();
 }

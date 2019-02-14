@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Interfaces;
 
 
 /**

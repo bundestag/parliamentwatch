@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\pw_parliaments_admin\DataSets;
+namespace Drupal\pw_parliaments_admin\Import\ConstituencyImport;
 
 
-use Drupal\pw_parliaments_admin\Entity\EntityBase;
+use Drupal\pw_parliaments_admin\PWEntity\EntityBase;
 use Drupal\pw_parliaments_admin\Import\Import;
-use Drupal\pw_parliaments_admin\ImportDataSetInterface;
+use Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface;
 use Drupal\pw_parliaments_admin\Status\DataSetStatus;
 use EntityFieldQuery;
 
@@ -160,7 +160,7 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
   /**
    * Create the structured data from the dataset
    *
-   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData|\Drupal\pw_parliaments_admin\Entity\EntityInterface
+   * @return \Drupal\pw_parliaments_admin\Import\ConstituencyImport\ConstituencyStructuredData
    */
   public function createStructuredData() {
     // first we try to load already defined structuredData
@@ -168,6 +168,7 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     $query = db_select($table, 't');
     $query->condition('field_constituency_nr', $this->constituency_nr);
     $query->condition('name', $this->constituency);
+    $query->condition('import', $this->importId);
     $query->fields('t');
     $result = $query->execute()->fetchAssoc();
 
@@ -270,6 +271,12 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
     }
   }
 
+  /**
+   * Reset the status when an import starts
+   */
+  public function resetStatus() {
+    $this->status = DataSetStatus::OK;
+  }
 
   /**
    * Helper to check if required fields are set
@@ -336,7 +343,7 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
    * @param array $dataset
    * @param \Drupal\pw_parliaments_admin\Import\Import $import
    *
-   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyImportDataSet|\Drupal\pw_parliaments_admin\ImportDataSetInterface
+   * @return \Drupal\pw_parliaments_admin\DataSets\ConstituencyImportDataSet|\Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface
    */
   public static function createFromCSVArray(array $dataset, Import $import) {
     $importDataSet = new ConstituencyImportDataSet($import->getParliamentId(), $dataset['constituency'], $dataset['constituency_nr'], $dataset['area_code'], $import->getId());
@@ -382,7 +389,7 @@ class ConstituencyImportDataSet  extends EntityBase implements ImportDataSetInte
   }
 
   public static function getStructuredDataClassName() {
-    return '\Drupal\pw_parliaments_admin\DataSets\ConstituencyStructuredData';
+    return '\Drupal\pw_parliaments_admin\Import\ConstituencyImport\ConstituencyStructuredData';
   }
 
 

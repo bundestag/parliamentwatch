@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin\Entity;
+namespace Drupal\pw_parliaments_admin\PWEntity;
 
 
 /**
@@ -18,7 +18,7 @@ abstract class EntityBase implements EntityInterface {
 
 
   /**
-   * @var \Drupal\pw_parliaments_admin\Entity\EntityBase|FALSE
+   * @var \Drupal\pw_parliaments_admin\PWEntity\EntityBase|FALSE
    * During updating we store the original values before updating here
    */
   protected $beforeUpdate = FALSE;
@@ -101,6 +101,10 @@ abstract class EntityBase implements EntityInterface {
 
   }
 
+
+  /**
+   * @return \Drupal\pw_parliaments_admin\PWEntity\EntityBase|FALSE
+   */
   protected function getBeforeUpdateVersion() {
     return $this->beforeUpdate;
   }

@@ -1,7 +1,8 @@
 <?php
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Interfaces;
 
+use Drupal\pw_parliaments_admin\CsvParser;
 use Drupal\pw_parliaments_admin\Import\Import;
 
 /**
@@ -33,7 +34,7 @@ interface ImportTypeInterface {
    * @param array $dataSet
    * An array of data set fields and values parsed by the CSV parser
    *
-   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface
    */
   public function createNewImportDataSetFromCSVArray(array $dataSet, Import $import);
 
@@ -41,7 +42,7 @@ interface ImportTypeInterface {
   /**
    * @param array $database_array
    *
-   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface
    */
   public function getImportDataSetFromDataBaseArray(array $database_array);
 
@@ -66,7 +67,7 @@ interface ImportTypeInterface {
   /**
    * @param array $database_array
    *
-   * @return \Drupal\pw_parliaments_admin\StructuredDataInterface
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\StructuredDataInterface
    */
   public function getStructuredDataFromDataBaseArray(array $database_array);
 
@@ -80,6 +81,24 @@ interface ImportTypeInterface {
   public function getRequiredFieldsForCSV();
 
 
-  public function loadAllDataSetsByImport($import_id, $status = 'all');
+  /**
+   * Define if the ImportType needs a step between CSV import and Drupal import
+   * where the data received from CSV gets turned into another structure.
+   *
+   * @return bool
+   */
+  public function needsDataStructuring();
 
+
+  /**
+   * Get the machine readable name of the view for specific type of entity
+   *
+   * @param string $entity_type
+   * The entity type which the view should list. Can ba 'dataset' or
+   * 'structured_data'
+   *
+   * @return string
+   * The name of the view. An empty string if none was found
+   */
+  public function getViewName($entity_type = 'dataset');
 }

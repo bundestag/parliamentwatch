@@ -1,9 +1,10 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Interfaces;
 
-use Drupal\pw_parliaments_admin\Entity\EntityInterface;
+use Drupal\pw_parliaments_admin\PWEntity\EntityInterface;
+use Drupal\pw_parliaments_admin\Import\Interfaces\ImportValidation;
 
 /**
  * Structured data may be needed before a CSV dataset may be imported into Drupal.
@@ -22,7 +23,7 @@ interface StructuredDataInterface extends EntityInterface, ImportValidation {
   /**
    * Load the related data set
    *
-   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface[]
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface[]
    * Array of datasets or an empty array
    */
   public function getRelatedDataSets();
@@ -32,4 +33,11 @@ interface StructuredDataInterface extends EntityInterface, ImportValidation {
   public function setEntityRevisionVid($vid);
 
   public function import();
+
+  public function setStatus($status);
+
+  /**
+   * Reset the status when an import starts
+   */
+  public function resetStatus();
 }

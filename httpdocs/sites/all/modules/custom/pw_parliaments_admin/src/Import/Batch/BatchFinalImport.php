@@ -1,11 +1,12 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Batch;
 
 use Drupal\pw_parliaments_admin\Import\Import;
 use Drupal\pw_parliaments_admin\Status\DataSetStatus;
 use Drupal\pw_parliaments_admin\Status\ImportStatus;
+use Drupal\pw_parliaments_admin\Status\StructuredDataStatus;
 
 class BatchFinalImport  {
 
@@ -15,6 +16,7 @@ class BatchFinalImport  {
       $query = db_select($pw_import->getDatabaseTableForStructuredData(), 't');
       $query->addField('t', 'id');
       $query->condition('import', $pw_import->getId());
+      $query->condition('status', [StructuredDataStatus::OK, StructuredDataStatus::ERROR]);
       $result = $query->execute()->fetchAllAssoc('id');
 
       $context['sandbox']['progress'] = 0;
@@ -27,6 +29,7 @@ class BatchFinalImport  {
     $query = db_select($pw_import->getDatabaseTableForStructuredData(), 't');
     $query->addField('t', 'id');
     $query->condition('import', $pw_import->getId());
+    $query->condition('status', [StructuredDataStatus::OK, StructuredDataStatus::ERROR]);
     $query->condition('id', $context['sandbox']['last_id'] , '>');
     $query->fields('t');
     $query->range(0, $limit);
@@ -38,13 +41,15 @@ class BatchFinalImport  {
       try {
         $importType = $pw_import->getImportTypeClass();
 
-        /** @var \Drupal\pw_parliaments_admin\StructuredDataInterface $structuredData */
+        /** @var \Drupal\pw_parliaments_admin\Import\Interfaces\StructuredDataInterface $structuredData */
         $structuredData = $importType->getStructuredDataFromDataBaseArray($record);
+        $structuredData->resetStatus();
         $structuredData->import();
       }
       catch (\Exception $e) {
         $transaction->rollback();
         $structuredData->setValidationError($e->getMessage());
+        $structuredData->setStatus(StructuredDataStatus::ERROR);
         $structuredData->save();
       }
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin\Entity;
+namespace Drupal\pw_parliaments_admin\PWEntity;
 
 
 /**
@@ -18,33 +18,52 @@ interface EntityInterface {
    * @param string|int $id
    * The id of the entity to load
    *
-   * @return \Drupal\pw_parliaments_admin\StructuredDataInterface|NULL
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\StructuredDataInterface|NULL
    */
   public static function load($id);
 
+
+  /**
+   * Save the current object data to the database (update/ insert)
+   */
   public function save();
 
+
+  /**
+   * Get the name of the database table where the entity is stored
+   *
+   * @return string
+   */
   public static function getDatabaseTable();
 
 
+  /**
+   * @return int
+   * The unique id of the entity
+   */
   public function getId();
 
+
   /**
-   * get the label for a dataset
+   * get the label for an entity
    *
    * @return string
    */
   public function getLabel();
+
 
   /**
    * Create a new class from the data loaded from the database
    *
    * @param array $database_data
    *
-   * @return \Drupal\pw_parliaments_admin\Entity\EntityInterface
+   * @return \Drupal\pw_parliaments_admin\PWEntity\EntityInterface
    */
   public static function createFromDataBaseArray(array $database_data);
 
 
+  /**
+   * Deletes the current object data from the database
+   */
   public function delete();
 }

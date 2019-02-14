@@ -1,14 +1,15 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import;
 
 
 use Drupal\pw_globals\OptionsInterface;
+use Drupal\pw_parliaments_admin\Import\Interfaces\ImportTypeInterface;
 
 
 /**
- * Defines the available import types as an Options clas
+ * Defines the available import types as an Options class
  */
 class ImportTypes implements OptionsInterface {
 
@@ -33,7 +34,7 @@ class ImportTypes implements OptionsInterface {
    */
   public static function getClass($import_type) {
     $classes = [
-      self::CONSTITUENCIES => '\Drupal\pw_parliaments_admin\Import\ImportTypeConstituencies',
+      self::CONSTITUENCIES => '\Drupal\pw_parliaments_admin\Import\ConstituencyImport\ImportTypeConstituencies',
       self::CANDIDACIES => '\Drupal\pw_parliaments_admin\Import\ImportTypeCandidacies',
       self::ELECTION_RESULTS => '\Drupal\pw_parliaments_admin\Import\ImportTypeElectionResults'
     ];

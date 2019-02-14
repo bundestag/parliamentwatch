@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Batch;
 
 use Drupal\pw_parliaments_admin\Import\Import;
 use Drupal\pw_parliaments_admin\Status\DataSetStatus;
@@ -37,12 +37,10 @@ class BatchStructureData  {
 
     while ($record = $result->fetchAssoc()) {
       $importType = $pw_import->getImportTypeClass();
-      /** @var \Drupal\pw_parliaments_admin\DataSets\ConstituencyImportDataSet $dataSet */
+      /** @var \Drupal\pw_parliaments_admin\Import\ConstituencyImport\ConstituencyImportDataSet $dataSet */
       $dataSet = $importType->getImportDataSetFromDataBaseArray($record);
-
       $structuredDataSaved = $dataSet->createStructuredData();
       $message = $structuredDataSaved->getLabel() .' verarbeitet';
-
 
       if ($structuredDataSaved->hasErrors()) {
         $error_item = $context['sandbox']['progress'];
@@ -58,6 +56,7 @@ class BatchStructureData  {
         $dataSet->setStatus(DataSetStatus::STRUCTURED);
         $dataSet->save();
       }
+
       $context['results'][] = $message;
       $context['sandbox']['progress']++;
       $context['message'] = $message;

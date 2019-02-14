@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_parliaments_admin;
+namespace Drupal\pw_parliaments_admin\Import\Batch;
 
 use Drupal\pw_parliaments_admin\Import\Import;
 use Drupal\pw_parliaments_admin\Status\ImportStatus;
