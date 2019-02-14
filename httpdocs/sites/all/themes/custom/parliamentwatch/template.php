@@ -343,6 +343,13 @@ function parliamentwatch_preprocess_node(&$variables) {
       $variables['activity'] = t('Financial share');
     }
   }
+
+  if ($variables['type'] == 'press_release') {
+    $day = sprintf('<span class="date__day">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'j'));
+    $month = sprintf('<span class="date__month">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'M'));
+    $year = sprintf('<span class="date__year">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'Y'));
+    $variables['date'] = sprintf('<span class="date">%s%s%s</span>', $day, $month, $year);
+  }
 }
 
 /**
