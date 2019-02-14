@@ -1,7 +1,7 @@
 <article id="press-release-<?php print $node->nid; ?>" class="<?php print $classes; ?> tile tile--press-release clearfix"<?php print $attributes; ?>>
   <header class="tile__title tile__title--date mh-item">
     <?php print $date ?>
-    <h3><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h3>
+    <h3 class="tile__title__headline"><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h3>
   </header>
   <?php print render($title_suffix); ?>
   <div class="tile__content" data-mh="link-list">
