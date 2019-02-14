@@ -44,9 +44,9 @@ class UserArchiveSearchAPI {
 
 
   /**
-   * The interal id of the Search API index to use
+   * The name of the Search index
    */
-  const SEARCH_API_INDEX_ID = 160;
+  const SEARCH_INDEX = 'politician_archive_index';
 
 
   /**
@@ -60,7 +60,7 @@ class UserArchiveSearchAPI {
    * Use "change" for updating or insertig the user revisions in(to) the index or
    * "delete" when the given user revisions should be deleted from search index
    */
-  public function __construct(array $vids, string $action) {
+  public function __construct(array $vids, $action) {
     $this->vidsGiven = $vids;
     $this->action = $action;
   }
@@ -103,10 +103,11 @@ class UserArchiveSearchAPI {
    *
    */
   protected function checkVidsIndexed() {
-    $query = db_select('search_api_item', 'i')
-      ->condition('index_id', self::SEARCH_API_INDEX_ID)
-      ->condition('item_id', $this->vidsGiven)
-      ->fields('i');
+    $query = db_select('search_api_item', 'item');
+    $query->join('search_api_index', 'sindex', 'sindex.id = item.index_id');
+    $query->condition('sindex.machine_name', self::SEARCH_INDEX);
+    $query->condition('item_id', $this->vidsGiven);
+    $query->fields('item');
     $result = $query->execute();
     $records = $result->fetchAllAssoc('item_id');
 

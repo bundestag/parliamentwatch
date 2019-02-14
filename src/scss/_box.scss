@@ -93,9 +93,10 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
     font-size: 2em;
   }
   h3 {
-    padding-left: ($space-large * 2) + 10px;
     @include h4();
     @include text-overflow-multi();
+    padding-left: ($space-large * 2) + 10px;
+    font-weight: 400;
   }
 }
 
@@ -639,6 +640,7 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
 
   &__date {
     font-family: $font-serif;
+    font-weight: 400;
     color: $gray;
   }
 

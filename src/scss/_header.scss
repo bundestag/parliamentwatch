@@ -127,6 +127,7 @@
   }
   .nav__item__link {
     font-family: $font-serif;
+    font-weight: 400;
     line-height: 23px;
     border-bottom: 1px solid transparent;
     background: $brightGray;
@@ -346,6 +347,7 @@
   }
   .nav__item__link {
     font-family: $font-serif;
+    font-weight: 400;
     line-height: $space;
     will-change: padding, color;
     transition: padding 300ms ease, color 200ms ease-in-out;
@@ -675,6 +677,7 @@ body {
   line-height: $space;
   font-size: 1.1em;
   font-family: $font-serif;
+  font-weight: 400;
   background: transparent;
   text-decoration: none;
   will-change: font-size;

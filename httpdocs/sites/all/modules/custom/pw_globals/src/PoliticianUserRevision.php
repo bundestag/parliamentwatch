@@ -229,7 +229,7 @@ class PoliticianUserRevision {
    *
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
-  public function getAnswersCids($filter = 'all') {
+  public function getAnswersNumbers($filter = 'all') {
     $question_nids = $this->getQuestionsNids();
     if (!empty($question_nids)) {
       $entityFieldQuery = new \EntityFieldQuery();

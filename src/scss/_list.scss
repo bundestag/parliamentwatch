@@ -48,11 +48,11 @@ dl {
 
 .dl__dt {
   padding-top: $space-small-mobile;
-  font-weight: 500;
+  font-weight: 600;
   @include text-overflow();
   @include breakpoint($breakpoint-xs-min) {
     @include padding($space-small-mobile null);
-    font-weight: 300;
+    font-weight: 400;
   }
   @include breakpoint($breakpoint-m-min) {
     @include padding($space-small null);
@@ -80,7 +80,7 @@ dl {
     @include padding($space-small null);
   }
   a {
-    font-weight: 500;
+    font-weight: 600;
   }
 }
 

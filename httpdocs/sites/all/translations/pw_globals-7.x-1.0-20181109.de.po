@@ -468,6 +468,11 @@ msgctxt "Bremen"
 msgid "Constituency"
 msgstr "Wahlbereich"
 
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:368;793
+msgctxt "EU"
+msgid "Constituency"
+msgstr "Bundesland"
+
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:75
 msgid "The formatted constituency of the user account."
 msgstr ""
@@ -484,8 +489,14 @@ msgctxt "Bremen"
 msgid "Constituency @number: @title"
 msgstr "Wahlbereich @number: @title"
 
-#: sites/all/modules/custom/pw_profiles/pw_profiles.module:105
-#: sites/all/themes/custom/parliamentwatch/template.php:408
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:99
+#: sites/all/themes/custom/parliamentwatch/template.php:402
+msgctxt "EU"
+msgid "Constituency @number: @title"
+msgstr "Bundesland: @title"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:101
+#: sites/all/themes/custom/parliamentwatch/template.php:405
 msgid "Constituency @number: @title"
 msgstr "Wahlkreis @number: @title"
 
@@ -941,7 +952,7 @@ msgid ""
 "\">constituency @name</a>"
 msgstr ""
 "<span>im</span> <a href=\"@url\" class=\"filter-summary__content__link"
-"\">Bremen @name</a>"
+"\">Stimmkreis @name</a>"
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1604
 msgctxt "Bremen"
@@ -949,8 +960,17 @@ msgid ""
 "<span>in</span> <a href=\"@url\" class=\"filter-summary__content__link"
 "\">constituency @name</a>"
 msgstr ""
+"<span>im</span> <a href=\"@url\" class=\"filter-summary__content__link"
+"\">Wahlbereich @name</a>"
 
-#: sites/all/themes/custom/parliamentwatch/template.php:1420
+#: sites/all/themes/custom/parliamentwatch/template.php:1597
+msgctxt "EU"
+msgid ""
+"<span>in</span> <a href=\"@url\" class=\"filter-summary__content__link"
+"\">constituency @name</a>"
+msgstr ""
+"<span>im</span> <a href=\"@url\" class=\"filter-summary__content__link"
+"\">Bundesland @name</a>"
 msgid "<span> having </span>!position<span> of </span>!list"
 msgstr "<span> mit dem </span>!position<span> der </span>!list"
 
@@ -1178,6 +1198,14 @@ msgid "in constituency @name"
 msgid_plural "and @count constituencies"
 msgstr[0] "im Wahlbereich @name"
 msgstr[1] "und @count Wahlbereichen"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1601
+msgctxt "EU"
+msgid "in constituency @name"
+msgid_plural "and @count constituencies"
+msgstr[0] "im Bundesland @name"
+msgstr[1] "und @count Bundesländern"
+
 
 #: sites/all/themes/custom/parliamentwatch/templates/field--field-topics.tpl.php:49
 msgid "Topics"

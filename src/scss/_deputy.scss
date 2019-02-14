@@ -471,7 +471,7 @@
     @include breakpoint($breakpoint-l-min) {
       margin-bottom: -($space-large * 2);
     }
-    h2, h2 a { color: $darkGray; font-family: $font-sans-serif; }
+    h2, h2 a { color: $darkGray; font-family: $font-sans-serif; font-weight: 400; }
     .messages.messages--warning {
       background-color: $white;
       margin: 0;
@@ -635,6 +635,7 @@ $abstimmverhalten-node-item-width: 18px;
 }
 .abstimmverhalten-overview__item__date {
   font-family: $font-serif;
+  font-weight: 400;
   color: $gray;
   display: block;
   margin-right: $space-xsmall;
@@ -746,10 +747,20 @@ $abstimmverhalten-node-item-width: 18px;
 .sidejob-overview {
   @include box-padded-large($white);
   @include grid-column(12);
-  tbody
+  .sidejob-overview__item {
+    @media (max-width: $breakpoint-s-max) {
+      padding-right: $space-small;
+      &:not(:first-child) {
+        padding-top: $space;
+      }
+      &:not(:last-child) {
+        padding-bottom: $space;
+      }
+    }
+  }
   .sidejob-overview__item__customer {
     vertical-align: top;
-    font-weight: 500;
+    font-weight: 600;
     small {
       color: $mediumGray;
       display: block;
@@ -757,21 +768,25 @@ $abstimmverhalten-node-item-width: 18px;
   }
   .sidejob-overview__item__level {
     vertical-align: top;
-    padding-left: $space-large;
     small {
       white-space: nowrap;
       color: $mediumGray;
       display: block;
     }
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 70%;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__activity {
     vertical-align: top;
+    @media (max-width: $breakpoint-s-max) {
+      padding-top: $space-small;
+    }
     @media (min-width: $breakpoint-s-min) {
-      padding-right: $space-xsmall-mobile;
+      padding-left: $space-large;
     }
     small {
       color: $mediumGray;
@@ -781,14 +796,21 @@ $abstimmverhalten-node-item-width: 18px;
   .sidejob-overview__item__date {
     vertical-align: top;
     @media (max-width: $breakpoint-s-max) {
-      float: left;
-      width: 30%;
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
     }
   }
   .sidejob-overview__item__total {
     vertical-align: top;
     white-space: nowrap;
-    padding-left: $space-large;
+    @media (max-width: $breakpoint-s-max) {
+      padding-top: $space-small;
+    }
+    @media (min-width: $breakpoint-s-min) {
+      padding-left: $space-large;
+    }
   }
   .sidejob-overview__item--active {
     background: $orangeBG;
@@ -921,6 +943,7 @@ $abstimmverhalten-node-item-width: 18px;
     position: absolute;
     top: 100px;
     font-family: $font-serif;
+    font-weight: 400;
     color: $gray;
     bottom: auto;
     pointer-events: none;
@@ -972,6 +995,7 @@ $abstimmverhalten-node-item-width: 18px;
   float: left;
   margin-top: $space;
   font-family: $font-sans-serif;
+  font-weight: 400;
   font-size: 0.8em;
   @include breakpoint($breakpoint-xs-min) {
     font-size: 1em;
@@ -1014,6 +1038,7 @@ $abstimmverhalten-node-item-width: 18px;
 
   text-align: center;
   font-family: $font-serif;
+  font-weight: 400;
   font-size: 1.5em;
   color: $darkGray;
   @include breakpoint($breakpoint-xs-min) {

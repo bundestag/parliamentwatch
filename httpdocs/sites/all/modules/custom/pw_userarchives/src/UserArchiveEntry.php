@@ -266,7 +266,7 @@ class UserArchiveEntry {
     return $this->id;
   }
 
-  public function setId(int $id) {
+  public function setId($id) {
     $this->id = $id;
   }
 
@@ -520,7 +520,7 @@ class UserArchiveEntry {
   /**
    * @param int $number_of_answers
    */
-  public function setNumberOfAnswers(int $number_of_answers) {
+  public function setNumberOfAnswers($number_of_answers) {
     $this->number_of_answers = $number_of_answers;
   }
 
@@ -592,8 +592,8 @@ class UserArchiveEntry {
       $parliament_name = $parliament->getName();
       $timestamp = $parliament->getElectionDate();
       $number_of_questions = count($politicianUserRevision->getQuestionsNids());
-      $number_of_answers = $politicianUserRevision->getAnswersCids('non-standard');
-      $number_of_standard_replies = $politicianUserRevision->getAnswersCids('standard');
+      $number_of_answers = $politicianUserRevision->getAnswersNumbers('non-standard');
+      $number_of_standard_replies = $politicianUserRevision->getAnswersNumbers('standard');
 
       $user_joined = $politicianUserRevision->getJoinedDate();
       if ($user_joined !== NULL) {
