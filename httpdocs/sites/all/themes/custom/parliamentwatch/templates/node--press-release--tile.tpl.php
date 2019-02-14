@@ -12,6 +12,8 @@
     <p><?php print render($content['field_press_release_body']); ?></p>
   </div>
   <ul class="tile__links tile__links--2">
-    <li class="tile__links__item"><a class="tile__links__item__link" href="<?php print $node_url ?>"><?php print t('read more'); ?></a></li>
+    <li class="tile__links__item">
+      <?php print l(t('read more'), $node_url, array('attributes' => array('class' => array('tile__links__item__link')))); ?>
+    </li>
   </ul>
 </article>
