@@ -120,7 +120,7 @@ function parliamentwatch_page_alter(&$page) {
 
     $has_container = !empty(array_filter($page['content']['system_main']['#theme_wrappers'], $filter));
     $has_filters = isset($page['content']['system_main']['filters']);
-    $is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page_or_press_release = menu_get_object('node') ? in_array(menu_get_object('node')->type, ['blogpost', 'dialogue', 'pw_petition', 'poll', 'committee', 'press_release']) : FALSE;
+    $content_type_without_container = menu_get_object('node') ? in_array(menu_get_object('node')->type, ['blogpost', 'dialogue', 'pw_petition', 'poll', 'committee', 'press_release']) : FALSE;
     $is_profile_page = in_array(menu_get_item()['page_callback'], ['user_view_page', 'user_revision_show']);
     $is_comment_reply_page = menu_get_item()['page_callback'] == 'comment_reply';
     $is_topic_page = menu_get_item()['page_callback'] == 'pw_globals_taxonomy_term_page';
@@ -131,7 +131,7 @@ function parliamentwatch_page_alter(&$page) {
       $is_press_page = false;
     };
 
-    if (!$has_container && !$has_filters && !$is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page_or_press_release && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page && !$is_press_page) {
+    if (!$has_container && !$has_filters && !$content_type_without_container && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page && !$is_press_page) {
       $page['content']['system_main']['#prefix'] = '<div class="container">';
       $page['content']['system_main']['#suffix'] = '</div>';
     }
