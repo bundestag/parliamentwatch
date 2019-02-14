@@ -1133,6 +1133,36 @@ function pw_press_field_default_fields() {
           'type' => 'text_summary_or_trimmed',
           'weight' => '1',
         ),
+        'tile' => array(
+          'label' => 'hidden',
+          'module' => 'smart_trim',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+            'more_link' => '0',
+            'more_text' => 'Read more',
+            'summary_handler' => 'full',
+            'trim_length' => '150',
+            'trim_link' => '0',
+            'trim_options' => array(
+              'text' => 'text',
+            ),
+            'trim_preserve_tags' => '',
+            'trim_suffix' => '...',
+            'trim_type' => 'chars',
+          ),
+          'type' => 'smart_trim_format',
+          'weight' => '1',
+        ),
       ),
       'ds_extras_field_template' => '',
       'entity_type' => 'node',
@@ -1302,6 +1332,31 @@ function pw_press_field_default_fields() {
           'weight' => '0',
         ),
         'teaser' => array(
+          'label' => 'hidden',
+          'module' => 'date',
+          'settings' => array(
+            'format_type' => 'long',
+            'fromto' => 'both',
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+            'multiple_from' => '',
+            'multiple_number' => '',
+            'multiple_to' => '',
+            'show_remaining_days' => FALSE,
+          ),
+          'type' => 'date_default',
+          'weight' => '0',
+        ),
+        'tile' => array(
           'label' => 'hidden',
           'module' => 'date',
           'settings' => array(

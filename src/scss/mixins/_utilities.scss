@@ -212,15 +212,15 @@
   font-family: $font-serif;
   font-weight: 900;
   color: $gray;
-  .date__day {
+  &__day {
     font-size: .7em;
     display: block;
   }
-  .date__month {
+  &__month {
     font-size: .5em;
     display: block;
   }
-  .date__year {
+  &__year {
     font-size: .4em;
     display: block;
   }
