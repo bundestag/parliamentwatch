@@ -16,19 +16,3 @@
     <?php print render($content) ?>
   </div>
 </div>
-
-<div class="press-contact">
-  <div class="container-regular">
-    <h2><?php print t('You have a question about Parliamentwatch e.V.?'); ?></h2>
-    <p><?php print t('We are happy to answer for you - just contact us.'); ?></p>
-    <?php print l(
-      t('contact now'),
-      'node/6578',
-      array(
-        'attributes' => array(
-          'class' => 'btn', 'btn--mobile-block'
-        ),
-        'html' => TRUE
-      )); ?>
-  </div>
-</div>
