@@ -46,7 +46,7 @@
     overflow: hidden;
   }
   li > a:not(.btn) {
-    font-weight: 500;
+    font-weight: 600;
   }
   .media_embed {
     margin-bottom: $space;
@@ -180,7 +180,7 @@
 /* link gray */
 @mixin link-gray() {
   color: $darkGray;
-  font-weight: 500;
+  font-weight: 600;
   will-change: color;
   transition: color 300ms ease;
   &:hover {
@@ -211,7 +211,7 @@
 @mixin date-stacked() {
   text-align: center;
   font-family: $font-serif;
-  font-weight: 900;
+  font-weight: 700;
   color: $gray;
   &__day {
     font-size: .7em;

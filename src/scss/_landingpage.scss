@@ -71,10 +71,11 @@
   }
   h2 {
     color: $darkGray;
-    font-weight: 900;
+    font-weight: 700;
     position: relative;
     padding-left: 45px;
     font-size: 1.45em;
+    line-height: 1;
     @include breakpoint($breakpoint-xs-min) {
       padding-left: 70px;
       font-size: 1.9em;
@@ -126,7 +127,7 @@
     font-size: 1.2em;
   }
   .link-icon {
-    font-weight: 300;
+    font-weight: 400;
     display: inline-block;
     margin-right: auto;
     margin-left: $space;
@@ -543,7 +544,7 @@
   }
   .btn {
     display: block;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 1em;
     @include breakpoint($breakpoint-s-min) {
       float: right;
@@ -614,7 +615,7 @@
       @include grid-column(8);
     }
     a {
-      font-weight: 500;
+      font-weight: 600;
       color: $white;
     }
   }
@@ -683,7 +684,7 @@
       border-right: 1px solid $darkBeige;
     }
     dt {
-      font-weight: 500;
+      font-weight: 600;
       padding-top: $space-xsmall-mobile;
       padding-bottom: $space-xsmall-mobile;
       @include text-overflow();
@@ -800,6 +801,7 @@
   }
   .election-teaser__col__title {
     font-family: $font-serif;
+    font-weight: 400;
     padding-left: 65px;
     position: relative;
     .icon {
@@ -830,4 +832,3 @@
 
 .page-taxonomy-term-29821 .testimonial.clearfix { display: none; }
 .page-taxonomy-term-29821 .patron-teaser { border-top: 0; }
-
