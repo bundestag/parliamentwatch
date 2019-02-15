@@ -68,7 +68,8 @@ function pw_administration_admin_paths() {
     'taxonomy/term/*/committees/export' => TRUE,
     'taxonomy/term/*/nodes' => TRUE,
     'taxonomy/term/*/electoral-regions' => TRUE,
-    'taxonomy/term/*/constituencies'=> TRUE
+    'taxonomy/term/*/constituencies' => TRUE,
+    'taxonomy/term/*/reset-user-archive-cache' => TRUE
   );
   return $paths;
 }

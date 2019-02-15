@@ -120,7 +120,7 @@ function parliamentwatch_page_alter(&$page) {
 
     $has_container = !empty(array_filter($page['content']['system_main']['#theme_wrappers'], $filter));
     $has_filters = isset($page['content']['system_main']['filters']);
-    $is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page_or_press_release = menu_get_object('node') ? in_array(menu_get_object('node')->type, ['blogpost', 'dialogue', 'pw_petition', 'poll', 'committee', 'press_release']) : FALSE;
+    $content_type_without_container = menu_get_object('node') ? in_array(menu_get_object('node')->type, ['blogpost', 'dialogue', 'pw_petition', 'poll', 'committee', 'press_release']) : FALSE;
     $is_profile_page = in_array(menu_get_item()['page_callback'], ['user_view_page', 'user_revision_show']);
     $is_comment_reply_page = menu_get_item()['page_callback'] == 'comment_reply';
     $is_topic_page = menu_get_item()['page_callback'] == 'pw_globals_taxonomy_term_page';
@@ -131,7 +131,7 @@ function parliamentwatch_page_alter(&$page) {
       $is_press_page = false;
     };
 
-    if (!$has_container && !$has_filters && !$is_blog_or_petition_or_dialogue_page_or_poll_page_or_committee_page_or_press_release && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page && !$is_press_page) {
+    if (!$has_container && !$has_filters && !$content_type_without_container && !$is_profile_page && !$is_comment_reply_page && !$is_topic_page && !$is_press_page) {
       $page['content']['system_main']['#prefix'] = '<div class="container">';
       $page['content']['system_main']['#suffix'] = '</div>';
     }
@@ -303,6 +303,12 @@ function parliamentwatch_preprocess_node(&$variables) {
   $month = sprintf('<span class="date__month">%s</span>', format_date($node->created, 'custom', 'M'));
   $year = sprintf('<span class="date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
   $variables['date'] = sprintf('<span class="date">%s%s%s</span>', $day, $month, $year);
+  if ($variables['view_mode'] == 'tile') {
+    $day = sprintf('<span class="tile__title__date__day">%s</span>', format_date($node->created, 'custom', 'j'));
+    $month = sprintf('<span class="tile__title__date__month">%s</span>', format_date($node->created, 'custom', 'M'));
+    $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
+    $variables['date'] = sprintf('<span class="tile__title__date">%s%s%s</span>', $day, $month, $year);
+  }
 
   if (isset($variables['field_teaser_image'][0]['fid'])) {
     $variables['content']['field_teaser_image_copyright'] = field_view_field('file', file_load($variables['field_teaser_image'][0]['fid']), 'field_image_copyright', 'default');
@@ -342,6 +348,14 @@ function parliamentwatch_preprocess_node(&$variables) {
     if (is_object($job_category) && isset($job_category->tid) && $job_category->tid == 29231) {
       $variables['activity'] = t('Financial share');
     }
+  }
+
+  // for press_release tiles
+  if ($variables['type'] == 'press_release' && $variables['view_mode'] == 'tile') {
+    $day = sprintf('<span class="tile__title__date__day">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'j'));
+    $month = sprintf('<span class="tile__title__date__month">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'M'));
+    $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'Y'));
+    $variables['date'] = sprintf('<span class="tile__title__date">%s%s%s</span>', $day, $month, $year);
   }
 }
 
@@ -414,6 +428,12 @@ function parliamentwatch_preprocess_user_profile(&$variables) {
     ];
     if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
       $text = t('Constituency @number: @title', $placeholders, ['context' => 'Bayern']);
+    }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
+      $text = t('Constituency @number: @title', $placeholders, ['context' => 'Bremen']);
+    }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'EU') === 0) {
+      $text = t('Constituency @number: @title', $placeholders, ['context' => 'EU']);
     }
     else {
       $text = t('Constituency @number: @title', $placeholders, ['context' => '']);
@@ -1348,6 +1368,12 @@ function parliamentwatch_profile_search_summary($variables) {
     $constituency_context = 'Bayern';
     $list_context = 'Bayern';
   }
+  elseif (strpos($variables['parliament']->name, 'Bremen') === 0) {
+    $constituency_context = 'Bremen';
+  }
+  elseif (strpos($variables['parliament']->name, 'EU') === 0) {
+    $constituency_context = 'EU';
+  }
   else {
     $constituency_context = '';
     $list_context = '';
@@ -1609,7 +1635,13 @@ t('Deputy', [], ['context' => 'female']);
 t('Deputy', [], ['context' => 'male']);
 t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => '']);
 t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'Bayern']);
+t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'Bremen']);
+t('<span>in</span> <a href="@url" class="filter-summary__content__link">constituency @name</a>', [], ['context' => 'EU']);
 format_plural(0, '1 constituency', '@count constituencies', [], ['context' => '']);
 format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'Bayern']);
+format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'Bremen']);
+format_plural(0, '1 constituency', '@count constituencies', [], ['context' => 'EU']);
 format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => '']);
 format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'Bayern']);
+format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'Bremen']);
+format_plural(0, 'in constituency @name', 'and @count constituencies', [], ['context' => 'EU']);

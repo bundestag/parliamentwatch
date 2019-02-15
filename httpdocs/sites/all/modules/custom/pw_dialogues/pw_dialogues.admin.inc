@@ -254,7 +254,7 @@ function pw_dialogues_admin_reimport_submit($form, &$form_state) {
       $form_state['rebuild'] = TRUE;
 
       // rewrite user archive cache
-      pw_userarchives_cron($record->uid);
+      pw_userarchives_update_by_user($record->uid);
     }
   }
 }

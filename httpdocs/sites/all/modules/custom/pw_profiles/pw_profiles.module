@@ -97,7 +97,14 @@ function pw_profiles_tokens($type, $tokens, array $data = [], array $options = [
             $parliament = pw_profiles_parliament($data['user']);
             if (strpos($parliament->name, 'Bayern') === 0) {
               $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => 'Bayern']) . ',';
-            } else {
+            }
+            elseif (strpos($parliament->name, 'Bremen') === 0) {
+              $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => 'Bremen']) . ',';
+            }
+            elseif (strpos($parliament->name, 'EU') === 0) {
+              $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => 'EU']) . ',';
+            }
+            else {
               $replacements[$original] = t('Constituency @number: @title', $placeholders, ['context' => '']) . ',';
             }
           }
@@ -309,7 +316,6 @@ function pw_profiles_user_load($users) {
  *  Implements hook_user_update().
  */
 function pw_profiles_user_update(&$edit, $account, $category) {
-
   // custom abort flag to prevent circular updates
   if(isset($account->abort_update) && $account->abort_update){
     return;
@@ -366,6 +372,9 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
   if (isset($account->content['field_user_constituency'])) {
     if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
       $account->content['field_user_constituency']['#title'] = t('Constituency', [], ['context' => 'Bayern']);
+    }
+    if (strpos(pw_profiles_parliament($account)->name, 'EU') === 0) {
+      $account->content['field_user_constituency']['#title'] = t('Constituency', [], ['context' => 'EU']);
     }
   }
 
@@ -770,12 +779,7 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
 
   $parameters = drupal_get_query_parameters();
 
-  if (strpos($parliament->name, 'EU') === 0) {
-    $keys_placeholder = t('Enter a locality or name');
-  }
-  else {
-    $keys_placeholder = t('Enter a postal code, locality or name');
-  }
+  $keys_placeholder = t('Enter a postal code, locality or name');
 
   $form['#method'] = 'get';
   $form['#action'] = url(current_path());
@@ -793,6 +797,12 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
     $constituency_title = t('Constituency', [], ['context' => 'Bayern']);
     $list_title = t('List', [], ['context' => 'Bayern']);
     $list_position_title = t('List position', [], ['context' => 'Bayern']);
+  }
+  elseif (strpos($parliament->name, 'Bremen') === 0) {
+    $constituency_title = t('Constituency', [], ['context' => 'Bremen']);
+  }
+  elseif (strpos($parliament->name, 'EU') === 0) {
+    $constituency_title = t('Constituency', [], ['context' => 'EU']);
   }
   else {
     $constituency_title = t('Constituency', [], ['context' => '']);
@@ -1282,8 +1292,10 @@ function _pw_profiles_filter_options(array $options, $account) {
 
 t('Constituency result', [], ['context' => '']);
 t('Constituency result', [], ['context' => 'Bayern']);
+t('Constituency result', [], ['context' => 'Bremen']);
 t('@result % (via constituency)', ['@result' => 0], ['context' => '']);
 t('@result % (via constituency)', ['@result' => 0], ['context' => 'Bayern']);
+t('@result % (via constituency)', ['@result' => 0], ['context' => 'Bremen']);
 t('@result % (via list)', ['@result' => 0], ['context' => '']);
 t('@result % (via list)', ['@result' => 0], ['context' => 'Baden-Württemberg']);
 t('@result % (via list)', ['@result' => 0], ['context' => 'Bayern']);
