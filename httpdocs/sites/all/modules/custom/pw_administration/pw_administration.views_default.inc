@@ -4814,7 +4814,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -5123,6 +5123,881 @@ function pw_administration_views_default_views() {
     t('Alle'),
   );
   $export['pw_administration_fragen'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_imports';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'pw_parliaments_admin_imports';
+  $view->human_name = 'PW Administration Imports';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Importe';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administrate an import';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'id' => 'id',
+    'label' => 'label',
+    'type' => 'type',
+    'name' => 'name',
+    'filename' => 'filename',
+    'status' => 'status',
+    'nothing' => 'nothing',
+    'nothing_1' => 'nothing_1',
+    'ctools_dropdown' => 'ctools_dropdown',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'label' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'type' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'filename' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'ctools_dropdown' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: PW Administration - Create new */
+  $handler->display->display_options['header']['pw_administration_create_new']['id'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['table'] = 'views';
+  $handler->display->display_options['header']['pw_administration_create_new']['field'] = 'pw_administration_create_new';
+  $handler->display->display_options['header']['pw_administration_create_new']['empty'] = TRUE;
+  $handler->display->display_options['header']['pw_administration_create_new']['entity_to_create'] = 'pw_import';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Importen';
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine Importe gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Beziehung: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['relationships']['parliament']['id'] = 'parliament';
+  $handler->display->display_options['relationships']['parliament']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['relationships']['parliament']['field'] = 'parliament';
+  $handler->display->display_options['relationships']['parliament']['label'] = 'Parliament';
+  /* Beziehung: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['relationships']['file']['id'] = 'file';
+  $handler->display->display_options['relationships']['file']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['relationships']['file']['field'] = 'file';
+  $handler->display->display_options['relationships']['file']['label'] = 'CSV-Datei';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['id']['id'] = 'id';
+  $handler->display->display_options['fields']['id']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['fields']['id']['field'] = 'id';
+  $handler->display->display_options['fields']['id']['label'] = '';
+  $handler->display->display_options['fields']['id']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['id']['element_label_colon'] = FALSE;
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['label']['id'] = 'label';
+  $handler->display->display_options['fields']['label']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['fields']['label']['field'] = 'label';
+  $handler->display->display_options['fields']['label']['label'] = 'Importieren';
+  $handler->display->display_options['fields']['label']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['label']['alter']['path'] = 'admin/abgeordnetenwatch/imports/[id]';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['type']['id'] = 'type';
+  $handler->display->display_options['fields']['type']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['fields']['type']['field'] = 'type';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'parliament';
+  $handler->display->display_options['fields']['name']['label'] = 'Parlament';
+  $handler->display->display_options['fields']['name']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['name']['alter']['path'] = 'admin/abgeordnetenwatch/imports/[id]';
+  /* Feld: Datei: Name */
+  $handler->display->display_options['fields']['filename']['id'] = 'filename';
+  $handler->display->display_options['fields']['filename']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['filename']['field'] = 'filename';
+  $handler->display->display_options['fields']['filename']['relationship'] = 'file';
+  $handler->display->display_options['fields']['filename']['label'] = 'CSV';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'pw_parliaments_admin_imports';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = '';
+  $handler->display->display_options['fields']['status']['element_label_colon'] = FALSE;
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Bearbeiten';
+  $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing']['alter']['path'] = 'admin/abgeordnetenwatch/imports/[id]/edit';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing_1']['id'] = 'nothing_1';
+  $handler->display->display_options['fields']['nothing_1']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing_1']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing_1']['label'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing_1']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['text'] = 'Löschen';
+  $handler->display->display_options['fields']['nothing_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['nothing_1']['alter']['path'] = 'admin/abgeordnetenwatch/imports/[id]/delete';
+  /* Feld: Global: Dropdown links */
+  $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
+  $handler->display->display_options['fields']['ctools_dropdown']['field'] = 'ctools_dropdown';
+  $handler->display->display_options['fields']['ctools_dropdown']['label'] = 'Aktionen';
+  $handler->display->display_options['fields']['ctools_dropdown']['fields'] = array(
+    'nothing' => 'nothing',
+    'nothing_1' => 'nothing_1',
+  );
+  $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 1;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/wahlen-parlamente/imports';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Importe';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $translatables['pw_administration_imports'] = array(
+    t('Master'),
+    t('Importe'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Importen'),
+    t('Keine Importe gefunden'),
+    t('Parliament'),
+    t('CSV-Datei'),
+    t('Importieren'),
+    t('Beschädigte Behandlungsroutine pw_parliaments_admin_imports.type'),
+    t('Parlament'),
+    t('CSV'),
+    t('Bearbeiten'),
+    t('Löschen'),
+    t('Aktionen'),
+    t('Page'),
+  );
+  $export['pw_administration_imports'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_imports_constituency_datasets';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $view->human_name = 'PW Administration Imports Constituency Datasets';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administrate an import';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'constituency' => 'constituency',
+    'constituency_nr' => 'constituency_nr',
+    'area_code' => 'area_code',
+    'area_code_descriptor' => 'area_code_descriptor',
+    'street' => 'street',
+  );
+  $handler->display->display_options['style_options']['default'] = 'constituency';
+  $handler->display->display_options['style_options']['info'] = array(
+    'constituency' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'constituency_nr' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'area_code' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'area_code_descriptor' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'street' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Datensätzen';
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Es wurden keine Wahlkreis-Datensätze gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['constituency']['id'] = 'constituency';
+  $handler->display->display_options['fields']['constituency']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['constituency']['field'] = 'constituency';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['constituency_nr']['id'] = 'constituency_nr';
+  $handler->display->display_options['fields']['constituency_nr']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['constituency_nr']['field'] = 'constituency_nr';
+  $handler->display->display_options['fields']['constituency_nr']['label'] = 'Constituency nr';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['area_code']['id'] = 'area_code';
+  $handler->display->display_options['fields']['area_code']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['area_code']['field'] = 'area_code';
+  $handler->display->display_options['fields']['area_code']['label'] = 'Area code';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['area_code_descriptor']['id'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['area_code_descriptor']['field'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['label'] = 'Area code descriptor';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['street']['id'] = 'street';
+  $handler->display->display_options['fields']['street']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['street']['field'] = 'street';
+  $handler->display->display_options['fields']['street']['label'] = 'Street';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['errors']['id'] = 'errors';
+  $handler->display->display_options['fields']['errors']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['fields']['errors']['field'] = 'errors';
+  $handler->display->display_options['fields']['errors']['label'] = 'Fehler';
+  /* Kontextfilter: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['arguments']['import']['id'] = 'import';
+  $handler->display->display_options['arguments']['import']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['arguments']['import']['field'] = 'import';
+  $handler->display->display_options['arguments']['import']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['import']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['import']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['import']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['import']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['import']['summary_options']['items_per_page'] = '25';
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['constituency_nr']['id'] = 'constituency_nr';
+  $handler->display->display_options['filters']['constituency_nr']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['constituency_nr']['field'] = 'constituency_nr';
+  $handler->display->display_options['filters']['constituency_nr']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['constituency_nr']['expose']['operator_id'] = 'constituency_nr_op';
+  $handler->display->display_options['filters']['constituency_nr']['expose']['label'] = 'Constituency nr';
+  $handler->display->display_options['filters']['constituency_nr']['expose']['operator'] = 'constituency_nr_op';
+  $handler->display->display_options['filters']['constituency_nr']['expose']['identifier'] = 'constituency_nr';
+  $handler->display->display_options['filters']['constituency_nr']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['constituency']['id'] = 'constituency';
+  $handler->display->display_options['filters']['constituency']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['constituency']['field'] = 'constituency';
+  $handler->display->display_options['filters']['constituency']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['constituency']['expose']['operator_id'] = 'constituency_op';
+  $handler->display->display_options['filters']['constituency']['expose']['label'] = 'Wahlkreis';
+  $handler->display->display_options['filters']['constituency']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['constituency']['expose']['operator'] = 'constituency_op';
+  $handler->display->display_options['filters']['constituency']['expose']['identifier'] = 'constituency';
+  $handler->display->display_options['filters']['constituency']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['operator'] = 'in';
+  $handler->display->display_options['filters']['status']['value'] = array();
+  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['area_code']['id'] = 'area_code';
+  $handler->display->display_options['filters']['area_code']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['area_code']['field'] = 'area_code';
+  $handler->display->display_options['filters']['area_code']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['area_code']['expose']['operator_id'] = 'area_code_op';
+  $handler->display->display_options['filters']['area_code']['expose']['label'] = 'Area code';
+  $handler->display->display_options['filters']['area_code']['expose']['operator'] = 'area_code_op';
+  $handler->display->display_options['filters']['area_code']['expose']['identifier'] = 'area_code';
+  $handler->display->display_options['filters']['area_code']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['area_code_descriptor']['id'] = 'area_code_descriptor';
+  $handler->display->display_options['filters']['area_code_descriptor']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['area_code_descriptor']['field'] = 'area_code_descriptor';
+  $handler->display->display_options['filters']['area_code_descriptor']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['operator_id'] = 'area_code_descriptor_op';
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['label'] = 'Area code descriptor';
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['operator'] = 'area_code_descriptor_op';
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['identifier'] = 'area_code_descriptor';
+  $handler->display->display_options['filters']['area_code_descriptor']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['street']['id'] = 'street';
+  $handler->display->display_options['filters']['street']['table'] = 'pw_parliaments_admin_imports_constituencies_datasets';
+  $handler->display->display_options['filters']['street']['field'] = 'street';
+  $handler->display->display_options['filters']['street']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['street']['expose']['operator_id'] = 'street_op';
+  $handler->display->display_options['filters']['street']['expose']['label'] = 'Street';
+  $handler->display->display_options['filters']['street']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['street']['expose']['operator'] = 'street_op';
+  $handler->display->display_options['filters']['street']['expose']['identifier'] = 'street';
+  $handler->display->display_options['filters']['street']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 1;
+  $handler->display->display_options['style_options']['filename'] = 'constituencies.csv';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/imports/%/datasets-export';
+  $handler->display->display_options['displays'] = array(
+    'default' => 'default',
+  );
+  $translatables['pw_administration_imports_constituency_datasets'] = array(
+    t('Master'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Datensätzen'),
+    t('Es wurden keine Wahlkreis-Datensätze gefunden'),
+    t('Beschädigte Behandlungsroutine pw_parliaments_admin_imports_constituencies_datasets.constituency'),
+    t('Constituency nr'),
+    t('Area code'),
+    t('Area code descriptor'),
+    t('Street'),
+    t('Status'),
+    t('Fehler'),
+    t('Alle'),
+    t('Wahlkreis'),
+    t('Data export'),
+  );
+  $export['pw_administration_imports_constituency_datasets'] = $view;
+
+  $view = new view();
+  $view->name = 'pw_administration_imports_constituency_structured_data';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'pw_parliaments_admin_imports_constituencies_structured';
+  $view->human_name = 'PW Administration Imports Constituency Structured Data';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['css_class'] = 'pw-administration-view';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'administrate an import';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'name' => 'name',
+    'field_constituency_nr' => 'field_constituency_nr',
+    'field_constituency_area_codes' => 'field_constituency_area_codes',
+    'field_constituency_ac_descriptor' => 'field_constituency_ac_descriptor',
+    'field_constituency_street' => 'field_constituency_street',
+  );
+  $handler->display->display_options['style_options']['default'] = 'name';
+  $handler->display->display_options['style_options']['info'] = array(
+    'name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_nr' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_area_codes' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_ac_descriptor' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_street' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Wahlkreisen';
+  /* Verhalten, wenn keine Ergebnisse vorliegen: Global: Textbereich */
+  $handler->display->display_options['empty']['area']['id'] = 'area';
+  $handler->display->display_options['empty']['area']['table'] = 'views';
+  $handler->display->display_options['empty']['area']['field'] = 'area';
+  $handler->display->display_options['empty']['area']['empty'] = TRUE;
+  $handler->display->display_options['empty']['area']['content'] = 'Keine strukturierten Daten gefunden';
+  $handler->display->display_options['empty']['area']['format'] = 'managed_content';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'Wahlkreis';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'Constituency nr';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['field_constituency_area_codes']['id'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['label'] = 'Area codes';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['id'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['field'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['label'] = 'Area code descriptors';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['field_constituency_street']['id'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['field_constituency_street']['field'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['label'] = 'Streets';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['errors']['id'] = 'errors';
+  $handler->display->display_options['fields']['errors']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['errors']['field'] = 'errors';
+  $handler->display->display_options['fields']['errors']['label'] = 'Errors';
+  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  /* Kontextfilter: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['arguments']['import']['id'] = 'import';
+  $handler->display->display_options['arguments']['import']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['arguments']['import']['field'] = 'import';
+  $handler->display->display_options['arguments']['import']['exception']['title'] = 'Alle';
+  $handler->display->display_options['arguments']['import']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['import']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['import']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['import']['summary_options']['items_per_page'] = '25';
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['id'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['field'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['expose']['operator_id'] = 'field_constituency_ac_descriptor_op';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['expose']['label'] = 'Area code descriptors';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['expose']['operator'] = 'field_constituency_ac_descriptor_op';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['expose']['identifier'] = 'field_constituency_ac_descriptor';
+  $handler->display->display_options['filters']['field_constituency_ac_descriptor']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['field_constituency_area_codes']['id'] = 'field_constituency_area_codes';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_constituency_area_codes']['expose']['operator_id'] = 'field_constituency_area_codes_op';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['expose']['label'] = 'Area codes';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['expose']['operator'] = 'field_constituency_area_codes_op';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['expose']['identifier'] = 'field_constituency_area_codes';
+  $handler->display->display_options['filters']['field_constituency_area_codes']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['field_constituency_nr']['id'] = 'field_constituency_nr';
+  $handler->display->display_options['filters']['field_constituency_nr']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['field_constituency_nr']['field'] = 'field_constituency_nr';
+  $handler->display->display_options['filters']['field_constituency_nr']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_constituency_nr']['expose']['operator_id'] = 'field_constituency_nr_op';
+  $handler->display->display_options['filters']['field_constituency_nr']['expose']['label'] = 'Constituency nr';
+  $handler->display->display_options['filters']['field_constituency_nr']['expose']['operator'] = 'field_constituency_nr_op';
+  $handler->display->display_options['filters']['field_constituency_nr']['expose']['identifier'] = 'field_constituency_nr';
+  $handler->display->display_options['filters']['field_constituency_nr']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['field_constituency_street']['id'] = 'field_constituency_street';
+  $handler->display->display_options['filters']['field_constituency_street']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['field_constituency_street']['field'] = 'field_constituency_street';
+  $handler->display->display_options['filters']['field_constituency_street']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_constituency_street']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_constituency_street']['expose']['operator_id'] = 'field_constituency_street_op';
+  $handler->display->display_options['filters']['field_constituency_street']['expose']['label'] = 'Streets';
+  $handler->display->display_options['filters']['field_constituency_street']['expose']['operator'] = 'field_constituency_street_op';
+  $handler->display->display_options['filters']['field_constituency_street']['expose']['identifier'] = 'field_constituency_street';
+  $handler->display->display_options['filters']['field_constituency_street']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['name']['id'] = 'name';
+  $handler->display->display_options['filters']['name']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['name']['field'] = 'name';
+  $handler->display->display_options['filters']['name']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['name']['expose']['operator_id'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['label'] = 'Wahlkreis';
+  $handler->display->display_options['filters']['name']['expose']['operator'] = 'name_op';
+  $handler->display->display_options['filters']['name']['expose']['identifier'] = 'name';
+  $handler->display->display_options['filters']['name']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Beschädigte/fehlende Behandlungsroutine */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'pw_parliaments_admin_imports_constituencies_structured';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['operator'] = 'in';
+  $handler->display->display_options['filters']['status']['value'] = array();
+  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $translatables['pw_administration_imports_constituency_structured_data'] = array(
+    t('Master'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Zeigt @start - @end von @total Wahlkreisen'),
+    t('Keine strukturierten Daten gefunden'),
+    t('Wahlkreis'),
+    t('Constituency nr'),
+    t('Area codes'),
+    t('Area code descriptors'),
+    t('Streets'),
+    t('Errors'),
+    t('Status'),
+    t('Alle'),
+  );
+  $export['pw_administration_imports_constituency_structured_data'] = $view;
 
   $view = new view();
   $view->name = 'pw_administration_parliaments';
