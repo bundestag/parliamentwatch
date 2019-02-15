@@ -82,11 +82,7 @@
 ?>
 <article id="press-article-<?php print $node->nid; ?>" class="<?php print $classes; ?> press-article tile clearfix"<?php print $attributes; ?>>
   <header class="tile__title tile__title--date mh-item">
-    <span class="date">
-      <span class="date__day"><?php print format_date(strtotime($content['field_press_article_date']['#items'][0]['value']), 'custom', 'd'); ?></span>
-      <span class="date__month"><?php print format_date(strtotime($content['field_press_article_date']['#items'][0]['value']), 'custom', 'M'); ?></span>
-      <span class="date__year"><?php print format_date(strtotime($content['field_press_article_date']['#items'][0]['value']), 'custom', 'Y'); ?></span>
-    </span>
+    <?php print $date ?>
     <h3><?php print $title; ?></h3>
     <p><?php print render($content['field_press_article_publisher']); ?></p>
   </header>

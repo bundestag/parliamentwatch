@@ -357,6 +357,13 @@ function parliamentwatch_preprocess_node(&$variables) {
     $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date(strtotime($node->field_press_release_date['und'][0]['value']), 'custom', 'Y'));
     $variables['date'] = sprintf('<span class="tile__title__date">%s%s%s</span>', $day, $month, $year);
   }
+  // for press_article tiles
+  if ($variables['type'] == 'press_article' && $variables['view_mode'] == 'tile') {
+    $day = sprintf('<span class="tile__title__date__day">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'j'));
+    $month = sprintf('<span class="tile__title__date__month">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'M'));
+    $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'Y'));
+    $variables['date'] = sprintf('<span class="tile__title__date">%s%s%s</span>', $day, $month, $year);
+  }
 }
 
 /**
