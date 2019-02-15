@@ -115,7 +115,7 @@
         @include grid-column(4, $neat-grid-no-gutter);
       }
       @include breakpoint($breakpoint-l-min) {
-        @include grid-column(2, $neat-grid-no-gutter);
+        width: 20%;
       }
 
       &__icon {
@@ -156,14 +156,15 @@
       }
 
       &--4,
-      &--5,
-      &--6 {
+      &--5 {
         @include breakpoint($breakpoint-s-min) {
           border-top: 1px solid $darkBeige;
           border-bottom: 0;
+          @include grid-column(6, $neat-grid-no-gutter);
         }
         @include breakpoint($breakpoint-l-min) {
           border-top: 0;
+          width: 20%;
         }
       }
       &--3 {
@@ -174,7 +175,7 @@
           border-right: 1px solid $darkBeige;
         }
       }
-      &--6 {
+      &--5 {
         border-bottom: 0;
         @include breakpoint($breakpoint-s-min) {
           border-right: 0;
