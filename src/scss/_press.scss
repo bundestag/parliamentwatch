@@ -93,9 +93,8 @@
   }
   @include breakpoint($breakpoint-l-min) {
     margin-top: $space-large * 2;
-    margin-bottom: $space-large;
+    margin-bottom: $space-large * 2;
   }
-
   &__list {
     border-top: 1px solid $darkBeige;
     border-bottom: 1px solid $darkBeige;
