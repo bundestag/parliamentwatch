@@ -80,7 +80,6 @@
 }
 .press-release__header__submitted {
   color: $gray;
-  }
 }
 
 /* Press-Links */
@@ -185,6 +184,7 @@
   }
 }
 
+
 .press-contact {
   margin-bottom: $space;
   @include breakpoint($breakpoint-m-min) {
@@ -259,7 +259,6 @@
     @include grid-column(6);
   }
 }
-.press-download__item__image {}
 .press-download__item__footer {
   @include clearfix();
   span {
@@ -269,4 +268,5 @@
   }
   .btn {
     float: right;
+  }
 }
