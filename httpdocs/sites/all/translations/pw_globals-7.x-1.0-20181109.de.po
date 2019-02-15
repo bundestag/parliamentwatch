@@ -1217,23 +1217,23 @@ msgstr ""
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--press-article--tile.tpl.php:101
 msgid "Open external link"
-msgstr ""
+msgstr "Externen Link öffnen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--press-article--tile.tpl.php:109
 msgid "Download @filename now"
-msgstr ""
+msgstr "@filename jetzt herunterladen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--press-article--tile.tpl.php:111
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF herunterladen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--press-article--tile.tpl.php:117
 msgid "Download Video"
-msgstr ""
+msgstr "Video-Datei herunterladen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--press-article--tile.tpl.php:122
 msgid "Download Audio"
-msgstr ""
+msgstr "Audio-Datei herunterladen"
 
 #: sites/all/themes/custom/parliamentwatch/templates/views-exposed-form--press-release--page.tpl.php:42
 #: sites/all/themes/custom/parliamentwatch/templates/page--test.tpl.php:177;338;723;1240
