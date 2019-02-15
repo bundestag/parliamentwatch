@@ -5,8 +5,14 @@ namespace Drupal\pw_parliaments_admin\PWEntity;
 
 
 /**
- * To avoid the messy Drupal 7 entity API we use this Interface and the EntiyBase
- * abstract class to implement a simple base save and loading system
+ * To avoid the messy Drupal 7 entity API we use this
+ * abstract class to implement a simple base save and loading system. To use
+ * this class please note the following:
+ *
+ *  - the class extending this class needs a database table. Define it in hook_schema
+ *  - name each property of the class in the same way as the database table column
+ *    where this property should be stored
+ *
  */
 abstract class EntityBase implements EntityInterface {
 

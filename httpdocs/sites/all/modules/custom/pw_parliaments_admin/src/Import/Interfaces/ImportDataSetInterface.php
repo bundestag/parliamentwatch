@@ -10,8 +10,10 @@ use Drupal\pw_parliaments_admin\Import\Interfaces\ImportValidation;
 
 /**
  * ImportDataSet classes describe a single entry from a CSV. Together with a
- * PreDrupalEntity class it describes how a Drupal entity will be gained from
- * the CSV entry. The PreDrupalEntity will then really creating the Drupal entities.
+ * StructuredData class it describes how a Drupal entity will be gained from
+ * the CSV entry.
+ *
+ * Be aware that you need to define a database table for that class
  */
 interface ImportDataSetInterface extends EntityInterface, ImportValidation {
 
@@ -50,7 +52,7 @@ interface ImportDataSetInterface extends EntityInterface, ImportValidation {
    * @param array $dataFromCsv
    * An array of field values parsed from the CSV
    *
-   * @return \Drupal\pw_parliaments_admin\ImportDataSetInterface
+   * @return \Drupal\pw_parliaments_admin\Import\Interfaces\ImportDataSetInterface
    */
   public static function createFromCSVArray(array $dataFromCsv, Import $import);
 
