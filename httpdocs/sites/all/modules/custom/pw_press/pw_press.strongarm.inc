@@ -190,7 +190,7 @@ function pw_press_strongarm() {
         'custom_settings' => FALSE,
       ),
       'tile' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'list_item' => array(
         'custom_settings' => FALSE,
@@ -224,9 +224,17 @@ function pw_press_strongarm() {
             'weight' => '36',
             'visible' => FALSE,
           ),
+          'tile' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
         ),
         'sharethis' => array(
           'default' => array(
+            'weight' => '-100',
+            'visible' => TRUE,
+          ),
+          'tile' => array(
             'weight' => '-100',
             'visible' => TRUE,
           ),
@@ -249,7 +257,7 @@ function pw_press_strongarm() {
         'custom_settings' => FALSE,
       ),
       'full' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'rss' => array(
         'custom_settings' => FALSE,
@@ -276,7 +284,7 @@ function pw_press_strongarm() {
         'custom_settings' => FALSE,
       ),
       'tile' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'list_item' => array(
         'custom_settings' => FALSE,
@@ -317,6 +325,10 @@ function pw_press_strongarm() {
             'weight' => '32',
             'visible' => FALSE,
           ),
+          'tile' => array(
+            'weight' => '10',
+            'visible' => TRUE,
+          ),
         ),
         'sharethis' => array(
           'full' => array(
@@ -328,6 +340,10 @@ function pw_press_strongarm() {
             'visible' => FALSE,
           ),
           'search_result' => array(
+            'weight' => '0',
+            'visible' => FALSE,
+          ),
+          'tile' => array(
             'weight' => '0',
             'visible' => FALSE,
           ),
@@ -422,7 +438,7 @@ function pw_press_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'node_submitted_press_release';
-  $strongarm->value = 0;
+  $strongarm->value = 1;
   $export['node_submitted_press_release'] = $strongarm;
 
   $strongarm = new stdClass();

@@ -5,3 +5,58 @@
  */
 
 include_once 'pw_press.features.inc';
+
+/**
+ * Implements hook_block_info().
+ */
+function pw_press_block_info() {
+  $blocks['press_links'] = [
+    'info' => t('Presse Links'),
+    'cache' => DRUPAL_CACHE_PER_ROLE | DRUPAL_CACHE_PER_PAGE,
+  ];
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function pw_press_block_view($delta = '') {
+  switch ($delta) {
+    case 'press_links':
+      return pw_press_links();
+    default:
+      return [];
+  }
+}
+
+/**
+ * Displays press related links.
+ *
+ * @return array
+ *   The block render array.
+ */
+function pw_press_links() {
+  $list_items = array(
+    array(l('<i class="press-links__list__item__icon icon icon-news"></i>' . t('Press review'), 'ueber-uns/presse/pressespiegel', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--1')),
+    array(l('<i class="press-links__list__item__icon icon icon-folders"></i>' . t('Press releases'), 'ueber-uns/presse/pressemitteilungen', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--2')),
+    array(l('<i class="press-links__list__item__icon icon icon-thesis"></i>' . t('Press newsletter'), 'node/972122', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--3')),
+    array(l('<i class="press-links__list__item__icon icon icon-download"></i>' . t('Press package'), 'node/39911', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--4')),
+    array(l('<i class="press-links__list__item__icon icon icon-mail"></i>' . t('Press contact'), 'node/6578', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--5')),
+  );
+
+  $list_output .= theme(
+    'item_list',
+    array(
+      'items' => $list_items,
+      'attributes' => array(
+        'class' => array('press-links__list')
+      )
+    ));
+
+  $block = [
+    'subject' => t('Presse Links'),
+    'content' => $list_output,
+  ];
+
+  return $block;
+}

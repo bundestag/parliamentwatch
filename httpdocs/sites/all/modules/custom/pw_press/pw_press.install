@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the pw_press module.
+ */
+
+/**
+ * Configure press-links block.
+ */
+function pw_press_update_7201() {
+  $config = [
+    'module' => 'pw_press',
+    'delta' => 'press_links',
+    'weight' => -1,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => "ueber-uns/presse/*\npresse/download\npressemitteilungen-abonnieren\nueber-uns/mehr/mitwirkende",
+    'cache' => DRUPAL_NO_CACHE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'content_extra', 'blank' => 'content_extra']
+  ];
+  _pw_globals_configure_block($config);
+}

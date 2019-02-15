@@ -63,6 +63,7 @@ function pw_globals_menu() {
 function pw_globals_menu_alter(&$items) {
   $items['admin/content/antispam']['page arguments'] = ['nodes'];
   $items['taxonomy/term/%taxonomy_term']['page callback'] = 'pw_globals_taxonomy_term_page';
+  $items['/ueber-uns/presse/pressespiegel']['page callback'] = 'pw_globals_press_page';
   unset($items['taxonomy/term/%taxonomy_term_load']['file']);
 }
 
@@ -113,6 +114,10 @@ function pw_globals_entity_info_alter(&$entity_info) {
   $entity_info['file']['view modes']['width_large'] = array(
     'label' => t('Width large'),
     'custom settings' => TRUE,
+  );
+  $entity_info['file']['view modes']['url'] = array(
+    'label' => t('URL'),
+    'custom settings' => FALSE,
   );
 }
 
@@ -501,12 +506,7 @@ function pw_globals_politician_search_form($form, &$form_state, $parliament_term
   $form['#action'] = url("profiles/$parliament_term->tid/$role_condition");
   $form['#method'] = 'get';
 
-  if (strpos($parliament_term->name, 'EU') === 0) {
-    $placeholder = t('Enter name');
-  }
-  else {
-    $placeholder = t('Enter a postal code, locality or name');
-  }
+  $placeholder = t('Enter a postal code, locality or name');
 
   $form['keys'] = [
     '#type' => 'textfield',
@@ -689,6 +689,22 @@ function _pw_globals_politician_search_role_condition($parliament_term) {
   }
 
   return $role_condition;
+}
+
+/**
+ * Returns TRUE if the context is a newsletter-specific page
+ */
+function _pw_globals_is_newsletter_page() {
+  $current_path = current_path();
+  if (
+    $current_path === 'node/10380' ||
+    $current_path === 'node/10508' ||
+    $current_path === 'node/111893'
+  ) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
 }
 
 /**
@@ -1345,6 +1361,30 @@ function _pw_globals_antispam_prepare_comment_data($comment, $server_vars, $is_t
 
   return $comment_data;
 }
+
+/**
+ * Implements hook_custom_theme().
+ *
+ * Define the blank theme for some subdomains and paths
+ */
+function pw_globals_custom_theme() {
+  $blank_theme_name = 'blank';
+  $subdomains_with_blank_theme = [
+    'affiliate.abgeordnetenwatch.de',
+    'affiliate.stage.abgeordnetenwatch.de',
+    'affiliate.r2017.abgeordnetenwatch.de',
+    'embed.abgeordnetenwatch.de'
+  ];
+  if (in_array($_SERVER["SERVER_NAME"], $subdomains_with_blank_theme)) {
+    return $blank_theme_name;
+  }
+
+  $current_path = current_path();
+  if (drupal_match_path($current_path, 'node/10446') && isset(drupal_get_query_parameters()['recipient']) && is_numeric(drupal_get_query_parameters()['recipient'])) {
+    return $blank_theme_name;
+  }
+}
+
 
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bundestag']);
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Baden-Württemberg']);

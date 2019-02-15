@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Update functions for the pw_newsletter module.
+ */
+
+/**
+ * Configure recent newsletter Block
+ */
+function pw_newsletter_update_7100() {
+  $config = [
+    'module' => 'views',
+    'delta' => 'pw_newsletter-block',
+    'weight' => 1,
+    'visibility' => BLOCK_VISIBILITY_LISTED,
+    'pages' => 'newsletter-subscription',
+    'cache' => DRUPAL_CACHE_PER_PAGE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'content_extra']
+  ];
+  _pw_globals_configure_block($config);
+}
+

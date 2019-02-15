@@ -180,7 +180,7 @@ M445.2,31H445l0.1-0.1V31z"/>
     <?php endif; ?>
   </footer>
 
-  <?php if ($GLOBALS['theme_key'] === 'parliamentwatch'): ?>
+  <?php if ($GLOBALS['theme_key'] === 'parliamentwatch' && _pw_globals_is_newsletter_page() === FALSE): ?>
     <div class="modal modal--newsletter" data-modal-initial data-modal-cookie data-modal-cookie-expires="7" data-modal-clicksToShow="3" data-modal-name="modal_newsletter">
       <div class="modal__container">
         <div class="modal__content">

@@ -724,3 +724,87 @@ function pw_globals_update_7139() {
     drupal_uninstall_modules(['webform_hints']);
   }
 }
+
+/**
+ * Configure poll filters block.
+ */
+function pw_globals_update_7140() {
+  $config = [
+    'module' => 'pw_vote',
+    'delta' => 'poll_filters',
+    'weight' => -82,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => '',
+    'cache' => DRUPAL_NO_CACHE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'content'],
+    'node_types' => ['poll']
+  ];
+  _pw_globals_configure_block($config);
+}
+
+
+/**
+ * Deactivate and uninstall Themekey module
+ */
+function pw_globals_update_7141() {
+  if(module_exists('themekey')) {
+    module_disable(['themekey']);
+    drupal_uninstall_modules(['themekey']);
+  }
+}
+
+
+/**
+ * Deactivate and uninstall User Diff, PW Diff Formatted und PW Diff Tracking module
+ */
+function pw_globals_update_7142() {
+  if(module_exists('user_diff')) {
+    module_disable(['user_diff']);
+    drupal_uninstall_modules(['user_diff']);
+  }
+  if(module_exists('pw_diff_tracking')) {
+    module_disable(['pw_diff_tracking']);
+    drupal_uninstall_modules(['pw_diff_tracking']);
+  }
+  if(module_exists('pw_diff_formatted')) {
+    module_disable(['pw_diff_formatted']);
+    drupal_uninstall_modules(['pw_diff_formatted']);
+  }
+}
+
+
+/**
+ * Delete the rule set pw_diff_tracking to send emails when politicians updated their profile
+ */
+function pw_globals_update_7143() {
+  rules_config_delete([12]);
+}
+
+
+/**
+ * Uninstall pw cleanup module
+ */
+function pw_globals_update_7144() {
+  if(module_exists('pw_cleanup')) {
+    module_disable(['pw_cleanup']);
+    drupal_uninstall_modules(['pw_cleanup']);
+  }
+}
+
+/**
+ * Configure title block.
+ */
+function pw_globals_update_7145() {
+  $config = [
+    'module' => 'pw_globals',
+    'delta' => 'title',
+    'weight' => -1,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => "blog/*\n*/abstimmungen/*\n*/ausschuesse/*\nprofile/*\nnewsletter/*\nteam-groko\nueber-uns/presse/pressemitteilungen/*",
+    'cache' => DRUPAL_NO_CACHE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'intro_primary', 'blank' => 'intro_primary']
+  ];
+  _pw_globals_configure_block($config);
+}

@@ -14,13 +14,13 @@
   }
   .tile__title {
     border: 0;
-    padding-top: $space;
-    padding-bottom: $space;
-    text-align: center;
-    @include h3();
+    padding-bottom: 20px;
+    h1 {
+      @include h3();
+    }
   }
-  .tile__image {
-    background: $brightGray;
+  .tile__title--date .date {
+    top: 0;
   }
 }
 #body_style {
@@ -92,7 +92,7 @@
     line-height: 100%;
   }
   strong {
-    font-weight: 800 !important;
+    font-weight: 700 !important;
   }
   a, a:link {
     color:#f63;
@@ -168,7 +168,43 @@
   li, ul li { list-style: none; color: #4d4d4d; margin: 0; padding: 0; padding-left: 20px; background-image: url(https://www.abgeordnetenwatch.de/sites/all/themes/custom/parliamentwatch/images/newsletter/list-icon.png); background-repeat: no-repeat; background-position: 2px 3px; }
 }
 
+/* Newsletter subscription */
 
-
-
-
+.webform-client-form-10380 {
+  position: relative;
+  margin-bottom: $space-large;
+  @include breakpoint($breakpoint-s-min) {
+    margin-bottom: $space-large * 2;
+    padding-right: 250px;
+  }
+  .form__item {
+    position: static;
+    .form-email[type=email] {
+      height: 44px;
+      padding-top: 11px;
+    }
+  }
+  .form__item:not(.form__item--checkboxes):not(.form__item--radios):not(.form__item--checkbox):not(.form__item--radio) {
+    .form__item__label {
+      top: 32px;
+    }
+  }
+  .btn {
+    @include button--mobile-block();
+    @include breakpoint($breakpoint-s-min) {
+      position: absolute;
+      right: 0;
+      top: $space;
+    }
+  }
+}
+/* Newsletter Block */
+.view-pw-newsletter {
+  .tile {
+    margin-bottom: 0;
+  }
+  .tile-wrapper + .tile-wrapper {
+    padding-top: 0;
+    text-align: right;
+  }
+}

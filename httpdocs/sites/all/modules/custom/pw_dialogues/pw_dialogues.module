@@ -297,7 +297,7 @@ function _pw_dialogues_questions_queue_worker($payload) {
   $basic_auth = variable_get('pw_modtool_api_basic_auth', FALSE);
   $curl = curl_init($endpoint);
   curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($payload));
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json; charset=utf-8'));
   if ($basic_auth){
     curl_setopt($curl, CURLOPT_USERPWD, $basic_auth);
   }
@@ -787,6 +787,8 @@ function pw_dialogues_do_import_answers($source) {
  *
  * @return EntityFieldQuery
  *   The query object.
+ *
+ * @deprecated use PoliticianUserRevision instead
  */
 function pw_dialogues_by_user_revision_query($account) {
   $q = new EntityFieldQuery();

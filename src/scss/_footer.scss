@@ -21,6 +21,7 @@
   }
   strong {
     font-family: $font-serif;
+    font-weight: 700;
     display: block;
     padding-bottom: $space;
   }
@@ -92,7 +93,7 @@
 }
 .footer__mediapartner__title {
   font-family: $font-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1em;
   color: $brightGray;
   margin-left: $space;
