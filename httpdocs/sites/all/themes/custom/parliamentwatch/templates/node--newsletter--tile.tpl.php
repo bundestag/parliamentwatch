@@ -81,14 +81,10 @@
  */
 ?>
 <article id="node-newsletter-<?php print $node->nid; ?>" class="<?php print $classes; ?> newsletter tile"<?php print $attributes; ?>>
-  <figure class="tile__image">
-    <a href="<?php print $node_url; ?>"><?php print render($content['field_teaser_image']); ?></a>
-    <?php if (isset($content['field_teaser_image_copyright'])): ?>
-      <figcaption class="figcaption-overlay"><span>©&nbsp;<?php print render($content['field_teaser_image_copyright']); ?></span></figcaption>
-    <?php endif; ?>
-  </figure>
-  <h1 class="tile__title mh-item" <?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h1>
-  <?php print render($title_suffix); ?>
+  <header class="tile__title mh-item">
+    <h1<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h1>
+    <?php print render($title_suffix); ?>
+  </header>
   <ul class="tile__links tile__links--2">
     <li class="tile__links__item"><a class="tile__links__item__link" href="<?php print $node_url ?>"><?php print t('read more'); ?></a></li>
   </ul>
