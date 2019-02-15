@@ -63,6 +63,7 @@ function pw_globals_menu() {
 function pw_globals_menu_alter(&$items) {
   $items['admin/content/antispam']['page arguments'] = ['nodes'];
   $items['taxonomy/term/%taxonomy_term']['page callback'] = 'pw_globals_taxonomy_term_page';
+  $items['/ueber-uns/presse/pressespiegel']['page callback'] = 'pw_globals_press_page';
   unset($items['taxonomy/term/%taxonomy_term_load']['file']);
 }
 
@@ -113,6 +114,10 @@ function pw_globals_entity_info_alter(&$entity_info) {
   $entity_info['file']['view modes']['width_large'] = array(
     'label' => t('Width large'),
     'custom settings' => TRUE,
+  );
+  $entity_info['file']['view modes']['url'] = array(
+    'label' => t('URL'),
+    'custom settings' => FALSE,
   );
 }
 
