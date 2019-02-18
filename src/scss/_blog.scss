@@ -143,7 +143,7 @@
 }
 
 .blog__content {
-  @include basic-content();
+  @include basic-content-small();
   .well {
     font-size: .9em;
     margin-top: $space-large * 2;
