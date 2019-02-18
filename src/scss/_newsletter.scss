@@ -190,7 +190,7 @@
     }
   }
   .form__item:not(.form__item--checkboxes):not(.form__item--radios):not(.form__item--checkbox):not(.form__item--radio) {
-    &__label {
+    .form__item__label {
       top: 32px;
     }
   }
