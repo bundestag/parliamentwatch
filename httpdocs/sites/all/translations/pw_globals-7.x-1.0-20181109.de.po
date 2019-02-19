@@ -2146,3 +2146,5 @@ msgstr "Presse-Kontakt"
 
 #~ msgid "More blog articles from the category “@name”"
 #~ msgstr "Mehr Blogartikel aus der Rubrik „@name”"
+msgid "Submitted on !datetime"
+msgstr "Veröffentlicht am !datetime"
