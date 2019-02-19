@@ -317,7 +317,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
         'module' => 'paragraphs',
         'settings' => array(),
         'type' => 'paragraphs_embed',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -356,7 +356,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
       'bundle' => 'newsletter',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Wird unter dem Newsletter-Formular und im Archiv angezeigt. Bitte nur einen Satz verwenden/ sehr kurz halten.',
       'display' => array(
         'default' => array(
           'label' => 'hidden',
@@ -444,7 +444,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '5',
+        'weight' => '2',
       ),
     ),
   );
@@ -599,7 +599,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -957,7 +957,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           ),
         ),
         'type' => 'media_generic',
-        'weight' => '3',
+        'weight' => '4',
       ),
     ),
   );
@@ -3646,6 +3646,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
   t('Titel klein');
   t('Vorkommende Politiker');
   t('Welche Politiker werden in dem Newsletter explizit genannt?');
+  t('Wird unter dem Newsletter-Formular und im Archiv angezeigt. Bitte nur einen Satz verwenden/ sehr kurz halten.');
   t('Zielgruppe');
   t('Zusammenfassung');
 
