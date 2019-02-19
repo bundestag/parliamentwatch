@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Drupal\pw_imports\Exception;
+namespace Drupal\pw_parliaments_admin\Exception;
 
 
 /**

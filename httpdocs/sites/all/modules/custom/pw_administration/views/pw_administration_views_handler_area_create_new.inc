@@ -27,6 +27,11 @@ class pw_administration_views_handler_area_create_new extends views_handler_area
       'options_label' => 'Nebentätigkeit',
       'linktext' => 'Neue Nebentätigkeit erstellen',
       'path' => 'node/add/sidejob'
+    ],
+    'pw_import' => [
+      'options_label' => 'PW Importe',
+      'linktext' => 'Neuen Import erstellen',
+      'path' => 'admin/abgeordnetenwatch/imports/add'
     ]
   ];
 
