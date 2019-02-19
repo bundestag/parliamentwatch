@@ -18,6 +18,8 @@ class Parliament {
    */
   protected $parliamentTerm;
 
+  const VOCABULARY_VID = 18;
+
   /**
    * Parliament constructor.
    *
