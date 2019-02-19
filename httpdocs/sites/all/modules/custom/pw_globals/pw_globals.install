@@ -791,3 +791,20 @@ function pw_globals_update_7144() {
     drupal_uninstall_modules(['pw_cleanup']);
   }
 }
+
+/**
+ * Configure title block.
+ */
+function pw_globals_update_7145() {
+  $config = [
+    'module' => 'pw_globals',
+    'delta' => 'title',
+    'weight' => -1,
+    'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+    'pages' => "blog/*\n*/abstimmungen/*\n*/ausschuesse/*\nprofile/*\nnewsletter/*\nteam-groko\nueber-uns/presse/pressemitteilungen/*",
+    'cache' => DRUPAL_NO_CACHE,
+    'title' => '<none>',
+    'regions' => ['parliamentwatch' => 'intro_primary', 'blank' => 'intro_primary']
+  ];
+  _pw_globals_configure_block($config);
+}

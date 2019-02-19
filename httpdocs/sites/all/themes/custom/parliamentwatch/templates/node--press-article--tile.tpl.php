@@ -80,45 +80,43 @@
  * @ingroup themeable
  */
 ?>
-
-<div class="intro__left">
-  <h1><?php print $title; ?></h1>
-  <div class="intro__date">
-    <span class="intro__date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?></span>
-    <span class="intro__date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'M'); ?></span>
-    <span class="intro__date__year"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'Y'); ?></span>
-  </div>
-  <?php print render(field_get_items('node', $node, 'body')[0]['summary']); ?>
-  <p><a href="#poll-content" class="link-icon" data-localScroll><i class="icon icon-arrow-right"></i> Weiterlesen</a></p>
-  <?php print render($content['field_topics']); ?>
-</div>
-<?php if (isset($result)): ?>
-<div class="intro__right">
-  <div class="poll_overview">
-    <div class="poll_overview__primary">
-      <div class="poll_overview__primary__item">
-        <div class="poll_overview__primary__label"><?php print t('Accepeted') ?></div>
-        <div class="poll_overview__primary__value"><?php print $yays; ?></div>
-      </div>
-      <div class="poll_overview__primary__item">
-        <div class="poll_overview__primary__label"><?php print t('Denied') ?></div>
-        <div class="poll_overview__primary__value"><?php print $nays; ?></div>
-      </div>
-      <i class="icon icon-<?php print ($yays > $nays) ? 'ok' : 'close' ?>"></i>
-    </div>
-    <div class="poll_overview__secondary">
-      <div class="row">
-        <div class="poll_overview__secondary__item">
-          <div class="poll_overview__secondary__label"><?php print t('Abstentions') ?></div>
-          <div class="poll_overview__secondary__value"><?php print $node->result['abstain']; ?></div>
-        </div>
-        <div class="poll_overview__secondary__item">
-          <div class="poll_overview__secondary__label"><?php print t('No show') ?></div>
-          <div class="poll_overview__secondary__value"><?php print $node->result['no-show']; ?></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="poll_overview__info"><i class="icon icon-info"></i> <?php print t('Voting results by a total of %count deputies.', array('%count' => $voterCount )) ?></div>
-</div>
-<?php endif; ?>
+<article id="press-article-<?php print $node->nid; ?>" class="<?php print $classes; ?> press-article tile clearfix"<?php print $attributes; ?>>
+  <header class="tile__title tile__title--date mh-item">
+    <?php print $date ?>
+    <h3><?php print $title; ?></h3>
+    <p><?php print render($content['field_press_article_publisher']); ?></p>
+  </header>
+  <?php print render($title_suffix); ?>
+  <ul class="icon-list" data-mh="link-list">
+    <?php if (isset($content['field_press_article_link'])): ?>
+      <li>
+        <a
+            href="<?php print render($content['field_press_article_link']); ?>"
+            title="<?php print $content['field_press_article_link']['#items'][0]['attributes']['title']; ?>"
+            target="_blank">
+          <?php print t('Open external link'); ?>
+        </a>
+      </li>
+    <?php endif; ?>
+    <?php if (isset($content['field_press_article_attachment'])): ?>
+    <li>
+      <a
+          href="<?php print render($content['field_press_article_attachment']); ?>"
+          title="<?php print t('Download @filename now', array('@filename' => $content['field_press_article_attachment']['#items'][0]['filename'])); ?>"
+          target="_blank">
+        <?php print t('Download PDF'); ?>
+      </a>
+    </li>
+    <?php endif; ?>
+    <?php if (isset($content['field_press_article_video'])): ?>
+      <li>
+        <a href="<?php print render($content['field_press_article_video']); ?>" target="_blank"><?php print t('Download Video'); ?></a>
+      </li>
+    <?php endif; ?>
+    <?php if (isset($content['field_press_article_sound'])): ?>
+      <li>
+        <a href="<?php print render($content['field_press_article_sound']); ?>" target="_blank"><?php print t('Download Audio'); ?></a>
+      </li>
+    <?php endif; ?>
+  </ul>
+</article>
