@@ -86,7 +86,7 @@ function pw_administration_form_alter(&$form, &$form_state, $form_id) {
   // on parliament term form allow as many zips as we want
   if ($form_id == 'taxonomy_form_term' && isset($form["field_constituency_area_codes"])) {
     if (isset($form["field_constituency_area_codes"]["und"]["#maxlength"])) {
-      $form["field_constituency_area_codes"]["und"]["#maxlength"] = 10000;
+      $form["field_constituency_area_codes"]["und"]["#maxlength"] = 20000;
     }
 
     if (isset($form["field_constituency_area_codes"]["und"]["#autocomplete_path"])) {
