@@ -1,0 +1,247 @@
+/**
+* Press
+*/
+
+/* Press-Statements */
+
+.press-article {
+  @include grid-column(12);
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+  @include breakpoint($breakpoint-m-min) {
+    @include grid-column(4);
+  }
+  .tile__title--date {
+    padding-bottom: $space;
+    margin-bottom: $space;
+    .date {
+      top: 0;
+    }
+    h3 {
+      margin-bottom: $space-xsmall-mobile;
+    }
+    p {
+      margin-bottom: 0;
+      padding-left: 70px;
+      font-size: 14px;
+      color: $mediumGray;
+    }
+  }
+  .link-list__item {
+    @include grid-column(12);
+  }
+}
+
+/* Press-release tile */
+
+.tile--press-release {
+  @include grid-column(12);
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+  @include breakpoint($breakpoint-m-min) {
+    @include grid-column(4);
+  }
+  .tile__title {
+    padding-bottom: $space;
+    border: 0;
+  }
+  .tile__title__headline {
+    margin-bottom: $space-xsmall-mobile;
+  }
+}
+
+/* Press-release detail */
+
+.press-release__content {
+  @include container-small;
+  padding-top: $space;
+  padding-bottom: $space;
+  @include breakpoint($breakpoint-s-min) {
+    padding-top: $space-large;
+    padding-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-l-min) {
+    padding-top: $space * 2;
+    padding-bottom: $space * 2;
+  }
+}
+.press-release__content__inner {
+  padding: 0 $space;
+}
+.press-release__header {
+  margin-bottom: $space-large;
+}
+.press-release__header__headline {
+  margin-bottom: $space-small;
+}
+.press-release__header__submitted {
+  color: $gray;
+}
+
+/* Press-Links */
+
+.press-links {
+  margin-top: $space;
+  margin-bottom: $space;
+  @include breakpoint($breakpoint-m-min) {
+    margin-top: $space-large;
+    margin-bottom: $space-large;
+  }
+  @include breakpoint($breakpoint-l-min) {
+    margin-top: $space-large * 2;
+    margin-bottom: $space-large * 2;
+  }
+  &__list {
+    border-top: 1px solid $darkBeige;
+    border-bottom: 1px solid $darkBeige;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @include clearfix;
+    &__item {
+      margin: 0;
+      border-bottom: 1px solid $darkBeige;
+      @include breakpoint($breakpoint-s-min) {
+        border-bottom: 0;
+        border-right: 1px solid $darkBeige;
+      }
+      @include grid-column(12, $neat-grid-no-gutter);
+      @include breakpoint($breakpoint-s-min) {
+        @include grid-column(4, $neat-grid-no-gutter);
+      }
+      @include breakpoint($breakpoint-l-min) {
+        width: 20%;
+      }
+
+      &__icon {
+        color: $orange;
+        width: $space-large;
+        display: inline-block;
+        text-align: center;
+        @include breakpoint($breakpoint-s-min) {
+          display: block;
+          font-size: 39px;
+          margin-bottom: $space-xsmall;
+          width: auto;
+        }
+        @include breakpoint($breakpoint-l-min) {
+          margin-bottom: $space-small;
+        }
+      }
+      &__link {
+        display: block;
+        border-left: 0;
+        padding: $space-xsmall 0;
+        color: $darkGray;
+        font-family: $font-serif;
+        will-change: background-color;
+        transition: background-color 300ms ease;
+        @include breakpoint($breakpoint-s-min) {
+          padding-top: $space-large;
+          padding-bottom: $space-large;
+          text-align: center;
+        }
+        @include breakpoint($breakpoint-l-min) {
+          padding-top: $space-large * 2;
+          padding-bottom: $space-large * 2;
+        }
+        &:hover {
+          background: $beige;
+        }
+      }
+
+      &--4,
+      &--5 {
+        @include breakpoint($breakpoint-s-min) {
+          border-top: 1px solid $darkBeige;
+          border-bottom: 0;
+          @include grid-column(6, $neat-grid-no-gutter);
+        }
+        @include breakpoint($breakpoint-l-min) {
+          border-top: 0;
+          width: 20%;
+        }
+      }
+      &--3 {
+        @include breakpoint($breakpoint-s-min) {
+          border-right: 0;
+        }
+        @include breakpoint($breakpoint-l-min) {
+          border-right: 1px solid $darkBeige;
+        }
+      }
+      &--5 {
+        border-bottom: 0;
+        @include breakpoint($breakpoint-s-min) {
+          border-right: 0;
+        }
+      }
+    }
+  }
+}
+
+/* Presse-Verteiler */
+
+.webform-client-form-972122 {
+  margin-bottom: $space-large;
+  @include grid-collapse();
+  @include clearfix();
+  > .form__item:nth-child(-n + 7) {
+    @include grid-column(12);
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(6);
+    }
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten,
+  .form__item--submitted-first-name {
+    clear: both;
+  }
+  > .form__item:nth-child(n + 8) {
+    @include grid-column(12);
+  }
+  .form__item--submitted-welche-informationen-moechten-sie-erhalten {
+    margin: $space 0;
+    @include breakpoint($breakpoint-s-min) {
+      margin: $space-large 0;
+    }
+  }
+  .form__item--markup,
+  .form__item--submitted-zusatzangaben {
+    margin-bottom: $space;
+    @include breakpoint($breakpoint-s-min) {
+      margin-bottom: $space-large;
+    }
+  }
+}
+
+/* Press Downloads */
+
+.press-download {
+  margin-top: $space-large;
+  @include grid-container();
+  @include grid-collapse();
+  @include breakpoint($breakpoint-s-min) {
+    margin-top: $space-large * 2;
+  }
+}
+.press-download__item {
+  @include grid-column(12);
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-column(6);
+  }
+}
+.press-download__item__footer {
+  @include clearfix();
+  span {
+    float: left;
+    padding-top: 12px;
+    color: $gray;
+  }
+  .btn {
+    float: right;
+  }
+}

@@ -85,6 +85,7 @@
   max-width: 1360px;
   @include margin(null auto);
   @include padding(null $space);
+  @include grid-container();
 }
 @mixin container-regular-padded() {
   max-width: 1360px;
@@ -212,15 +213,15 @@
   font-family: $font-serif;
   font-weight: 700;
   color: $gray;
-  .date__day {
+  &__day {
     font-size: .7em;
     display: block;
   }
-  .date__month {
+  &__month {
     font-size: .5em;
     display: block;
   }
-  .date__year {
+  &__year {
     font-size: .4em;
     display: block;
   }

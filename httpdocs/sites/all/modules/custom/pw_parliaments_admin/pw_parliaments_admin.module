@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * @file
+ * Module file for PW Imports modules for Drupal hooks
+ */
+
+use Drupal\pw_parliaments_admin\Import\Import;
+use Drupal\pw_parliaments_admin\Status\ImportStatus;
+
+require_once(DRUPAL_ROOT .'/'. drupal_get_path('module', 'pw_parliaments_admin') .'/library/League/Csv/functions_include.php');
+
+/**
+ * Implements hook_menu().
+ */
+function pw_parliaments_admin_menu() {
+  $items = [];
+
+  $items['admin/abgeordnetenwatch/imports/add'] = [
+    'title' => 'Add new import',
+    'page callback' => 'pw_parliaments_admin_addform_pagecallback',
+    'access arguments' => ['administrate an import'],
+    'type' => MENU_CALLBACK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  ];
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import'] = [
+    'title' => 'Administrate import',
+    'page callback' => 'pw_parliaments_import_pagecallback',
+    'page arguments' => [3],
+    'access arguments' => ['administrate an import'],
+    'type' => MENU_CALLBACK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  ];
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import/overview'] = array(
+    'title' => 'Overview',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  );
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import/datasets'] = [
+    'title' => 'Datsensätze',
+    'page callback' => 'pw_parliaments_import_pagecallback_datasets',
+    'page arguments' => [3],
+    'access callback' => 'pw_parliaments_import_pagecallback_datasets_access',
+    'access arguments' => [3],
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc'
+  ];
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import/edit'] = [
+    'title' => 'Edit import',
+    'page callback' => 'pw_parliaments_admin_editform_pagecallback',
+    'page arguments' => [3],
+    'access arguments' => ['administrate an import'],
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc',
+    'weight' => 100
+  ];
+
+
+  $items['admin/abgeordnetenwatch/imports/%pw_import/delete'] = [
+    'title' => 'Edit import',
+    'page callback' => 'pw_parliaments_admin_deleteform_pagecallback',
+    'page arguments' => [3],
+    'access arguments' => ['administrate an import'],
+    'type' => MENU_LOCAL_TASK,
+    'file' => 'pw_parliaments_admin.pagecallbacks.inc',
+    'weight' => 100
+  ];
+
+
+  return $items;
+}
+
+function pw_parliaments_import_pagecallback_datasets_access(Import $import) {
+  if ($import->getStatus() === ImportStatus::DATA_STRUCTURED_OK ||
+      $import->getStatus() !== ImportStatus::IMPORTED ||
+      $import->getStatus() !== ImportStatus::IMPORT_FAILED) {
+    return user_access('administrate an import');
+  }
+
+  return FALSE;
+}
+/**
+ * Loader function for Imports
+ *
+ * @param int|string $id
+ * The id of the import
+ *
+ * @return \Drupal\pw_parliaments_admin\Import\Import
+ */
+function pw_import_load($id) {
+  return \Drupal\pw_parliaments_admin\Import\Import::load($id);
+}
+
+
+/**
+ * Implements hook_permission().
+ */
+function pw_parliaments_admin_permission() {
+  return [
+    'administrate an import' => [
+      'title' => t('Administrate an import'),
+      'description' => t('Needed to create, edit and finish imports')
+    ]
+  ];
+}
+
+
+/**
+ * Implements hook_views_api().
+ */
+function pw_parliaments_admin_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'pw_parliaments_admin') . '/views',
+  );
+}
+
+
+/**
+ * Implements hook_xautoload().
+ *
+ * Tell the xautoload module about the external library we use
+ *
+ * @param \Drupal\xautoload\Adapter\LocalDirectoryAdapter $adapter
+ *   An adapter object that can register stuff into the class loader.
+ */
+function pw_parliaments_admin_xautoload($adapter) {
+  $adapter->add('League\Csv\\','library'
+  );
+}
+
+
+
+
+/**
+ * implements hook_form_alter() for views exposed forms
+ *
+ * We need to change the action for the views rendered on import pages
+ *
+ * @param $form
+ * @param $form_state
+ */
+function pw_parliaments_admin_form_views_exposed_form_alter(&$form, &$form_state) {
+  $change_form_action_views = [
+    'pw_administration_imports_constituency_datasets',
+    'pw_administration_imports_constituency_structured_data'
+  ];
+
+  if (in_array($form_state["view"]->name, $change_form_action_views)) {
+    $form["#action"] = '/'. current_path();
+  }
+}

@@ -1,0 +1,193 @@
+<?php
+
+/**
+ * @file
+ * Update hooks, install and uninstall hooks, schema hook for PW Imports
+ */
+
+function pw_parliaments_admin_schema() {
+  $schema = [];
+
+  // database table for the imports
+  $schema['pw_parliaments_admin_imports'] = [
+    'description' => 'Table stores the settings for each import',
+    'fields' => [
+      'id' => [
+        'description' => 'The unique id for each import',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'label' => [
+        'description' => 'A label for the import',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 255
+      ],
+      'parliament' => [
+        'description' => 'The {taxonomy_term_data} tid of the parliament',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'file' => [
+        'description' => 'The {file_managed} fid of the CSV file',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'type' => [
+        'description' => 'The type of import which also describes which type of data is imported',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 15
+      ],
+      'status' => [
+        'description' => 'The status of the import',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 25
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ]
+  ];
+
+
+  // database table for the constituency datasets
+  $schema['pw_parliaments_admin_imports_constituencies_datasets'] = [
+    'description' => 'Table stores the constituencies in the form they were imported from CSV',
+    'fields' => [
+      'id' => [
+        'description' => 'The unique id for each import dataset for a constituency',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'parliament' => [
+        'description' => 'The parliament connected to the constituency',
+        'type' => 'text'
+      ],
+      'constituency' => [
+        'description' => 'The name of the constituency',
+        'type' => 'text'
+      ],
+      'constituency_nr' => [
+        'description' => 'The number of constituency',
+        'type' => 'text'
+      ],
+      'electoral_region' => [
+        'description' => 'Electoral region connected to the constituency',
+        'type' => 'text'
+      ],
+      'area_code' => [
+        'description' => 'The are codes of the constituency',
+        'type' => 'text'
+      ],
+      'area_code_descriptor' => [
+        'description' => 'Area code descriptor',
+        'type' => 'text'
+      ],
+      'street' => [
+        'description' => 'Streets connected to the constituency',
+        'type' => 'text'
+      ],
+      'status' => [
+        'description' => 'Streets connected to the constituency',
+        'type' => 'varchar',
+        'length' => 25,
+        'no null' => TRUE
+      ],
+      'errors' => [
+        'description' => 'Errors',
+        'type' => 'text'
+      ],
+      'import' => [
+        'description' => 'Id of the import',
+        'type' => 'int',
+        'not null' => TRUE
+      ],
+      'structured_data_id' => [
+        'description' => 'Id of the structured data',
+        'type' => 'int'
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ]
+  ];
+
+  // database table for the constituency imports
+  $schema['pw_parliaments_admin_imports_constituencies_structured'] = [
+    'description' => 'Table stores the constituencies in the form they will be imported',
+    'fields' => [
+      'id' => [
+        'description' => 'The unique id for each structured data',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'name' => [
+        'description' => 'The name of the constituency',
+        'type' => 'varchar',
+        'not null' => TRUE,
+        'length' => 255
+      ],
+      'field_constituency_nr' => [
+        'description' => 'The number of constituency',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ],
+      'field_constituency_area_codes' => [
+        'description' => 'The are codes of the constituency',
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE
+      ],
+      'field_constituency_ac_descriptor' => [
+        'description' => 'Area code descriptors',
+        'type' => 'text',
+        'size' => 'big',
+      ],
+      'field_constituency_street' => [
+        'description' => 'Streets connected to the constituency',
+        'type' => 'text',
+        'size' => 'big',
+      ],
+      'field_electoral_region' => [
+        'description' => 'Electoral region connected to the constituency',
+        'type' => 'text',
+        'size' => 'big',
+      ],
+      'field_parliament' => [
+        'description' => 'The parliament connected to the constituency',
+        'type' => 'text'
+      ],
+      'entity_id' => [
+        'description' => 'When imported stores it the entity id ',
+        'type' => 'int',
+        'unsigned' => TRUE,
+      ],
+      'import' => [
+        'description' => 'Id of the import',
+        'type' => 'int'
+      ],
+      'errors' => [
+        'description' => 'Errors',
+        'type' => 'text'
+      ],
+      'status' => [
+        'description' => 'Status of the structured data',
+        'type' => 'varchar',
+        'length' => 25,
+        'no null' => TRUE
+      ]
+    ],
+    'primary key' => [
+      'id'
+    ]
+  ];
+  return $schema;
+}
