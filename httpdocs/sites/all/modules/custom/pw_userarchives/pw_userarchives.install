@@ -354,6 +354,15 @@ function pw_userarchives_update_7112(&$sandbox) {
  *
  **/
 function pw_userarchives_update_7113(&$sandbox) {
+  // emptied so that 7114 runs instead (in case this update did not run yet)
+}
+
+
+/**
+ * Run through the user archive table and update all question/ answer counters
+ *
+ **/
+function pw_userarchives_update_7114(&$sandbox) {
 
   if (!isset($sandbox['progress'])) {
     $query = db_select('user_archive_cache', 'uac');
@@ -378,11 +387,11 @@ function pw_userarchives_update_7113(&$sandbox) {
     $userArchiveEntry = \Drupal\pw_userarchives\UserArchiveEntry::createFromDataBaseArray($archiveEntryArray);
     $politicianUserRevision = $userArchiveEntry->getPoliticianUserRevision();
     $number_of_questions = count($politicianUserRevision->getQuestionsNids());
-    $number_of_answers = $politicianUserRevision->getAnswersNumbers('non-standard');
+    $number_of_answers = $politicianUserRevision->getNumberOfAnsweredQuestions('non-standard');
     $number_of_standard_replies = $politicianUserRevision->getAnswersNumbers('standard');
 
     $userArchiveEntry->setNumberOfQuestions($number_of_questions);
-    $userArchiveEntry->setNumberOfAnswers($number_of_answers);
+    $userArchiveEntry->setNumberOfAnsweredQuestions($number_of_answers);
     $userArchiveEntry->setNumberOfStandardReplies($number_of_standard_replies);
     $userArchiveEntry->save();
 
@@ -406,4 +415,3 @@ function pw_userarchives_update_7113(&$sandbox) {
     return 'The user archive table was updated for '.  $sandbox['progress'] .' entries. It is still running.';
   }
 }
-
