@@ -303,7 +303,7 @@ function parliamentwatch_preprocess_node(&$variables) {
   $month = sprintf('<span class="date__month">%s</span>', format_date($node->created, 'custom', 'M'));
   $year = sprintf('<span class="date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
   $variables['date'] = sprintf('<span class="date">%s%s%s</span>', $day, $month, $year);
-  if ($variables['view_mode'] == 'tile') {
+  if ($variables['type'] != 'dialogue' && $variables['view_mode'] == 'tile') {
     $day = sprintf('<span class="tile__title__date__day">%s</span>', format_date($node->created, 'custom', 'j'));
     $month = sprintf('<span class="tile__title__date__month">%s</span>', format_date($node->created, 'custom', 'M'));
     $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
