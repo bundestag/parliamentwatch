@@ -83,20 +83,20 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
 
 .tile__title--date {
   position: relative;
-  .date {
-    display: block;
-    width: $space-large * 2;
-    position: absolute;
-    left: $space;
-    top: $space;
-    @include date-stacked();
-    font-size: 2em;
-  }
   h3 {
-    padding-left: ($space-large * 2) + 10px;
     @include h4();
     @include text-overflow-multi();
+    padding-left: ($space-large * 2) + 10px;
+    font-weight: 400;
   }
+}
+.tile__title__date {
+  display: block;
+  width: $space-large * 2;
+  position: absolute;
+  left: $space;
+  @include date-stacked();
+  font-size: 2em;
 }
 
 /* Date */
@@ -639,6 +639,7 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
 
   &__date {
     font-family: $font-serif;
+    font-weight: 400;
     color: $gray;
   }
 

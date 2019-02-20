@@ -4,10 +4,13 @@
 namespace Drupal\pw_datatransfers\Modtool;
 
 
+use Drupal\pw_globals\OptionsInterface;
+
+
 /**
  * Define the status which are possible for messages in Modtool
  */
-class ModtoolMessageStatus {
+class ModtoolMessageStatus implements OptionsInterface {
 
   const UNRELEASED = 0;
   const RELEASED = 1;
@@ -17,7 +20,7 @@ class ModtoolMessageStatus {
   const REQUESTED = 5;
 
 
-  public static function getPossibleStatus() {
+  public static function getPossibleOptions() {
     return [
       self::UNRELEASED => t('Unreleased'),
       self::RELEASED => t('Released'),
@@ -28,9 +31,8 @@ class ModtoolMessageStatus {
     ];
   }
 
-
-  public static function getStatusLabel($status) {
-    $possibleStatus = self::getPossibleStatus();
+  public static function getOptionLabel($status) {
+    $possibleStatus = self::getPossibleOptions();
     if (isset($possibleStatus[$status])) {
       return $possibleStatus[$status];
     }
