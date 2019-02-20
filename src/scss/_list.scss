@@ -114,8 +114,8 @@ dl {
     }
   }
   &--committee {
-    a::before {
-      content: '\e835' !important;
+    > li a::before {
+      content: '\e835';
     }
   }
 }
@@ -163,6 +163,11 @@ dl {
       &:after {
         color: $orange;
       }
+    }
+  }
+  &--full {
+    @include breakpoint($breakpoint-m-min) {
+      @include grid-column(12, $neat-grid-large-gutter);
     }
   }
 }
