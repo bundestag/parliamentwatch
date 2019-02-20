@@ -26,7 +26,6 @@
 @mixin basic-content() {
   font-size: 16px;
   padding-bottom: $space-large;
-  @include container-small();
   @include breakpoint($breakpoint-s-min) {
     font-size: 18px;
   }
@@ -46,12 +45,18 @@
     overflow: hidden;
   }
   li > a:not(.btn) {
-    font-weight: 500;
+    font-weight: 600;
   }
   .media_embed {
     margin-bottom: $space;
   }
 }
+
+@mixin basic-content-small() {
+  @include basic-content();
+  @include container-small();
+}
+
 
 /* Text-Overflow */
 
@@ -85,6 +90,7 @@
   max-width: 1360px;
   @include margin(null auto);
   @include padding(null $space);
+  @include grid-container();
 }
 @mixin container-regular-padded() {
   max-width: 1360px;
@@ -179,7 +185,7 @@
 /* link gray */
 @mixin link-gray() {
   color: $darkGray;
-  font-weight: 500;
+  font-weight: 600;
   will-change: color;
   transition: color 300ms ease;
   &:hover {
@@ -210,17 +216,17 @@
 @mixin date-stacked() {
   text-align: center;
   font-family: $font-serif;
-  font-weight: 900;
+  font-weight: 700;
   color: $gray;
-  .date__day {
+  &__day {
     font-size: .7em;
     display: block;
   }
-  .date__month {
+  &__month {
     font-size: .5em;
     display: block;
   }
-  .date__year {
+  &__year {
     font-size: .4em;
     display: block;
   }

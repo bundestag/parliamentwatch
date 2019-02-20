@@ -229,7 +229,49 @@ class PoliticianUserRevision {
    *
    * @throws \Drupal\pw_globals\Exception\PwGlobalsException
    */
-  public function getAnswersCids($filter = 'all') {
+  public function getAnswersNumbers($filter = 'all') {
+    $comments = $this->getAnswers($filter);
+    return count($comments);
+  }
+
+
+  /**
+   * Get the number of answered questions
+   *
+   * @return int
+   * The number of questions answered (without standard replies)
+   *
+   * @throws \Drupal\pw_globals\Exception\PwGlobalsException
+   */
+  public function getNumberOfAnsweredQuestions() {
+    $result = 0;
+    $comments = $this->getAnswers('non-standard');
+    if (!empty($comments)) {
+      $comments_objects = comment_load_multiple(array_keys($comments));
+      $answered_questions = [];
+      foreach ($comments_objects as $comment_object) {
+        $answered_questions[$comment_object->nid] = $comment_object->nid;
+      }
+
+      $result = count($answered_questions);
+    }
+
+    return $result;
+  }
+
+
+  /**
+   * @param string $filter
+   * Default to all, can be 'standard' or 'non-standard'
+   *
+   * @return array
+   * Each key is the comment cid and holds an array with cid and node_type as
+   * key/ values. Empty if none was found
+   *
+   * @throws \Drupal\pw_globals\Exception\PwGlobalsException
+   */
+  public function getAnswers($filter = 'all') {
+    $result = array();
     $question_nids = $this->getQuestionsNids();
     if (!empty($question_nids)) {
       $entityFieldQuery = new \EntityFieldQuery();
@@ -244,13 +286,13 @@ class PoliticianUserRevision {
         $entityFieldQuery->fieldCondition('field_dialogue_is_standard_reply', 'value', 0);
       }
 
-      $result = $entityFieldQuery->execute();
-      if (isset($result['comment'])) {
-        return count($result['comment']);
+      $query_result = $entityFieldQuery->execute();
+      if (isset($query_result['comment'])) {
+        $result = $query_result['comment'];
       }
     }
 
-    return 0;
+    return $result;
   }
 
 

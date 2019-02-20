@@ -25,7 +25,7 @@
     padding: $space-xsmall - 1px;
     line-height: $space;
     font-family: $font-sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     color: $darkGray;
     outline: 0;
     box-shadow: none;
@@ -42,7 +42,7 @@
     }
 
     @include placeholder-text {
-      font-weight: 300;
+      font-weight: 400;
       color: $darkGray;
       opacity: 1;
     }
@@ -290,7 +290,7 @@ textarea.form__item__control {
   padding: ($space-xsmall - 1px) ($space-large - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
   line-height: $space;
   color: $darkGray;
-  font-weight: 500;
+  font-weight: 600;
 }
 .select2-container .select2-selection--single .select2-selection__arrow {
   height: auto;
@@ -327,7 +327,7 @@ textarea.form__item__control {
 }
 .select2-container--default .select2-selection--single .select2-selection__placeholder {
   color: $darkGray;
-  font-weight: 300;
+  font-weight: 400;
 }
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
   background-color: $orange;
@@ -360,7 +360,7 @@ textarea.form__item__control {
 /* Form-Item Combiner */
 
 .form--pw-globals-politician-search-form,
-.form__item--combine {
+.form__item--combiner {
   background: $white;
   padding: $space-xsmall;
   box-shadow: 0 5px 10px 0 rgba(0,0,0,.1);
@@ -517,6 +517,7 @@ textarea.form__item__control {
   }
   .autosuggest__item__name {
     font-family: $font-serif;
+    font-weight: 400;
     padding-bottom: 3px;
     padding-right: 100px;
     color: $mediumGray;

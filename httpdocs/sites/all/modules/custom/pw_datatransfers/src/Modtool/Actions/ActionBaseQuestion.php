@@ -63,8 +63,8 @@ abstract class ActionBaseQuestion implements ActionInterface {
     $modtoolMessage = $this->getDataEntity()->getModtoolMessage();
 
     if ($modtoolMessage->getStatus() != $status) {
-      $status_message_label = ModtoolMessageStatus::getStatusLabel($modtoolMessage->getStatus() );
-      $target_status_label = ModtoolMessageStatus::getStatusLabel($status);
+      $status_message_label = ModtoolMessageStatus::getOptionLabel($modtoolMessage->getStatus() );
+      $target_status_label = ModtoolMessageStatus::getOptionLabel($status);
       throw new DataActionException('The question should have the status '. $status .' ('. $target_status_label .')  but it has the status '. $modtoolMessage->getStatus() .' ('. $status_message_label. ')');
     }
 

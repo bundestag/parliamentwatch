@@ -83,10 +83,10 @@
 
 <div class="intro__left">
   <h1><?php print $title; ?></h1>
-  <div class="intro__date date">
-    <span class="date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?></span>
-    <span class="date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'M'); ?></span>
-    <span class="date__year"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'Y'); ?></span>
+  <div class="intro__date">
+    <span class="intro__date__day"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'j'); ?></span>
+    <span class="intro__date__month"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'M'); ?></span>
+    <span class="intro__date__year"><?php print format_date(strtotime($field_poll_date[0]['value']), 'custom', 'Y'); ?></span>
   </div>
   <?php print render(field_get_items('node', $node, 'body')[0]['summary']); ?>
   <p><a href="#poll-content" class="link-icon" data-localScroll><i class="icon icon-arrow-right"></i> Weiterlesen</a></p>

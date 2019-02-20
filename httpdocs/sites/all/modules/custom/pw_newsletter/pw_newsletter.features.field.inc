@@ -61,7 +61,6 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -192,7 +191,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -226,7 +225,6 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'label' => 'hidden',
           'module' => 'paragraphs',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -241,7 +239,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
             'view_mode' => 'full',
           ),
           'type' => 'paragraphs_view',
-          'weight' => '5',
+          'weight' => '4',
         ),
         'search_result' => array(
           'label' => 'hidden',
@@ -319,7 +317,134 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
         'module' => 'paragraphs',
         'settings' => array(),
         'type' => 'paragraphs_embed',
-        'weight' => '4',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-newsletter-field_newsletter_summary'.
+  $fields['node-newsletter-field_newsletter_summary'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_newsletter_summary',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'text_long',
+    ),
+    'field_instance' => array(
+      'bundle' => 'newsletter',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Wird unter dem Newsletter-Formular und im Archiv angezeigt. Bitte nur einen Satz verwenden/ sehr kurz halten.',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_default',
+          'weight' => '5',
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_newsletter_summary',
+      'label' => 'Zusammenfassung',
+      'required' => 0,
+      'settings' => array(
+        'better_formats' => array(
+          'allowed_formats' => array(
+            'copyright' => 'copyright',
+            'filtered_html' => 'filtered_html',
+            'full_html' => 'full_html',
+            'html_mail' => 'html_mail',
+            'managed_content' => 'managed_content',
+            'newsletter' => 'newsletter',
+            'php_code' => 'php_code',
+            'plain_text' => 'plain_text',
+          ),
+          'allowed_formats_toggle' => 0,
+          'default_order_toggle' => 0,
+          'default_order_wrapper' => array(
+            'formats' => array(
+              'copyright' => array(
+                'weight' => '0',
+              ),
+              'filtered_html' => array(
+                'weight' => '-9',
+              ),
+              'full_html' => array(
+                'weight' => '-8',
+              ),
+              'html_mail' => array(
+                'weight' => '0',
+              ),
+              'managed_content' => array(
+                'weight' => '-10',
+              ),
+              'newsletter' => array(
+                'weight' => '0',
+              ),
+              'php_code' => array(
+                'weight' => '-6',
+              ),
+              'plain_text' => array(
+                'weight' => '-7',
+              ),
+            ),
+          ),
+        ),
+        'linkit' => array(
+          'button_text' => 'Suchen',
+          'enable' => 0,
+          'profile' => '',
+        ),
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'maxlength_js' => '',
+          'maxlength_js_enforce' => 0,
+          'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
+          'maxlength_js_truncate_html' => 0,
+          'rows' => '5',
+        ),
+        'type' => 'text_textarea',
+        'weight' => '2',
       ),
     ),
   );
@@ -366,7 +491,6 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'field_delimiter' => '',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -475,7 +599,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -535,7 +659,6 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'module' => 'entityreference',
           'settings' => array(
             'bypass_access' => FALSE,
-            'field_delimiter' => '',
             'link' => 1,
             'linked_field' => array(
               'advanced' => array(
@@ -550,7 +673,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
             ),
           ),
           'type' => 'entityreference_label',
-          'weight' => '4',
+          'weight' => '3',
         ),
         'search_result' => array(
           'label' => 'inline',
@@ -621,7 +744,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'size' => '150',
         ),
         'type' => 'entityreference_autocomplete_tags',
-        'weight' => '6',
+        'weight' => '7',
       ),
     ),
   );
@@ -747,7 +870,6 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'field_delimiter' => '',
             'image_link' => '',
             'image_style' => 'width_medium',
             'linked_field' => array(
@@ -835,7 +957,7 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
           ),
         ),
         'type' => 'media_generic',
-        'weight' => '3',
+        'weight' => '4',
       ),
     ),
   );
@@ -3524,7 +3646,9 @@ Der Body enthält die Einleitung des Newsletters für Mail und Webseite. Das Tex
   t('Titel klein');
   t('Vorkommende Politiker');
   t('Welche Politiker werden in dem Newsletter explizit genannt?');
+  t('Wird unter dem Newsletter-Formular und im Archiv angezeigt. Bitte nur einen Satz verwenden/ sehr kurz halten.');
   t('Zielgruppe');
+  t('Zusammenfassung');
 
   return $fields;
 }

@@ -236,6 +236,12 @@ class ModtoolActionsController {
       case 'hold':
         $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($this->dataClass);
         break;
+      case 'request':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Request($this->dataClass);
+        break;
+      case 'unrelease':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Unrelease($this->dataClass);
+        break;
       case 'delete':
         $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($this->dataClass);
         break;
@@ -268,6 +274,12 @@ class ModtoolActionsController {
         break;
       case 'hold':
         $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($this->dataClass);
+        break;
+      case 'request':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Request($this->dataClass);
+        break;
+      case 'unrelease':
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Unrelease($this->dataClass);
         break;
       case 'delete':
         $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($this->dataClass);
