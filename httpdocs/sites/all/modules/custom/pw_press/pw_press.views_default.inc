@@ -22,7 +22,7 @@ function pw_press_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Presseartikel';
+  $handler->display->display_options['title'] = 'Pressespiegel';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
   $handler->display->display_options['access']['type'] = 'perm';
@@ -345,7 +345,7 @@ function pw_press_views_default_views() {
   );
   $translatables['press_articles'] = array(
     t('Master'),
-    t('Presseartikel'),
+    t('Pressespiegel'),
     t('mehr'),
     t('Anwenden'),
     t('Zurücksetzen'),

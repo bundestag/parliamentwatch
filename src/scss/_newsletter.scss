@@ -173,15 +173,20 @@
 .webform-client-form-10380 {
   position: relative;
   margin-bottom: $space-large;
+  @include clearfix;
   @include breakpoint($breakpoint-s-min) {
     margin-bottom: $space-large * 2;
-    padding-right: 250px;
   }
   .form__item {
     position: static;
     .form-email[type=email] {
-      height: 44px;
-      padding-top: 11px;
+      height: 46px;
+    }
+  }
+  .webform-component--e-mail {
+    @include breakpoint($breakpoint-s-min) {
+      max-width: 400px;
+      float: left;
     }
   }
   .form__item:not(.form__item--checkboxes):not(.form__item--radios):not(.form__item--checkbox):not(.form__item--radio) {
@@ -189,13 +194,15 @@
       top: 32px;
     }
   }
+  .form__item:not(.webform-component--e-mail) {
+    @include breakpoint($breakpoint-s-min) {
+      float: left;
+      margin-top: $space;
+      margin-left: $space;
+    }
+  }
   .btn {
     @include button--mobile-block();
-    @include breakpoint($breakpoint-s-min) {
-      position: absolute;
-      right: 0;
-      top: $space;
-    }
   }
 }
 /* Newsletter Block */

@@ -26,7 +26,6 @@
 @mixin basic-content() {
   font-size: 16px;
   padding-bottom: $space-large;
-  @include container-small();
   @include breakpoint($breakpoint-s-min) {
     font-size: 18px;
   }
@@ -52,6 +51,12 @@
     margin-bottom: $space;
   }
 }
+
+@mixin basic-content-small() {
+  @include basic-content();
+  @include container-small();
+}
+
 
 /* Text-Overflow */
 

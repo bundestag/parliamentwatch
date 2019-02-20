@@ -48,6 +48,9 @@
     padding-bottom: $space-large;
   }
 }
+.webform-container {
+  @include basic-content();
+}
 
 .webform-component-fieldset {
   border: 0;

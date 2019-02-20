@@ -85,6 +85,9 @@
     <h1<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h1>
     <?php print render($title_suffix); ?>
   </header>
+    <div class="tile__content" data-mh="link-list">
+      <?php if (isset($content['field_newsletter_summary'])): ?><p><?php print render($content['field_newsletter_summary']); ?></p><?php endif; ?>
+    </div>
   <ul class="tile__links tile__links--2">
     <li class="tile__links__item"><a class="tile__links__item__link" href="<?php print $node_url ?>"><?php print t('read more'); ?></a></li>
   </ul>

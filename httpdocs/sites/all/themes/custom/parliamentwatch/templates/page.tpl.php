@@ -138,7 +138,10 @@ M445.2,31H445l0.1-0.1V31z"/>
           </li>
           <li class="footer__maincol__col__nav__item">
             <?php print l(t('Newsletter subscription'), 'node/10380', ['html' => TRUE, 'attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
-          </li>
+            </li>
+            <li class="footer__maincol__col__nav__item">
+              <?php print l('Presse', 'node/987096', ['html' => TRUE, 'attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
+            </li>
           <li class="footer__maincol__col__nav__item">
             <?php print l('<i class="icon icon-info"></i>' . t('More Information in English'), 'node/7756', ['html' => TRUE, 'attributes' => ['class' => ['footer__maincol__col__nav__item__link'], 'hreflang' => 'en']]); ?>
           </li>

@@ -29,8 +29,7 @@
   @include container-small();
 }
 .page.detail {
-  @include basic-content();
-  @include container-small();
+  @include basic-content-small();
   padding-bottom: $space-large;
   @include breakpoint($breakpoint-l-min) {
     padding-bottom: $space-large * 2;

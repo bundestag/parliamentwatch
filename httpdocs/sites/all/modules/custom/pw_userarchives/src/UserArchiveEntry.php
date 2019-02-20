@@ -129,7 +129,8 @@ class UserArchiveEntry {
 
   /**
    * @var int
-   * Number of answers not flagged as standard reply
+   * Number of answers not flagged as standard reply - in real this is the number
+   * of answered questions!
    */
   protected $number_of_answers;
 
@@ -520,7 +521,7 @@ class UserArchiveEntry {
   /**
    * @param int $number_of_answers
    */
-  public function setNumberOfAnswers($number_of_answers) {
+  public function setNumberOfAnsweredQuestions($number_of_answers) {
     $this->number_of_answers = $number_of_answers;
   }
 
@@ -592,7 +593,7 @@ class UserArchiveEntry {
       $parliament_name = $parliament->getName();
       $timestamp = $parliament->getElectionDate();
       $number_of_questions = count($politicianUserRevision->getQuestionsNids());
-      $number_of_answers = $politicianUserRevision->getAnswersNumbers('non-standard');
+      $number_of_answers = $politicianUserRevision->getNumberOfAnsweredQuestions('non-standard');
       $number_of_standard_replies = $politicianUserRevision->getAnswersNumbers('standard');
 
       $user_joined = $politicianUserRevision->getJoinedDate();

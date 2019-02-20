@@ -18,11 +18,6 @@ function pw_newsletter_filter_default_formats() {
     'status' => '1',
     'weight' => '0',
     'filters' => array(
-      'filter_autop' => array(
-        'weight' => '-50',
-        'status' => '1',
-        'settings' => array(),
-      ),
       'media_filter_paragraph_fix' => array(
         'weight' => '-49',
         'status' => '1',
