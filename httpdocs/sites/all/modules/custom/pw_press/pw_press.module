@@ -41,7 +41,7 @@ function pw_press_links() {
     array(l('<i class="press-links__list__item__icon icon icon-folders"></i>' . t('Press releases'), 'ueber-uns/presse/pressemitteilungen', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--2')),
     array(l('<i class="press-links__list__item__icon icon icon-thesis"></i>' . t('Press newsletter'), 'node/972122', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--3')),
     array(l('<i class="press-links__list__item__icon icon icon-download"></i>' . t('Press package'), 'node/39911', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--4')),
-    array(l('<i class="press-links__list__item__icon icon icon-mail"></i>' . t('Press contact'), 'node/6578', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--5')),
+    array(l('<i class="press-links__list__item__icon icon icon-mail"></i>' . t('Press contact'), 'node/987096', array('attributes' => array('class' => array('press-links__list__item__link')), 'html' => TRUE)), 'class' => array('press-links__list__item press-links__list__item--5')),
   );
 
   $list_output .= theme(
