@@ -2087,6 +2087,18 @@ msgstr "Präsentiert von"
 msgid "Abgeordnetenwatch"
 msgstr ""
 
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:105
+msgid "Responsible Committee"
+msgid_plural "Responsible Committees"
+msgstr[0] "Verantwortlicher Ausschuss"
+msgstr[1] "Verantwortliche Ausschüsse"
+
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:113
+msgid "Related link"
+msgid_plural "Related links"
+msgstr[0] "Weiterführender Link"
+msgstr[1] "Weiterführende Links"
+
 #~ msgid "More contents on the topic “@name”"
 #~ msgstr "Mehr Inhalte zum Thema „@name”"
 
