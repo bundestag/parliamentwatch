@@ -133,11 +133,6 @@ http://beta.abgeordnetenwatch.de/
     'status' => '1',
     'weight' => '-10',
     'filters' => array(
-      'filter_autop' => array(
-        'weight' => '-50',
-        'status' => '1',
-        'settings' => array(),
-      ),
       'media_filter_paragraph_fix' => array(
         'weight' => '-49',
         'status' => '1',
@@ -159,13 +154,6 @@ http://beta.abgeordnetenwatch.de/
         'weight' => '-46',
         'status' => '1',
         'settings' => array(),
-      ),
-      'filter_url' => array(
-        'weight' => '-45',
-        'status' => '1',
-        'settings' => array(
-          'filter_url_length' => '72',
-        ),
       ),
       'pathologic' => array(
         'weight' => '-44',
