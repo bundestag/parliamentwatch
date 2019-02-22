@@ -935,6 +935,90 @@ function pw_blog_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-blogpost-field_blogpost_license'.
+  $fields['node-blogpost-field_blogpost_license'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_blogpost_license',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => '',
+          1 => '',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_boolean',
+    ),
+    'field_instance' => array(
+      'bundle' => 'blogpost',
+      'default_value' => array(
+        0 => array(
+          'value' => 1,
+        ),
+      ),
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'list_default',
+          'weight' => 10,
+        ),
+        'tile' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_blogpost_license',
+      'label' => 'Lizenz anzeigen',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'display_label' => 1,
+        ),
+        'type' => 'options_onoff',
+        'weight' => '15',
+      ),
+    ),
+  );
+
   // Exported field: 'node-blogpost-field_politician'.
   $fields['node-blogpost-field_politician'] = array(
     'field_config' => array(
@@ -1351,6 +1435,7 @@ function pw_blog_field_default_fields() {
   t('Der gewählte Block wird automatisch zwischen dem Text und den Kommentaren ausgegeben.');
   t('Intro');
   t('Kommentar');
+  t('Lizenz anzeigen');
   t('Politicians');
   t('Teaser image');
   t('Topics');
