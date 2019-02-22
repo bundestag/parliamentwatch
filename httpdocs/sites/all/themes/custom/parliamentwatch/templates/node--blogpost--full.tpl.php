@@ -107,14 +107,7 @@
   <div class="blog__content" <?php print $content_attributes; ?>>
     <div class="blog__content__inner">
       <?php print render($content['body']); ?>
-
-      <?php if ($field_blogpost_license[0]['value'] === '1'): ?>
-      <div class="well">
-        <div class="well__full">
-          <p><i class="icon icon-info"></i> <?php print t('<strong>License:</strong> The text on this page is under the Creative Commons license <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">BY-NC-SA 4.0.</a>') ?></p>
-        </div>
-      </div>
-      <?php endif; ?>
+      <?php print render($content['field_blogpost_license']); ?>
       <?php if ($field_blockreference): ?>
         <div class="well">
           <?php print render($content['field_blockreference']); ?>
