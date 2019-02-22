@@ -975,8 +975,8 @@ function pw_blog_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
-          'module' => 'list',
+          'label' => 'hidden',
+          'module' => 'pw_blog',
           'settings' => array(
             'linked_field' => array(
               'advanced' => array(
@@ -990,8 +990,8 @@ function pw_blog_field_default_fields() {
               'linked' => 0,
             ),
           ),
-          'type' => 'list_default',
-          'weight' => 10,
+          'type' => 'blog_license',
+          'weight' => '10',
         ),
         'tile' => array(
           'label' => 'above',
