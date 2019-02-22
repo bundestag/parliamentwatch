@@ -362,12 +362,18 @@ function parliamentwatch_preprocess_node(&$variables) {
   if ($variables['type'] == 'press_release' && $variables['view_mode'] == 'full') {
     $variables['submitted'] = t('Submitted on !datetime', array('!username' => $variables['name'], '!datetime' => $variables['date']));
   }
-    // for press_article tiles
+
+  // for press_article tiles
   if ($variables['type'] == 'press_article' && $variables['view_mode'] == 'tile') {
     $day = sprintf('<span class="tile__title__date__day">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'j'));
     $month = sprintf('<span class="tile__title__date__month">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'M'));
     $year = sprintf('<span class="tile__title__date__year">%s</span>', format_date(strtotime($node->field_press_article_date['und'][0]['value']), 'custom', 'Y'));
     $variables['date'] = sprintf('<span class="tile__title__date">%s%s%s</span>', $day, $month, $year);
+  }
+
+  // Add press-links block to press webform
+  if ($variables['nid'] == '987096') {
+    $variables['content']['block_press_links'] =_block_get_renderable_array(_block_render_blocks(array(block_load(pw_press, press_links))));
   }
 }
 
