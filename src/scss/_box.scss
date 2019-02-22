@@ -565,6 +565,9 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
       @include grid-column(6, $neat-grid-large-gutter);
     }
   }
+  .well__full {
+    @include grid-column(12, $neat-grid-large-gutter);
+  }
 }
 .well--tabs {
   .tabs__navigation {

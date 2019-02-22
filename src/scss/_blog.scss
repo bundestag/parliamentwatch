@@ -183,6 +183,9 @@
     .btn {
       @include button--block();
     }
+    & + .well {
+      margin-top: $space-large;
+    }
   }
 }
 .blog__content__inner {
