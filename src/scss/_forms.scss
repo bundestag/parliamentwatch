@@ -54,6 +54,10 @@
     }
   }
 
+  &__label {
+    cursor: inherit;
+  }
+
   &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
     display: block;
     line-height: $space;
