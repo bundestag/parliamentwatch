@@ -299,6 +299,13 @@ function parliamentwatch_preprocess_node(&$variables) {
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['view_mode'];
   $variables['theme_hook_suggestions'][] = 'node__' . $variables['type'] . '__' . $variables['view_mode'];
 
+  // Change sorting of theme hook suggestions
+  $theme_hook_suggestions_order = [0,2,3,1];
+  uksort($variables['theme_hook_suggestions'], function($x, $y) use ($theme_hook_suggestions_order) {
+    return array_search($x, $theme_hook_suggestions_order) > array_search($y, $theme_hook_suggestions_order);
+  });
+  $variables['theme_hook_suggestions'] = array_values($variables['theme_hook_suggestions']);
+
   $day = sprintf('<span class="date__day">%s</span>', format_date($node->created, 'custom', 'j'));
   $month = sprintf('<span class="date__month">%s</span>', format_date($node->created, 'custom', 'M'));
   $year = sprintf('<span class="date__year">%s</span>', format_date($node->created, 'custom', 'Y'));
