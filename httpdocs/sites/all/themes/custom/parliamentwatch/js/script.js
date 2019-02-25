@@ -698,7 +698,10 @@
             if (this.responseText == "success") {
               newsletter_message.innerHTML = "Anmeldung erfolgreich, sie erhalten eine Email mit Bestätigungslink.";
               newsletter_message.setAttribute('class', 'form__item show form__item--alert form__item--alert-success');
-              _paq.push(['trackGoal', 2]);
+
+              if(typeof _paq !== 'undefined') {
+                _paq.push(['trackGoal', 2]);
+              }
             }
             else if (this.responseText == "email_error") {
               newsletter_message.innerHTML = "Ihre Email-Adresse konnte nicht angemeldet werden.";
@@ -2054,8 +2057,11 @@
     attach: function (context, settings) {
       if (window.history && window.history.pushState && settings.url) {
         history.pushState({}, document.title, settings.url);
-        _paq.push(['setCustomUrl', window.location.href]);
-        _paq.push(['trackPageView']);
+
+        if(typeof _paq !== 'undefined') {
+          _paq.push(['setCustomUrl', window.location.href]);
+          _paq.push(['trackPageView']);
+        }
       }
     }
   };
@@ -2220,7 +2226,7 @@
   Drupal.behaviors.topicTagTracking = {
     attach: function () {
       $(function() {
-        if(typeof _paq !== "undefined") {
+        if(typeof _paq !== 'undefined') {
           var page_url = window.location.href;
 
           $('#topic-tags a').click(function() {
@@ -2241,7 +2247,7 @@
   Drupal.behaviors.deputyGallery = {
     attach: function () {
       $(function() {
-        if(typeof _paq !== "undefined") {
+        if(typeof _paq !== 'undefined') {
           var deputy_name = $('.deputy__title').text();
 
           $('.deputy__gallery a[data-lightbox]').click(function () {
