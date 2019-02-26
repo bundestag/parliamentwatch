@@ -373,7 +373,7 @@ function parliamentwatch_preprocess_node(&$variables) {
 
   // Add press-links block to press webform
   if ($variables['nid'] == '987096') {
-    $variables['content']['block_press_links'] =_block_get_renderable_array(_block_render_blocks(array(block_load(pw_press, press_links))));
+    $variables['content']['block_press_links'] = _block_get_renderable_array(_block_render_blocks(array(block_load('pw_press', 'press_links'))));
   }
 }
 
