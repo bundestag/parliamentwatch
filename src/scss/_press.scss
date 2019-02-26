@@ -183,6 +183,21 @@
     }
   }
 }
+.webform-container .press-links {
+  .container-regular {
+    padding: 0;
+  }
+  .press-links__list__item {
+    margin: 0;
+    padding: 0;
+    &:before {
+      content: none;
+    }
+  }
+  .press-links__list__item__link {
+    font-weight: 400;
+  }
+}
 
 /* Presse-Verteiler */
 
