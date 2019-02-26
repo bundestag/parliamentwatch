@@ -6636,8 +6636,8 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['style_options']['columns'] = array(
     'views_bulk_operations' => 'views_bulk_operations',
     'uid' => 'uid',
-    'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
+    'field_user_fname' => 'field_user_fname',
     'mail' => 'mail',
     'name' => 'name',
     'rid' => 'rid',
@@ -6669,14 +6669,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_fname' => array(
-      'sortable' => 0,
+    'field_user_lname' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_lname' => array(
+    'field_user_fname' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -6878,13 +6878,14 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['uid']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
-  /* Feld: Benutzer: First Name */
-  $handler->display->display_options['fields']['field_user_fname']['id'] = 'field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname']['table'] = 'field_data_field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname']['field'] = 'field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname']['label'] = 'Vorname';
-  $handler->display->display_options['fields']['field_user_fname']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_user_fname']['settings'] = array(
+  /* Feld: Benutzer: Last name */
+  $handler->display->display_options['fields']['field_user_lname']['id'] = 'field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['table'] = 'field_data_field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['field'] = 'field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['label'] = 'Name';
+  $handler->display->display_options['fields']['field_user_lname']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lname']['alter']['path'] = 'user/[uid]';
+  $handler->display->display_options['fields']['field_user_lname']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -6897,16 +6898,12 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Benutzer: Last name */
-  $handler->display->display_options['fields']['field_user_lname']['id'] = 'field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname']['table'] = 'field_data_field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname']['field'] = 'field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname']['label'] = 'Name';
-  $handler->display->display_options['fields']['field_user_lname']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_lname']['alter']['text'] = '[field_user_lname], [field_user_fname]';
-  $handler->display->display_options['fields']['field_user_lname']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_user_lname']['alter']['path'] = 'user/[uid]';
-  $handler->display->display_options['fields']['field_user_lname']['settings'] = array(
+  /* Feld: Benutzer: First Name */
+  $handler->display->display_options['fields']['field_user_fname']['id'] = 'field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['table'] = 'field_data_field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['field'] = 'field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['label'] = 'Vorname';
+  $handler->display->display_options['fields']['field_user_fname']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -7239,6 +7236,32 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
+  /* Filterkriterium: Benutzer: Fraktion (field_user_fraction) */
+  $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_data_field_user_fraction';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_user_fraction_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['operator_id'] = 'field_user_fraction_tid_op';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['label'] = 'Fraktion';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['operator'] = 'field_user_fraction_tid_op';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['identifier'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
   /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
   $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
   $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
@@ -7629,9 +7652,8 @@ function pw_administration_views_default_views() {
     t('Einträge exportieren'),
     t('Löschen'),
     t('Change value'),
-    t('Vorname'),
     t('Name'),
-    t('[field_user_lname], [field_user_fname]'),
+    t('Vorname'),
     t('E-Mail'),
     t('Benutzername'),
     t('Rollen'),
@@ -7646,11 +7668,13 @@ function pw_administration_views_default_views() {
     t('Revisionen'),
     t('Aktionen'),
     t('Nachname'),
+    t('Fraktion'),
     t('Geschlecht'),
     t('Parlament verlassen (field_user_retired)'),
     t('Page'),
     t('Data export'),
     t('Uid'),
+    t('[field_user_lname], [field_user_fname]'),
     t('Alle'),
   );
   $export['pw_administration_politicians'] = $view;
@@ -7695,8 +7719,8 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'uid' => 'uid',
-    'field_user_fname-revision_id' => 'field_user_fname-revision_id',
     'field_user_lname-revision_id' => 'field_user_lname-revision_id',
+    'field_user_fname-revision_id' => 'field_user_fname-revision_id',
     'user_role' => 'user_role',
     'name_5' => 'name_5',
     'name_1' => 'name_1',
@@ -7708,11 +7732,13 @@ function pw_administration_views_default_views() {
     'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
     'field_user_constituency_won-revision_id' => 'field_user_constituency_won-revision_id',
     'field_user_election_result-revision_id' => 'field_user_election_result-revision_id',
+    'question_form_open' => 'question_form_open',
     'uuid' => 'uuid',
     'name' => 'name',
     'edit_revision' => 'edit_revision',
     'nothing' => 'nothing',
     'ctools_dropdown' => 'ctools_dropdown',
+    'question_form_open_1' => 'question_form_open_1',
   );
   $handler->display->display_options['style_options']['default'] = 'field_user_lname-revision_id';
   $handler->display->display_options['style_options']['info'] = array(
@@ -7723,14 +7749,14 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_fname-revision_id' => array(
-      'sortable' => 0,
+    'field_user_lname-revision_id' => array(
+      'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_lname-revision_id' => array(
+    'field_user_fname-revision_id' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -7812,6 +7838,11 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'question_form_open' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'uuid' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -7837,6 +7868,11 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
     'ctools_dropdown' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'question_form_open_1' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -7893,13 +7929,15 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['uid']['relationship'] = 'vid';
   $handler->display->display_options['fields']['uid']['exclude'] = TRUE;
   $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
-  /* Feld: Benutzer (Historische Daten): First Name */
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['id'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['table'] = 'field_revision_field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['settings'] = array(
+  /* Feld: Benutzer (Historische Daten): Last name */
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['id'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['table'] = 'field_revision_field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['text'] = '[field_user_lname-revision_id], [field_user_fname-revision_id]';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -7912,15 +7950,13 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
       ),
     ),
   );
-  /* Feld: Benutzer (Historische Daten): Last name */
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['id'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['table'] = 'field_revision_field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['text'] = '[field_user_lname-revision_id], [field_user_fname-revision_id]';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
+  /* Feld: Benutzer (Historische Daten): First Name */
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['id'] = 'field_user_fname-revision_id';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['table'] = 'field_revision_field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['label'] = 'Vorname';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -8430,9 +8466,9 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Listenposition'),
     t('Partei'),
     t('Uid'),
-    t('First Name'),
     t('Nachname'),
     t('[field_user_lname-revision_id], [field_user_fname-revision_id]'),
+    t('Vorname'),
     t('Profil für'),
     t('Parlament beigetreten'),
     t('Parlament verlassen'),
@@ -8452,7 +8488,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
-    t('Vorname'),
     t('Page'),
   );
   $export['pw_administration_politicians_of_parliament'] = $view;
