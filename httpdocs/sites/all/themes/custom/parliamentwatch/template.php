@@ -147,9 +147,7 @@ function parliamentwatch_page_alter(&$page) {
  * Implements hook_preprocess_page().
  */
 function parliamentwatch_preprocess_page(&$variables) {
-  if ($GLOBALS['theme_key'] == 'parliamentwatch') {
-    drupal_add_library('system', 'jquery.cookie');
-  }
+  drupal_add_library('system', 'jquery.cookie');
 
   if (menu_get_item()['tab_root'] == 'user') {
     $variables['tabs']['#primary'] = '';
