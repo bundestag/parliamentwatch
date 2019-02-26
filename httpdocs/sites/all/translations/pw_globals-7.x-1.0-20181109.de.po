@@ -2135,6 +2135,20 @@ msgstr "Presse-Paket"
 msgid "Press contact"
 msgstr "Presse-Kontakt"
 
+#: sites/all/modules/custom/pw_blog/pw_blog.module:193
+msgid "Blog license"
+msgstr "Blog Lizenz"
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:209
+msgid ""
+"<strong>License:</strong> The text on this page is under the Creative "
+"Commons license <a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\" "
+"target=\"_blank\">BY-NC-SA 4.0.</a>"
+msgstr ""
+"<strong>Lizenz:</strong> Der Text auf dieser Seite steht unter der Lizenz "
+"Creative Commons <a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\" "
+"target=\"_blank\">BY-NC-SA 4.0.</a>"
+
 #~ msgid "Enter name"
 #~ msgstr "Namen eingeben"
 
