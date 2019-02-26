@@ -143,8 +143,8 @@ function pw_userarchives_user_revision_edit_form_cancel_submit($form, &$form_sta
  * @param $pw_profiles_username
  * @param $user_revision
  */
-function pw_userarchives_edit_revision_page_callback($user_revision) {
-  drupal_goto('user/'. $user_revision->uid .'/revisions/'. $user_revision->vid .'/edit');
+function pw_userarchives_edit_revision_page_callback($account, $vid) {
+  drupal_goto('user/'. $account->uid .'/revisions/'. $vid .'/edit');
 }
 
 
@@ -154,8 +154,8 @@ function pw_userarchives_edit_revision_page_callback($user_revision) {
  * @param $pw_profiles_username
  * @param $user_revision
  */
-function pw_userarchives_all_revision_page_callback($user_revision) {
-  drupal_goto('user/'. $user_revision->uid .'/revisions');
+function pw_userarchives_all_revision_page_callback($account) {
+  drupal_goto('user/'. $account->uid .'/revisions');
 }
 
 
