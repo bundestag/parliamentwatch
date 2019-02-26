@@ -414,7 +414,7 @@ function pw_blog_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -563,7 +563,7 @@ function pw_blog_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -930,7 +930,7 @@ function pw_blog_field_default_fields() {
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '3',
+        'weight' => '4',
       ),
     ),
   );
@@ -972,7 +972,7 @@ function pw_blog_field_default_fields() {
         ),
       ),
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Wenn aktiviert, wird der Text "Der Text auf dieser Seite steht unter der Lizenz Creative Commons BY-NC-SA 4.0." angezeigt.',
       'display' => array(
         'default' => array(
           'label' => 'hidden',
@@ -1014,7 +1014,7 @@ function pw_blog_field_default_fields() {
           'display_label' => 1,
         ),
         'type' => 'options_onoff',
-        'weight' => '15',
+        'weight' => '6',
       ),
     ),
   );
@@ -1115,7 +1115,7 @@ function pw_blog_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'entityreference_autocomplete',
-        'weight' => '8',
+        'weight' => '9',
       ),
     ),
   );
@@ -1334,7 +1334,7 @@ function pw_blog_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'media_generic',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -1422,7 +1422,7 @@ function pw_blog_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '1',
+        'weight' => '8',
       ),
     ),
   );
@@ -1439,6 +1439,7 @@ function pw_blog_field_default_fields() {
   t('Politicians');
   t('Teaser image');
   t('Topics');
+  t('Wenn aktiviert, wird der Text "Der Text auf dieser Seite steht unter der Lizenz Creative Commons BY-NC-SA 4.0." angezeigt.');
 
   return $fields;
 }
