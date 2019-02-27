@@ -2472,6 +2472,11 @@
             $('select#poll_detail_table_sorting').trigger('change.select2');
           }
           $('.dynatable-sort-header').append('<span class="dynatable-sort-header__indicator"></span>');
+
+          // Scroll after pagination
+          $('.pager__item').click(function () {
+            $(window).scrollTo($('.filterbar'), 300);
+          });
         });
 
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {
