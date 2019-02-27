@@ -102,7 +102,9 @@
 
   &--checkbox &__control,
   &--radio &__control {
-    display: none;
+    @include sr-only();
+    width: 13px!important;
+    height: 13px!important;;
   }
 
   &--checkbox &__label,
