@@ -2,7 +2,7 @@
 
 /**
  * @file field.tpl.php
- * Override field output for committees on the full poll view-mode.
+ * Override field output for committees on node-type poll.
  */
 ?>
 <?php if (sizeof($items) > 0): ?>
