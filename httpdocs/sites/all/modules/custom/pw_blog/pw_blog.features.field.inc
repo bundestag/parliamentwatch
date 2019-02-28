@@ -414,7 +414,7 @@ function pw_blog_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -563,7 +563,7 @@ function pw_blog_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -930,7 +930,91 @@ function pw_blog_field_default_fields() {
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '3',
+        'weight' => '4',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-blogpost-field_blogpost_license'.
+  $fields['node-blogpost-field_blogpost_license'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_blogpost_license',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => '',
+          1 => '',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_boolean',
+    ),
+    'field_instance' => array(
+      'bundle' => 'blogpost',
+      'default_value' => array(
+        0 => array(
+          'value' => 1,
+        ),
+      ),
+      'deleted' => '0',
+      'description' => 'Wenn aktiviert, wird der Text "Der Text auf dieser Seite steht unter der Lizenz Creative Commons BY-NC-SA 4.0." angezeigt.',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'module' => 'pw_blog',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'blog_license',
+          'weight' => '10',
+        ),
+        'tile' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_blogpost_license',
+      'label' => 'Lizenz anzeigen',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(
+          'display_label' => 1,
+        ),
+        'type' => 'options_onoff',
+        'weight' => '6',
       ),
     ),
   );
@@ -1031,7 +1115,7 @@ function pw_blog_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'entityreference_autocomplete',
-        'weight' => '8',
+        'weight' => '9',
       ),
     ),
   );
@@ -1250,7 +1334,7 @@ function pw_blog_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'media_generic',
-        'weight' => '2',
+        'weight' => '3',
       ),
     ),
   );
@@ -1338,7 +1422,7 @@ function pw_blog_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '1',
+        'weight' => '8',
       ),
     ),
   );
@@ -1351,9 +1435,11 @@ function pw_blog_field_default_fields() {
   t('Der gewählte Block wird automatisch zwischen dem Text und den Kommentaren ausgegeben.');
   t('Intro');
   t('Kommentar');
+  t('Lizenz anzeigen');
   t('Politicians');
   t('Teaser image');
   t('Topics');
+  t('Wenn aktiviert, wird der Text "Der Text auf dieser Seite steht unter der Lizenz Creative Commons BY-NC-SA 4.0." angezeigt.');
 
   return $fields;
 }

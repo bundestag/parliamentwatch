@@ -28,3 +28,69 @@ function pw_blog_update_7100() {
 function pw_blog_update_7101() {
   db_query("UPDATE spamicide SET form_field='enter_name' WHERE enabled=1");
 }
+
+
+/**
+ * Activate "show licence" for all existing blog entries
+ */
+function pw_blog_update_7102(&$sandbox) {
+
+  if (!isset($sandbox['progress'])) {
+    module_load_include('inc', 'features', 'features.drush');
+    drush_features_revert('pw_blog');
+
+    $sandbox['last_id'] = -1;
+
+    $query = db_select('node', 'n');
+    $query->condition('type', 'blogpost');
+    $query->addField('n', 'nid');
+    $result = $query->execute()->fetchAll();
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = count($result);
+    $sandbox['messages'] = [];
+  }
+
+
+  $limit = 50;
+  $query = db_select('node', 'n');
+  $query->condition('type', 'blogpost');
+  $query->condition('n.nid', $sandbox['last_id'], '>');
+  $query->addField('n', 'nid');
+  $query->orderBy('nid');
+  $query->range(0, $limit);
+  $result = $query->execute()->fetchAllAssoc('nid');
+
+  $nodes = node_load_multiple(array_keys($result));
+
+
+  if (count($nodes) < $limit) {
+    $difference = $limit - count($nodes);
+    $sandbox['progress'] = $sandbox['progress'] + $difference;
+  }
+  // go through the found user accounts and rebuild the user archive entries
+  foreach ($nodes as $nid => $node) {
+    if ($node) {
+      $entityWrapper = entity_metadata_wrapper('node', $node);
+      $entityWrapper->field_blogpost_license->set(1);
+      $entityWrapper->save();
+    }
+    $sandbox['progress']++;
+    $sandbox['last_id'] = $nid;
+  }
+
+
+
+  if ($sandbox['progress'] != $sandbox['max'] && $sandbox['progress'] < $sandbox['max']) {
+    $sandbox['#finished'] = $sandbox['progress'] / $sandbox['max'];
+  }
+  else {
+    $sandbox['#finished'] = 1;
+  }
+
+  if ($sandbox['#finished'] == 1) {
+    return  $sandbox['progress'] .' blog post updated. The batch was sucessfully finished.';
+  }
+  else {
+    return  $sandbox['progress'] .' blog posts updated. The batch is still running.';
+  }
+}

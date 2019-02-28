@@ -95,7 +95,7 @@ class DataQuestion extends DataEntityBase {
         0 => [
           'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
           'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
-          'format' => 'managed_content',
+          'format' => 'filtered_html',
         ],
       ],
     ];

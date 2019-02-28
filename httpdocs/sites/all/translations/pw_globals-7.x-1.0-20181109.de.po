@@ -2115,6 +2115,18 @@ msgstr "Präsentiert von"
 msgid "Abgeordnetenwatch"
 msgstr ""
 
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:105
+msgid "Responsible Committee"
+msgid_plural "Responsible Committees"
+msgstr[0] "Verantwortlicher Ausschuss"
+msgstr[1] "Verantwortliche Ausschüsse"
+
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:113
+msgid "Related link"
+msgid_plural "Related links"
+msgstr[0] "Weiterführender Link"
+msgstr[1] "Weiterführende Links"
+
 #: parliamentwatch/httpdocs/sites/all/modules/custom/pw_press/pw_press.module:40
 msgid "Press review"
 msgstr "Pressespiegel"
@@ -2134,6 +2146,20 @@ msgstr "Presse-Paket"
 #: parliamentwatch/httpdocs/sites/all/modules/custom/pw_press/pw_press.module:44
 msgid "Press contact"
 msgstr "Presse-Kontakt"
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:193
+msgid "Blog license"
+msgstr "Blog Lizenz"
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:209
+msgid ""
+"<strong>License:</strong> The text on this page is under the Creative "
+"Commons license <a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\" "
+"target=\"_blank\">BY-NC-SA 4.0.</a>"
+msgstr ""
+"<strong>Lizenz:</strong> Der Text auf dieser Seite steht unter der Lizenz "
+"Creative Commons <a href=\"http://creativecommons.org/licenses/by-nc-sa/3.0/\" "
+"target=\"_blank\">BY-NC-SA 4.0.</a>"
 
 #~ msgid "Enter name"
 #~ msgstr "Namen eingeben"
