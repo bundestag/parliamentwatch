@@ -2370,6 +2370,15 @@
           }
         });
 
+        // Modal trigger
+        $('[data-modal-trigger]').click(function () {
+          var modalName = $(this).attr('data-modal-name');
+          var modal = $('.modal[data-modal-name=' + modalName + ']');
+          var attr = modal.attr('data-modal-cookie');
+          modal.addClass('modal--open');
+          $('body').addClass('block-scrolling');
+        });
+
         // Control inital modals
         if ($('[data-modal-initial]').length) {
           $('[data-modal-initial]').each(function (index) {
