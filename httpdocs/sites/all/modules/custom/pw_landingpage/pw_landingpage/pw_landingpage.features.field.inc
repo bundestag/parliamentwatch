@@ -137,7 +137,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'paragraphs',
           'settings' => array(
             'linked_field' => array(
@@ -154,7 +154,7 @@ function pw_landingpage_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'paragraphs_view',
-          'weight' => 1,
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -247,7 +247,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -263,7 +263,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 4,
+          'weight' => '4',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -382,7 +382,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -398,7 +398,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 5,
+          'weight' => '5',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -515,7 +515,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
@@ -533,7 +533,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'image',
-          'weight' => 1,
+          'weight' => '1',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -626,7 +626,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
@@ -644,7 +644,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'image',
-          'weight' => 2,
+          'weight' => '2',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -737,7 +737,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -753,7 +753,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 3,
+          'weight' => '3',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -870,7 +870,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -886,7 +886,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -1003,7 +1003,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -1019,7 +1019,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 6,
+          'weight' => '6',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -1123,7 +1123,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'paragraphs',
           'settings' => array(
             'linked_field' => array(
@@ -1140,7 +1140,7 @@ function pw_landingpage_field_default_fields() {
             'view_mode' => 'full',
           ),
           'type' => 'paragraphs_view',
-          'weight' => 0,
+          'weight' => '1',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -1364,7 +1364,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -1380,7 +1380,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
@@ -1499,7 +1499,7 @@ function pw_landingpage_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
             'linked_field' => array(
@@ -1515,7 +1515,7 @@ function pw_landingpage_field_default_fields() {
             ),
           ),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
