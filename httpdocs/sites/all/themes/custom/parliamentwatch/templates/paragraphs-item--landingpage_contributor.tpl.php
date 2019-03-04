@@ -34,8 +34,12 @@
         <p class="h2"><?php print render($content['field_contributor_name']); ?></p>
         <p><?php print render($content['field_contributor_job_title']); ?></p>
         <?php print render($content['field_contributor_description']); ?>
-        <p class="modal--contributor__content__link"><i class="icon icon-mail"></i> <a href="<?php print str_rot13('mailto: ' . ltrim(render($content['field_contributor_email']))); ?>" class="encrypt-rot13"><?php print str_rot13(ltrim(render($content['field_contributor_email']))); ?></a></p>
-        <p class="modal--contributor__content__link"><i class="icon icon-phone"></i> <a href=""><?php print render($content['field_contributor_telephone']); ?></a></p>
+        <?php if ($content['field_contributor_email']): ?>
+          <p class="modal--contributor__content__link"><i class="icon icon-mail"></i> <a href="<?php print str_rot13('mailto: ' . ltrim(render($content['field_contributor_email']))); ?>" class="encrypt-rot13"><?php print str_rot13(ltrim(render($content['field_contributor_email']))); ?></a></p>
+        <?php endif; ?>
+        <?php if ($content['field_contributor_telephone']): ?>
+          <p class="modal--contributor__content__link"><i class="icon icon-phone"></i> <?php print render($content['field_contributor_telephone']); ?></p>
+        <?php endif; ?>
       </div>
     </div>
   </div>
