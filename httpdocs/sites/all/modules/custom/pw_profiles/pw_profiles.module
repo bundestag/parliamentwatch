@@ -489,6 +489,25 @@ function pw_profiles_page($parliament_term, $role_name) {
     $q->filter($f->condition('field_user_list_position', drupal_get_query_parameters()['list_position']));
   }
 
+  if (isset(drupal_get_query_parameters()['top_ten']) && drupal_get_query_parameters()['top_ten'] == TRUE) {
+    $f = new SearchApiQueryFilter('OR', ['facet:field_user_list_position']);
+    $positions = [
+      1 => 15598,
+      2 => 15596,
+      3 => 15606,
+      4 => 15602,
+      5 => 15595,
+      6 => 15597,
+      7 => 15617,
+      8 => 15601,
+      9 => 15604,
+      10 => 15608
+    ];
+    foreach ($positions as $position => $tid) {
+      $q->filter($f->condition('field_user_list_position', $tid));
+    }
+  }
+
   if (isset(drupal_get_query_parameters()['party'])) {
     $f = new SearchApiQueryFilter('OR', ['facet:field_user_party']);
     foreach (drupal_get_query_parameters()['party'] as $party) {
@@ -830,6 +849,13 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
         '#options' => ['' => t('All')] + _pw_profiles_options($list_position_values),
         '#default_value' => empty($parameters['list_position']) ? '' : $parameters['list_position'],
         '#dropdown' => TRUE,
+      );
+      $form['top_ten'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('List position top ten'),
+        '#title_display' => 'invisible',
+        '#default_value' => empty($parameters['top_ten']) ? '' : $parameters['top_ten'],
+        '#dropdown' => FALSE,
       );
     }
     if (count($party_values) > 1) {
