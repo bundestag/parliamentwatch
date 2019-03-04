@@ -875,13 +875,9 @@
         padding: 0;
         margin: 0;
         border: 0;
-        width: 120px;
-        height: 120px;
-        background: #f3f3f3;
         position: absolute;
         transition: opacity 600ms ease;
         & + img {
-          background: #333;
           z-index: 1;
           opacity: 0;
         }
