@@ -2400,6 +2400,33 @@
   };
 
   /**
+   * Attaches encrypt rot-13 behavior
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.encryptRot13 = {
+    attach: function (context, settings) {
+
+      function rot13(str) {
+        var input     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var output    = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+        var index     = x => input.indexOf(x);
+        var translate = x => index(x) > -1 ? output[index(x)] : x;
+        return str.split('').map(translate).join('');
+      }
+
+      $('.encrypt-rot13').each(function (index) {
+        var hrefValue = $(this).attr('href');
+        var textValue = $(this).text();
+        $(this).text(rot13(textValue));
+        $(this).attr('href', rot13(hrefValue));
+      });
+    }
+  };
+
+  /**
    * Attaches votes table behavior.
    *
    * @type {Drupal~behavior}
