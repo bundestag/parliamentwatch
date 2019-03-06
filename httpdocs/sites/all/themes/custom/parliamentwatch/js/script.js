@@ -2418,8 +2418,10 @@
             dynatable.sortsHeaders.removeAllArrows = SortsHeaders.removeAllArrows;
             dynatable.sortsHeaders.toggleSort = SortsHeaders.toggleSort;
 
-            // sorting on mobile devices
+            // set highlighting for default sorting
+            $('th[data-dynatable-column="field_vote_display"] .dynatable-sort-header').click();
 
+            // sorting on mobile devices
             $('#poll_detail_table_sorting').on('select2:select', function (e) {
               var selectValue = $(this).find(':selected').data('sort-value');
               var selectSortOrder = $(this).find(':selected').data('sort-order');
