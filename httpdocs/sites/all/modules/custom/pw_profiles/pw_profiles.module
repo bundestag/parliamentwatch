@@ -853,7 +853,7 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
       $form['top_ten'] = array(
         '#type' => 'checkbox',
         '#title' => t('List position top ten'),
-        '#title_display' => 'invisible',
+        '#title_display' => 'after',
         '#default_value' => empty($parameters['top_ten']) ? '' : $parameters['top_ten'],
         '#dropdown' => FALSE,
       );
