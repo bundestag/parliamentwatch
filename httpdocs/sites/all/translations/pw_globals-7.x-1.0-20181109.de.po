@@ -2174,3 +2174,7 @@ msgstr ""
 #~ msgstr "Mehr Blogartikel aus der Rubrik „@name”"
 msgid "Submitted on !datetime"
 msgstr "Veröffentlicht am !datetime"
+
+#: sites/all/modules/custom/pw_blog/pw_profiles.module:855
+msgid "Top 10 list position"
+msgstr "Top 10 Listenplatz"
