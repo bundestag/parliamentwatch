@@ -1,0 +1,16 @@
+Index: httpdocs/sites/all/modules/contrib/feeds/libraries/http_request.inc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- httpdocs/sites/all/modules/contrib/feeds/libraries/http_request.inc	(revision b87990b3ba0150f1affef2b38a4302957cd45239)
++++ httpdocs/sites/all/modules/contrib/feeds/libraries/http_request.inc	(date 1551962722845)
+@@ -241,7 +241,7 @@
+       $download = curl_init($url);
+       curl_setopt($download, CURLOPT_FOLLOWLOCATION, TRUE);
+       if (!empty($options['username'])) {
+-        curl_setopt($download, CURLOPT_USERPWD, '{' . $options['username'] . '}:{' . $options['password'] . '}');
++        curl_setopt($download, CURLOPT_USERPWD, $options['username'] . ':' . $options['password']);
+         curl_setopt($download, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+       }
+       curl_setopt($download, CURLOPT_HTTPHEADER, $headers);
