@@ -1026,9 +1026,9 @@ function _pw_profiles_facet_values_list_position($facet) {
 
   if (isset($parameters["top_ten"]) && $parameters["top_ten"] == TRUE) {
     $topten = _pw_profiles_top_ten_listposititions();
-    foreach ($values as $key => $facet_data) {
-      if (!in_array($facet_data['filter'], $topten)) {
-        unset($facet[$key]);
+    foreach ($values as $key => $tid) {
+      if (!in_array($tid, $topten)) {
+        unset($values[$key]);
       }
     }
   }
