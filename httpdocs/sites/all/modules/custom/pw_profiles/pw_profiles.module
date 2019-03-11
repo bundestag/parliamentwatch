@@ -491,18 +491,7 @@ function pw_profiles_page($parliament_term, $role_name) {
 
   if (isset(drupal_get_query_parameters()['top_ten']) && drupal_get_query_parameters()['top_ten'] == TRUE) {
     $f = new SearchApiQueryFilter('OR', ['facet:field_user_list_position']);
-    $positions = [
-      1 => 15598,
-      2 => 15596,
-      3 => 15606,
-      4 => 15602,
-      5 => 15595,
-      6 => 15597,
-      7 => 15617,
-      8 => 15601,
-      9 => 15604,
-      10 => 15608
-    ];
+    $positions = _pw_profiles_top_ten_listposititions();
     foreach ($positions as $position => $tid) {
       $q->filter($f->condition('field_user_list_position', $tid));
     }
@@ -785,7 +774,7 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
   $constituency_values = _pw_profiles_facet_values($facets['field_user_constituency']);
   $party_values = _pw_profiles_facet_values($facets['field_user_party']);
   $list_values = _pw_profiles_facet_values($facets['field_user_list']);
-  $list_position_values = _pw_profiles_facet_values($facets['field_user_list_position']);
+  $list_position_values = _pw_profiles_facet_values_list_position($facets['field_user_list_position']);
   $gender_options = array_combine(_pw_profiles_facet_values($facets['field_user_gender']), array_map('t', _pw_profiles_facet_values($facets['field_user_gender'])));
 
   $parameters = drupal_get_query_parameters();
@@ -1019,6 +1008,52 @@ function _pw_profiles_facet_values($facet) {
   }
 
   return $values;
+}
+
+
+/**
+ * Extracts the list positions from a facet. When the top ten filter is set
+ * we just show the top ten positions.
+ *
+ * @param $facet
+ *
+ * @return array
+ */
+function _pw_profiles_facet_values_list_position($facet) {
+  $values = _pw_profiles_facet_values($facet);
+
+  $parameters = drupal_get_query_parameters();
+
+  if (isset($parameters["top_ten"]) && $parameters["top_ten"] == TRUE) {
+    $topten = _pw_profiles_top_ten_listposititions();
+    foreach ($values as $key => $facet_data) {
+      if (!in_array($facet_data['filter'], $topten)) {
+        unset($facet[$key]);
+      }
+    }
+  }
+
+  return $values;
+}
+
+
+/**
+ * @return array
+ * Define the term tids of top ten list positions. The key is the list position
+ */
+function _pw_profiles_top_ten_listposititions() {
+  return [
+    1 => 15598,
+    2 => 15596,
+    3 => 15606,
+    4 => 15602,
+    5 => 15595,
+    6 => 15597,
+    7 => 15617,
+    8 => 15601,
+    9 => 15604,
+    10 => 15608
+  ];
 }
 
 /**
