@@ -527,7 +527,6 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
   }
 }
 
-
 /* Wells */
 .well {
   background: $beige;
@@ -546,6 +545,8 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
   }
   .well__full {
     @include grid-column(12, $neat-grid-large-gutter);
+    margin-top: $space;
+    margin-bottom: $space;
   }
 }
 .well--tabs {

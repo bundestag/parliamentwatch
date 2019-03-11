@@ -167,6 +167,12 @@
         font-weight: 700;
       }
     }
+    .well__full {
+      @include breakpoint($breakpoint-m-min) {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
     .form {
       border-top: 1px solid $darkBeige;
       padding-top: $space;

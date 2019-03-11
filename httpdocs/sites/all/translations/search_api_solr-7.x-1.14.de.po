@@ -1,10 +1,10 @@
 # German translation of Search API Solr Search (7.x-1.14)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Search API Solr Search (7.x-1.14)\n"
-"POT-Creation-Date: 2018-10-10 17:47+0000\n"
+"POT-Creation-Date: 2019-03-03 14:47+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid "Username"
-msgstr "Benutzername"
+msgstr "Username"
 msgid "Search"
 msgstr "Suche"
 msgid "Password"
@@ -50,6 +50,8 @@ msgid "Did you mean"
 msgstr "Meinten Sie"
 msgid "Solr server URI"
 msgstr "Solr-Server-URI"
+msgid "Solr service"
+msgstr "Solr-Dienst"
 msgid "The Solr server could be reached (latency: @millisecs ms)."
 msgstr "Der Solr-Server ist erreichbar (Latenz: @millisecs ms)."
 msgid "HTTP method"

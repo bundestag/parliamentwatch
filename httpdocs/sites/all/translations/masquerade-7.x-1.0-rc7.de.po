@@ -1,10 +1,10 @@
 # German translation of Masquerade (7.x-1.0-rc7)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Masquerade (7.x-1.0-rc7)\n"
-"POT-Creation-Date: 2018-09-26 12:27+0000\n"
+"POT-Creation-Date: 2019-03-03 15:07+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -60,8 +60,8 @@ msgid "Masquerade autocomplete"
 msgstr "Masquerade-Autovervollständigung"
 msgid "Masquerade module allows administrators to masquerade as other users."
 msgstr ""
-"Masquerade erlaubt Administratoren, sich als ein anderer Benutzern "
-"auszugeben (zum Benutzer zu „wechseln“)."
+"Masquerade erlaubt es Administratoren, sich als ein anderer Benutzer "
+"auszugeben."
 msgid "This module allows permitted users to masquerade as other users."
 msgstr ""
 "Dieses Modul erlaubt berechtigten Benutzern, sich als andere Benutzer "
