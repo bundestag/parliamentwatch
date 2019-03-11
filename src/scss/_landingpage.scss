@@ -857,6 +857,7 @@
   @include grid-column(12);
   margin-bottom: $space;
   padding-bottom: $space-large;
+  cursor: pointer;
   @include breakpoint($breakpoint-xs-min) {
     @include grid-column(6);
   }
