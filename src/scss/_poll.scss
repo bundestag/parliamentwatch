@@ -439,6 +439,7 @@
   overflow: hidden;
   background: $beige;
   cursor: grab;
+  &:active { cursor: grabbing; }
   &:before,
   &:after {
     content: '';
