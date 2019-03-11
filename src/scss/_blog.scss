@@ -147,6 +147,7 @@
   .well {
     font-size: .9em;
     margin-top: $space-large * 2;
+    clear: both;
     @include breakpoint($breakpoint-m-min) {
       padding: $space-large 0;
     }
@@ -196,6 +197,7 @@
 }
 .blog__content__inner {
   @include grid-column(12);
+  @include grid-container();
 }
 .blog-related {
   padding-top: $space-large * 2;
