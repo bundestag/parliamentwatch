@@ -37,12 +37,12 @@ function pw_landingpage_node_info() {
 function pw_landingpage_paragraphs_info() {
   $items = array(
     'landingpage_contributor' => array(
-      'name' => 'Mitwirkende Person',
+      'name' => 'Person',
       'bundle' => 'landingpage_contributor',
       'locked' => '1',
     ),
     'landingpage_contributor_group' => array(
-      'name' => 'Mitwirkende',
+      'name' => 'Personen-Gruppe',
       'bundle' => 'landingpage_contributor_group',
       'locked' => '1',
     ),

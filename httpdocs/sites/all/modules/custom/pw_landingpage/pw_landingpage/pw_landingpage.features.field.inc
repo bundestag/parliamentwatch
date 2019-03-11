@@ -10,107 +10,6 @@
 function pw_landingpage_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-landingpage-body'.
-  $fields['node-landingpage-body'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(
-        0 => 'node',
-      ),
-      'field_name' => 'body',
-      'field_permissions' => array(
-        'type' => '0',
-      ),
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'profile2_private' => FALSE,
-      ),
-      'translatable' => '1',
-      'type' => 'text_with_summary',
-    ),
-    'field_instance' => array(
-      'bundle' => 'landingpage',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'module' => 'text',
-          'settings' => array(
-            'linked_field' => array(
-              'advanced' => array(
-                'class' => '',
-                'rel' => '',
-                'target' => '',
-                'text' => '',
-                'title' => '',
-              ),
-              'destination' => '',
-              'linked' => 0,
-            ),
-          ),
-          'type' => 'text_default',
-          'weight' => '0',
-        ),
-        'teaser' => array(
-          'label' => 'hidden',
-          'module' => 'text',
-          'settings' => array(
-            'linked_field' => array(
-              'advanced' => array(
-                'class' => '',
-                'rel' => '',
-                'target' => '',
-                'text' => '',
-                'title' => '',
-              ),
-              'destination' => '',
-              'linked' => 0,
-            ),
-            'trim_length' => 600,
-          ),
-          'type' => 'text_summary_or_trimmed',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'body',
-      'label' => 'Body',
-      'required' => FALSE,
-      'settings' => array(
-        'display_summary' => TRUE,
-        'text_processing' => 1,
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'module' => 'text',
-        'settings' => array(
-          'rows' => 20,
-          'summary_rows' => 5,
-        ),
-        'type' => 'text_textarea_with_summary',
-        'weight' => '2',
-      ),
-    ),
-  );
-
   // Exported field: 'node-landingpage-field_landingpage_paragraphs'.
   $fields['node-landingpage-field_landingpage_paragraphs'] = array(
     'field_config' => array(
@@ -191,7 +90,7 @@ function pw_landingpage_field_default_fields() {
           'paragraphs_pw_list' => '5',
           'paragraphs_pw_testmonial' => '6',
         ),
-        'default_edit_mode' => 'open',
+        'default_edit_mode' => 'preview',
         'title' => 'Paragraph',
         'title_multiple' => 'Paragraphs',
         'user_register_form' => FALSE,
@@ -269,7 +168,7 @@ function pw_landingpage_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '4',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -404,7 +303,7 @@ function pw_landingpage_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '5',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -519,7 +418,7 @@ function pw_landingpage_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => '',
+            'image_style' => 'square_medium',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -536,10 +435,25 @@ function pw_landingpage_field_default_fields() {
           'weight' => '1',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'hidden',
+          'module' => 'image',
+          'settings' => array(
+            'image_link' => '',
+            'image_style' => 'square_small',
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'image',
+          'weight' => '0',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -630,7 +544,7 @@ function pw_landingpage_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => '',
+            'image_style' => 'square_medium',
             'linked_field' => array(
               'advanced' => array(
                 'class' => '',
@@ -650,7 +564,7 @@ function pw_landingpage_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '3',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -756,10 +670,23 @@ function pw_landingpage_field_default_fields() {
           'weight' => '3',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_plain',
+          'weight' => '2',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -889,10 +816,23 @@ function pw_landingpage_field_default_fields() {
           'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'inline',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_plain',
+          'weight' => '1',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -1025,7 +965,7 @@ function pw_landingpage_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '6',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -1144,14 +1084,28 @@ function pw_landingpage_field_default_fields() {
         ),
         'paragraphs_editor_preview' => array(
           'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'module' => 'paragraphs',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+            'view_mode' => 'paragraphs_editor_preview',
+          ),
+          'type' => 'paragraphs_view',
+          'weight' => '1',
         ),
       ),
       'entity_type' => 'paragraphs_item',
       'field_name' => 'field_landingpage_contributor',
-      'label' => 'Mitwirkende',
+      'label' => 'Personen',
       'required' => 0,
       'settings' => array(
         'add_mode' => 'button',
@@ -1177,7 +1131,7 @@ function pw_landingpage_field_default_fields() {
           'paragraphs_pw_list' => '9',
           'paragraphs_pw_testmonial' => '10',
         ),
-        'default_edit_mode' => 'open',
+        'default_edit_mode' => 'preview',
         'title' => 'Paragraph',
         'title_multiple' => 'Paragraphs',
         'user_register_form' => FALSE,
@@ -1250,15 +1204,28 @@ function pw_landingpage_field_default_fields() {
           'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_plain',
+          'weight' => '0',
         ),
       ),
       'entity_type' => 'paragraphs_item',
       'field_name' => 'field_landingpage_headline',
-      'label' => 'Titel',
+      'label' => 'Gruppenbezeichnung',
       'required' => 0,
       'settings' => array(
         'better_formats' => array(
@@ -1320,7 +1287,7 @@ function pw_landingpage_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '0',
+        'weight' => 0,
       ),
     ),
   );
@@ -1383,10 +1350,23 @@ function pw_landingpage_field_default_fields() {
           'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_plain',
+          'weight' => '0',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -1518,10 +1498,23 @@ function pw_landingpage_field_default_fields() {
           'weight' => '0',
         ),
         'paragraphs_editor_preview' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
+          'label' => 'hidden',
+          'module' => 'text',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'text_plain',
+          'weight' => '0',
         ),
       ),
       'entity_type' => 'paragraphs_item',
@@ -1600,16 +1593,15 @@ function pw_landingpage_field_default_fields() {
   t('Beschreibung');
   t('Bild');
   t('Bild (Hover)');
-  t('Body');
   t('E-Mail');
+  t('Gruppenbezeichnung');
   t('Job-Titel');
   t('Landingpage Headline');
   t('Landingpage Text');
-  t('Mitwirkende');
   t('Name');
+  t('Personen');
   t('Seitenabschnitte');
   t('Telefon');
-  t('Titel');
 
   return $fields;
 }
