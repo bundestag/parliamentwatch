@@ -439,7 +439,7 @@
   overflow: hidden;
   background: $beige;
   cursor: grab;
-  &:active { cursor: grabbing; }
+  &:active { cursor: grabbing !important; }
   &:before,
   &:after {
     content: '';
