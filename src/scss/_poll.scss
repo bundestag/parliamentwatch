@@ -438,6 +438,8 @@
   position: relative;
   overflow: hidden;
   background: $beige;
+  cursor: grab;
+  &:active { cursor: grabbing !important; }
   &:before,
   &:after {
     content: '';
@@ -455,6 +457,7 @@
 }
 .poll__timeline__title {
   position: relative;
+  cursor: auto;
   > h2 {
     @include h3();
     position: relative;

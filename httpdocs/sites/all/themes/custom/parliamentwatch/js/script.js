@@ -1778,6 +1778,7 @@
           slidesPerView: 'auto',
           spaceBetween: 30,
           centeredSlides: true,
+          grabCursor: true,
           nextButton: $('.poll__timeline .swiper-button-next'),
           prevButton: $('.poll__timeline .swiper-button-prev'),
         });
