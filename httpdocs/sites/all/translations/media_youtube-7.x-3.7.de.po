@@ -1,10 +1,10 @@
 # German translation of Media: YouTube (7.x-3.7)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Media: YouTube (7.x-3.7)\n"
-"POT-Creation-Date: 2018-09-12 00:38+0000\n"
+"POT-Creation-Date: 2019-03-03 12:43+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -28,11 +28,15 @@ msgid "Light"
 msgstr "Hell"
 msgid "Origin"
 msgstr "﻿Ursprung"
+msgid "YouTube Video"
+msgstr "YouTube-Video"
 msgid "Image style"
 msgstr "Bildstil"
 msgid "None (original image)"
 msgstr "Keine (Originalbild)"
 msgid "Dark"
 msgstr "Dunkel"
+msgid "YouTube Preview Image"
+msgstr "YouTube-Vorschaubild"
 msgid "Player theme"
 msgstr "Playertheme"

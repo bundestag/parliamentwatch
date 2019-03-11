@@ -1,10 +1,10 @@
 # German translation of Libraries API (7.x-2.5)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Libraries API (7.x-2.5)\n"
-"POT-Creation-Date: 2018-10-05 20:47+0000\n"
+"POT-Creation-Date: 2019-03-10 00:54+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -74,6 +74,10 @@ msgid "The %variant variant of the %library library could not be found."
 msgstr ""
 "Die Variante %variant der Bibliothek %library konnte nicht gefunden "
 "werden."
+msgid "Allows version-dependent and shared usage of external libraries."
+msgstr ""
+"Ermöglicht die versionsabhängige und gemeinsame Nutzung externer "
+"Bibliotheken."
 msgid "%module module"
 msgstr "Modul %module"
 msgid "Status report for library %library"

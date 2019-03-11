@@ -1,10 +1,10 @@
 # German translation of Matomo Analytics (7.x-2.11)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Matomo Analytics (7.x-2.11)\n"
-"POT-Creation-Date: 2018-09-01 17:37+0000\n"
+"POT-Creation-Date: 2019-03-01 21:34+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Downloads"
 msgid "Users"
 msgstr "Benutzer"
 msgid "Messages"
-msgstr "Nachrichten"
+msgstr "Benachrichtigungen"
 msgid "Visit"
 msgstr "Aufrufen"
 msgid "Scope"

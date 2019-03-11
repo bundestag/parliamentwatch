@@ -1,10 +1,10 @@
-# German translation of Services (7.x-3.21)
+# German translation of Services (7.x-3.23)
 # Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Services (7.x-3.21)\n"
-"POT-Creation-Date: 2019-01-19 18:46+0000\n"
+"Project-Id-Version: Services (7.x-3.23)\n"
+"POT-Creation-Date: 2019-02-28 00:43+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
