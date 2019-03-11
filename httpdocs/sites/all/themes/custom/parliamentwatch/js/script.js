@@ -2370,6 +2370,15 @@
           }
         });
 
+        // Modal trigger
+        $('[data-modal-trigger]').click(function () {
+          var modalName = $(this).attr('data-modal-name');
+          var modal = $('.modal[data-modal-name=' + modalName + ']');
+          var attr = modal.attr('data-modal-cookie');
+          modal.addClass('modal--open');
+          $('body').addClass('block-scrolling');
+        });
+
         // Control inital modals
         if ($('[data-modal-initial]').length) {
           $('[data-modal-initial]').each(function (index) {
@@ -2386,6 +2395,33 @@
         if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
           $.cookie('modal_newsletter', '1', {path: '/'});
         }
+      });
+    }
+  };
+
+  /**
+   * Attaches encrypt rot-13 behavior
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.encryptRot13 = {
+    attach: function (context, settings) {
+
+      function rot13(str) {
+        var input     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var output    = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+        var index     = x => input.indexOf(x);
+        var translate = x => index(x) > -1 ? output[index(x)] : x;
+        return str.split('').map(translate).join('');
+      }
+
+      $('.encrypt-rot13').each(function (index) {
+        var hrefValue = $(this).attr('href');
+        var textValue = $(this).text();
+        $(this).text(rot13(textValue));
+        $(this).attr('href', rot13(hrefValue));
       });
     }
   };

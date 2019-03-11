@@ -810,10 +810,17 @@ function pw_globals_update_7145() {
 }
 
 
-
 /**
  * Enable Stage File Proxy
  */
 function pw_globals_update_7146() {
   module_enable(['stage_file_proxy']);
+}
+
+
+/**
+ * Install pw landingpage module
+ */
+function pw_globals_update_7147() {
+  module_enable(['pw_landingpage']);
 }

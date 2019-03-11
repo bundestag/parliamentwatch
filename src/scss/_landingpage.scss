@@ -826,9 +826,118 @@
   }
 }
 
-/* Landingpage specific styles */
-
 /* Wahlportal: Bayern */
 
 .page-taxonomy-term-29821 .testimonial.clearfix { display: none; }
 .page-taxonomy-term-29821 .patron-teaser { border-top: 0; }
+
+/* Landingpage specific styles */
+
+/* Paragraph-item: Title */
+
+.landingpage__title {
+  @include grid-column(12);
+}
+
+/* Paragraph-item: Title */
+
+.landingpage__text {
+  @include grid-column(12);
+  margin-bottom: $space-large;
+}
+
+/* Paragraph-item: Contributor */
+
+.tile-wrapper--contributor {
+  position: static;
+  margin-bottom: $space-large;
+}
+
+.tile--contributor {
+  @include grid-column(12);
+  margin-bottom: $space;
+  padding-bottom: $space-large;
+  cursor: pointer;
+  @include breakpoint($breakpoint-xs-min) {
+    @include grid-column(6);
+  }
+  @include breakpoint($breakpoint-m-min) {
+    @include grid-column(3);
+  }
+  h3 {
+    margin-bottom: $space-xsmall-mobile;
+  }
+  &__image {
+    @include margin(null auto $space);
+    max-width: 120px;
+    &__inner {
+      @include image-circle(120px, 120px);
+      img {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        position: absolute;
+        transition: opacity 600ms ease;
+        & + img {
+          z-index: 1;
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
+.tile--contributor:hover .tile--contributor__image__inner img + img {
+  opacity: 1;
+}
+.modal--contributor {
+  @include grid-container();
+  &__image {
+    max-width: 170px;
+    margin: 0 auto 30px;
+    @include breakpoint($breakpoint-s-min) {
+      float: left;
+      margin-bottom: 0;
+    }
+    &__inner {
+      @include image-circle(170px, 170px);
+      img {
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+    }
+  }
+  &__content {
+    @include breakpoint($breakpoint-s-min) {
+      padding-left: 210px;
+    }
+    .h2 {
+      margin-bottom: 0;
+    }
+    .h2 + p {
+      margin-bottom: $space;
+    }
+    &__link {
+      margin-top: $space;
+      + .modal--contributor__content__link {
+        margin-top: 0;
+      }
+      .icon {
+        color: #f46b3b;
+        width: 25px;
+        text-align: center;
+        display: inline-block;
+        font-size: 1.1em;
+      }
+      .icon-mail {
+        font-size: 0.7em;
+      }
+      a {
+        color: $darkGray;
+        &:hover {
+          color: $orange;
+        }
+      }
+    }
+  }
+}

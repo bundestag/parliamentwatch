@@ -24,3 +24,32 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+
+/* Paragraph-Items */
+
+/* Person */
+.field-name-field-landingpage-contributor > .field-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+.field-name-field-landingpage-contributor > .field-items > .field-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.paragraph-item--person {
+    display: flex;
+}
+.paragraph-item--person__image {
+    flex: 1 1 80px;
+    padding-right: 20px;
+}
+.paragraph-item--person__image img {
+    width: 100%;
+    height: auto;
+}
+.paragraph-item--person__info {
+    flex: 1 1 calc(100% - 80px);
+}
