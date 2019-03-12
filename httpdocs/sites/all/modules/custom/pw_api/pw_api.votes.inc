@@ -209,7 +209,7 @@ function pw_api_poll($parliament, $poll, $subsets = ['votes']) {
     $stats = ['total' => []];
     foreach($votes as $vote){
       $key_vote = $vote['vote'];
-      $key_fraction = $vote['party'];
+      $key_fraction = $vote['fraction'];
       if (!key_exists($key_vote, $stats['total'])) {
         $stats['total'][$key_vote] = 1;
       }

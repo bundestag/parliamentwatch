@@ -183,3 +183,33 @@ function pw_blog_base_query() {
 
   return $q;
 }
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function pw_blog_field_formatter_info() {
+  return array(
+    'blog_license' => array(
+      'label' => t('Blog license'),
+      'field types' => array('list_boolean'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function pw_blog_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
+  $element = array();
+
+  if ($display['type'] == 'blog_license') {
+    foreach ($items as $delta => $item) {
+      if($item['value'] == '1') {
+        $element[$delta] = array('#markup' => '<div class="well"><div class="well__full"><p><i class="icon icon-info"></i> <strong>' . t('License') .':</strong> ' . t('The text on this page is under the Creative Commons license'). ' <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de" target="_blank">'. t('BY-NC-SA 4.0.') .'</a></p></div></div>');
+      }
+    }
+  }
+
+  return $element;
+}

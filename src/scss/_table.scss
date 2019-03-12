@@ -75,9 +75,7 @@
   }
 }
 
-
 // Wrapper
-
 
 .table-wrapper {
   @include box-inset-large();
@@ -106,28 +104,52 @@
   }
 }
 
-// Sorting
-.table--sortable {
-  th[data-sort] {
+// Dynatable - Sorting
+
+[data-dynatable-sortable] {
+  .dynatable-sort-header {
     cursor: pointer;
-    &:after {
-      content: '';
-      font-family: 'awfont';
-      display: inline-block;
-      margin-left: $space-xsmall-mobile;
-      font-size: .8em;
-      color: $orange;
-    }
-    &.sorting-desc {
+    display: block;
+    .dynatable-sort-header__indicator {
+      &:before,
+      &:after {
+        font-family: 'awfont';
+        display: inline-block;
+        margin-left: $space-xsmall-mobile;
+        font-size: .8em;
+        color: $gray;
+      }
+      &:before {
+        content: '\e848';
+      }
       &:after {
         content: '\e847';
       }
     }
-    &.sorting-asc {
+    &--active {
       &:after {
-        content: '\e848';
+        content: none;
+      }
+    }
+    &--active-sort-up {
+      .dynatable-sort-header__indicator {
+        &:before {
+          color: $orange;
+        }
+        &:after {
+          color: $gray;
+        }
+      }
+    }
+    &--active-sort-down {
+      .dynatable-sort-header__indicator {
+        &:before {
+          color: $gray;
+        }
+        &:after {
+          color: $orange;
+        }
       }
     }
   }
-
 }

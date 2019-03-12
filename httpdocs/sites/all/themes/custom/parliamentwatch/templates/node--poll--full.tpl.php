@@ -92,13 +92,29 @@
       <?php print render($content['body']); ?>
     </div>
     <div class="poll__content__right sidebar">
-      <?php if (!empty($content['field_blogpost_categories'])): ?>
+      <?php if (!empty($content['field_topics'])): ?>
       <div class="sidebar__box">
-        <h3 class="sidebar__box__headline"><?php print t('Tags'); ?> <i class="icon icon-info" data-tooltip-placement="top" data-tooltip-content="<?php print t('tooltip-poll-tags') ?>"></i></h3>
+        <h3 class="sidebar__box__headline"><?php print format_plural(count($content['field_topics']['#items']), 'Topic', 'Topics'); ?></h3>
         <div class="sidebar__box__tag_list">
-          <?php print render($content['field_blogpost_categories']); ?>
+          <?php print render($content['field_topics']); ?>
         </div>
       </div>
+      <?php endif; ?>
+      <?php if (!empty($content['field_poll_committees'])): ?>
+      <div class="sidebar__box">
+        <h3 class="sidebar__box__headline"><?php print format_plural(count($content['field_poll_committees']['#items']), 'Responsible Committee', 'Responsible Committees'); ?></h3>
+        <div class="sidebar__box__tag_list">
+          <?php print render($content['field_poll_committees']); ?>
+        </div>
+      </div>
+      <?php endif; ?>
+      <?php if (!empty($content['field_poll_related_links'])): ?>
+        <div class="sidebar__box">
+          <h3 class="sidebar__box__headline"><?php print format_plural(count($content['field_poll_related_links']['#items']), 'Related link', 'Related links'); ?></h3>
+          <div class="sidebar__box__link_list">
+            <?php print render($content['field_poll_related_links']); ?>
+          </div>
+        </div>
       <?php endif; ?>
     </div>
   </div>

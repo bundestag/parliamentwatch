@@ -51,3 +51,11 @@ Translations for contributed and custom modules are managed with [Localization u
     # drush l10n-update
 
 When the version of PW Globals changes the PO file needs to be renamed accordingly.
+
+## Files folder
+
+We have the Stage File Proxy module enabled so that files that are not found on your local machine are downloaded from the production version. To enable this add the following lines to your settings.php
+
+`# File stage proxy
+ $conf['stage_file_proxy_origin'] = 'https://www.abgeordnetenwatch.de';
+ $conf['stage_file_proxy_origin_dir'] = 'sites/abgeordnetenwatch.de/files';`

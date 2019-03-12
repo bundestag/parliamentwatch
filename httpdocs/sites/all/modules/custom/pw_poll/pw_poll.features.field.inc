@@ -326,7 +326,7 @@ function pw_poll_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '8',
+        'weight' => '10',
       ),
     ),
   );
@@ -380,7 +380,7 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '5',
+          'weight' => '7',
         ),
         'search_result' => array(
           'label' => 'inline',
@@ -532,7 +532,7 @@ function pw_poll_field_default_fields() {
             ),
           ),
           'type' => 'entityreference_label',
-          'weight' => 31,
+          'weight' => '5',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -627,7 +627,7 @@ function pw_poll_field_default_fields() {
             'show_remaining_days' => 0,
           ),
           'type' => 'date_default',
-          'weight' => '2',
+          'weight' => '1',
         ),
         'search_result' => array(
           'label' => 'hidden',
@@ -780,7 +780,7 @@ function pw_poll_field_default_fields() {
           'label' => 'hidden',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '6',
+          'weight' => '8',
         ),
         'search_result' => array(
           'label' => 'above',
@@ -868,6 +868,120 @@ function pw_poll_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-poll-field_poll_related_links'.
+  $fields['node-poll-field_poll_related_links'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_poll_related_links',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'link',
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => 'default',
+        ),
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+        'enable_tokens' => 1,
+        'title' => 'optional',
+        'title_maxlength' => 128,
+        'title_value' => '',
+        'url' => 0,
+      ),
+      'translatable' => '0',
+      'type' => 'link_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'poll',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'link',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'link_default',
+          'weight' => 10,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'tile' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_poll_related_links',
+      'label' => 'Related Links',
+      'required' => 0,
+      'settings' => array(
+        'absolute_url' => 1,
+        'attributes' => array(
+          'class' => '',
+          'configurable_class' => 0,
+          'configurable_title' => 0,
+          'rel' => '',
+          'target' => '_blank',
+          'title' => '',
+        ),
+        'display' => array(
+          'url_cutoff' => '80',
+        ),
+        'enable_tokens' => 1,
+        'linkit' => array(
+          'button_text' => 'Suchen',
+          'enable' => 0,
+          'profile' => '',
+        ),
+        'rel_remove' => 'default',
+        'title' => 'optional',
+        'title_allowed_values' => '',
+        'title_label_use_field_label' => 0,
+        'title_maxlength' => '128',
+        'title_value' => '',
+        'url' => 0,
+        'user_register_form' => FALSE,
+        'validate_url' => 1,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_field',
+        'weight' => '9',
+      ),
+    ),
+  );
+
   // Exported field: 'node-poll-field_teaser_image'.
   $fields['node-poll-field_teaser_image'] = array(
     'field_config' => array(
@@ -924,7 +1038,7 @@ function pw_poll_field_default_fields() {
             ),
           ),
           'type' => 'file_rendered',
-          'weight' => '4',
+          'weight' => '3',
         ),
         'search_result' => array(
           'label' => 'above',
@@ -1081,7 +1195,7 @@ function pw_poll_field_default_fields() {
             ),
           ),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => 30,
+          'weight' => '4',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1174,7 +1288,7 @@ function pw_poll_field_default_fields() {
             ),
           ),
           'type' => 'list_default',
-          'weight' => '3',
+          'weight' => '2',
         ),
         'search_result' => array(
           'label' => 'hidden',
@@ -1327,6 +1441,7 @@ function pw_poll_field_default_fields() {
   t('Kommentar');
   t('Parliament');
   t('Poll Date');
+  t('Related Links');
   t('Teaser image');
   t('Topics');
   t('Voted');

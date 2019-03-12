@@ -353,16 +353,53 @@
     },
     SortsHeaders: function (obj, settings) {
       return {
+        create: function(cell) {
+          var $cell = $(cell),
+          $link = $('<a></a>', {
+            'class': 'dynatable-sort-header',
+            href: '#',
+            html: $cell.html()
+          }),
+          id = $cell.data('dynatable-column'),
+          column = utility.findObjectInArray(settings.table.columns, {id: id});
+
+          $link.bind('click', function(e) {
+            _this.toggleSort(e, $link, column);
+            obj.process();
+
+            e.preventDefault();
+          });
+
+
+          if (this.sortedByColumn($link, column)) {
+            if (this.sortedByColumnValue(column) == 1) {
+              this.appendArrowUp($link);
+            } else {
+              this.appendArrowDown($link);
+            }
+          }
+          return $link;
+
+        },
         appendArrowUp: function ($link) {
           this.removeArrow($link);
-          $link.append('<i class="dynatable-arrow icon icon-arrow-up"></i>');
+          $('.dynatable-sort-header').removeClass('dynatable-sort-header--active-sort-up').removeClass('dynatable-sort-header--active-sort-down');
+          $link.addClass('dynatable-sort-header--active dynatable-sort-header--active-sort-up');
         },
 
         appendArrowDown: function ($link) {
           this.removeArrow($link);
-          $link.append('<i class="dynatable-arrow icon icon-arrow-down"></i>');
+          $('.dynatable-sort-header').removeClass('dynatable-sort-header--active-sort-up').removeClass('dynatable-sort-header--active-sort-down');
+          $link.addClass('dynatable-sort-header--active dynatable-sort-header--active-sort-down');
         },
-
+        removeArrow: function ($link) {
+          $link.find('.dynatable-arrow').remove();
+          $link.find('.dynatable-sort-header__indicator').remove();
+        },
+        removeAllArrows: function () {
+          obj.$element.find('.dynatable-arrow').remove();
+          obj.$element.find('.dynatable-sort-header__indicator').remove();
+        },
         toggleSort: function (e, $link, column) {
           var sortedByColumn = this.sortedByColumn($link, column),
             value = this.sortedByColumnValue(column);
@@ -387,7 +424,7 @@
               for (var i = 0, len = column.sorts.length; i < len; i++) {
                 obj.sorts.add(column.sorts[i], 1);
               }
-              this.appendArrowUp($link);
+              this.removeArrow($link);
             }
             // Otherwise, if not already set, set to ascending
           } else {
@@ -698,7 +735,10 @@
             if (this.responseText == "success") {
               newsletter_message.innerHTML = "Anmeldung erfolgreich, sie erhalten eine Email mit Bestätigungslink.";
               newsletter_message.setAttribute('class', 'form__item show form__item--alert form__item--alert-success');
-              _paq.push(['trackGoal', 2]);
+
+              if(typeof _paq !== 'undefined') {
+                _paq.push(['trackGoal', 2]);
+              }
             }
             else if (this.responseText == "email_error") {
               newsletter_message.innerHTML = "Ihre Email-Adresse konnte nicht angemeldet werden.";
@@ -1738,6 +1778,7 @@
           slidesPerView: 'auto',
           spaceBetween: 30,
           centeredSlides: true,
+          grabCursor: true,
           nextButton: $('.poll__timeline .swiper-button-next'),
           prevButton: $('.poll__timeline .swiper-button-prev'),
         });
@@ -2054,8 +2095,11 @@
     attach: function (context, settings) {
       if (window.history && window.history.pushState && settings.url) {
         history.pushState({}, document.title, settings.url);
-        _paq.push(['setCustomUrl', window.location.href]);
-        _paq.push(['trackPageView']);
+
+        if(typeof _paq !== 'undefined') {
+          _paq.push(['setCustomUrl', window.location.href]);
+          _paq.push(['trackPageView']);
+        }
       }
     }
   };
@@ -2220,7 +2264,7 @@
   Drupal.behaviors.topicTagTracking = {
     attach: function () {
       $(function() {
-        if(typeof _paq !== "undefined") {
+        if(typeof _paq !== 'undefined') {
           var page_url = window.location.href;
 
           $('#topic-tags a').click(function() {
@@ -2241,7 +2285,7 @@
   Drupal.behaviors.deputyGallery = {
     attach: function () {
       $(function() {
-        if(typeof _paq !== "undefined") {
+        if(typeof _paq !== 'undefined') {
           var deputy_name = $('.deputy__title').text();
 
           $('.deputy__gallery a[data-lightbox]').click(function () {
@@ -2327,6 +2371,15 @@
           }
         });
 
+        // Modal trigger
+        $('[data-modal-trigger]').click(function () {
+          var modalName = $(this).attr('data-modal-name');
+          var modal = $('.modal[data-modal-name=' + modalName + ']');
+          var attr = modal.attr('data-modal-cookie');
+          modal.addClass('modal--open');
+          $('body').addClass('block-scrolling');
+        });
+
         // Control inital modals
         if ($('[data-modal-initial]').length) {
           $('[data-modal-initial]').each(function (index) {
@@ -2343,6 +2396,33 @@
         if ($('#node-111893').length === 1 || $('#node-10380').length === 1) {
           $.cookie('modal_newsletter', '1', {path: '/'});
         }
+      });
+    }
+  };
+
+  /**
+   * Attaches encrypt rot-13 behavior
+   *
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~attachBehavior}
+   */
+  Drupal.behaviors.encryptRot13 = {
+    attach: function (context, settings) {
+
+      function rot13(str) {
+        var input     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        var output    = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+        var index     = x => input.indexOf(x);
+        var translate = x => index(x) > -1 ? output[index(x)] : x;
+        return str.split('').map(translate).join('');
+      }
+
+      $('.encrypt-rot13').each(function (index) {
+        var hrefValue = $(this).attr('href');
+        var textValue = $(this).text();
+        $(this).text(rot13(textValue));
+        $(this).attr('href', rot13(hrefValue));
       });
     }
   };
@@ -2373,12 +2453,18 @@
               dynatable.sorts.add('field_vote', 1);
             }
             var SortsHeaders = Drupal.dynatable.SortsHeaders(dynatable, dynatable.settings);
+            dynatable.sortsHeaders.create = SortsHeaders.create;
+            dynatable.sortsHeaders.appendArrow = SortsHeaders.appendArrow;
             dynatable.sortsHeaders.appendArrowUp = SortsHeaders.appendArrowUp;
             dynatable.sortsHeaders.appendArrowDown = SortsHeaders.appendArrowDown;
+            dynatable.sortsHeaders.removeArrow = SortsHeaders.removeArrow;
+            dynatable.sortsHeaders.removeAllArrows = SortsHeaders.removeAllArrows;
             dynatable.sortsHeaders.toggleSort = SortsHeaders.toggleSort;
 
-            // sorting on mobile devices
+            // set highlighting for default sorting
+            $('th[data-dynatable-column="field_vote_display"] .dynatable-sort-header').click();
 
+            // sorting on mobile devices
             $('#poll_detail_table_sorting').on('select2:select', function (e) {
               var selectValue = $(this).find(':selected').data('sort-value');
               var selectSortOrder = $(this).find(':selected').data('sort-order');
@@ -2430,6 +2516,12 @@
             $('select#poll_detail_table_sorting').val(newSortValue);
             $('select#poll_detail_table_sorting').trigger('change.select2');
           }
+          $('.dynatable-sort-header').append('<span class="dynatable-sort-header__indicator"></span>');
+
+          // Scroll after pagination
+          $('.pager__item').click(function () {
+            $(window).scrollTo($('.filterbar'), 300);
+          });
         });
 
         $('.form--pw-vote-poll-filters .form__item__control').change(function (event) {

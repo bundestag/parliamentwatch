@@ -473,29 +473,8 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
 
 .sidebar__box__link_list {
   border-top: 1px solid $gray;
-  padding: $space-small;
   padding: 0;
   margin: 0;
-}
-.sidebar__box__link_list__title {
-  padding: $space-xsmall 0 $space-xsmall-mobile 0;
-  margin: 0;
-  display: block;
-  position: relative;
-  .icon {
-    position: absolute;
-    right: $space-xsmall-mobile;
-    top: $space-small;
-    font-size: .7em;
-    color: $mediumGray;
-  }
-}
-.sidebar__box__link_list__description {
-  padding: 0 0 $space-xsmall 0;
-  margin: 0;
-  display: block;
-  border-bottom: 1px solid $gray;
-  font-size: .9em;
 }
 
 /* Sidebar-Box: Accordion */
@@ -548,7 +527,6 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
   }
 }
 
-
 /* Wells */
 .well {
   background: $beige;
@@ -564,6 +542,11 @@ h3.tile__title { padding-bottom: $space; @include text-overflow-multi(); }
       margin-bottom: $space-large;
       @include grid-column(6, $neat-grid-large-gutter);
     }
+  }
+  .well__full {
+    @include grid-column(12, $neat-grid-large-gutter);
+    margin-top: $space;
+    margin-bottom: $space;
   }
 }
 .well--tabs {
