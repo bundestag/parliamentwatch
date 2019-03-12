@@ -135,22 +135,22 @@ function pw_poll_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'metatags' => array(
-          'weight' => '12',
+          'weight' => '14',
         ),
         'title' => array(
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '11',
+          'weight' => '13',
         ),
         'rabbit_hole' => array(
-          'weight' => '9',
+          'weight' => '11',
         ),
         'redirect' => array(
-          'weight' => '10',
+          'weight' => '12',
         ),
         'xmlsitemap' => array(
-          'weight' => '14',
+          'weight' => '16',
         ),
       ),
       'display' => array(

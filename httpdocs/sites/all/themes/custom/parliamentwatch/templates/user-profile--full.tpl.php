@@ -178,7 +178,7 @@
               <p>
                 <small>
                   <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
-                  <?php print $user_profile['field_user_election_result'][0]['#markup']; ?>
+                  <?php print number_format(floatval(str_replace(',', '.', $user_profile['field_user_election_result'][0]['#markup'])), 1, ',', '.'); ?>&thinsp;%
                 </small>
               </p>
             <?php endif; ?>

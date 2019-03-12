@@ -438,6 +438,8 @@
   position: relative;
   overflow: hidden;
   background: $beige;
+  cursor: grab;
+  &:active { cursor: grabbing !important; }
   &:before,
   &:after {
     content: '';
@@ -455,6 +457,7 @@
 }
 .poll__timeline__title {
   position: relative;
+  cursor: auto;
   > h2 {
     @include h3();
     position: relative;
@@ -662,8 +665,10 @@
 }
 .poll__content__left {
   @include grid-column(12);
+  padding-bottom: $space-large;
   @include breakpoint($breakpoint-s-min) {
     @include grid-column(7);
+    padding-bottom: 0;
   }
   ul { @include icon-list() }
   a { font-weight: 600; color: $orange; }

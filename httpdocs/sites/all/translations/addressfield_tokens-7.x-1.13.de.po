@@ -1,10 +1,10 @@
 # German translation of Addressfield Tokens (7.x-1.13)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Addressfield Tokens (7.x-1.13)\n"
-"POT-Creation-Date: 2018-10-11 12:48+0000\n"
+"POT-Creation-Date: 2019-03-01 19:07+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 msgid "- None -"
-msgstr "- Keiner -"
+msgstr "- Nicht festgelegt/ausgewählt -"
 msgid "Country"
 msgstr "Land"
 msgid "Separator"

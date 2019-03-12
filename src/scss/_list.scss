@@ -113,6 +113,11 @@ dl {
       }
     }
   }
+  &--committee {
+    > li a::before {
+      content: '\e835';
+    }
+  }
 }
 
 /* Link-list */
@@ -158,6 +163,11 @@ dl {
       &:after {
         color: $orange;
       }
+    }
+  }
+  &--full {
+    @include breakpoint($breakpoint-m-min) {
+      @include grid-column(12, $neat-grid-large-gutter);
     }
   }
 }

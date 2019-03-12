@@ -54,6 +54,10 @@
     }
   }
 
+  &__label {
+    cursor: inherit;
+  }
+
   &:not(&--checkboxes):not(&--radios):not(&--checkbox):not(&--radio) &__label:not(.sr-only) {
     display: block;
     line-height: $space;
@@ -98,7 +102,9 @@
 
   &--checkbox &__control,
   &--radio &__control {
-    display: none;
+    @include sr-only();
+    width: 13px!important;
+    height: 13px!important;;
   }
 
   &--checkbox &__label,

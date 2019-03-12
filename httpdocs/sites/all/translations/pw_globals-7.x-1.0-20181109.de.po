@@ -2115,6 +2115,18 @@ msgstr "Präsentiert von"
 msgid "Abgeordnetenwatch"
 msgstr ""
 
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:105
+msgid "Responsible Committee"
+msgid_plural "Responsible Committees"
+msgstr[0] "Verantwortlicher Ausschuss"
+msgstr[1] "Verantwortliche Ausschüsse"
+
+#: sites/all/themes/custom/parliamentwatch/templates/node--poll--full.tpl.php:113
+msgid "Related link"
+msgid_plural "Related links"
+msgstr[0] "Weiterführender Link"
+msgstr[1] "Weiterführende Links"
+
 #: parliamentwatch/httpdocs/sites/all/modules/custom/pw_press/pw_press.module:40
 msgid "Press review"
 msgstr "Pressespiegel"
@@ -2135,6 +2147,24 @@ msgstr "Presse-Paket"
 msgid "Press contact"
 msgstr "Presse-Kontakt"
 
+#: sites/all/modules/custom/pw_blog/pw_blog.module:193
+msgid "Blog license"
+msgstr "Blog Lizenz"
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:209
+msgid "License"
+msgstr "Lizens"
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:209
+msgid "BY-NC-SA 4.0."
+msgstr "BY-NC-SA 4.0."
+
+#: sites/all/modules/custom/pw_blog/pw_blog.module:209
+msgid ""
+"The text on this page is under the Creative Commons license"
+msgstr ""
+"Der Text auf dieser Seite steht unter der Creative Commons Lizenz"
+
 #~ msgid "Enter name"
 #~ msgstr "Namen eingeben"
 
@@ -2148,3 +2178,7 @@ msgstr "Presse-Kontakt"
 #~ msgstr "Mehr Blogartikel aus der Rubrik „@name”"
 msgid "Submitted on !datetime"
 msgstr "Veröffentlicht am !datetime"
+
+#: sites/all/modules/custom/pw_blog/pw_profiles.module:855
+msgid "List position top ten"
+msgstr "Top 10 Listenplatz"

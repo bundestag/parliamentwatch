@@ -1,10 +1,10 @@
 # German translation of Entity API (7.x-1.9)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Entity API (7.x-1.9)\n"
-"POT-Creation-Date: 2018-09-17 22:19+0000\n"
+"POT-Creation-Date: 2019-03-01 23:19+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Aktionen"
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 msgid "Author"
-msgstr "Autor"
+msgstr "Author"
 msgid "yes"
 msgstr "Ja"
 msgid "Subject"

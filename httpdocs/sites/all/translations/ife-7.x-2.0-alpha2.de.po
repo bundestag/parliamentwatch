@@ -1,10 +1,10 @@
 # German translation of Inline Form Errors (7.x-2.0-alpha2)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Inline Form Errors (7.x-2.0-alpha2)\n"
-"POT-Creation-Date: 2018-09-26 14:58+0000\n"
+"POT-Creation-Date: 2019-03-03 12:42+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -36,5 +36,7 @@ msgid "Default display settings"
 msgstr "Standard-Anzeigeeinstellungen"
 msgid "Field types"
 msgstr "Feldtypen"
+msgid "Remove all messages"
+msgstr "Remove all messages"
 msgid "Inline Form Errors"
 msgstr "Inline Form Errors"

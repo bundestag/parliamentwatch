@@ -124,7 +124,7 @@ class ModtoolMessage {
   }
 
   public function getSummary() {
-    return $this->getData('keyworded_text');
+    return $this->getData('summary');
   }
 
   public function getDocuments() {

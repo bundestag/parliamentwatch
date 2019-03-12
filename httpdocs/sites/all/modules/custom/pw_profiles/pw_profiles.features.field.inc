@@ -4406,7 +4406,7 @@ function pw_profiles_field_default_fields() {
       'entity_types' => array(),
       'field_name' => 'field_user_retired_reason',
       'field_permissions' => array(
-        'type' => '0',
+        'type' => '2',
       ),
       'foreign keys' => array(
         'format' => array(
@@ -4509,7 +4509,6 @@ function pw_profiles_field_default_fields() {
             ),
           ),
         ),
-        'exclude_cv' => FALSE,
         'linkit' => array(
           'button_text' => 'Suche',
           'enable' => 0,

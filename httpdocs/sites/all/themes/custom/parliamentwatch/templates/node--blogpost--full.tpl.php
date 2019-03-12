@@ -107,6 +107,7 @@
   <div class="blog__content" <?php print $content_attributes; ?>>
     <div class="blog__content__inner">
       <?php print render($content['body']); ?>
+      <?php print render($content['field_blogpost_license']); ?>
       <?php if ($field_blockreference): ?>
         <div class="well">
           <?php print render($content['field_blockreference']); ?>

@@ -6,6 +6,13 @@
  */
 
 /**
+ * The default maximum number of feeds to list or import.
+ *
+ * @var int
+ */
+define('DRUSH_FEEDS_DEFAULT_LIMIT', 2147483647);
+
+/**
  * Implements hook_drush_command().
  */
 function feeds_drush_command() {
@@ -38,15 +45,16 @@ function feeds_drush_command() {
       'importer' => 'The name of the Feeds importer that will be refreshed. Mandatory.',
     ),
     'options' => array(
-      'nid' => 'The nid of the Feeds importer that will be imported. Optional.',
-      'file' => 'The file to import. Optional.',
-      'url' => 'The URL to import. Optional.',
-      'stdin' => 'Read the file to import from stdin. Optional.',
+      'nid' => '(optional) The nid of the Feeds importer that will be imported.',
+      'file' => '(optional) The file to import. Bypasses the configured fetcher and does *not* update the source configuration.',
+      'url' => '(optional) The URL to import. Bypasses the configured fetcher and does *not* update the source configuration.',
+      'stdin' => '(optional) Read the file to import from stdin. Bypasses the configured fetcher and does *not* update the source configuration.',
     ),
     'examples' => array(
       'drush feeds-import my_importer' => "Import items with the importer 'my_importer'.",
-      'drush feeds-import my_importer --nid=2' => "Import item with the importer 'my_importer' for feed node 2.",
+      'drush feeds-import my_importer --nid=2' => "Import items with the importer 'my_importer' for feed node 2.",
     ),
+    'aliases' => array('feeds-im'),
   );
 
   $items['feeds-import-all'] = array(
@@ -57,11 +65,12 @@ function feeds_drush_command() {
     'examples' => array(
       'drush feeds-import-all' => 'Import all instances of all feeds.',
       'drush feeds-import-all my_importer' => "Import all instances of the importer 'my_importer'.",
-      'drush feeds-import-all my_importer --limit 10' => "Import 10 instances the feed \'my_importer'.",
+      'drush feeds-import-all my_importer --limit=10' => "Import 10 instances of the feed 'my_importer'.",
     ),
     'options' => array(
       'limit' => 'Limit the number of feeds to import. Optional.',
     ),
+    'aliases' => array('feeds-ia', 'feeds-im-all'),
   );
 
   $items['feeds-clear'] = array(
@@ -133,7 +142,9 @@ function feeds_drush_help($section) {
     case 'drush:feeds-list-feeds':
       return dt("List all feed sources. You can limit the number of feed sources to display by setting the option '--limit'.");
     case 'drush:feeds-import':
-      return dt("Import items from a feed. Follow the command with the importer name to import items with. If the importer is attached to a content type, specify also the feed node with the option '--nid'.");
+      $help = dt("Import items from a feed. Follow the command with the importer name to import items with. If the importer is attached to a content type, specify also the feed node with the option '--nid'.");
+      $help .= "\n" . dt("Note that the options '--file', '--stdin' and '--url' temporary bypass the configured fetcher and do *not* update the source configuration. For example, if a file was uploaded for the feed source, that file will remain there even when you specify a different file using the '--file' option. Same story applies for when importing from a url. If you omit these options, the last stored source will be used.");
+      return $help;
     case 'drush:feeds-import-all':
       return dt('Import items from all feeds. Optionally specify the importer name to import all feeds for.');
     case 'drush:feeds-clear':
@@ -199,32 +210,72 @@ function drush_feeds_list_importers() {
  */
 function drush_feeds_list_feeds($importer_id = NULL) {
   if (!$limit = drush_get_option('limit')) {
-    $limit = 2147483647;
+    $limit = DRUSH_FEEDS_DEFAULT_LIMIT;
   }
 
-  $rows = array();
-
-  $rows[] = array(
-    dt('Importer ID'),
-    dt('Feed NID'),
-    dt('Last imported'),
-    dt('Feed source'),
-    dt('Process in background'),
+  $header = array(
+    'importer_id' => dt('Importer ID'),
+    'feed_nid' => dt('Feed NID'),
+    'feed_title' => dt('Feed title'),
+    'imported' => dt('Last imported'),
+    'source' => dt('Feed source'),
+    'process_in_background' => dt('Process in background'),
   );
+
+  $rows = array();
+  $nids = array();
 
   foreach (_drush_feeds_get_all($importer_id, $limit) as $feed) {
     $feed_config = feeds_source($feed->id, $feed->feed_nid)->importer->getConfig();
 
     $rows[] = array(
-      $feed->id,
-      $feed->feed_nid,
-      $feed->imported ? date('Y-m-d H:i:s', $feed->imported) : dt('Never'),
-      is_scalar($feed->source) ? $feed->source : gettype($feed->source),
-      !empty($feed_config['process_in_background']) ? dt('Yes') : dt('No'),
+      'importer_id' => $feed->id,
+      'feed_nid' => $feed->feed_nid,
+      'feed_title' => '',
+      'imported' => $feed->imported ? date('Y-m-d H:i:s', $feed->imported) : dt('Never'),
+      'source' => is_scalar($feed->source) ? $feed->source : gettype($feed->source),
+      'process_in_background' => !empty($feed_config['process_in_background']) ? dt('Yes') : dt('No'),
     );
+
+    // Collect node ID's to find titles for.
+    if ($feed->feed_nid) {
+      $nids[] = $feed->feed_nid;
+    }
   }
 
-  drush_print_table($rows, TRUE);
+  // Find titles for feed nodes.
+  if (count($nids)) {
+    $nodes = db_select('node')
+      ->fields('node', array('nid', 'title'))
+      ->condition('nid', $nids)
+      ->execute()
+      ->fetchAllKeyed();
+
+    foreach ($rows as &$row) {
+      $nid = $row['feed_nid'];
+      if ($nid && isset($nodes[$nid])) {
+        $row['feed_title'] = $nodes[$nid];
+      }
+    }
+  }
+
+  // Check if there were any results.
+  if (count($rows) == 0) {
+    if (empty($importer_id)) {
+      drush_print(dt('There are no feed sources.'));
+    }
+    else {
+      drush_print(dt("No feed sources exists for importer '@importer_id'.", array(
+        '@importer_id' => $importer_id,
+      )));
+    }
+    return FALSE;
+  }
+
+  // Create table.
+  $table = array_merge(array($header), $rows);
+
+  drush_print_table($table, TRUE);
 }
 
 /**
@@ -254,6 +305,13 @@ function drush_feeds_import($importer_id = NULL) {
       )));
       return FALSE;
     }
+    elseif (!$importer->isEnabled()) {
+      drush_set_error(dt("The importer '@importer' is not enabled. You can enable it with the command '@command'.", array(
+        '@importer' => $importer_id,
+        '@command' => 'drush feeds-enable ' . $importer_id,
+      )));
+      return FALSE;
+    }
 
     if ($feed_nid == 0) {
       // Check if the importer is a standalone importer.
@@ -262,6 +320,11 @@ function drush_feeds_import($importer_id = NULL) {
           '@importer' => $importer_id,
         )));
         return FALSE;
+      }
+      elseif (drush_get_option('file') || drush_get_option('url') || drush_get_option('stdin')) {
+        // Create a new source.
+        $source = feeds_source($importer_id);
+        $source->save();
       }
     }
     elseif (!$importer->config['content_type']) {
@@ -280,11 +343,24 @@ function drush_feeds_import($importer_id = NULL) {
       }
     }
 
-    drush_set_error(dt("There is no feed node with ID @nid for importer '@importer'. To show a list of available feed nodes for this importer, use 'drush feeds-list-feeds @importer'.", array(
-      '@importer' => $importer_id,
-      '@nid' => $feed_nid,
-    )));
-    return FALSE;
+    if (empty($source)) {
+      // Only abort at this point when no source object exists. It can exist
+      // when the importer is not attached to a content type and a file, url or
+      // stdin is supplied.
+      if ($feed_nid == 0) {
+        drush_set_error(dt("No source exists yet for the importer '@importer'. There is nothing to import. You can import from a file or url using the options '--file' or '--url' or go to /import/@importer to configure the source to import. See 'drush help feeds-import' for more information.", array(
+          '@importer' => $importer_id,
+        )));
+        return FALSE;
+      }
+      else {
+        drush_set_error(dt("There is no feed node with ID @nid for importer '@importer'. To show a list of available feed nodes for this importer, use 'drush feeds-list-feeds @importer'.", array(
+          '@importer' => $importer_id,
+          '@nid' => $feed_nid,
+        )));
+        return FALSE;
+      }
+    }
   }
 
   // Propose confirmation message.
@@ -302,14 +378,18 @@ function drush_feeds_import($importer_id = NULL) {
 
   $result = NULL;
   if ($filename = drush_get_option('file')) {
-    if (!is_file($filename)) {
+    $filepath = _drush_feeds_find_file($filename);
+    if (!is_file($filepath)) {
       drush_set_error(dt("The file '@file' does not exist.", array('@file' => $filename)));
       return FALSE;
     }
-    $result = new FeedsFileFetcherResult($filename);
+    else {
+      $filepath = realpath($filepath);
+    }
+    $result = new FeedsFileFetcherResult($filepath);
 
     $messages[] = dt("The items will be imported from the file '@file'.", array(
-      '@file' => $filename,
+      '@file' => $filepath,
     ));
   }
   elseif ($url = drush_get_option('url')) {
@@ -359,8 +439,13 @@ function drush_feeds_import($importer_id = NULL) {
  */
 function drush_feeds_import_all($importer_id = NULL) {
   if (!$limit = drush_get_option('limit')) {
-    $limit = 2147483647;
+    $limit = DRUSH_FEEDS_DEFAULT_LIMIT;
   }
+
+  // Set flag for whether or not executing the batch. When all importers are not
+  // not confirmed there are no batches set and in that case there are no
+  // batches to process.
+  $execute_batch = FALSE;
 
   foreach (_drush_feeds_get_all($importer_id, $limit) as $feed) {
     if (!isset($feed->source) || !strlen($feed->source)) {
@@ -374,10 +459,40 @@ function drush_feeds_import_all($importer_id = NULL) {
       continue;
     }
 
-    _drush_feeds_create_import_batch($feed->id, $feed->feed_nid);
+    // Compose messages.
+    $vars = array(
+      '@importer_id' => $source->id,
+      '@feed_nid' => $source->feed_nid,
+    );
+    if ($source->feed_nid) {
+      $feed_node = node_load($source->feed_nid);
+      if ($feed_node) {
+        $vars['@title'] = $feed_node->title;
+      }
+      else {
+        drush_set_error(dt('The feed node @feed_nid (@importer_id) does not exist.', $vars));
+        continue;
+      }
+      $confirm_message = dt("Do you want to import items with the importer '@importer_id' for the feed '@title'?", $vars);
+      $skip_message = dt("Skipping importer '@importer_id' for feed '@title'.", $vars);
+    }
+    else {
+      $confirm_message = dt("Do you want to import items with the importer '@importer_id'?", $vars);
+      $skip_message = dt("Skipping importer '@importer_id'.", $vars);
+    }
+
+    if (drush_confirm($confirm_message)) {
+      _drush_feeds_create_import_batch($feed->id, $feed->feed_nid);
+      $execute_batch = TRUE;
+    }
+    else {
+      drush_log($skip_message, 'ok');
+    }
   }
 
-  drush_backend_batch_process();
+  if ($execute_batch) {
+    drush_backend_batch_process();
+  }
 }
 
 /**
@@ -392,7 +507,7 @@ function _drush_feeds_create_import_batch($importer_id, $feed_nid) {
   $feed_node = FALSE;
   if ($feed_nid) {
     if (!$feed_node = node_load($feed_nid)) {
-      drush_set_error(dt('The feed node @importer: @nid does not exist.', array('@importer' => $importer_id, '@nid' => $feed_nid)));
+      drush_set_error(dt('The feed node @feed_nid (@importer_id) does not exist.', array('@importer_id' => $importer_id, '@feed_nid' => $feed_nid)));
       return FALSE;
     }
   }
@@ -436,6 +551,13 @@ function drush_feeds_clear($importer_id = NULL) {
     if (!$importer) {
       drush_set_error(dt("The importer '@importer' does not exist.", array(
         '@importer' => $importer_id,
+      )));
+      return FALSE;
+    }
+    elseif (!$importer->isEnabled()) {
+      drush_set_error(dt("The importer '@importer' is not enabled. You can enable it with the command '@command'.", array(
+        '@importer' => $importer_id,
+        '@command' => 'drush feeds-enable ' . $importer_id,
       )));
       return FALSE;
     }
@@ -541,6 +663,7 @@ function drush_feeds_enable() {
   }
 
   variable_set('default_feeds_importer', $disabled);
+  feeds_cache_clear();
 }
 
 /**
@@ -580,6 +703,7 @@ function drush_feeds_disable() {
     $disabled[$importer_id] = TRUE;
     drush_log(dt("The importer '!importer' has been disabled.", array('!importer' => $importer_id)), 'ok');
   }
+
   variable_set('default_feeds_importer', $disabled);
   feeds_cache_clear();
 }
@@ -698,10 +822,43 @@ function drush_feeds_revert() {
  * @return DatabaseStatementInterface
  *   A list of feeds objects.
  */
-function _drush_feeds_get_all($importer_id = NULL, $limit = 2147483647) {
+function _drush_feeds_get_all($importer_id = NULL, $limit = DRUSH_FEEDS_DEFAULT_LIMIT) {
   if (isset($importer_id)) {
     return db_query_range("SELECT * FROM {feeds_source} WHERE id = :importer ORDER BY imported ASC", 0, $limit, array(':importer' => $importer_id));
   }
 
   return db_query_range("SELECT * FROM {feeds_source} ORDER BY imported ASC", 0, $limit);
+}
+
+/**
+ * Tries to find the specified file at several locations.
+ *
+ * @param string $filename
+ *   The file to look for.
+ *
+ * @return string
+ *   If found, the file that was found.
+ *   NULL otherwise.
+ */
+function _drush_feeds_find_file($filename) {
+  // If the full path to the file is specified, the file will be found right away.
+  if (is_file($filename)) {
+    // Found!
+    return $filename;
+  }
+
+  // Look for the file within the current active directory.
+  $search = drush_cwd() . '/' . $filename;
+  if (is_file($search)) {
+    // Found!
+    return $search;
+  }
+
+  // Look for the file within the directory Drupal is installed in.
+  // bootstrap_drupal_root() sets the active directory to the Drupal root.
+  $search = getcwd() . '/' . $filename;
+  if (is_file($search)) {
+    // Found!
+    return $search;
+  }
 }
