@@ -36,7 +36,8 @@
     &[type="search"],
     &[type="password"],
     &[type="email"],
-    &[type="text"] {
+    &[type="text"],
+    &[type="date"] {
       height: $space * 2;
       width: 100%;
     }
