@@ -284,6 +284,7 @@
           transform: translate(-50%, $space);
           width: 710px;
           left: 50%;
+          cursor: auto;
 
           // Dropdown display
 
@@ -292,6 +293,7 @@
             @include grid-container();
             @include grid-collapse($neat-grid-large-gutter);
             .form__item {
+              cursor: pointer;
               border-bottom: 1px solid $brightGray;
               margin-top: $space-xsmall;
               padding-bottom: $space-xsmall;
