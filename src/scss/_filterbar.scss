@@ -28,7 +28,8 @@
 
 // Form elements
 
-.filterbar {
+.filterbar__trigger,
+.filterbar__item {
   .btn {
     background: $white;
     padding: $space-xsmall;
@@ -51,39 +52,6 @@
   .select2-selection--single,
   .select2-selection--single .select2-selection__arrow {
     border-color: $darkBeige;
-  }
-
-  .dropdown__list {
-    .form__item {
-      &__label {
-        @include text-overflow();
-      }
-
-      &--checkboxes,
-      &--radios {
-        @include grid-container();
-        @include grid-collapse($neat-grid-large-gutter);
-
-        .form__item {
-          margin-top: $space-xsmall;
-          padding-bottom: $space-xsmall;
-          @include grid-column(12, $neat-grid-large-gutter);
-
-          @include breakpoint($breakpoint-xs-min) {
-            @include grid-column(6, $neat-grid-large-gutter);
-            border-bottom: 1px solid $brightGray;
-          }
-
-          @include breakpoint($breakpoint-s-min) {
-            @include grid-column(4, $neat-grid-large-gutter);
-          }
-
-          &:not(:last-child) {
-            border-bottom: 1px solid $brightGray;
-          }
-        }
-      }
-    }
   }
 }
 
@@ -332,6 +300,24 @@
           transform: translate(-50%, $space);
           width: 710px;
           left: 50%;
+
+          .form__item {
+            &__label {
+              @include text-overflow();
+            }
+
+            &--checkboxes,
+            &--radios {
+              @include grid-container();
+              @include grid-collapse($neat-grid-large-gutter);
+
+              .form__item {
+                margin-top: $space-xsmall;
+                padding-bottom: $space-xsmall;
+                @include grid-column(4, $neat-grid-large-gutter);
+              }
+            }
+          }
         }
 
         &.dropdown--open .dropdown__list {
@@ -430,6 +416,7 @@
 
     &--dropdown {
       z-index: auto;
+
       .dropdown__list {
         position: static;
         display: block;
@@ -438,6 +425,39 @@
 
     .dropdown__trigger {
       display: none;
+    }
+  }
+
+  .form__item {
+    margin-bottom: 0;
+
+    &__label {
+      @include text-overflow();
+    }
+
+    &--checkboxes,
+    &--radios {
+      @include grid-container();
+      @include grid-collapse($neat-grid-large-gutter);
+
+      .form__item {
+        margin-top: $space-xsmall;
+        padding-bottom: $space-xsmall;
+        @include grid-column(12, $neat-grid-large-gutter);
+
+        @include breakpoint($breakpoint-xs-min) {
+          @include grid-column(6, $neat-grid-large-gutter);
+          border-bottom: 1px solid $brightGray;
+        }
+
+        @include breakpoint($breakpoint-s-min) {
+          @include grid-column(4, $neat-grid-large-gutter);
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $brightGray;
+        }
+      }
     }
   }
 
