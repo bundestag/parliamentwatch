@@ -383,6 +383,10 @@
 .filterbar--expanded {
   z-index: auto;
 
+  .filterbar__heading {
+    @include clearfix;
+  }
+
   .filterbar__content {
     display: block;
     width: 100vw;
