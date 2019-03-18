@@ -415,6 +415,12 @@
       border-top: 1px solid $darkBeige;
     }
 
+    &--input {
+      .btn {
+        display: none;
+      }
+    }
+
     &--dropdown {
       z-index: auto;
 
