@@ -49,6 +49,12 @@
     }
   }
 
+  .form__item--textfield {
+    .form__item__control {
+      border: 1px solid $darkBeige;
+    }
+  }
+
   .select2-selection--single,
   .select2-selection--single .select2-selection__arrow {
     border-color: $darkBeige;
@@ -233,7 +239,6 @@
         }
 
         .form__item__control {
-          border: 1px solid $darkBeige;
           border-right: 0;
         }
 
