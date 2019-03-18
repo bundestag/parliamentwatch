@@ -384,6 +384,7 @@
   z-index: auto;
 
   .filterbar__heading {
+    margin-bottom: $space;
     @include clearfix;
   }
 
@@ -400,6 +401,7 @@
     z-index: 9999999;
     background: $white;
     padding-top: $space-large;
+    padding-bottom: $space-large;
   }
 
   .filterbar__item {
@@ -410,12 +412,7 @@
     }
 
     &:first-child {
-      margin-top: $space;
       border-top: 1px solid $darkBeige;
-    }
-
-    &:last-child {
-      padding-bottom: $space-large;
     }
 
     &--dropdown {
