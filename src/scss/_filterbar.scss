@@ -357,9 +357,8 @@
 }
 
 .filterbar__view_options {
-  display: none;
   position: absolute;
-  right: 0;
+  right: $space;
   top: 0;
   bottom: -1px;
   list-style: none;
@@ -368,10 +367,6 @@
   border-left: 1px solid $darkBeige;
   background: $white;
   @include grid-container();
-  @include breakpoint($breakpoint-s-min) {
-    right: $space;
-    display: block;
-  }
   &:after {
     content: '';
     background: #fff;
@@ -392,10 +387,7 @@
   border-right: 1px solid $darkBeige;
   border-bottom: 1px solid $darkBeige;
   &:last-child {
-    border-right: 0;
-    @include breakpoint($breakpoint-s-min) {
-      border-right: 1px solid $darkBeige;
-    }
+    border-right: 1px solid $darkBeige;
   }
   &.active {
     background: $beige;
@@ -420,11 +412,8 @@
 }
 .filterbar__view_options__item__link {
   display: block;
-  padding: $space-small $space-xsmall;
+  padding: $space-small;
   color: $mediumGray;
-  @include breakpoint($breakpoint-s-min) {
-    padding: $space-small;
-  }
   .icon {
     width: 32px;
     display: inline-block;
