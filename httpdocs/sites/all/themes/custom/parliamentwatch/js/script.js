@@ -1796,8 +1796,8 @@
   Drupal.behaviors.filterBar = {
     attach: function () {
       var $filterbar = $('.filterbar');
+      var $filterBarInner = $('.filterbar__content');
       var $filterBarSwiper = $('.filterbar__secondary');
-      var $filterBarInner = $('.filterbar .filterbar__inner');
       var filterBarActive = false;
 
       function filterBarCreate() {
@@ -1851,25 +1851,12 @@
       }
 
       function filterBarSwiperSize() {
+        var filterBarWidth = $filterBarInner.outerWidth();
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
         var filterBarOffsetLeft = $('.filterbar__primary').outerWidth();
-        var filterBarOffsetRightValue = filterBarOffsetRight;
-        var filterBarOffsetLeftValue = filterBarOffsetLeft;
 
-        windowWidth = window.innerWidth;
-
-        if (windowWidth >= breakpointMMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 20;
-        }
-        else if (windowWidth >= breakpointSMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 15;
-        }
-        else {
-          filterBarOffsetRightValue = 0;
-        }
-        $filterBarInner
-          .css('padding-right', filterBarOffsetRightValue + 'px')
-          .css('padding-left', filterBarOffsetLeftValue + 'px');
+        $filterBarSwiper
+          .css('width', filterBarWidth - filterBarOffsetRight - filterBarOffsetLeft + 'px');
       }
 
       if (windowWidth >= breakpointMMin) {
