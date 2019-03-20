@@ -1462,8 +1462,8 @@ msgstr[1] "<span>@party</span> (@count Abgeordnete)"
 #: sites/all/themes/custom/parliamentwatch/templates/dialogues-stats.tpl.php:73;91
 msgid "@count_answers of 1 question answered (@percentage %)"
 msgid_plural "@count_answers of @count questions answered (@percentage %)"
-msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage %)"
-msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage %)"
+msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage%)"
+msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage%)"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--pw-kc-position--embedded.tpl.php:90
 msgid "Position of"
