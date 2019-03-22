@@ -773,6 +773,7 @@ function pw_profiles_archived_revisions($account, $earlier = TRUE) {
  */
 function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $additional_filters_enabled = TRUE) {
 
+  $is_eu_2019 = ($parliament->tid == 30438);
   $constituency_values = _pw_profiles_facet_values($facets['field_user_constituency']);
   $party_values = _pw_profiles_facet_values($facets['field_user_party']);
   $list_values = _pw_profiles_facet_values($facets['field_user_list']);
@@ -803,16 +804,13 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
   elseif (strpos($parliament->name, 'Bremen') === 0) {
     $constituency_title = t('Constituency', [], ['context' => 'Bremen']);
   }
-  elseif (strpos($parliament->name, 'EU') === 0) {
-    $constituency_title = t('Constituency', [], ['context' => 'EU']);
-  }
   else {
     $constituency_title = t('Constituency', [], ['context' => '']);
     $list_title = t('List', [], ['context' => '']);
     $list_position_title = t('List position', [], ['context' => '']);
   }
 
-  if (count($constituency_values) > 1) {
+  if (count($constituency_values) > 1 && !$is_eu_2019) {
     $form['constituency'] = array(
       '#type' => 'select',
       '#title' => $constituency_title,
