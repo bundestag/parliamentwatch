@@ -36,7 +36,8 @@
     &[type="search"],
     &[type="password"],
     &[type="email"],
-    &[type="text"] {
+    &[type="text"],
+    &[type="date"] {
       height: $space * 2;
       width: 100%;
     }
@@ -74,6 +75,7 @@
   }
 
   &__label--floating,
+  &__label--static,
   html:not(.js) &__label:not(.sr-only) {
     left: 0 !important;
     top: 0 !important;

@@ -1226,6 +1226,10 @@ function parliamentwatch_form_element_label($variables) {
   elseif ($element['#title_display'] == 'invisible') {
     $attributes['class'][] = 'sr-only';
   }
+  // Disable floating label when placeholder is set.
+  elseif (!empty($element['#attributes']['placeholder'])) {
+    $attributes['class'][] = 'form__item__label--static';
+  }
 
   if (!empty($element['#id'])) {
     $attributes['for'] = $element['#id'];
