@@ -2089,7 +2089,7 @@ function pw_globals_field_default_fields() {
   $fields['taxonomy_term-constituency-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -2257,7 +2257,7 @@ function pw_globals_field_default_fields() {
   $fields['taxonomy_term-election_list-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',
@@ -2343,7 +2343,7 @@ function pw_globals_field_default_fields() {
   $fields['taxonomy_term-electoral_region-field_parliament'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_parliament',

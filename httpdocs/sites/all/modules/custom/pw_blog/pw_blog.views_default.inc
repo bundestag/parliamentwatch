@@ -52,7 +52,7 @@ function pw_blog_views_default_views() {
   $handler->display->display_options['pager']['options']['tags']['last'] = 'last';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
