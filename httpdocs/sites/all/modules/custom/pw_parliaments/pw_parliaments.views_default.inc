@@ -57,12 +57,12 @@ function pw_parliaments_views_default_views() {
   $handler->display->display_options['sorts']['sticky']['table'] = 'node';
   $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
-  /* Sortierkriterien: Inhalt: Datum */
+  /* Sortierkriterien: Inhalt: Beitragsdatum */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Kontextfilter: Inhalt: Has taxonomy term ID (with depth) */
+  /* Kontextfilter: Inhalt: Hat eine Taxonomie-Begriff-ID (mit Hierarchie) */
   $handler->display->display_options['arguments']['term_node_tid_depth']['id'] = 'term_node_tid_depth';
   $handler->display->display_options['arguments']['term_node_tid_depth']['table'] = 'node';
   $handler->display->display_options['arguments']['term_node_tid_depth']['field'] = 'term_node_tid_depth';
@@ -449,6 +449,7 @@ function pw_parliaments_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = 15;
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
   $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
@@ -474,7 +475,7 @@ function pw_parliaments_views_default_views() {
     t('Feed'),
     t('Elemente pro Seite'),
     t('- Alle -'),
-    t('Offset'),
+    t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
     t('weiter'),

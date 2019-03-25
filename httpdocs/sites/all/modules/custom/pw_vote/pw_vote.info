@@ -55,4 +55,4 @@ features[variable][] = rh_node_redirect_response_vote
 features[variable][] = rh_node_redirect_vote
 features[variable][] = xmlsitemap_settings_node_vote
 files[] = VoteSearchAlterCallback.inc
-mtime = 1547710264
+mtime = 1552981386
