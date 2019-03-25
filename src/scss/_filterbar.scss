@@ -73,6 +73,10 @@
 
     .filterbar__primary {
       float: left;
+
+      .form__item {
+        margin-bottom: 0;
+      }
     }
 
     .filterbar__secondary {
@@ -155,7 +159,14 @@
 
       .form__item {
         color: $mediumGray;
-        margin-bottom: 0;
+
+        &--select,
+        &--checkboxes,
+        &--checkbox,
+        &--radios,
+        &--radio {
+          margin-bottom: 0;
+        }
       }
 
       &--input {
@@ -234,6 +245,7 @@
           transform: translate(-50%, $space);
           width: 710px;
           left: 50%;
+          cursor: auto;
 
           .form__item {
             &__label {
@@ -248,6 +260,7 @@
               .form__item {
                 margin-top: $space-xsmall;
                 padding-bottom: $space-xsmall;
+                cursor: pointer;
                 @include grid-column(4, $neat-grid-large-gutter);
               }
             }

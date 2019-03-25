@@ -1274,7 +1274,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['relationships']['nid']['table'] = 'comment';
   $handler->display->display_options['relationships']['nid']['field'] = 'nid';
   $handler->display->display_options['relationships']['nid']['label'] = 'Beitrag';
-  /* Beziehung: Kommentar: Autor */
+  /* Beziehung: Kommentar: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'comment';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -1358,7 +1358,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['subject']['label'] = '';
   $handler->display->display_options['fields']['subject']['exclude'] = TRUE;
   $handler->display->display_options['fields']['subject']['element_label_colon'] = FALSE;
-  /* Feld: Kommentar: Autor */
+  /* Feld: Kommentar: Author */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'comment';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -1418,7 +1418,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '<div class="comment-view-meta">Kommentar <strong>[subject]</strong> von <strong>[name]</strong> geschrieben am <strong>[created]</strong></div>
 <div class="comment-view-title">Verfasst in <strong>[title]</strong></div>
 <div class="comment-view-body">[comment_body]</div>';
-  /* Feld: Kommentar: Autor */
+  /* Feld: Kommentar: Author */
   $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
   $handler->display->display_options['fields']['name_1']['table'] = 'comment';
   $handler->display->display_options['fields']['name_1']['field'] = 'name';
@@ -1625,6 +1625,7 @@ function pw_administration_views_default_views() {
     t('<div class="comment-view-meta">Kommentar <strong>[subject]</strong> von <strong>[name]</strong> geschrieben am <strong>[created]</strong></div>
 <div class="comment-view-title">Verfasst in <strong>[title]</strong></div>
 <div class="comment-view-body">[comment_body]</div>'),
+    t('Author'),
     t('E-Mail'),
     t('Aktionen'),
     t('Genemigter Kommentar'),
@@ -1746,7 +1747,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
   $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Ausschüssen';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -3246,7 +3247,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Einträge gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -7935,8 +7936,8 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['text'] = '[field_user_lname-revision_id], [field_user_fname-revision_id]';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['path'] = 'user/[uid]';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -7956,6 +7957,8 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['label'] = 'Vorname';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['alter']['path'] = 'user/[uid]';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -8173,12 +8176,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     'nothing' => 'nothing',
   );
   $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
-  /* Feld: PW User archive: Question form open */
-  $handler->display->display_options['fields']['question_form_open_1']['id'] = 'question_form_open_1';
-  $handler->display->display_options['fields']['question_form_open_1']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['question_form_open_1']['field'] = 'question_form_open';
-  $handler->display->display_options['fields']['question_form_open_1']['label'] = 'Frageformular';
-  $handler->display->display_options['fields']['question_form_open_1']['not'] = 0;
   /* Kontextfilter: Benutzer (Historische Daten): Parlament (field_user_parliament) */
   $handler->display->display_options['arguments']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
   $handler->display->display_options['arguments']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
@@ -8467,7 +8464,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Partei'),
     t('Uid'),
     t('Nachname'),
-    t('[field_user_lname-revision_id], [field_user_fname-revision_id]'),
     t('Vorname'),
     t('Profil für'),
     t('Parlament beigetreten'),
@@ -8639,7 +8635,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
   $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Abstimmungen';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -9315,7 +9311,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Abstimmungen gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
