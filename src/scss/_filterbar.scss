@@ -26,8 +26,6 @@
   }
 }
 
-// Form elements
-
 .filterbar__trigger,
 .filterbar__item {
   .btn {
@@ -49,76 +47,10 @@
     }
   }
 
-  .form__item--textfield {
-    .form__item__control {
-      border: 1px solid $darkBeige;
-    }
-  }
-
+  .form__item--textfield .form__item__control,
   .select2-selection--single,
   .select2-selection--single .select2-selection__arrow {
     border-color: $darkBeige;
-  }
-}
-
-// View mode switch
-
-.filterbar__view_options {
-  position: absolute;
-  right: $space;
-  top: 0;
-  bottom: -1px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-left: 1px solid $darkBeige;
-  background: $white;
-
-  &__item {
-    float: left;
-    margin: 0;
-    height: 100%;
-    border-right: 1px solid $darkBeige;
-    border-bottom: 1px solid $darkBeige;
-
-    &:last-child {
-      border-right: 1px solid $darkBeige;
-    }
-
-    &.active {
-      background: $beige;
-      position: relative;
-      z-index: 9;
-      border-bottom: 1px solid $beige;
-
-      .filterbar__view_options__item__link {
-        color: $darkGray;
-      }
-
-      &:after {
-        content: '';
-
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -1px;
-        height: 1px;
-
-        background: $beige;
-      }
-    }
-
-    &__link {
-      display: block;
-      padding: $space-small;
-      color: $mediumGray;
-
-      .icon {
-        width: 32px;
-        display: inline-block;
-        text-align: center;
-      }
-    }
   }
 }
 
@@ -238,10 +170,6 @@
           width: 210px !important;
         }
 
-        .form__item__control {
-          border-right: 0;
-        }
-
         .btn {
           right: $space-xsmall;
           top: $space-xsmall;
@@ -249,6 +177,7 @@
           position: absolute;
           width: $space-large + $space;
           padding: $space-xsmall 0;
+          border-left: 0;
           @include hide-text;
 
           &:after {
@@ -383,6 +312,7 @@
   }
 }
 
+
 /* Filterbar: overlay (mobile) */
 
 .filterbar--expanded {
@@ -483,6 +413,7 @@
   }
 }
 
+
 /* Filterbar: disabled */
 
 .filterbar--disabled {
@@ -519,6 +450,68 @@
     z-index: 9;
   }
 }
+
+/* View mode switch */
+
+.filterbar__view_options {
+  position: absolute;
+  right: $space;
+  top: 0;
+  bottom: -1px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid $darkBeige;
+  background: $white;
+
+  &__item {
+    float: left;
+    margin: 0;
+    height: 100%;
+    border-right: 1px solid $darkBeige;
+    border-bottom: 1px solid $darkBeige;
+
+    &:last-child {
+      border-right: 1px solid $darkBeige;
+    }
+
+    &.active {
+      background: $beige;
+      position: relative;
+      z-index: 9;
+      border-bottom: 1px solid $beige;
+
+      .filterbar__view_options__item__link {
+        color: $darkGray;
+      }
+
+      &:after {
+        content: '';
+
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+
+        background: $beige;
+      }
+    }
+
+    &__link {
+      display: block;
+      padding: $space-small;
+      color: $mediumGray;
+
+      .icon {
+        width: 32px;
+        display: inline-block;
+        text-align: center;
+      }
+    }
+  }
+}
+
 
 /* Filter summary */
 
