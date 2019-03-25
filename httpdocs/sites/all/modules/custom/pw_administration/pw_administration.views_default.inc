@@ -4835,7 +4835,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -8440,6 +8440,25 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['uuid']['table'] = 'users';
   $handler->display->display_options['filters']['uuid']['field'] = 'uuid';
   $handler->display->display_options['filters']['uuid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['uuid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uuid']['expose']['operator_id'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['label'] = 'UUID';
+  $handler->display->display_options['filters']['uuid']['expose']['operator'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['identifier'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
   /* Filterkriterium: Benutzer: E-Mail */
   $handler->display->display_options['filters']['mail']['id'] = 'mail';
   $handler->display->display_options['filters']['mail']['table'] = 'users';
@@ -8521,6 +8540,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
+    t('UUID'),
     t('E-Mail'),
     t('Page'),
   );
