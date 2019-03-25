@@ -46,5 +46,6 @@ features[variable][] = menu_parent_landingpage
 features[variable][] = node_options_landingpage
 features[variable][] = node_preview_landingpage
 features[variable][] = node_submitted_landingpage
+features[variable][] = pathauto_node_landingpage_pattern
 features[variable][] = xmlsitemap_settings_node_landingpage
-mtime = 1552654134
+mtime = 1553151042
