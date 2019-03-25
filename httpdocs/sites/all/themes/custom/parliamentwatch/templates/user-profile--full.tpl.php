@@ -36,6 +36,11 @@
  *
  * @ingroup themeable
  */
+$is_eu_2019 = FALSE;
+if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
+  $is_eu_2019 = ($user_profile["field_user_parliament"]["#items"][0]["tid"]== 30438);
+}
+
 ?>
 <script type="application/ld+json">
     {
@@ -168,7 +173,7 @@
           <dt class="dl__dt"><?php print $user_profile['field_user_job_skills']['#title']; ?></dt>
           <dd class="dl__dd"><?php print $user_profile['field_user_job_skills'][0]['#markup']; ?></dd>
         <?php endif; ?>
-        <?php if (!empty($user_profile['field_user_constituency'])): ?>
+        <?php if (!empty($user_profile['field_user_constituency']) && !$is_eu_2019): ?>
           <dt class="dl__dt"><?php print $user_profile['field_user_constituency']['#title']; ?></dt>
           <dd class="dl__dd">
             <p>
