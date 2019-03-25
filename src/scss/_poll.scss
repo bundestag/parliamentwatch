@@ -48,12 +48,10 @@
     text-align: center;
     color: $gray;
     font-weight: 600;
-    &.won {
-      color: $darkGray;
-    }
+    @include poll-icon-colors;
   }
-  .tile__pollchart__value_left { padding-right: $space-large; }
-  .tile__pollchart__value_right { padding-left: $space-large; }
+  .tile__pollchart__value_left { padding-right: $space-large; color: $darkRed; }
+  .tile__pollchart__value_right { padding-left: $space-large; color: $darkGreen; }
 
   .tile__pollchart__statistic {
     position: absolute;

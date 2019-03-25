@@ -90,14 +90,14 @@
   <div class="tile__date"><?php print render($content['field_poll_date']); ?></div>
   <?php if (isset($result)): ?>
   <div class="tile__pollchart">
-    <div class="tile__pollchart__value_left<?php if ($yays < $nays) { print ' won'; } ?>"><i class="icon icon-close"></i> <?php print $nays; ?></div>
+    <div class="tile__pollchart__value_left"><i class="icon icon-close"></i> <?php print $nays; ?></div>
     <div class="tile__pollchart__statistic">
       <div class='d3 d3--donut'
            data-d3-donut-icon
            data-data='<?php print drupal_json_encode($result); ?>'>
       </div>
     </div>
-    <div class="tile__pollchart__value_right<?php if ($yays > $nays) { print ' won'; } ?>"><i class="icon icon-ok"></i> <?php print $yays; ?></i></div>
+    <div class="tile__pollchart__value_right"><i class="icon icon-ok"></i> <?php print $yays; ?></i></div>
   </div>
   <?php endif; ?>
   <h2 class="tile__title mh-item"<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
