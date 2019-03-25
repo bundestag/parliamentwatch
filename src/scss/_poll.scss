@@ -38,6 +38,7 @@
     border-bottom: 1px solid $gray;
     @include grid-container();
     @include breakpoint($breakpoint-l-min) {
+      padding-top: $space-large;
       padding-bottom: $space-large;
     }
   }
@@ -45,10 +46,8 @@
   .tile__pollchart__value_right {
     @include grid-column(6, $neat-grid-no-gutter);
     text-align: center;
-    font-size: 1.2em;
     color: $gray;
-    font-family: $font-serif;
-    font-weight: 700;
+    font-weight: 600;
     &.won {
       color: $darkGray;
     }
