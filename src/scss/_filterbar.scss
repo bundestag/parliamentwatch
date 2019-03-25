@@ -520,18 +520,6 @@
   }
 }
 
-/* Filterbar: empty */
-
-.filterbar--empty {
-  .filterbar__primary {
-    padding-right: $space-xsmall;
-
-    .filterbar__item--input {
-      border-right: 0;
-    }
-  }
-}
-
 /* Filter summary */
 
 .filter-summary {
