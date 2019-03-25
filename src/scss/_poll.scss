@@ -31,15 +31,13 @@
   }
 
   .tile__pollchart {
-    padding-top: $space;
-    padding-bottom: $space;
+    padding-top: $space-small;
+    padding-bottom: $space-small;
     position: relative;
-    margin-bottom: $space;
-    border-bottom: 1px solid $gray;
     @include grid-container();
     @include breakpoint($breakpoint-l-min) {
-      padding-top: $space-large;
-      padding-bottom: $space-large;
+      padding-top: $space;
+      padding-bottom: $space;
     }
   }
   .tile__pollchart__value_left,
@@ -86,8 +84,13 @@
   .tile__title {
     text-align: center;
     border-bottom: 0;
-    margin-top: $space-large;
+    margin-top: $space;
+    margin-bottom: $space;
     @include h3();
+    @include breakpoint($breakpoint-l-min) {
+      margin-top: $space-large;
+      margin-bottom: $space-large;
+    }
     a {
       color: $darkGray;
     }
