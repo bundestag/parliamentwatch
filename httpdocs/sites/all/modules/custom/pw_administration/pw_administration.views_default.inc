@@ -2285,6 +2285,14 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::pathauto_node_update_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
     'action::node_unpublish_action' => array(
       'selected' => 1,
       'postpone_processing' => 0,
@@ -8427,6 +8435,35 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer: Benutzer UUID */
+  $handler->display->display_options['filters']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['table'] = 'users';
+  $handler->display->display_options['filters']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['relationship'] = 'vid';
+  /* Filterkriterium: Benutzer: E-Mail */
+  $handler->display->display_options['filters']['mail']['id'] = 'mail';
+  $handler->display->display_options['filters']['mail']['table'] = 'users';
+  $handler->display->display_options['filters']['mail']['field'] = 'mail';
+  $handler->display->display_options['filters']['mail']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'E-Mail';
+  $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
+  $handler->display->display_options['filters']['mail']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -8484,6 +8521,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
+    t('E-Mail'),
     t('Page'),
   );
   $export['pw_administration_politicians_of_parliament'] = $view;
@@ -9327,6 +9365,14 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::pathauto_node_update_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
     'action::node_unpublish_action' => array(
       'selected' => 1,
       'postpone_processing' => 0,
