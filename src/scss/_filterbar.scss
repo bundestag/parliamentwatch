@@ -159,14 +159,7 @@
 
       .form__item {
         color: $mediumGray;
-
-        &--select,
-        &--checkboxes,
-        &--checkbox,
-        &--radios,
-        &--radio {
-          margin-bottom: 0;
-        }
+        margin-bottom: 0;
       }
 
       &--input {
@@ -248,6 +241,8 @@
           cursor: auto;
 
           .form__item {
+            margin-bottom: $space-xsmall;
+
             &__label {
               @include text-overflow();
             }
@@ -259,6 +254,7 @@
 
               .form__item {
                 margin-top: $space-xsmall;
+                margin-bottom: 0;
                 padding-bottom: $space-xsmall;
                 cursor: pointer;
                 @include grid-column(4, $neat-grid-large-gutter);
