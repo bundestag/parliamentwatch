@@ -42,7 +42,7 @@ function pw_globals_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -572,11 +572,10 @@ function pw_globals_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Listet Politiker auf, die bei Partei den Wert fraktionslos und bei Fraktion den Wert parteilos haben'),
     t('Bitte auswählen'),
-    t('Einträge exportieren'),
     t('Löschen'),
     t('Werte ändern'),
     t('Name'),
