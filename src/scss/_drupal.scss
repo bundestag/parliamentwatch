@@ -93,19 +93,19 @@
   }
 }
 .messages--status {
-  background-color: $success;
+  background-color: $green;
   &:before {
     content: '\e87a';
   }
 }
 .messages--error {
-  background-color: $error;
+  background-color: $red;
   &:before {
     content: '\e823';
   }
 }
 .messages--warning {
-  background-color: $warning;
+  background-color: $brightOrange;
   &:before {
     content: '\e829';
   }

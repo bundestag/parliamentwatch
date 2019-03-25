@@ -195,10 +195,8 @@
 
 /* Poll icon colors */
 @mixin poll-icon-colors() {
-  .icon-ok { color: $color-accepted; }
-  .icon-close { color: $color-denied; }
-  .icon-ok { color: $color-accepted; }
-  .icon-ok { color: $color-accepted; }
+  .icon-ok { color: $green; }
+  .icon-close { color: $red; }
 }
 
 

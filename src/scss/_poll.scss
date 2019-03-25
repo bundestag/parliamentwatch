@@ -154,8 +154,8 @@
       width: 120px;
     }
   }
-  .icon-ok { color: $color-accepted; }
-  .icon-close { color: $color-denied; }
+  .icon-ok { color: $green; }
+  .icon-close { color: $red; }
   &:after {
     content: '}';
     font-size: 3.6em;
