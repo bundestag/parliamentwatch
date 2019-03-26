@@ -136,9 +136,8 @@ function pw_parliaments_next($term) {
     ->execute()
     ->fetchField();
 
-  $eu_2019 = 30438;
   $bremen_2019 = 30473;
-  if ($tid && $tid != $bremen_2019 && $tid != $eu_2019) {
+  if ($tid && $tid != $bremen_2019 ) {
     return taxonomy_term_load($tid);
   }
 }
