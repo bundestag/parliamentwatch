@@ -4835,7 +4835,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -10727,6 +10727,32 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Inhalt: Organization (field_sidejob_organization) */
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['id'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['table'] = 'field_data_field_sidejob_organization';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['field'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['operator_id'] = 'field_sidejob_organization_tid_op';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['label'] = 'Organisation';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['operator'] = 'field_sidejob_organization_tid_op';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['identifier'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['vocabulary'] = 'sidejob_organizations';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
