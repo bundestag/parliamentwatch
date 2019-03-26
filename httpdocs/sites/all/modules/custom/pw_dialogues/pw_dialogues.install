@@ -66,3 +66,43 @@ function pw_dialogues_update_7003() {
   );
   $index->update(array('options' => $options));
 }
+
+
+/**
+ * Store question attachments in new file field
+ */
+function pw_dialogues_update_7010() {
+
+  $query = db_select('field_data_field_dialogue_documents', 'd')
+    ->condition('bundle', 'dialogue')
+    ->fields('d')
+    ->execute();
+  $info = field_info_instance('node', 'field_dialogue_attachments', 'dialogue');
+  $allowed_extensions = explode(' ', $info["settings"]["file_extensions"]);
+
+  while ($record = $query->fetchAssoc()) {
+    $dialogue_node = node_load($record["entity_id"]);
+    $file_pathinfo = pathinfo($record["field_dialogue_documents_url"]);
+
+    if ($dialogue_node && in_array($file_pathinfo['extension'], $allowed_extensions)) {
+
+      $file_temp = file_get_contents($record["field_dialogue_documents_url"]);
+      if ($file_temp) {
+        $drupal_file = file_save_data($file_temp, 'private://'. $info["settings"]["file_directory"] .'/'. $file_pathinfo["basename"],FILE_EXISTS_RENAME);
+        if ($drupal_file) {
+          $file = [
+            'fid' => $drupal_file->fid,
+            'display' => 1,
+            'filename' => $drupal_file->filename,
+            'filemime' => $drupal_file->filemime,
+            'uri' => $drupal_file->uri,
+            'status' => 1,
+            'uid' => 1
+          ];
+          $dialogue_node->field_dialogue_attachments[LANGUAGE_NONE][] = $file;
+          node_save($dialogue_node);
+        }
+      }
+    }
+  }
+}
