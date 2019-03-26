@@ -200,9 +200,9 @@
     margin-left: -4px;
   }
 }
-.form__item--alert-danger.show { border-color: $error; &:before { @include triangle(12px 5px, $error, down); } }
-.form__item--alert-info.show { border-color: $warning; &:before { @include triangle(12px 5px, $warning, down); } }
-.form__item--alert-success.show { border-color: $success; &:before { @include triangle(12px 5px, $success, down); } }
+.form__item--alert-danger.show { border-color: $red; &:before { @include triangle(12px 5px, $red, down); } }
+.form__item--alert-info.show { border-color: $brightOrange; &:before { @include triangle(12px 5px, $brightOrange, down); } }
+.form__item--alert-success.show { border-color: $green; &:before { @include triangle(12px 5px, $green, down); } }
 
 /* Loader */
 

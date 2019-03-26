@@ -661,10 +661,10 @@ $abstimmverhalten-node-item-width: 18px;
   margin-bottom: $space-xsmall;
   display: inline-block;
   &.icon-ok {
-    color: $success;
+    color: $green;
   }
   &.icon-close {
-    color: $error;
+    color: $red;
   }
   &.icon-minus {
     color: $darkGray;
