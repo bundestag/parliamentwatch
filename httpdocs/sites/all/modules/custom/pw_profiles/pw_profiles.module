@@ -803,6 +803,7 @@ function pw_profiles_filters_form($form, &$form_state, $parliament, $facets, $ad
   }
   elseif (strpos($parliament->name, 'Bremen') === 0) {
     $constituency_title = t('Constituency', [], ['context' => 'Bremen']);
+    $list_title = t('List', [], ['context' => '']);
   }
   else {
     $constituency_title = t('Constituency', [], ['context' => '']);
