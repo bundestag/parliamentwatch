@@ -135,8 +135,10 @@ function pw_parliaments_next($term) {
     ->condition('prev.field_parliament_previous_tid', $term->tid)
     ->execute()
     ->fetchField();
-
-  return taxonomy_term_load($tid);
+  
+  if ($tid ) {
+    return taxonomy_term_load($tid);
+  }
 }
 
 /**
