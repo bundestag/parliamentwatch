@@ -48,8 +48,8 @@
     font-weight: 600;
     @include poll-icon-colors;
   }
-  .tile__pollchart__value_left { padding-right: $space-large; color: $darkRed; }
-  .tile__pollchart__value_right { padding-left: $space-large; color: $darkGreen; }
+  .tile__pollchart__value_left { padding-right: $space-large; color: $darkGreen; }
+  .tile__pollchart__value_right { padding-left: $space-large; color: $darkRed; }
 
   .tile__pollchart__statistic {
     position: absolute;
