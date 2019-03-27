@@ -288,10 +288,14 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
         </div>
       <?php endif; ?>
       <?php if (isset($user_profile['field_user_image_gallery'])): ?>
-        <div class="deputy__gallery">
+        <div class="deputy__gallery readmore">
           <h2><?php print t('Image gallery of @full_name', ['@full_name' => render($user_profile['field_user_fname']) . ' ' . render($user_profile['field_user_lname'])]); ?></h2>
           <div class="deputy__gallery__inner">
             <?php print render($user_profile['field_user_image_gallery']); ?>
+          </div>
+          <div class="deputy__aboput__read_more readmore__trigger">
+            <a href="#" class="btn btn--small readmore__trigger__more"><?php print t('Show all'); ?></a>
+            <a href="#" class="btn btn--small readmore__trigger__less"><?php print t('Show less'); ?></a>
           </div>
         </div>
       <?php endif; ?>
