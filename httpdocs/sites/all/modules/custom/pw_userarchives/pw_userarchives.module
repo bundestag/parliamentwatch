@@ -901,18 +901,22 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
   if(!empty($exclude_vids)){
     $query->condition('uac.vid', $exclude_vids, 'NOT IN');
   }
+
+  // put the profiles open for question above those closed for questions
   $query->orderBy('uac.question_form_open', 'DESC');
-  $query->orderBy('uac.timestamp', 'DESC');
-  $query->orderBy('uac.user_role=\'deputy\'', 'DESC');
+  // then put the candidacy profiles above the deputy profiles
+  $query->orderBy('uac.user_role=\'deputy\'', 'ASC');
+  // lastly if there are two or more deputy/ candidacy profiles open for questions
+  // put the profile with the highest vid above the others
   $query->orderBy('uac.vid', 'DESC');
   $result = $query->execute()->fetchAssoc();
-  $newest_vid = $result['vid'];
+  $latest_revision_vid = $result['vid'];
 
   // check if current vid is newest
-  if ($user->vid != $newest_vid) {
+  if ($user->vid != $latest_revision_vid) {
 
     // load full revision
-    $user_revision = user_revision_load($uid, $newest_vid);
+    $user_revision = user_revision_load($uid, $latest_revision_vid);
 
     // retrieve roles and add them to user object
     $role_tids = _pw_array_flatten($user_revision->field_user_roles_for_view_mode_s, FALSE);
