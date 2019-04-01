@@ -116,6 +116,7 @@ function pw_dialogues_update_7010() {
             'uid' => $dialogue_node->uid
           ];
           $dialogue_node->field_dialogue_attachments[LANGUAGE_NONE][] = $file;
+          $dialogue_node->field_dialogue_documents = [];
           node_save($dialogue_node);
         }
       }
@@ -191,8 +192,8 @@ function pw_dialogues_update_7011(&$sandbox) {
             'uid' => $dialogue_comment->uid
           ];
           $dialogue_comment->field_dialogue_attachments[LANGUAGE_NONE][] = $file;
+          $dialogue_comment->field_dialogue_documents = [];
           comment_save($dialogue_comment);
-
         }
       }
     }
