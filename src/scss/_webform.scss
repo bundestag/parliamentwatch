@@ -197,6 +197,7 @@
   .form__item--submitted-quantity {
     margin-bottom: $space-large * 2;
   }
+  > .form__item--submitted-prefix,
   > .form__item--submitted-first-name,
   > .form__item--submitted-last-name,
   > .form__item--submitted-e-mail,
@@ -207,6 +208,9 @@
     @include breakpoint($breakpoint-s-min) {
       @include grid-column(6);
     }
+  }
+  > .form__item--submitted-first-name {
+    clear: both;
   }
   > .form__item--submitted-keep-me-updated {
     clear: both;
