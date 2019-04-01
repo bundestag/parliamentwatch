@@ -135,9 +135,8 @@ function pw_parliaments_next($term) {
     ->condition('prev.field_parliament_previous_tid', $term->tid)
     ->execute()
     ->fetchField();
-
-  $bremen_2019 = 30473;
-  if ($tid && $tid != $bremen_2019 ) {
+  
+  if ($tid ) {
     return taxonomy_term_load($tid);
   }
 }
