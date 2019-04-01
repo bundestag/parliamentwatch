@@ -50,6 +50,9 @@
 }
 .webform-container {
   @include basic-content();
+  .intro h1 {
+    margin: 0;
+  }
 }
 
 .webform-component-fieldset {
