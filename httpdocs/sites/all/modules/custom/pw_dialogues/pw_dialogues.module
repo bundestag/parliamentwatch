@@ -434,8 +434,14 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
     $q->condition('created', $filters['date'][1], '<');
   }
 
-  if (isset($filters['has-reply'])) {
-    $q->condition('comment_count', 0, '>');
+  if (isset($filters['answered'])) {
+    if ($filters['answered'] == 'answered') {
+      $q->condition('comment_count', 0, '>');
+    }
+
+    if ($filters['answered'] == 'notanswered') {
+      $q->condition('comment_count', 0);
+    }
   }
 
   if (isset($filters['ignore-standard-replies'])) {
@@ -581,13 +587,17 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
     '#dropdown' => TRUE,
   ];
 
-  $form['has-reply'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Has reply'),
-    '#default_value' => isset($parameters['has-reply']) ? 1 : 0,
-  ];
+  $form['answered'] = array(
+    '#type' => 'select',
+    '#title' => t('Status'),
+    '#title_display' => 'invisible',
+    '#options' => ['all' => t('All questions'),
+      'answered' => t('Answered'),
+      'notanswered' => t('Not answered')],
+    '#default_value' => empty($parameters['answered']) ? '' : $parameters['answered'],
+  );
 
-  if (isset($parameters['has-reply'])) {
+  if (isset($parameters['answered']) && $parameters['answered'] == 'answered') {
     $form['ignore-standard-replies'] = [
       '#type' => 'checkbox',
       '#title' => t('Ignore standard replies'),

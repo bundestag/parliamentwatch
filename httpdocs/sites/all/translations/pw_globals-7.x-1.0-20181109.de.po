@@ -65,6 +65,16 @@ msgstr "Fragen an die Kandidierenden — @parliament (Wahlen)"
 msgid "Search"
 msgstr "Suchen"
 
+#: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:594
+msgid "All questions"
+msgstr "Alle Fragen"
+
+msgid "Answered"
+msgstr "Beantwortet"
+
+msgid "Not answered"
+msgstr "Unbeantwortet"
+
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:566
 msgid "Filter by topic"
 msgstr "Thema"
