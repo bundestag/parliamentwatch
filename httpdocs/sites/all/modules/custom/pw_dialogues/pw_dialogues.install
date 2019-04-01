@@ -152,10 +152,11 @@ function pw_dialogues_update_7011(&$sandbox) {
     $sandbox['destination'] = 'private://'. $field_info["settings"]["file_directory"];
   }
 
-  $limit = 50;
+  $limit = 25;
 
   $query = db_select('field_data_field_dialogue_documents', 'd')
     ->condition('bundle', 'comment_node_dialogue')
+    ->condition('entity_id',  $sandbox['last_id'], '>')
     ->fields('d')
     ->orderBy('entity_id')
     ->range(0, $limit)
