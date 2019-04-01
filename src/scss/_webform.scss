@@ -172,7 +172,68 @@
 .bitpay-donate-field-currency--wrapper { @include grid-column(4); }
 
 
-  /* TEMP */
+/* Sticker Formular */
+
+#node-65995 {
+  .figure-align--left {
+    margin-left: 0;
+    @include breakpoint($breakpoint-s-min) {
+      max-width: 260px;
+    }
+  }
+}
+.webform-client-form-65995 {
+  clear: both;
+  padding-top: $space;
+  @include breakpoint($breakpoint-s-min) {
+    @include grid-collapse();
+    padding-top: $space-large;
+  }
+  .form__item {
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(12);
+    }
+  }
+  .form__item--submitted-quantity {
+    margin-bottom: $space-large * 2;
+  }
+  > .form__item--submitted-prefix,
+  > .form__item--submitted-first-name,
+  > .form__item--submitted-last-name,
+  > .form__item--submitted-e-mail,
+  > .form__item--submitted-phone,
+  > .form__item--submitted-street,
+  > .form__item--submitted-zipcode,
+  > .form__item--submitted-city {
+    @include breakpoint($breakpoint-s-min) {
+      @include grid-column(6);
+    }
+  }
+  > .form__item--submitted-first-name {
+    clear: both;
+  }
+  > .form__item--submitted-keep-me-updated {
+    clear: both;
+    padding: $space 0;
+  }
+  .form__item--submitted-message {
+    margin-bottom: $space-large;
+  }
+  .form__item:last-child {
+    width: auto;
+  }
+  .webform-component--pflichtfelder {
+    @include breakpoint($breakpoint-s-min) {
+      float: right;
+      width: auto;
+      margin-right: $space;
+      margin-top: $space-xsmall;
+    }
+  }
+}
+
+
+/* TEMP */
 
 .webform-component--fieldset-meta,
 .webform-component--fieldset-donationform-civicrm { display: none; }
