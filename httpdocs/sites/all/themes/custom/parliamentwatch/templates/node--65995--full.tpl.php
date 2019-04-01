@@ -7,9 +7,11 @@
 ?>
 <div class="container-small">
   <div id="node-<?php print $node->nid; ?>" class="webform-container clearfix <?php print $classes; ?>"<?php print $attributes; ?>>
-    <?php print render($title_prefix); ?>
-    <h1><?php print $title; ?></h1>
-    <?php print render($title_suffix); ?>
+    <div class="intro">
+      <?php print render($title_prefix); ?>
+      <h1><?php print $title; ?></h1>
+      <?php print render($title_suffix); ?>
+    </div>
 
     <?php if ($display_submitted): ?>
       <div class="submitted">
