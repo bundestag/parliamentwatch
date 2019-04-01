@@ -114,11 +114,7 @@ class DataAnswer extends DataEntityBase {
       'value' => (int) $modtoolMessage->getIsStandardAnswer(),
     ]]];
 
-    // @todo - documents import implementieren
-    $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
-//    foreach ($modtoolMessage->getDocuments() as $item) {
-//      $comment->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-//    }
+    $this->setDocuments($comment);
 
     // @todo - tags import implementieren
     $comment->field_dialogue_tags[LANGUAGE_NONE] = [];
