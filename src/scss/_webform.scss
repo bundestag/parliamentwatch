@@ -197,6 +197,7 @@
   .form__item--submitted-quantity {
     margin-bottom: $space-large * 2;
   }
+  > .form__item--submitted-quantity,
   > .form__item--submitted-prefix,
   > .form__item--submitted-first-name,
   > .form__item--submitted-last-name,
@@ -209,6 +210,7 @@
       @include grid-column(6);
     }
   }
+  > .form__item--submitted-prefix,
   > .form__item--submitted-first-name {
     clear: both;
   }
