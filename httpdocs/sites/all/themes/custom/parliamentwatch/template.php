@@ -328,8 +328,8 @@ function parliamentwatch_preprocess_node(&$variables) {
 
   if ($variables['type'] == 'poll' && isset($node->result)) {
     $variables['result'] = [
-      ['name' => 'Ja', 'color' => '#9fd773', 'count' => $node->result['yes']],
       ['name' => 'Nein', 'color' => '#cc6c5b', 'count' => $node->result['no']],
+      ['name' => 'Ja', 'color' => '#9fd773', 'count' => $node->result['yes']],
       ['name' => 'Enthalten', 'color' => '#e2e2e2', 'count' => $node->result['abstain']],
       ['name' => 'Nicht beteiligt', 'color' => '#a6a6a6', 'count' => $node->result['no-show']],
     ];
