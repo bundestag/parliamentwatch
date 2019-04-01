@@ -83,6 +83,9 @@ abstract class DataEntityBase implements DataEntityInterface {
     $allowed_extensions = $this->getAllowedExtensionsForDocuments();
     $info = field_info_instance('node', 'field_dialogue_attachments', 'dialogue');
 
+    // rest the documents field
+    $entity->field_dialogue_attachments = [];
+
     foreach ($this->modtoolMessage->getDocuments() as $document_url) {
       $file_pathinfo = pathinfo($document_url);
       if (in_array($file_pathinfo['extension'], $allowed_extensions)) {
