@@ -288,7 +288,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
         </div>
       <?php endif; ?>
       <?php if (isset($user_profile['field_user_image_gallery'])): ?>
-        <div class="deputy__gallery readmore">
+        <div class="deputy__gallery readmore readmore--mobile">
           <h2><?php print t('Image gallery of @full_name', ['@full_name' => render($user_profile['field_user_fname']) . ' ' . render($user_profile['field_user_lname'])]); ?></h2>
           <div class="deputy__gallery__inner">
             <?php print render($user_profile['field_user_image_gallery']); ?>
