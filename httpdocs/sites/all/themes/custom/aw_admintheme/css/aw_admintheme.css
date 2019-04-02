@@ -53,3 +53,11 @@
 .paragraph-item--person__info {
     flex: 1 1 calc(100% - 80px);
 }
+
+
+/* User-profile form */
+
+.form-submit--loading {
+    opacity: .4;
+    pointer-events: none;
+}

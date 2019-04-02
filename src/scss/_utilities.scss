@@ -560,7 +560,7 @@ textarea {
 .readmore__trigger__less {
   display: none;
 }
-.readMore--expanded {
+.readmore--expanded {
   height: auto;
   max-height: none;
   overflow: visible;
@@ -579,9 +579,20 @@ textarea {
     display: inline-block;
   }
 }
-.readMore--expanded-initial {
+.readmore--expanded-initial {
   padding-bottom: 0;
 }
+
+@include breakpoint($breakpoint-s-min) {
+  .readmore--mobile {
+    max-height: none;
+    overflow: visible;
+    .readmore__trigger {
+      display: none;
+    }
+  }
+}
+
 
 /* Info-Elements */
 

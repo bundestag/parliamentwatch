@@ -36,6 +36,11 @@
  *
  * @ingroup themeable
  */
+$is_eu_2019 = FALSE;
+if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
+  $is_eu_2019 = ($user_profile["field_user_parliament"]["#items"][0]["tid"]== 30438);
+}
+
 ?>
 <script type="application/ld+json">
     {
@@ -168,7 +173,7 @@
           <dt class="dl__dt"><?php print $user_profile['field_user_job_skills']['#title']; ?></dt>
           <dd class="dl__dd"><?php print $user_profile['field_user_job_skills'][0]['#markup']; ?></dd>
         <?php endif; ?>
-        <?php if (!empty($user_profile['field_user_constituency'])): ?>
+        <?php if (!empty($user_profile['field_user_constituency']) && !$is_eu_2019): ?>
           <dt class="dl__dt"><?php print $user_profile['field_user_constituency']['#title']; ?></dt>
           <dd class="dl__dd">
             <p>
@@ -283,10 +288,14 @@
         </div>
       <?php endif; ?>
       <?php if (isset($user_profile['field_user_image_gallery'])): ?>
-        <div class="deputy__gallery">
+        <div class="deputy__gallery readmore readmore--mobile">
           <h2><?php print t('Image gallery of @full_name', ['@full_name' => render($user_profile['field_user_fname']) . ' ' . render($user_profile['field_user_lname'])]); ?></h2>
           <div class="deputy__gallery__inner">
             <?php print render($user_profile['field_user_image_gallery']); ?>
+          </div>
+          <div class="deputy__aboput__read_more readmore__trigger">
+            <a href="#" class="btn btn--small readmore__trigger__more"><?php print t('Show all'); ?></a>
+            <a href="#" class="btn btn--small readmore__trigger__less"><?php print t('Show less'); ?></a>
           </div>
         </div>
       <?php endif; ?>

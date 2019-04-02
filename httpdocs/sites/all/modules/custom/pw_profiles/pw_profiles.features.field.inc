@@ -3388,7 +3388,7 @@ function pw_profiles_field_default_fields() {
     'field_instance' => array(
       'bundle' => 'user',
       'deleted' => '0',
-      'description' => 'Hier können Sie ein Foto für Ihr Profil hochladen. Klicken Sie dazu auf "Auswählen", suchen Sie dann eine Bilddatei von Ihrem Computer aus und klicken Sie auf "Abschicken".',
+      'description' => 'Hier können Sie ein Foto für Ihr Profil hochladen. Klicken Sie dazu auf "Auswählen", suchen Sie dann eine Bilddatei von Ihrem Computer aus und klicken Sie auf "Abschicken". Max. Größe 1MB.',
       'display' => array(
         'default' => array(
           'label' => 'hidden',
@@ -4630,7 +4630,7 @@ function pw_profiles_field_default_fields() {
   t('Geschlecht');
   t('Grund für Ausscheiden aus dem Parlament');
   t('Hier können Sie beliebige Links ergänzen, die in Ihrem Profil öffentlich angezeigt werden sollen.');
-  t('Hier können Sie ein Foto für Ihr Profil hochladen. Klicken Sie dazu auf "Auswählen", suchen Sie dann eine Bilddatei von Ihrem Computer aus und klicken Sie auf "Abschicken".');
+  t('Hier können Sie ein Foto für Ihr Profil hochladen. Klicken Sie dazu auf "Auswählen", suchen Sie dann eine Bilddatei von Ihrem Computer aus und klicken Sie auf "Abschicken". Max. Größe 1MB.');
   t('Hier können Sie einen Freitext über Ihre Person eintragen, z.B. eine Biographie oder einen Lebenslauf. Der Text wird in Ihrem Profil veröffentlicht.');
   t('If this field is filled, question form will be closed and content of this field will be shown to visitor.');
   t('Kinder');

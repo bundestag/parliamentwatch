@@ -65,6 +65,16 @@ msgstr "Fragen an die Kandidierenden — @parliament (Wahlen)"
 msgid "Search"
 msgstr "Suchen"
 
+#: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:594
+msgid "All questions"
+msgstr "Alle Fragen"
+
+msgid "Answered"
+msgstr "Beantwortet"
+
+msgid "Not answered"
+msgstr "Unbeantwortet"
+
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:566
 msgid "Filter by topic"
 msgstr "Thema"
@@ -1056,6 +1066,15 @@ msgstr[0] ""
 msgstr[1] ""
 "<span>Sie sehen @count Kandidierende aus</span> !parties !constituencies"
 
+#: sites/all/themes/custom/parliamentwatch/template.php:1401
+msgid "<span>Found 1 candidate from</span> !parties"
+msgid_plural ""
+"<span>Found @count candidates from</span> !parties"
+msgstr[0] ""
+"<span>Sie sehen einen Kandidierenden aus</span> !parties"
+msgstr[1] ""
+"<span>Sie sehen @count Kandidierende aus</span> !parties"
+
 #: sites/all/themes/custom/parliamentwatch/template.php:1404
 msgid "<span>Found 1 deputy from</span> !parties !constituencies"
 msgid_plural "<span>Found @count deputies from</span> !parties !constituencies"
@@ -1063,6 +1082,14 @@ msgstr[0] ""
 "<span>Sie sehen einen Abgeordneten aus</span> !parties !constituencies"
 msgstr[1] ""
 "<span>Sie sehen @count Abgeordnete aus</span> !parties !constituencies"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1404
+msgid "<span>Found 1 deputy from</span> !parties"
+msgid_plural "<span>Found @count deputies from</span> !parties"
+msgstr[0] ""
+"<span>Sie sehen einen Abgeordneten aus</span> !parties"
+msgstr[1] ""
+"<span>Sie sehen @count Abgeordnete aus</span> !parties"
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1410
 msgid ""
@@ -1081,6 +1108,24 @@ msgstr[1] ""
 "<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
 "target=\"@data-ajax-target\">weibliche und männliche</a> <span>Kandidierende "
 "aus</span> !parties !constituencies"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1410
+msgid ""
+"<span>Found @count</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female or male</a> <span>candidate from </span> !"
+"parties"
+msgid_plural ""
+"<span>Found @count <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female and male</a> <span>candidates from </span> !"
+"parties"
+msgstr[0] ""
+"<span>Sie sehen einen</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weiblichen oder männlichen</a> "
+"<span>Kandidierenden aus</span> !parties"
+msgstr[1] ""
+"<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weibliche und männliche</a> <span>Kandidierende "
+"aus</span> !parties"
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1413
 msgid ""
@@ -1112,6 +1157,22 @@ msgstr[1] ""
 "target=\"@data-ajax-target\">männliche</a> <span>Kandidierende aus</span> !"
 "parties !constituencies"
 
+#: sites/all/themes/custom/parliamentwatch/template.php:1419
+msgid ""
+"<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">male</a> <span>candidate from</span> !parties"
+msgid_plural ""
+"<span>Found @count</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">male</a> <span>candidates from</span> !parties"
+msgstr[0] ""
+"<span>Sie sehen einen</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">männlichen</a> <span>Kandidierenden aus</span> !"
+"parties"
+msgstr[1] ""
+"<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">männliche</a> <span>Kandidierende aus</span> !"
+"parties"
+
 #: sites/all/themes/custom/parliamentwatch/template.php:1422
 msgid ""
 "<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
@@ -1129,6 +1190,22 @@ msgstr[1] ""
 "<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
 "target=\"@data-ajax-target\">männliche</a> <span>Abgeordnete aus</span> !"
 "parties !constituencies"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1422
+msgid ""
+"<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">male</a> <span>deputy from</span> !parties"
+msgid_plural ""
+"<span>Found @count</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">male</a> <span>deputies from</span> !parties"
+msgstr[0] ""
+"<span>Sie sehen einen</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">männlichen</a> <span>Abgeordneten aus</span> !"
+"parties"
+msgstr[1] ""
+"<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">männliche</a> <span>Abgeordnete aus</span> !"
+"parties"
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1428
 msgid ""
@@ -1148,6 +1225,22 @@ msgstr[1] ""
 "target=\"@data-ajax-target\">weibliche</a> <span>Kandidierende aus</span> !"
 "parties !constituencies"
 
+#: sites/all/themes/custom/parliamentwatch/template.php:1428
+msgid ""
+"<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female</a> <span>candidate from </span> !parties"
+msgid_plural ""
+"<span>Found @count</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female</a> <span>candidates from </span> !parties"
+msgstr[0] ""
+"<span>Sie sehen eine</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weibliche</a> <span>Kandidierende aus</span> !"
+"parties"
+msgstr[1] ""
+"<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weibliche</a> <span>Kandidierende aus</span> !"
+"parties"
+
 #: sites/all/themes/custom/parliamentwatch/template.php:1431
 msgid ""
 "<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
@@ -1165,6 +1258,24 @@ msgstr[1] ""
 "<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
 "target=\"@data-ajax-target\">weibliche</a> <span>Abgeordnete aus</span> !"
 "parties !constituencies"
+
+#: sites/all/themes/custom/parliamentwatch/template.php:1431
+msgid ""
+"<span>Found 1</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female</a> <span>deputy from </span> !parties"
+msgid_plural ""
+"<span>Found @count</span> <a href=\"@url\" class=\"@class\" data-ajax-target="
+"\"@data-ajax-target\">female</a> <span>deputies from </span> !parties"
+msgstr[0] ""
+"<span>Sie sehen eine</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weibliche</a> <span>Abgeordnete aus</span> !"
+"parties"
+msgstr[1] ""
+"<span>Sie sehen @count</span> <a href=\"@url\" class=\"@class\" data-ajax-"
+"target=\"@data-ajax-target\">weibliche</a> <span>Abgeordnete aus</span> !"
+"parties"
+
+
 
 #: sites/all/themes/custom/parliamentwatch/template.php:1436
 msgid "Found 1 candidate"
@@ -1462,8 +1573,8 @@ msgstr[1] "<span>@party</span> (@count Abgeordnete)"
 #: sites/all/themes/custom/parliamentwatch/templates/dialogues-stats.tpl.php:73;91
 msgid "@count_answers of 1 question answered (@percentage %)"
 msgid_plural "@count_answers of @count questions answered (@percentage %)"
-msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage %)"
-msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage %)"
+msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage%)"
+msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage%)"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--pw-kc-position--embedded.tpl.php:90
 msgid "Position of"
@@ -2153,7 +2264,7 @@ msgstr "Blog Lizenz"
 
 #: sites/all/modules/custom/pw_blog/pw_blog.module:209
 msgid "License"
-msgstr "Lizens"
+msgstr "Lizenz"
 
 #: sites/all/modules/custom/pw_blog/pw_blog.module:209
 msgid "BY-NC-SA 4.0."

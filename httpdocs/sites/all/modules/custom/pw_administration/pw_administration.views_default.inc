@@ -1274,7 +1274,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['relationships']['nid']['table'] = 'comment';
   $handler->display->display_options['relationships']['nid']['field'] = 'nid';
   $handler->display->display_options['relationships']['nid']['label'] = 'Beitrag';
-  /* Beziehung: Kommentar: Autor */
+  /* Beziehung: Kommentar: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'comment';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -1358,7 +1358,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['subject']['label'] = '';
   $handler->display->display_options['fields']['subject']['exclude'] = TRUE;
   $handler->display->display_options['fields']['subject']['element_label_colon'] = FALSE;
-  /* Feld: Kommentar: Autor */
+  /* Feld: Kommentar: Author */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'comment';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -1418,7 +1418,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['alter']['text'] = '<div class="comment-view-meta">Kommentar <strong>[subject]</strong> von <strong>[name]</strong> geschrieben am <strong>[created]</strong></div>
 <div class="comment-view-title">Verfasst in <strong>[title]</strong></div>
 <div class="comment-view-body">[comment_body]</div>';
-  /* Feld: Kommentar: Autor */
+  /* Feld: Kommentar: Author */
   $handler->display->display_options['fields']['name_1']['id'] = 'name_1';
   $handler->display->display_options['fields']['name_1']['table'] = 'comment';
   $handler->display->display_options['fields']['name_1']['field'] = 'name';
@@ -1625,6 +1625,7 @@ function pw_administration_views_default_views() {
     t('<div class="comment-view-meta">Kommentar <strong>[subject]</strong> von <strong>[name]</strong> geschrieben am <strong>[created]</strong></div>
 <div class="comment-view-title">Verfasst in <strong>[title]</strong></div>
 <div class="comment-view-body">[comment_body]</div>'),
+    t('Author'),
     t('E-Mail'),
     t('Aktionen'),
     t('Genemigter Kommentar'),
@@ -1746,7 +1747,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
   $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Ausschüssen';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -2284,6 +2285,14 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::pathauto_node_update_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
     'action::node_unpublish_action' => array(
       'selected' => 1,
       'postpone_processing' => 0,
@@ -3246,7 +3255,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Einträge gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -4826,7 +4835,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -7935,8 +7944,8 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['text'] = '[field_user_lname-revision_id], [field_user_fname-revision_id]';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['alter']['path'] = 'user/[uid]';
   $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -7956,6 +7965,8 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['label'] = 'Vorname';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['alter']['path'] = 'user/[uid]';
   $handler->display->display_options['fields']['field_user_fname-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -8173,12 +8184,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     'nothing' => 'nothing',
   );
   $handler->display->display_options['fields']['ctools_dropdown']['check_access'] = 0;
-  /* Feld: PW User archive: Question form open */
-  $handler->display->display_options['fields']['question_form_open_1']['id'] = 'question_form_open_1';
-  $handler->display->display_options['fields']['question_form_open_1']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['question_form_open_1']['field'] = 'question_form_open';
-  $handler->display->display_options['fields']['question_form_open_1']['label'] = 'Frageformular';
-  $handler->display->display_options['fields']['question_form_open_1']['not'] = 0;
   /* Kontextfilter: Benutzer (Historische Daten): Parlament (field_user_parliament) */
   $handler->display->display_options['arguments']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
   $handler->display->display_options['arguments']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
@@ -8430,6 +8435,54 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer: Benutzer UUID */
+  $handler->display->display_options['filters']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['table'] = 'users';
+  $handler->display->display_options['filters']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['uuid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uuid']['expose']['operator_id'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['label'] = 'UUID';
+  $handler->display->display_options['filters']['uuid']['expose']['operator'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['identifier'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Benutzer: E-Mail */
+  $handler->display->display_options['filters']['mail']['id'] = 'mail';
+  $handler->display->display_options['filters']['mail']['table'] = 'users';
+  $handler->display->display_options['filters']['mail']['field'] = 'mail';
+  $handler->display->display_options['filters']['mail']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'E-Mail';
+  $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
+  $handler->display->display_options['filters']['mail']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -8467,7 +8520,6 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Partei'),
     t('Uid'),
     t('Nachname'),
-    t('[field_user_lname-revision_id], [field_user_fname-revision_id]'),
     t('Vorname'),
     t('Profil für'),
     t('Parlament beigetreten'),
@@ -8488,6 +8540,8 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
+    t('UUID'),
+    t('E-Mail'),
     t('Page'),
   );
   $export['pw_administration_politicians_of_parliament'] = $view;
@@ -8639,7 +8693,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
   $handler->display->display_options['header']['result']['content'] = 'Zeigt @start - @end von @total Abstimmungen';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -9315,7 +9369,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['empty']['area']['empty'] = TRUE;
   $handler->display->display_options['empty']['area']['content'] = 'Keine Abstimmungen gefunden';
   $handler->display->display_options['empty']['area']['format'] = 'managed_content';
-  /* Beziehung: Inhalt: Autor */
+  /* Beziehung: Inhalt: Author */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
   $handler->display->display_options['relationships']['uid']['table'] = 'node';
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
@@ -9331,6 +9385,14 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
+    'action::pathauto_node_update_action' => array(
+      'selected' => 1,
+      'postpone_processing' => 0,
+      'skip_confirmation' => 0,
+      'skip_permission_check' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
     'action::node_unpublish_action' => array(
       'selected' => 1,
       'postpone_processing' => 0,
@@ -10665,6 +10727,32 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Inhalt: Organization (field_sidejob_organization) */
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['id'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['table'] = 'field_data_field_sidejob_organization';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['field'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['operator_id'] = 'field_sidejob_organization_tid_op';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['label'] = 'Organisation';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['operator'] = 'field_sidejob_organization_tid_op';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['identifier'] = 'field_sidejob_organization_tid';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['vocabulary'] = 'sidejob_organizations';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');

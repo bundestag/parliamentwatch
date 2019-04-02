@@ -96,7 +96,7 @@ function pw_parliaments_start_date($term) {
   $date = NULL;
 
   $items = field_get_items('taxonomy_term', $term, 'field_parliament_valid');
-  if (is_array($items) && count($items == 2)) {
+  if (is_array($items) && count($items) == 2) {
     $date = new DateTime($items[1]['value'], new DateTimeZone($items[1]['timezone']));
   }
 
@@ -135,10 +135,8 @@ function pw_parliaments_next($term) {
     ->condition('prev.field_parliament_previous_tid', $term->tid)
     ->execute()
     ->fetchField();
-
-  $eu_2019 = 30438;
-  $bremen_2019 = 30473;
-  if ($tid && $tid != $bremen_2019 && $tid != $eu_2019) {
+  
+  if ($tid ) {
     return taxonomy_term_load($tid);
   }
 }
