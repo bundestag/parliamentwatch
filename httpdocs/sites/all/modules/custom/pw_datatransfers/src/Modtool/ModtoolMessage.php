@@ -257,6 +257,28 @@ class ModtoolMessage {
       throw new InvalidSourceException('The annotation text found in sent JSON is not a valid string.');
     }
 
+    // validate documents
+    if (isset($this->jsonData->documents) && !empty($this->jsonData->documents)) {
+      $info = field_info_instance('node', 'field_dialogue_attachments', 'dialogue');
+      $allowed_extensions = explode(' ', $info["settings"]["file_extensions"]);
+
+      foreach ($this->jsonData->documents as $document_url) {
+        $file_pathinfo = pathinfo($document_url);
+
+        // check for allowed file extensions
+        if (!in_array($file_pathinfo['extension'], $allowed_extensions)) {
+          throw new InvalidSourceException('The file '. $document_url .' has not an allowed file extension. Allowed are the following extensions: '. implode(', ',$allowed_extensions));
+        }
+
+        $file_temp = file_get_contents(pw_globals_helper_file($document_url));
+        if (!$file_temp) {
+          throw new InvalidSourceException('It was not possible to load the file '. $document_url);
+        }
+
+      }
+
+    }
+
     $this->validated = TRUE;
  }
 

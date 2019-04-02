@@ -137,11 +137,7 @@ class DataQuestion extends DataEntityBase {
     ];
 
     // add documents
-    // @todo - documents import implementation
-    $node->field_dialogue_documents[LANGUAGE_NONE] = [];
-    foreach ($modtoolMessage->getDocuments() as $document) {
-      // $node->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-    }
+    $this->setDocuments($node);
 
     // add tags
     // @todo - tags import implementation
