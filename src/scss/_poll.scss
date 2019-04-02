@@ -31,30 +31,25 @@
   }
 
   .tile__pollchart {
-    padding-top: $space;
-    padding-bottom: $space;
+    padding-top: $space-small;
+    padding-bottom: $space-small;
     position: relative;
-    margin-bottom: $space;
-    border-bottom: 1px solid $gray;
     @include grid-container();
     @include breakpoint($breakpoint-l-min) {
-      padding-bottom: $space-large;
+      padding-top: $space;
+      padding-bottom: $space;
     }
   }
   .tile__pollchart__value_left,
   .tile__pollchart__value_right {
     @include grid-column(6, $neat-grid-no-gutter);
     text-align: center;
-    font-size: 1.2em;
     color: $gray;
-    font-family: $font-serif;
-    font-weight: 700;
-    &.won {
-      color: $darkGray;
-    }
+    font-weight: 600;
+    @include poll-icon-colors;
   }
-  .tile__pollchart__value_left { padding-right: $space-large; }
-  .tile__pollchart__value_right { padding-left: $space-large; }
+  .tile__pollchart__value_left { padding-right: $space-large; color: $darkGreen; }
+  .tile__pollchart__value_right { padding-left: $space-large; color: $darkRed; }
 
   .tile__pollchart__statistic {
     position: absolute;
@@ -89,8 +84,13 @@
   .tile__title {
     text-align: center;
     border-bottom: 0;
-    margin-top: $space-large;
+    margin-top: $space;
+    margin-bottom: $space;
     @include h3();
+    @include breakpoint($breakpoint-l-min) {
+      margin-top: $space-large;
+      margin-bottom: $space-large;
+    }
     a {
       color: $darkGray;
     }
@@ -155,8 +155,8 @@
       width: 120px;
     }
   }
-  .icon-ok { color: $color-accepted; }
-  .icon-close { color: $color-denied; }
+  .icon-ok { color: $green; }
+  .icon-close { color: $red; }
   &:after {
     content: '}';
     font-size: 3.6em;

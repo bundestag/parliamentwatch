@@ -1958,19 +1958,20 @@
   Drupal.behaviors.readMore = {
     attach: function (context) {
       $('.readmore', context).once('readMore', function () {
+
         var readmoreHeight = $(this).outerHeight();
 
         if (readmoreHeight < 300) {
-          $(this).addClass('readMore--expanded readMore--expanded-initial');
+          $(this).addClass('readmore--expanded readmore--expanded-initial');
           $(this).find('.readmore__trigger').hide();
         }
         $('.readmore__trigger .readmore__trigger__more').click(function (event) {
           event.preventDefault();
-          $(this).parents('.readmore').addClass('readMore--expanded');
+          $(this).parents('.readmore').addClass('readmore--expanded');
         });
         $('.readmore__trigger .readmore__trigger__less').click(function (event) {
           event.preventDefault();
-          $(this).parents('.readmore').removeClass('readMore--expanded');
+          $(this).parents('.readmore').removeClass('readmore--expanded');
         });
       });
     }

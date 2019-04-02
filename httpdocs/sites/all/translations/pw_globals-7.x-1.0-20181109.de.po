@@ -65,6 +65,16 @@ msgstr "Fragen an die Kandidierenden — @parliament (Wahlen)"
 msgid "Search"
 msgstr "Suchen"
 
+#: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:594
+msgid "All questions"
+msgstr "Alle Fragen"
+
+msgid "Answered"
+msgstr "Beantwortet"
+
+msgid "Not answered"
+msgstr "Unbeantwortet"
+
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:566
 msgid "Filter by topic"
 msgstr "Thema"
@@ -1563,8 +1573,8 @@ msgstr[1] "<span>@party</span> (@count Abgeordnete)"
 #: sites/all/themes/custom/parliamentwatch/templates/dialogues-stats.tpl.php:73;91
 msgid "@count_answers of 1 question answered (@percentage %)"
 msgid_plural "@count_answers of @count questions answered (@percentage %)"
-msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage %)"
-msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage %)"
+msgstr[0] "@count_answers von 1 Frage beantwortet (@percentage%)"
+msgstr[1] "@count_answers von @count Fragen beantwortet (@percentage%)"
 
 #: sites/all/themes/custom/parliamentwatch/templates/node--pw-kc-position--embedded.tpl.php:90
 msgid "Position of"
@@ -2254,7 +2264,7 @@ msgstr "Blog Lizenz"
 
 #: sites/all/modules/custom/pw_blog/pw_blog.module:209
 msgid "License"
-msgstr "Lizens"
+msgstr "Lizenz"
 
 #: sites/all/modules/custom/pw_blog/pw_blog.module:209
 msgid "BY-NC-SA 4.0."

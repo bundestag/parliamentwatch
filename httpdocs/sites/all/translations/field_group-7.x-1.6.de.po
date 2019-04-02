@@ -1,10 +1,10 @@
 # German translation of Field Group (7.x-1.6)
-# Copyright (c) 2018 by the German translation team
+# Copyright (c) 2019 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Field Group (7.x-1.6)\n"
-"POT-Creation-Date: 2018-12-30 13:03+0000\n"
+"POT-Creation-Date: 2019-03-18 13:02+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -154,6 +154,8 @@ msgstr ""
 "Anzeige duplizieren."
 msgid "Show label"
 msgstr "Beschriftung anzeigen"
+msgid "Label only"
+msgstr "Nur Beschriftung"
 msgid "Step 1 of 10"
 msgstr "Schritt 1 von 10"
 msgid "Step 1 of 10 [Label]"

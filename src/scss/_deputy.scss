@@ -660,10 +660,10 @@ $abstimmverhalten-node-item-width: 18px;
   margin-bottom: $space-xsmall;
   display: inline-block;
   &.icon-ok {
-    color: $success;
+    color: $green;
   }
   &.icon-close {
-    color: $error;
+    color: $red;
   }
   &.icon-minus {
     color: $darkGray;
@@ -871,10 +871,7 @@ $abstimmverhalten-node-item-width: 18px;
   margin-top: $space-large * 2;
   @include breakpoint($breakpoint-s-min) {
     margin-bottom: $space-large * 2;
-    @include grid-column(6);
-  }
-  @include breakpoint($breakpoint-l-min) {
-    @include grid-column(6);
+    @include grid-column(6, $neat-grid-large-gutter);
   }
   p {
     font-size: 1.1em;
@@ -893,7 +890,7 @@ $abstimmverhalten-node-item-width: 18px;
 /* Twitter timeline widget */
 
 .deputy__twitter {
-  @include grid-column(12, $neat-grid-large-gutter);
+  @include grid-column(12);
   @include box($white);
   @include shadow();
   margin-top: $space-large;
@@ -907,7 +904,7 @@ $abstimmverhalten-node-item-width: 18px;
 /* About me */
 
 .deputy__about {
-  @include grid-column(12, $neat-grid-large-gutter);
+  @include grid-column(12);
   margin-top: $space-large;
   @include breakpoint($breakpoint-s-min) {
     margin-top: $space-large * 2;
@@ -1115,9 +1112,8 @@ $abstimmverhalten-node-item-width: 18px;
     margin-bottom: $space-large;
   }
 }
-
 .deputy__gallery {
-  @include grid-column(12, $neat-grid-large-gutter);
+  @include grid-column(12);
   padding: $space-large 0;
   figure {
     margin-bottom: $space;
@@ -1142,9 +1138,13 @@ $abstimmverhalten-node-item-width: 18px;
     width: calc(100% - 5px);
     left: 0;
   }
+  &.readmore {
+    padding-bottom: 60px;
+  }
 }
 .deputy__gallery__inner {
   @include grid-collapse();
+  @include grid-container();
   @include breakpoint($breakpoint-s-min) {
     @include grid-collapse($neat-grid-large-gutter);
   }
