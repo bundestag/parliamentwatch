@@ -1386,6 +1386,30 @@ function pw_globals_custom_theme() {
 }
 
 
+/**
+ * Helper to receive an escaped URL to a file which may have spaces in it's
+ * name. It just escapes the parts of an URL which needs to be escaped.
+ *
+ * @see https://stackoverflow.com/a/8260942
+ *
+ * @param string $file_url
+ * A full URL including http to a file
+ *
+ * @return string
+ * The URL with escaped folders and file name
+ */
+function pw_globals_helper_file($file_url) {
+  $parts = parse_url($file_url);
+  $path_parts = array_map('rawurldecode', explode('/', $parts['path']));
+
+  return
+    $parts['scheme'] . '://' .
+    $parts['host'] .
+    implode('/', array_map('rawurlencode', $path_parts))
+    ;
+}
+
+
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bundestag']);
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Baden-Württemberg']);
 t('Ask your questions and find out about your direct candidates for the upcoming elections!', [], ['context' => 'Bayern']);

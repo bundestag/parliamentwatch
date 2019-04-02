@@ -112,7 +112,116 @@ function pw_dialogues_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '12',
+        'weight' => '3',
+      ),
+    ),
+  );
+
+  // Exported field: 'comment-comment_node_dialogue-field_dialogue_attachments'.
+  $fields['comment-comment_node_dialogue-field_dialogue_attachments'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_dialogue_attachments',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'private',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'comment_node_dialogue',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'file_default',
+          'weight' => 14,
+        ),
+        'full' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'comment',
+      'field_name' => 'field_dialogue_attachments',
+      'label' => 'Attachments',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => 'dialogue-attachments',
+        'file_extensions' => 'gif jpg jpeg png doc docx pdf xls xlsx ppt pptx zip',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'filefield_sources' => array(
+            'filefield_sources' => array(
+              'attach' => 0,
+              'clipboard' => 0,
+              'reference' => 0,
+              'remote' => 0,
+              'upload' => 'upload',
+            ),
+            'source_attach' => array(
+              'absolute' => '0',
+              'attach_mode' => 'move',
+              'path' => 'file_attach',
+            ),
+            'source_imce' => array(
+              'imce_mode' => 0,
+            ),
+            'source_reference' => array(
+              'autocomplete' => '0',
+              'search_all_fields' => '0',
+            ),
+          ),
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '8',
       ),
     ),
   );
@@ -326,7 +435,7 @@ function pw_dialogues_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '27',
+        'weight' => '11',
       ),
     ),
   );
@@ -440,7 +549,7 @@ function pw_dialogues_field_default_fields() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_field',
-        'weight' => '22',
+        'weight' => '9',
       ),
     ),
   );
@@ -509,7 +618,7 @@ function pw_dialogues_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '18',
+        'weight' => '6',
       ),
     ),
   );
@@ -621,7 +730,7 @@ function pw_dialogues_field_default_fields() {
           'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
         ),
         'type' => 'options_onoff',
-        'weight' => '28',
+        'weight' => '12',
       ),
     ),
   );
@@ -690,7 +799,7 @@ function pw_dialogues_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '20',
+        'weight' => '7',
       ),
     ),
   );
@@ -765,7 +874,7 @@ function pw_dialogues_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '16',
+        'weight' => '5',
       ),
     ),
   );
@@ -858,7 +967,7 @@ function pw_dialogues_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'entityreference_autocomplete',
-        'weight' => '14',
+        'weight' => '4',
       ),
     ),
   );
@@ -1035,7 +1144,7 @@ $display_output = rtrim($display_output);',
           'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
         ),
         'type' => 'computed',
-        'weight' => '29',
+        'weight' => '13',
       ),
     ),
   );
@@ -1168,7 +1277,7 @@ $display_output = rtrim($display_output);',
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '6',
+        'weight' => '0',
       ),
     ),
   );
@@ -1255,7 +1364,7 @@ $display_output = rtrim($display_output);',
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '10',
+        'weight' => '2',
       ),
     ),
   );
@@ -1342,7 +1451,7 @@ $display_output = rtrim($display_output);',
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '8',
+        'weight' => '1',
       ),
     ),
   );
@@ -1571,7 +1680,7 @@ $display_output = rtrim($display_output);',
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '1',
+        'weight' => '2',
       ),
     ),
   );
@@ -1708,7 +1817,116 @@ $display_output = rtrim($display_output);',
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '13',
+        'weight' => '14',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dialogue-field_dialogue_attachments'.
+  $fields['node-dialogue-field_dialogue_attachments'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_dialogue_attachments',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'private',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dialogue',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'file_default',
+          'weight' => 16,
+        ),
+        'full' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_dialogue_attachments',
+      'label' => 'Attachments',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => 'dialogue-attachments',
+        'file_extensions' => 'gif jpg jpeg png doc docx pdf xls xlsx ppt pptx zip',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'filefield_sources' => array(
+            'filefield_sources' => array(
+              'attach' => 0,
+              'clipboard' => 0,
+              'reference' => 0,
+              'remote' => 0,
+              'upload' => 'upload',
+            ),
+            'source_attach' => array(
+              'absolute' => '0',
+              'attach_mode' => 'move',
+              'path' => 'file_attach',
+            ),
+            'source_imce' => array(
+              'imce_mode' => 0,
+            ),
+            'source_reference' => array(
+              'autocomplete' => '0',
+              'search_all_fields' => '0',
+            ),
+          ),
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '9',
       ),
     ),
   );
@@ -1850,7 +2068,7 @@ $display_output = rtrim($display_output);',
           'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
         ),
         'type' => 'options_onoff',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -2007,7 +2225,7 @@ $display_output = rtrim($display_output);',
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_field',
-        'weight' => '7',
+        'weight' => '8',
       ),
     ),
   );
@@ -2140,7 +2358,7 @@ $display_output = rtrim($display_output);',
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '11',
+        'weight' => '12',
       ),
     ),
   );
@@ -2273,7 +2491,7 @@ $display_output = rtrim($display_output);',
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '12',
+        'weight' => '13',
       ),
     ),
   );
@@ -2408,7 +2626,7 @@ $display_output = rtrim($display_output);',
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '10',
+        'weight' => '11',
       ),
     ),
   );
@@ -2607,7 +2825,7 @@ $display_output = rtrim($display_output);',
           'size' => '60',
         ),
         'type' => 'entityreference_autocomplete',
-        'weight' => '8',
+        'weight' => '10',
       ),
     ),
   );
@@ -2979,7 +3197,7 @@ $display_output = rtrim($display_output);',
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '6',
+        'weight' => '7',
       ),
     ),
   );
@@ -3186,7 +3404,7 @@ $display_output = rtrim($display_output);',
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -3472,7 +3690,7 @@ $display_output = rtrim($display_output);',
           'maxlength_js_label' => 'Content limited to @limit characters, remaining: <strong>@remaining</strong>',
         ),
         'type' => 'number',
-        'weight' => '17',
+        'weight' => '18',
       ),
     ),
   );
@@ -3564,6 +3782,7 @@ $display_output = rtrim($display_output);',
   // Translatables
   // Included for use with string extractors like potx.
   t('Annotation');
+  t('Attachments');
   t('Before Election Date');
   t('Body');
   t('Comment Body');
