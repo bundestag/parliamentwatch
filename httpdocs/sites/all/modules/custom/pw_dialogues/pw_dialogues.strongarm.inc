@@ -167,22 +167,16 @@ function pw_dialogues_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '1',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '15',
+          'weight' => '14',
         ),
         'redirect' => array(
-          'weight' => '16',
+          'weight' => '15',
         ),
         'xmlsitemap' => array(
-          'weight' => '17',
-        ),
-        'metatags' => array(
-          'weight' => '19',
-        ),
-        'rabbit_hole' => array(
-          'weight' => '0',
+          'weight' => '16',
         ),
       ),
       'display' => array(
