@@ -793,6 +793,11 @@
       .election-teaser__col__title {
         opacity: .6;
       }
+      .btn {
+        border-color: $darkBeige;
+        background: transparent;
+        color: $mediumGray;
+      }
     }
     &:hover {
       background: $brightBeige;
