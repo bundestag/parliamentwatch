@@ -196,6 +196,9 @@
       padding-top: $space-large * 2;
       padding-bottom: $space-large * 2;
     }
+    .attachment__item {
+      background: $white;
+    }
   }
 
   .question__answer {
