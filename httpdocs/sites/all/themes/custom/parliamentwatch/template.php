@@ -1303,7 +1303,7 @@ function parliamentwatch_textarea($variables) {
 function parliamentwatch_select($variables) {
   $element = $variables['element'];
   element_set_attributes($element, ['id', 'name', 'size']);
-  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
+  _parliamentwatch_form_set_class($element, ['form__item__control']);
 
   return '<select data-width="100%" ' . drupal_attributes($element['#attributes']) . '>' . form_select_options($element) . '</select>';
 }

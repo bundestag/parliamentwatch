@@ -933,7 +933,9 @@
           $('.dropdown__list').removeClass('dropdown__list--open');
         });
         $(this).on('select2:select', function (e) {
-          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          if ($(this).is('.form__item__control--special').length < 0) {
+            $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          }
         });
       });
     }
@@ -948,7 +950,7 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible');
+      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email');
 
       $inputs.each(function () {
         setFloatingLabel($(this), false);

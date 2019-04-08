@@ -52,7 +52,7 @@
       <div class="poll_detail__table__sorting">
         <div class="form__item form__item--horizontal">
           <label for="poll_detail_table_sorting" class="form__item__label">Sortieren nach</label>
-          <select name="poll_detail_table_sorting" id="poll_detail_table_sorting" class="form__item__control">
+          <select name="poll_detail_table_sorting" id="poll_detail_table_sorting" class="form__item__control form__item__control--special">
             <option value="politician_full_name_asc" data-sort-value="politician_full_name" data-sort-order="1">Name aufsteigend</option>
             <option value="politician_full_name_dsc" data-sort-value="politician_full_name" data-sort-order="0">Name absteigend</option>
             <option value="politician_political_faction_asc" data-sort-value="politician_political_faction" data-sort-order="1">Fraktion aufsteigend</option>
