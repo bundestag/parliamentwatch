@@ -1,6 +1,0 @@
-name = PW Diff Formatted
-description = sends email when a politicians account has been updated
-core = 7.x
-package = Features
-version = 7.x-1.0-20140124
-project = pw_diff_tracking
