@@ -1796,8 +1796,8 @@
   Drupal.behaviors.filterBar = {
     attach: function () {
       var $filterbar = $('.filterbar');
+      var $filterBarInner = $('.filterbar__content');
       var $filterBarSwiper = $('.filterbar__secondary');
-      var $filterBarInner = $('.filterbar .filterbar__inner');
       var filterBarActive = false;
 
       function filterBarCreate() {
@@ -1851,25 +1851,12 @@
       }
 
       function filterBarSwiperSize() {
+        var filterBarWidth = $filterBarInner.outerWidth();
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
         var filterBarOffsetLeft = $('.filterbar__primary').outerWidth();
-        var filterBarOffsetRightValue = filterBarOffsetRight;
-        var filterBarOffsetLeftValue = filterBarOffsetLeft;
 
-        windowWidth = window.innerWidth;
-
-        if (windowWidth >= breakpointMMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 20;
-        }
-        else if (windowWidth >= breakpointSMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 15;
-        }
-        else {
-          filterBarOffsetRightValue = 0;
-        }
-        $filterBarInner
-          .css('padding-right', filterBarOffsetRightValue + 'px')
-          .css('padding-left', filterBarOffsetLeftValue + 'px');
+        $filterBarSwiper
+          .css('width', filterBarWidth - filterBarOffsetRight - filterBarOffsetLeft + 'px');
       }
 
       if (windowWidth >= breakpointMMin) {
@@ -2115,7 +2102,6 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      hideIfEmpty();
 
       function loadResults($form) {
         var path = $form.attr('action');
@@ -2129,37 +2115,25 @@
         $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
           Drupal.attachBehaviors(target, {url: url});
           removeLoadingAnimation($('.tile-wrapper'));
-          hideIfEmpty();
         });
       }
 
-      function hideIfEmpty() {
-        if (!$('.filterbar__secondary .filterbar__item').length) {
-          $('.filterbar').addClass('filterbar--empty');
-          $('.filterbar__trigger').hide();
-        } else {
-          $('.filterbar').removeClass('filterbar--empty');
-          $('.filterbar__trigger').show();
-        }
-      }
-
       $('form[data-ajax-target] .form__item__control').change(function (event) {
-        if ($(this).is('#edit-keys')) {
-          window.location = '?keys=' + $(this).val();
-        } else {
-          if (!$(this).parents('.filterbar--expanded').length) {
-            var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
-            if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
-              if (dateInputs[0].value === '' || dateInputs[1].value === '') {
-                return;
-              }
-            }
-            loadResults($(this).parents('form'));
-          } else {
-            $('[data-filterbar-submit]').one('click', function (event) {
-              loadResults($(this).parents('form'));
-            });
+        if (!$(this).parents('.filterbar--expanded').length) {
+          if ($(this).is('#edit-keys')) {
+            window.location = '?keys=' + $(this).val();
           }
+          var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
+          if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
+            if (dateInputs[0].value === '' || dateInputs[1].value === '') {
+              return;
+            }
+          }
+          loadResults($(this).parents('form'));
+        } else {
+          $('[data-filterbar-submit]').one('click', function (event) {
+            loadResults($(this).parents('form'));
+          });
         }
       });
 
