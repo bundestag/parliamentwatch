@@ -154,6 +154,7 @@ function pw_kandidatencheck_feeds_importer_default() {
         'request_timeout' => NULL,
         'auto_scheme' => 'http',
         'accept_invalid_cert' => FALSE,
+        'cache_http_result' => TRUE,
       ),
     ),
     'parser' => array(
@@ -165,7 +166,7 @@ function pw_kandidatencheck_feeds_importer_default() {
           'xpathparser:2' => 'thesis',
           'xpathparser:4' => 'concat(\'Thesis \', thesis_number, \' - \', substring(thesis, 0, 20), \'...\')',
           'xpathparser:5' => 'thesis_number',
-          'xpathparser:6' => 'parliament_uuid',
+          'xpathparser:6' => 'parliament',
           'xpathparser:7' => 'thesis_number',
         ),
         'rawXML' => array(
@@ -236,14 +237,14 @@ function pw_kandidatencheck_feeds_importer_default() {
           5 => array(
             'source' => 'xpathparser:6',
             'target' => 'field_parliament',
-            'term_search' => '2',
+            'term_search' => '0',
             'autocreate' => 0,
-            'language' => 'und',
           ),
           6 => array(
             'source' => 'xpathparser:7',
             'target' => 'field_kc_thesis_number',
             'unique' => FALSE,
+            'language' => 'und',
           ),
         ),
         'update_existing' => '2',
