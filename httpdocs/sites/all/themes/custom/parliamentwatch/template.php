@@ -1602,7 +1602,13 @@ function parliamentwatch_tablesort_indicator($variables) {
  *   The class names to be added.
  */
 function _parliamentwatch_form_set_class(array &$element, array $name) {
-  $element['#attributes']['class'] = $name;
+  if (!empty($name)) {
+    if (!isset($element['#attributes']['class'])) {
+      $element['#attributes']['class'] = array();
+    }
+    $element['#attributes']['class'] = array_merge($element['#attributes']['class'], $name);
+  }
+
   // This function is invoked from form element theme functions, but the
   // rendered form element may not necessarily have been processed by
   // form_builder().
