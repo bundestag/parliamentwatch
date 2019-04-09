@@ -139,7 +139,7 @@ class DataQuestion extends DataEntityBase {
     // add documents
     $this->setDocuments($node);
 
-    // set the topics
+    // set the topic
     $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
     if (!empty($topic)) {
       $node->field_dialogue_topic = [
@@ -149,9 +149,6 @@ class DataQuestion extends DataEntityBase {
           ],
         ],
       ];
-    }
-    else {
-      throw new DatatransfersException('The given topic was not found in Drupal.');
     }
 
     // add annotation
