@@ -139,6 +139,7 @@ class DataQuestion extends DataEntityBase {
     // add documents
     $this->setDocuments($node);
 
+    // set the topics
     $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
     if (!empty($topic)) {
       $node->field_dialogue_topic = [
