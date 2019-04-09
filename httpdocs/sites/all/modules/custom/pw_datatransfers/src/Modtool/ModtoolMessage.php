@@ -141,16 +141,6 @@ class ModtoolMessage {
     return $this->getData('annotation_text');
   }
 
-  public function getTags() {
-    $tags = $this->getData('tags');
-
-    if ($tags === NULL) {
-      $tags = [];
-    }
-
-    return $tags;
-  }
-
 
   /**
    * Get the data from JSON by key. it checks if the data was validated
@@ -266,9 +256,7 @@ class ModtoolMessage {
         if (!$file_temp) {
           throw new InvalidSourceException('It was not possible to load the file '. $document_url);
         }
-
       }
-
     }
 
     $this->validated = TRUE;
