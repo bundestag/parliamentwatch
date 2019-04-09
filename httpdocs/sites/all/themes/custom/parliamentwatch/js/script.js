@@ -915,11 +915,11 @@
             maximumSelectionLength: 1,
             multiple: true
           });
-        } else if ($(this).parents('.filterbar__secondary').length) {
+        } else if ($(this).parents('.filterbar').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
             placeholder: $(this).siblings('label').text(),
-            dropdownParent: $('.filterbar__secondary__inner')
+            dropdownParent: $(this).closest('div')
           });
         } else {
           $(this).select2({
