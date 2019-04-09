@@ -89,8 +89,8 @@ class DataAnswer extends DataEntityBase {
     $comment->uid = $sender_uid;
 
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
-      'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
-      'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
+      'value' => json_decode($modtoolMessage->getText()),
+      'summary' => json_decode($modtoolMessage->getSummary()),
       'format' => 'filtered_html',
     ]]];
 
