@@ -139,16 +139,7 @@ class DataQuestion extends DataEntityBase {
     // add documents
     $this->setDocuments($node);
 
-    // add tags
-    // @todo - tags import implementation
-    $node->field_dialogue_tags[LANGUAGE_NONE] = [];
-    foreach ($modtoolMessage->getTags() as $tag) {
-//      $term = array_values(taxonomy_get_term_by_name(trim($tag->textContent), 'dialogue_tags'));
-//      if (!empty($term)) {
-//        $node->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-//      }
-    };
-
+    // set the topic
     $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
     if (!empty($topic)) {
       $node->field_dialogue_topic = [
@@ -158,9 +149,6 @@ class DataQuestion extends DataEntityBase {
           ],
         ],
       ];
-    }
-    else {
-      throw new DatatransfersException('The given topic was not found in Drupal.');
     }
 
     // add annotation
