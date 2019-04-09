@@ -37,18 +37,25 @@
   </div>
 
   <?php if ($form['#id'] === 'pw-profiles-filters-form'): ?>
+    <?php
+      $params = drupal_get_query_parameters();
+      if (!array_key_exists('sort_by', $params)) {
+        $params['sort_by'] = 'answers';
+        $params['sort_order'] = 'desc';
+      }
+    ?>
     <div class="filterbar__sorting filterbar__sorting--deputies">
       <div class="form__item form__item--horizontal">
         <label for="deputies_sorting" class="form__item__label form__item__label--static"><?php print t('Sorted by:'); ?></label>
         <select name="deputies_sorting" id="deputies_sorting" class="form__item__control form__item__control--special" data-width="100%">
-          <option value="answers_asc"><?php print t('Answers'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="answers_desc" selected><?php print t('Answers'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="questions_asc"><?php print t('Questions'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="questions_desc"><?php print t('Questions'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="party_asc"><?php print t('Party'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="party_desc"><?php print t('Party'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="name_asc"><?php print t('Name'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="name_desc"><?php print t('Name'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="answers_asc"<?php if ($params['sort_by'] === 'answers' && $params['sort_order'] === 'asc'): ?> selected<?php endif; ?>><?php print t('Answers'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="answers_desc"<?php if ($params['sort_by'] === 'answers' && $params['sort_order'] === 'desc'): ?> selected<?php endif; ?>><?php print t('Answers'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="questions_asc"<?php if ($params['sort_by'] === 'questions' && $params['sort_order'] === 'asc'): ?> selected<?php endif; ?>><?php print t('Questions'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="questions_desc"<?php if ($params['sort_by'] === 'questions' && $params['sort_order'] === 'desc'): ?> selected<?php endif; ?>><?php print t('Questions'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="party_asc"<?php if ($params['sort_by'] === 'party' && $params['sort_order'] === 'asc'): ?> selected<?php endif; ?>><?php print t('Party'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="party_desc"<?php if ($params['sort_by'] === 'party' && $params['sort_order'] === 'desc'): ?> selected<?php endif; ?>><?php print t('Party'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="name_asc"<?php if ($params['sort_by'] === 'name' && $params['sort_order'] === 'asc'): ?> selected<?php endif; ?>><?php print t('Name'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="name_desc"<?php if ($params['sort_by'] === 'name' && $params['sort_order'] === 'desc'): ?> selected<?php endif; ?>><?php print t('Name'); ?> (<?php print t('descending'); ?>)</option>
         </select>
       </div>
     </div>
