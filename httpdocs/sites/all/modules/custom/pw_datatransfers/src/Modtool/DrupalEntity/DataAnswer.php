@@ -89,8 +89,8 @@ class DataAnswer extends DataEntityBase {
     $comment->uid = $sender_uid;
 
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
-      'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
-      'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
+      'value' => json_decode($modtoolMessage->getText()),
+      'summary' => json_decode($modtoolMessage->getSummary()),
       'format' => 'filtered_html',
     ]]];
 
@@ -116,15 +116,6 @@ class DataAnswer extends DataEntityBase {
 
     $this->setDocuments($comment);
 
-    // @todo - tags import implementieren
-    $comment->field_dialogue_tags[LANGUAGE_NONE] = [];
-//    foreach ($modtoolMessage->getTags() as $item) {
-//      $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
-//      if (!empty($term)) {
-//        $comment->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-//      }
-//    };
-
     $annotation = $modtoolMessage->getAnnotation();
     if (!empty($annotation)) {
       $comment->field_dialogue_annotation = [LANGUAGE_NONE => [0 => [
@@ -132,14 +123,16 @@ class DataAnswer extends DataEntityBase {
       ]]];
     }
 
-
-    //@todo - check if topics should really be set for comments separated
-//    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $answer_from_modtool), 'dialogue_topics'));
-//    if (!empty($topic)) {
-//      $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-//        'tid' => $topic[0]->tid,
-//      ]]];
-//    }
+    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
+    if (!empty($topic)) {
+      $comment->field_dialogue_topic = [
+        LANGUAGE_NONE => [
+          0 => [
+            'tid' => $topic[0]->tid,
+          ],
+        ],
+      ];
+    }
   }
 
 

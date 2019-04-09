@@ -1,9 +1,0 @@
-name = PW Diff Tracking
-description = sends email when a poiiticians account has been updated
-core = 7.x
-package = Features
-php = 5.2.4
-version = 7.x-1.0-20140813
-project = pw_diff_tracking
-features[features_api][] = api:1
-features[rules_config][] = rules_user_changed

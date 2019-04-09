@@ -149,4 +149,15 @@ class PWUser {
 
     return trim($fullname);
   }
+
+
+  /**
+   * Check if the user has a admin or content admin role
+   *
+   * @return bool
+   */
+  public function isColleague() {
+    return ($this->hasRole(self::ROLE_ADMINISTRATOR) ||
+            $this->hasRole(self::ROLE_CONTENT_MANAGER));
+  }
 }

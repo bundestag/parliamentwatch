@@ -116,7 +116,7 @@ class ModtoolMessage {
   }
 
   public function getTopic() {
-    return $this->getData('message_topic');
+    return $this->getData('topic');
   }
 
   public function getParliament() {
@@ -124,7 +124,7 @@ class ModtoolMessage {
   }
 
   public function getSummary() {
-    return $this->getData('summary');
+    return $this->getData('keyworded_text');
   }
 
   public function getDocuments() {
@@ -139,16 +139,6 @@ class ModtoolMessage {
 
   public function getAnnotation() {
     return $this->getData('annotation_text');
-  }
-
-  public function getTags() {
-    $tags = $this->getData('tags');
-
-    if ($tags === NULL) {
-      $tags = [];
-    }
-
-    return $tags;
   }
 
 
@@ -204,14 +194,6 @@ class ModtoolMessage {
     // validate text
     if (!isset($this->jsonData->text) || !is_string($this->jsonData->text)) {
       throw new InvalidSourceException('No valid text was found in sent JSON.');
-    }
-
-    // validate summary
-    if (!isset($this->jsonData->keyworded_text) || !is_string($this->jsonData->keyworded_text)) {
-      throw new InvalidSourceException('No valid summary text was found in sent JSON.');
-    }
-    else if (isset($this->jsonData->keyworded_text) && empty($this->jsonData->keyworded_text)) {
-      throw new InvalidSourceException('The excerpt cannot be empty.');
     }
 
     // validate type
@@ -274,9 +256,26 @@ class ModtoolMessage {
         if (!$file_temp) {
           throw new InvalidSourceException('It was not possible to load the file '. $document_url);
         }
+      }
+    }
 
+    // validate topic
+    // for questions topic is required
+    if ($this->jsonData->type == 'question' && !isset($this->jsonData->topic) || empty($this->jsonData->topic) || !is_string($this->jsonData->topic) ) {
+      throw new InvalidSourceException('No valid topic was found in sent JSON. Either it is not set, it is empty or it is not a string.');
+    }
+
+    // when a topic is set validate that it exists in Drupal
+    if (isset($this->jsonData->topic) && is_string($this->jsonData->topic)) {
+      $topic_result = array_values(taxonomy_get_term_by_name($this->jsonData->topic));
+      if (!$topic_result) {
+        throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term in Drupal.');
       }
 
+      $topic = $topic_result[0];
+      if ($topic->vid != 26) {
+        throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term of dialogue topics taxonomy in Drupal.');
+      }
     }
 
     $this->validated = TRUE;
