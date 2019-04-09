@@ -260,10 +260,13 @@ class ModtoolMessage {
     }
 
     // validate topic
-    if (!isset($this->jsonData->topic) || empty($this->jsonData->topic) || !is_string($this->jsonData->topic) ) {
+    // for questions topic is required
+    if ($this->jsonData->type == 'question' && !isset($this->jsonData->topic) || empty($this->jsonData->topic) || !is_string($this->jsonData->topic) ) {
       throw new InvalidSourceException('No valid topic was found in sent JSON. Either it is not set, it is empty or it is not a string.');
     }
-    else {
+
+    // when a topic is set validate that it exists in Drupal
+    if (isset($this->jsonData->topic) && is_string($this->jsonData->topic)) {
       $topic_result = array_values(taxonomy_get_term_by_name($this->jsonData->topic));
       if (!$topic_result) {
         throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term in Drupal.');
