@@ -4,6 +4,9 @@
  * @file
  * Module for the dialogue import.
  */
+
+use Drupal\pw_userarchives\UserArchiveDatabase;
+
 include_once 'pw_dialogues.features.inc';
 
 /**
@@ -1104,23 +1107,15 @@ function pw_dialogues_party_ratios_by_parliament($term, $before_election) {
  *   The account version.
  */
 function pw_dialogues_recipient_user_revision($node) {
-  $recipient = NULL;
+
   $uid = $node->field_dialogue_recipient[LANGUAGE_NONE][0]['target_id'];
+  $parliament_name = pw_globals_parliament($node)->name;
   $before_election = $node->field_dialogue_before_election[LANGUAGE_NONE][0]['value'];
+  $user_role = $before_election ? 'candidate' : 'deputy';
 
-  $result = db_select('user_archive_cache', 'uac')
-    ->fields('uac', ['uid', 'vid'])
-    ->condition('uid', $uid)
-    ->condition('parliament_name', pw_globals_parliament($node)->name)
-    ->condition('user_role', $before_election ? 'candidate' : 'deputy')
-    ->execute()
-    ->fetchAssoc();
+  $dialogue_date = date('Y-m-d', $node->created);
 
-  if (!empty($result)) {
-    $recipient = user_revision_load($result['uid'], $result['vid']);
-  }
-
-  return $recipient;
+  return UserArchiveDatabase::getRevisionValidOnDate($uid, $parliament_name, $dialogue_date, $user_role);
 }
 
 /**
