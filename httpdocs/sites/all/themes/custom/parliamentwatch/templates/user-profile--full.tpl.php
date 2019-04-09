@@ -231,7 +231,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
               </div>
             </div>
             <h3 class="deputy__candidate_check__header__parliament"><?php print $user_profile['field_user_parliament'][0]['#markup']; ?></h3>
-            <span class="deputy__candidate_check__header__info" data-tooltip-placement="right" data-tooltip-content="<?php print t('At the Kandidaten-Check all candidates can take position on relevant topics and justify them. Make the candidate check and check which of your direct candidates are closest to you! To do this, click on <strong>to Kandidaten-Check</strong>'); ?>">
+            <span class="deputy__candidate_check__header__info" data-tooltip-placement="right" data-tooltip-content="<?php print t('At the Kandidaten-Check all candidates can take position on relevant topics and justify them. Make the candidate check and check which of your direct candidates are closest to you!'); ?>">
               <i class="icon icon-info"></i>
             </span>
           </div>
@@ -243,9 +243,11 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
           <div class="swiper-pagination"></div>
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-          <div class="deputy__candidate_check__footer">
-            <a href="https://kandidatencheck.abgeordnetenwatch.de/<?php print drupal_html_class(transliteration_get($user_profile['field_user_parliament'][0]['#markup'])); ?>" class="btn btn--mobile-block" target="_blank"><?php print t('Go to candidate check'); ?></a>
-          </div>
+          <?php if ($user_profile['field_user_parliament']['#items'][0]['tid'] != '30438'): ?>
+            <div class="deputy__candidate_check__footer">
+              <a href="https://kandidatencheck.abgeordnetenwatch.de/<?php print drupal_html_class(transliteration_get($user_profile['field_user_parliament'][0]['#markup'])); ?>" class="btn btn--mobile-block" target="_blank"><?php print t('Go to candidate check'); ?></a>
+            </div>
+          <?php endif; ?>
         </div>
       <?php endif; ?>
 
