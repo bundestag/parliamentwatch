@@ -6,6 +6,7 @@
  */
 
 use Drupal\pw_globals\PoliticianUserRevision;
+use Drupal\pw_globals\PWUser;
 use Drupal\pw_userarchives\UserArchiveEntry;
 
 include_once 'pw_globals.features.inc';
@@ -1407,6 +1408,20 @@ function pw_globals_helper_file($file_url) {
     $parts['host'] .
     implode('/', array_map('rawurlencode', $path_parts))
     ;
+}
+
+
+/**
+ * Implements hook_username_alter().
+ *
+ * Implemented to meet the needs from AWT-22 - print full names of authors
+ * in RSS feed
+ */
+function pw_globals_username_alter(&$name, $account) {
+  $pwUser = new PWUser($account->uid);
+  if ($pwUser->isColleague()) {
+    $name = $pwUser->getFullName();
+  }
 }
 
 
