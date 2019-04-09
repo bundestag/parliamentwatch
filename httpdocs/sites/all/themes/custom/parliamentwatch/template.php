@@ -1467,15 +1467,7 @@ function parliamentwatch_profile_search_summary($variables) {
 
   $output .= '</p>';
 
-  if (!empty(array_filter($variables['filters']))) {
-    $options = $link_options;
-    $options['html'] = TRUE;
-    $options['attributes']['class'] = ['btn'];
-    $output .= ' ' . l('<i class="icon icon-close"></i>' . t('Reset all filters'), current_path(), $options);
-  }
-
   $output .= '</div>';
-  $output .= '<p>' . t('<strong>Sorted by:</strong> number of answers') . '</p>';
   $output .= '</div>';
 
   return $output;
