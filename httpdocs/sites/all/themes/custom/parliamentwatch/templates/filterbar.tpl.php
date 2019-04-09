@@ -52,6 +52,22 @@
         </select>
       </div>
     </div>
+  <?php elseif ($form['#id'] === 'pw-vote-poll-filters'): ?>
+    <div class="filterbar__sorting filterbar__sorting--poll">
+      <div class="form__item form__item--horizontal">
+        <label for="poll_detail_table_sorting" class="form__item__label form__item__label--static"><?php print t('Sorted by:'); ?></label>
+        <select name="poll_detail_table_sorting" id="poll_detail_table_sorting" class="form__item__control form__item__control--special" data-width="100%">
+          <option value="politician_full_name_asc" data-sort-value="politician_full_name" data-sort-order="1"><?php print t('Name'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="politician_full_name_dsc" data-sort-value="politician_full_name" data-sort-order="0"><?php print t('Name'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="politician_political_faction_asc" data-sort-value="politician_political_faction" data-sort-order="1"><?php print t('Fraction'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="politician_political_faction_dsc" data-sort-value="politician_political_faction" data-sort-order="0"><?php print t('Fraction'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="politician_constituency_name_asc" data-sort-value="politician_constituency_name" data-sort-order="1"><?php print t('Wahlkreis'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="politician_constituency_name_dsc" data-sort-value="politician_constituency_name" data-sort-order="0"><?php print t('Wahlkreis'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="field_vote_display_asc" data-sort-value="field_vote_display" data-sort-order="1" selected><?php print t('Voting behavior'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="field_vote_display_dsc" data-sort-value="field_vote_display" data-sort-order="0"><?php print t('Voting behavior'); ?> (<?php print t('descending'); ?>)</option>
+        </select>
+      </div>
+    </div>
   <?php endif; ?>
 
   <div class="filterbar__primary">

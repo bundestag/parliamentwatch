@@ -49,21 +49,6 @@
   <div class="container">
     <?php print render($title_suffix) ?>
     <div class="poll_detail__table">
-      <div class="poll_detail__table__sorting">
-        <div class="form__item form__item--horizontal">
-          <label for="poll_detail_table_sorting" class="form__item__label">Sortieren nach</label>
-          <select name="poll_detail_table_sorting" id="poll_detail_table_sorting" class="form__item__control form__item__control--special">
-            <option value="politician_full_name_asc" data-sort-value="politician_full_name" data-sort-order="1">Name aufsteigend</option>
-            <option value="politician_full_name_dsc" data-sort-value="politician_full_name" data-sort-order="0">Name absteigend</option>
-            <option value="politician_political_faction_asc" data-sort-value="politician_political_faction" data-sort-order="1">Fraktion aufsteigend</option>
-            <option value="politician_political_faction_dsc" data-sort-value="politician_political_faction" data-sort-order="0">Fraktion absteigend</option>
-            <option value="politician_constituency_name_asc" data-sort-value="politician_constituency_name" data-sort-order="1">Wahlkreis aufsteigend</option>
-            <option value="politician_constituency_name_dsc" data-sort-value="politician_constituency_name" data-sort-order="0">Wahlkreis absteigend</option>
-            <option value="field_vote_display_asc" data-sort-value="field_vote_display" data-sort-order="1">Stimmverhalten aufsteigend</option>
-            <option value="field_vote_display_dsc" data-sort-value="field_vote_display" data-sort-order="0">Stimmverhalten absteigend</option>
-          </select>
-        </div>
-      </div>
       <?php print $content; ?>
     </div>
   </div>
