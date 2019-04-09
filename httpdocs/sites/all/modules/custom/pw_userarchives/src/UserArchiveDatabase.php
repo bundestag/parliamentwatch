@@ -104,4 +104,47 @@ class UserArchiveDatabase {
     }
   }
 
+
+  /**
+   * Get the user revision which is valid for a given user, parliament, date and
+   * role.
+   *
+   * For politicians who have more than one candidate or deputy profile maybe
+   * caused by party or fraction changes this function helps to get the revision
+   * which stores the valid data for a given date.
+   *
+   * @param int|string $uid
+   * The Drupal user uid
+   *
+   * @param string $parliament_name
+   * The parliament's term name
+   *
+   * @param string $date
+   *  The date on format 'Y-m-d'
+   *
+   * @param string $role
+   * Can be 'deputy' or 'candidate'. Optional, default is 'deputy'
+   *
+   * @return object|FALSE
+   * False if no user revision was loaded - the user revision otherwise
+   */
+  public static function getRevisionValidOnDate($uid, $parliament_name, $date, $role = 'deputy') {
+    $q = db_select('user_archive_cache', 'uac');
+    $q->fields('uac', ['vid'])
+      ->orderBy('uac.timestamp', 'DESC')
+      ->condition('uac.uid', $uid)
+      ->condition('uac.user_role', $role)
+      ->condition('uac.parliament_name', $parliament_name);
+    $or_user_joined = db_or();
+    $or_user_joined->condition('uac.user_joined', $date, '<=');
+    $or_user_joined->condition('uac.user_joined', NULL);
+    $q->condition($or_user_joined);
+    $or_user_retired = db_or();
+    $or_user_retired->condition('uac.user_retired', $date, '>');
+    $or_user_retired->condition('uac.user_retired', NULL);
+    $q->condition($or_user_retired);
+
+    return user_revision_load($uid, $q->execute()->fetchField());
+  }
+
 }
