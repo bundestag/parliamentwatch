@@ -41,14 +41,14 @@
       <div class="form__item form__item--horizontal">
         <label for="deputies_sorting" class="form__item__label form__item__label--static"><?php print t('Sorted by:'); ?></label>
         <select name="deputies_sorting" id="deputies_sorting" class="form__item__control form__item__control--special" data-width="100%">
-          <option value="answers_asc" data-sort-value="answers" data-sort-order="asc"><?php print t('Answers'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="answers_desc" data-sort-value="answers" data-sort-order="desc" selected><?php print t('Answers'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="questions_asc" data-sort-value="questions" data-sort-order="asc"><?php print t('Questions'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="questions_desc" data-sort-value="questions" data-sort-order="desc"><?php print t('Questions'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="party_asc" data-sort-value="party" data-sort-order="asc"><?php print t('Party'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="party_desc" data-sort-value="party" data-sort-order="desc"><?php print t('Party'); ?> (<?php print t('descending'); ?>)</option>
-          <option value="name_asc" data-sort-value="name" data-sort-order="asc"><?php print t('Name'); ?> (<?php print t('ascending'); ?>)</option>
-          <option value="name_desc" data-sort-value="name" data-sort-order="desc"><?php print t('Name'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="answers_asc"><?php print t('Answers'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="answers_desc" selected><?php print t('Answers'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="questions_asc"><?php print t('Questions'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="questions_desc"><?php print t('Questions'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="party_asc"><?php print t('Party'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="party_desc"><?php print t('Party'); ?> (<?php print t('descending'); ?>)</option>
+          <option value="name_asc"><?php print t('Name'); ?> (<?php print t('ascending'); ?>)</option>
+          <option value="name_desc"><?php print t('Name'); ?> (<?php print t('descending'); ?>)</option>
         </select>
       </div>
     </div>

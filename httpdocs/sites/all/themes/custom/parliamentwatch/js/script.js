@@ -2107,8 +2107,31 @@
 
       function loadResults($form) {
         var path = $form.attr('action');
-        var search = $form.serialize();
         var target = $form.data('ajax-target');
+        var searchArray = $form.serializeArray();
+
+        for (var i = 0; i < searchArray.length; i++) {
+          if (searchArray[i].name === 'deputies_sorting') {
+            var sortBy = searchArray[i].value.split('_')[0];
+            var sortOrder = searchArray[i].value.split('_')[1];
+
+            searchArray.push(
+              {
+                name: "sort_by",
+                value: sortBy
+              },
+              {
+                name: "sort_order",
+                value: sortOrder
+              }
+            );
+
+            searchArray.splice(i, 1);
+            break;
+          }
+        }
+
+        var search = $.param(searchArray);
         var url = path + '?' + search;
         var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
 
