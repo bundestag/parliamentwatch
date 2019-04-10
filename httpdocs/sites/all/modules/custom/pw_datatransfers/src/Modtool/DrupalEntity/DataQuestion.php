@@ -140,7 +140,7 @@ class DataQuestion extends DataEntityBase {
     $this->setDocuments($node);
 
     // set the topic
-    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
+    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic(), 'dialogue_topics'));
     if (!empty($topic)) {
       $node->field_dialogue_topic = [
         LANGUAGE_NONE => [

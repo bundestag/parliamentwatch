@@ -267,7 +267,7 @@ class ModtoolMessage {
 
     // when a topic is set validate that it exists in Drupal
     if (isset($this->jsonData->topic) && is_string($this->jsonData->topic)) {
-      $topic_result = array_values(taxonomy_get_term_by_name($this->jsonData->topic, 26));
+      $topic_result = array_values(taxonomy_get_term_by_name($this->jsonData->topic, 'dialogue_topics'));
       if (!$topic_result) {
         throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term of dialogue topics in Drupal.');
       }

@@ -123,7 +123,7 @@ class DataAnswer extends DataEntityBase {
       ]]];
     }
 
-    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
+    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic(), 'dialogue_topics'));
     if (!empty($topic)) {
       $comment->field_dialogue_topic = [
         LANGUAGE_NONE => [
