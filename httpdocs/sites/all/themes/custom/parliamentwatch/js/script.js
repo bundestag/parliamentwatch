@@ -915,11 +915,11 @@
             maximumSelectionLength: 1,
             multiple: true
           });
-        } else if ($(this).parents('.filterbar__secondary').length) {
+        } else if ($(this).parents('.filterbar').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
             placeholder: $(this).siblings('label').text(),
-            dropdownParent: $('.filterbar__secondary__inner')
+            dropdownParent: $(this).closest('div')
           });
         } else {
           $(this).select2({
@@ -933,7 +933,9 @@
           $('.dropdown__list').removeClass('dropdown__list--open');
         });
         $(this).on('select2:select', function (e) {
-          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          if ($(this).is('.form__item__control--special').length < 0) {
+            $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          }
         });
       });
     }
@@ -948,7 +950,7 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible');
+      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email');
 
       $inputs.each(function () {
         setFloatingLabel($(this), false);
@@ -2105,8 +2107,31 @@
 
       function loadResults($form) {
         var path = $form.attr('action');
-        var search = $form.serialize();
         var target = $form.data('ajax-target');
+        var searchArray = $form.serializeArray();
+
+        for (var i = 0; i < searchArray.length; i++) {
+          if (searchArray[i].name === 'deputies_sorting') {
+            var sortBy = searchArray[i].value.split('_')[0];
+            var sortOrder = searchArray[i].value.split('_')[1];
+
+            searchArray.push(
+              {
+                name: "sort_by",
+                value: sortBy
+              },
+              {
+                name: "sort_order",
+                value: sortOrder
+              }
+            );
+
+            searchArray.splice(i, 1);
+            break;
+          }
+        }
+
+        var search = $.param(searchArray);
         var url = path + '?' + search;
         var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
 

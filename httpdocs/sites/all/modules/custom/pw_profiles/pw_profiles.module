@@ -518,13 +518,32 @@ function pw_profiles_page($parliament_term, $role_name) {
     $q->keys(drupal_get_query_parameters()['keys']);
   }
 
-  $response = $q
-    ->sort('number_of_answers', 'DESC')
-    ->sort('number_of_questions', 'DESC')
-    ->sort('has_picture', 'DESC')
-    ->sort('field_user_lname')
-    ->sort('search_api_relevance')
-    ->range(pager_find_page() * $limit, $limit)
+  // set default sorting
+  if (!isset(drupal_get_query_parameters()['sort_by'])) {
+    $q
+      ->sort('number_of_answers', 'DESC')
+      ->sort('field_user_lname')
+      ->sort('has_picture', 'DESC');
+  }
+  else {
+    $sort_by = drupal_get_query_parameters()['sort_by'];
+    $sort_order = drupal_get_query_parameters()['sort_order'];
+    switch ($sort_by) {
+      case 'questions':
+        $q->sort('number_of_questions', $sort_order);
+        break;
+      case 'answers':
+        $q->sort('number_of_answers', $sort_order);
+        break;
+      case 'party':
+        $q->sort('field_user_party:name', $sort_order);
+        break;
+      case 'name':
+        $q->sort('field_user_lname', $sort_order);
+        break;
+    }
+  }
+  $response = $q->range(pager_find_page() * $limit, $limit)
     ->execute();
 
 

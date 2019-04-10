@@ -27,6 +27,7 @@
 }
 
 .filterbar__trigger,
+.filterbar__sorting,
 .filterbar__item {
   .btn {
     background: $white;
@@ -69,6 +70,16 @@
 
     .filterbar__heading {
       display: none;
+    }
+
+    .filterbar__sorting {
+      position: absolute;
+      right: $space;
+      top: ($space-large * 3) - 2px;
+
+      &--poll {
+        display: none;
+      }
     }
 
     .filterbar__primary {
@@ -327,11 +338,6 @@
 .filterbar--expanded {
   z-index: auto;
 
-  .filterbar__heading {
-    margin-bottom: $space;
-    @include clearfix;
-  }
-
   .filterbar__content {
     display: block;
     width: 100vw;
@@ -346,6 +352,17 @@
     background: $white;
     padding-top: $space-large;
     padding-bottom: $space-large;
+  }
+
+  .filterbar__heading {
+    margin-bottom: $space;
+    @include clearfix;
+  }
+
+  .filterbar__sorting {
+    padding: $space-small $space $space;
+    background-color: $beige;
+    border-top: 1px solid $darkBeige;
   }
 
   .filterbar__item {
@@ -530,12 +547,14 @@
 
   .filter-summary__content {
     @include grid-container();
-    margin-bottom: $space-xsmall-mobile;
+    padding-top: $space-xsmall-mobile;
+    padding-bottom: $space;
     border-bottom: 1px solid $darkBeige;
+    margin-bottom: $space-xsmall-mobile;
+    min-height: $space-large * 2;
 
     p {
       color: $darkGray;
-      padding-bottom: $space-xsmall;
       margin-bottom: 0;
       line-height: 1.6em;
       float: left;

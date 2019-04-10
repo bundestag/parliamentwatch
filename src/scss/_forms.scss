@@ -286,7 +286,7 @@ textarea.form__item__control {
     border-width: 2px;
 
     .select2-selection__rendered {
-      padding: ($space-xsmall - 2px) ($space-large - 2px) ($space-xsmall - 2px) ($space-xsmall - 2px);
+      padding: ($space-xsmall - 2px) ($space-large + $space-xsmall - 2px) ($space-xsmall - 2px) ($space-xsmall - 2px);
     }
   }
 }
@@ -295,7 +295,7 @@ textarea.form__item__control {
   padding: 0;
 }
 .select2-container .select2-selection--single .select2-selection__rendered {
-  padding: ($space-xsmall - 1px) ($space-large - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
+  padding: ($space-xsmall - 1px) ($space-large + $space-xsmall - 1px) ($space-xsmall - 1px) ($space-xsmall - 1px);
   line-height: $space;
   color: $darkGray;
   font-weight: 600;
@@ -351,17 +351,17 @@ textarea.form__item__control {
 /* Form-Item Horizontal */
 
 .form__item--horizontal {
-  padding-left: 120px;
-  position: relative;
-  .form__item__label {
-    width: 100px;
-    padding: $space-small-mobile 0;
-    position: absolute;
-    left: 0;
-  }
-  .form__item__control,
-  .select2 {
-    display: block;
+  @include breakpoint($breakpoint-m-min) {
+    display: flex;
+    align-items: center;
+
+    .form__item__label {
+      padding-right: $space-xsmall;
+      white-space: pre;
+
+      transform: scale(1) !important;
+      font-weight: 400 !important;
+    }
   }
 }
 

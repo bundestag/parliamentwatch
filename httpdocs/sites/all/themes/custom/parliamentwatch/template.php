@@ -1303,7 +1303,7 @@ function parliamentwatch_textarea($variables) {
 function parliamentwatch_select($variables) {
   $element = $variables['element'];
   element_set_attributes($element, ['id', 'name', 'size']);
-  _parliamentwatch_form_set_class($element, ['form__item__control', 'form__item__control--special']);
+  _parliamentwatch_form_set_class($element, ['form__item__control']);
 
   return '<select data-width="100%" ' . drupal_attributes($element['#attributes']) . '>' . form_select_options($element) . '</select>';
 }
@@ -1467,15 +1467,7 @@ function parliamentwatch_profile_search_summary($variables) {
 
   $output .= '</p>';
 
-  if (!empty(array_filter($variables['filters']))) {
-    $options = $link_options;
-    $options['html'] = TRUE;
-    $options['attributes']['class'] = ['btn'];
-    $output .= ' ' . l('<i class="icon icon-close"></i>' . t('Reset all filters'), current_path(), $options);
-  }
-
   $output .= '</div>';
-  $output .= '<p>' . t('<strong>Sorted by:</strong> number of answers') . '</p>';
   $output .= '</div>';
 
   return $output;
@@ -1602,7 +1594,13 @@ function parliamentwatch_tablesort_indicator($variables) {
  *   The class names to be added.
  */
 function _parliamentwatch_form_set_class(array &$element, array $name) {
-  $element['#attributes']['class'] = $name;
+  if (!empty($name)) {
+    if (!isset($element['#attributes']['class'])) {
+      $element['#attributes']['class'] = array();
+    }
+    $element['#attributes']['class'] = array_merge($element['#attributes']['class'], $name);
+  }
+
   // This function is invoked from form element theme functions, but the
   // rendered form element may not necessarily have been processed by
   // form_builder().

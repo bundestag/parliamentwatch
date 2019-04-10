@@ -935,13 +935,14 @@ function pw_search_api_default_search_api_index() {
           }
         },
         "search_api_transliteration" : {
-          "status" : 0,
+          "status" : 1,
           "weight" : "15",
           "settings" : { "fields" : {
               "field_user_fname" : true,
               "field_user_lname" : true,
               "search_api_aggregation_1" : true,
               "field_user_constituency:name" : true,
+              "field_user_party:name" : true,
               "field_user_constituency:field_constituency_area_codes:name" : true
             }
           }
