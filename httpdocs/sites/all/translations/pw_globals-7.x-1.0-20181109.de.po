@@ -2292,3 +2292,27 @@ msgstr "Veröffentlicht am !datetime"
 #: sites/all/modules/custom/pw_blog/pw_profiles.module:855
 msgid "List position top ten"
 msgstr "Top 10 Listenplatz"
+
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+msgid "Answers"
+msgstr "Antworten"
+
+msgid "ascending"
+msgstr "aufsteigend"
+
+msgid "descending"
+msgstr "absteigend"
+
+msgid "Party"
+msgstr "Partei"
+
+msgid "Contact person for press inquiries"
+msgstr "Ansprechpartnerin für Presseanfragen"
+
+msgid "Press spokeswoman"
+msgstr "Pressesprecherin"
+
+msgid "Phone"
+msgstr "Telefon"
