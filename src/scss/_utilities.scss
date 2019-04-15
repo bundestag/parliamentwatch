@@ -36,6 +36,11 @@ textarea {
   @include sr-only();
 }
 
+/* Clearfix */
+.clearfix {
+  @include clearfix;
+}
+
 /* Links with icons */
 
 .link-icon {
