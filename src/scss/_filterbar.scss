@@ -180,6 +180,7 @@
         border-right: 1px solid $darkBeige;
         z-index: 9;
         width: 310px;
+        max-width: calc(100vw - #{$space} * 2);
 
         .select2 {
           width: 210px !important;
