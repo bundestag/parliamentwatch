@@ -64,8 +64,12 @@
     margin-right: 0;
     border-bottom: 0;
     @include breakpoint($breakpoint-s-min) {
-      float: right;
+      clear: both;
       border-bottom: 1px solid $gray;
+    }
+    @include breakpoint($breakpoint-m-min) {
+      clear: none;
+      float: right;
     }
   }
 }
