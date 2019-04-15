@@ -128,7 +128,7 @@ M445.2,31H445l0.1-0.1V31z"/>
             <?php print l(t('Imprint'), 'node/7732', ['attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
           </li>
           <li class="footer__maincol__col__nav__item">
-            <?php print l(t('Donate'), 'node/10508', ['attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
+            <?php print l('Spenden', 'node/10508', ['attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
           </li>
           <li class="footer__maincol__col__nav__item">
             <?php print l(t('Jobs'), 'node/7748', ['attributes' => ['class' => ['footer__maincol__col__nav__item__link']]]); ?>
