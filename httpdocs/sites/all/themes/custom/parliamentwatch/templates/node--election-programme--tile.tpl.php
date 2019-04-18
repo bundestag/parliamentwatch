@@ -90,7 +90,7 @@
   </figure>
   <div class="tile__content mh-item">
     <h1 class="tile__title" <?php print $title_attributes; ?>><?php print $title; ?></h1>
-    <a href="<?php print file_create_url($field_pdf_download[0]['file']->uri); ?>" class="btn btn--mobile-block" target="_blank"><?php print t('Open election program') ?></a>
+    <a href="<?php print $programme_link; ?>" class="btn btn--mobile-block" target="_blank"><?php print t('Open election program') ?></a>
     <div class="election-manifesto__tag_cloud">
       <?php print render($content['body']); ?>
     </div>

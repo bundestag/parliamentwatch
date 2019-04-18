@@ -287,6 +287,19 @@ function parliamentwatch_preprocess_menu_block_wrapper(&$variables) {
 function parliamentwatch_preprocess_node(&$variables) {
   $node = $variables['node'];
 
+  // define the election programme link. Can be set as download
+  // or external link within the node form
+  if ($variables['type'] == 'election_programme') {
+    $variables['programme_link'] = '';
+
+    if (!empty($node->field_pdf_download) && isset($node->field_pdf_download["und"][0]["file"])) {
+      $variables['programme_link'] = file_create_url($node->field_pdf_download[0]['file']->uri);
+    }
+    else if (!empty($node->field_election_programme_open) && isset($node->field_election_programme_open["und"][0]["url"])) {
+      $variables['programme_link'] = $node->field_election_programme_open["und"][0]["url"];
+    }
+  }
+
   $exclude_classes = [
     'node',
     'node-sticky',
