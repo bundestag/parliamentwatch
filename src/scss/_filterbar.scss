@@ -554,6 +554,10 @@
     margin-bottom: $space-xsmall-mobile;
     min-height: $space-large * 2;
 
+    @include breakpoint($breakpoint-m-min) {
+      padding-right: 400px;
+    }
+
     p {
       color: $darkGray;
       margin-bottom: 0;
