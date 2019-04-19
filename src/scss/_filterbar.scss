@@ -567,7 +567,7 @@
       & > span {
         display: none;
 
-        @include breakpoint($breakpoint-s-min) {
+        @include breakpoint($breakpoint-m-min) {
           display: inline;
         }
       }
@@ -600,7 +600,7 @@
       float: none;
       padding-bottom: $space-xsmall;
 
-      @include breakpoint($breakpoint-s-min) {
+      @include breakpoint($breakpoint-m-min) {
         display: none;
       }
     }
