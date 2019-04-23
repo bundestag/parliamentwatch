@@ -308,7 +308,7 @@ class ModtoolMessage {
   public function loadDocument($document_url) {
     $opts = array('http' =>
       array(
-        'header' => "Authorization: Basic ".base64_encode("test@test.de:test")
+        'header' => "Authorization: Basic ". variable_get('modtool_api_credentials', FALSE)
       )
     );
     $context  = stream_context_create($opts);
