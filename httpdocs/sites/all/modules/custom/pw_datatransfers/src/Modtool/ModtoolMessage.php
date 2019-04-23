@@ -251,8 +251,7 @@ class ModtoolMessage {
         if (!in_array($file_pathinfo['extension'], $allowed_extensions)) {
           throw new InvalidSourceException('The file '. $document_url .' has not an allowed file extension. Allowed are the following extensions: '. implode(', ',$allowed_extensions));
         }
-
-        $file_temp = file_get_contents(pw_globals_helper_file($document_url));
+        $file_temp = $this->loadDocument($document_url);
         if (!$file_temp) {
           throw new InvalidSourceException('It was not possible to load the file '. $document_url);
         }
