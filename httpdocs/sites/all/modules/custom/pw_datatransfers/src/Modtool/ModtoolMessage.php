@@ -297,4 +297,22 @@ class ModtoolMessage {
     $d = DateTime::createFromFormat($format, $date_string);
     return ($d && $d->format($format) === $date_string);
   }
+
+
+  /**
+   * Load the document/ attachment file of a message from Modtool server
+   *
+   * @param string $document_url
+   *
+   * @return false|string
+   */
+  public function loadDocument($document_url) {
+    $opts = array('http' =>
+      array(
+        'header' => "Authorization: Basic ".base64_encode("test@test.de:test")
+      )
+    );
+    $context  = stream_context_create($opts);
+    return file_get_contents(pw_globals_helper_file($document_url), FALSE, $context);
+  }
 }
