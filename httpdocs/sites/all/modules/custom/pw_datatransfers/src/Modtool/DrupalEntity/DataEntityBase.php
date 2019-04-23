@@ -89,7 +89,7 @@ abstract class DataEntityBase implements DataEntityInterface {
     foreach ($this->modtoolMessage->getDocuments() as $document_url) {
       $file_pathinfo = pathinfo($document_url);
       if (in_array($file_pathinfo['extension'], $allowed_extensions)) {
-        $file_temp = file_get_contents(pw_globals_helper_file($document_url));
+        $file_temp = $this->modtoolMessage->loadDocument($document_url);
         $directory = 'private://'. $info["settings"]["file_directory"];
         $directory_prepared = file_prepare_directory($directory, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
