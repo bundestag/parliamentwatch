@@ -554,6 +554,10 @@
     margin-bottom: $space-xsmall-mobile;
     min-height: $space-large * 2;
 
+    @include breakpoint($breakpoint-m-min) {
+      padding-right: 400px;
+    }
+
     p {
       color: $darkGray;
       margin-bottom: 0;
@@ -563,7 +567,7 @@
       & > span {
         display: none;
 
-        @include breakpoint($breakpoint-s-min) {
+        @include breakpoint($breakpoint-m-min) {
           display: inline;
         }
       }
@@ -596,7 +600,7 @@
       float: none;
       padding-bottom: $space-xsmall;
 
-      @include breakpoint($breakpoint-s-min) {
+      @include breakpoint($breakpoint-m-min) {
         display: none;
       }
     }
