@@ -190,7 +190,10 @@ class DataQuestion extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalQuestionId() {
-    return $this->getEntity()->nid;
+    if ($this->getEntity() && isset($this->getEntity()->nid)) {
+      return $this->getEntity()->nid;
+    }
+    return 0;
   }
 
 
