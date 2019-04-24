@@ -345,11 +345,11 @@ function pw_api_user_to_array($user, $subsets = array()) {
           // add sidejob date range
           $date_range = pw_sidejobs_date($node);
           if (count($date_range) == 2) {
-            $profile['sidejobs']['sidejob_' . $node->nid]['income']['date']['start'] = $date_range[0]->format('Y-m-d');
-            $profile['sidejobs']['sidejob_' . $node->nid]['income']['date']['end'] = $date_range[1]->format('Y-m-d');
+            $profile['sidejobs']['sidejob_' . $node->nid]['date']['start'] = $date_range[0]->format('Y-m-d');
+            $profile['sidejobs']['sidejob_' . $node->nid]['date']['end'] = $date_range[1]->format('Y-m-d');
           }
           else if(count($date_range) == 1) {
-            $profile['sidejobs']['sidejob_' . $node->nid]['income']['date'] = $date_range[0]->format('Y-m-d');
+            $profile['sidejobs']['sidejob_' . $node->nid]['date'] = $date_range[0]->format('Y-m-d');
           }
         }
       }
