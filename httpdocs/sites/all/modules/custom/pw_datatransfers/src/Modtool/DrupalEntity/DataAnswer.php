@@ -88,7 +88,7 @@ class DataAnswer extends DataEntityBase {
     if (empty($sender_uid)) {
       throw new DatatransfersException('No user account found for the sender of the answer.');
     }
-    $comment->uid = $sender_uid;
+    $comment->uid = $sender_uid[0];
 
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
       'value' => $modtoolMessage->getText(),
