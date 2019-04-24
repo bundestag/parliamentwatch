@@ -85,6 +85,11 @@
       <?php print render($content['field_dialogue_documents']); ?>
     </div>
   <?php endif; ?>
+  <?php if (!empty($content['field_dialogue_attachments'])): ?>
+    <div class="question__attachement">
+      <?php print render($content['field_dialogue_attachments']); ?>
+    </div>
+  <?php endif; ?>
   <?php if (!empty($content['field_dialogue_annotation'])): ?>
     <div class="question__annotation">
       <h3><?php print t("Editor's note") ?></h3>

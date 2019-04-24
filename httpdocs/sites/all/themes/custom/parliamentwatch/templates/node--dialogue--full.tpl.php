@@ -105,6 +105,11 @@
       <div class="question__question__title"><?php print render($content['body']); ?></div>
       <?php print render($title_suffix); ?>
       <p class="question__question__author"><?php print t('By'); ?>: <span class="robots-nocontent"><?php print render($content['field_dialogue_sender_name']); ?></span></p>
+      <?php if (!empty($content['field_dialogue_attachments'])): ?>
+        <div class="question__attachment">
+          <?php print render($content['field_dialogue_attachments']); ?>
+        </div>
+      <?php endif; ?>
       <?php if (!empty($content['field_dialogue_annotation'])): ?>
         <div class="question__annotation">
           <h3><?php print t("Editor's note") ?></h3>

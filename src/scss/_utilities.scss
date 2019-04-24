@@ -36,6 +36,11 @@ textarea {
   @include sr-only();
 }
 
+/* Clearfix */
+.clearfix {
+  @include clearfix;
+}
+
 /* Links with icons */
 
 .link-icon {
@@ -758,6 +763,52 @@ $transition-length: .3s;
     &:after {
       transform: rotate3d(0,0,1,-45deg);
     }
+}
+
+/* Attachments */
+
+.attachment {
+  @include grid-container();
+  padding-top: $space;
+  @include breakpoint($breakpoint-s-min) {
+    padding-top: $space-large;
+  }
+}
+.attachment__item {
+  background: $brightGray;
+  padding: $space-xsmall $space-small $space-xsmall ($space-large + $space);
+  display: block;
+  margin-bottom: $space;
+  position: relative;
+  @include breakpoint($breakpoint-s-min) {
+    float: left;
+    margin-right: $space;
+  }
+  &:before {
+    content: '';
+    font-family: awfont;
+    position: absolute;
+    left: $space-small;
+    top: 50%;
+    transform: translate3d(0,-50%,0);
+    font-size: 18px;
+  }
+}
+.attachment__item__text {
+  border-left: 1px solid $gray;
+  padding-left: $space-small;
+  display: block;
+  color: $darkGray;
+  font-weight: bold;
+}
+.attachment__item__text__suffix {
+  text-transform: uppercase;
+}
+.attachment__item__text__filesize {
+  display: block;
+  color: $gray;
+  font-size: 13px;
+  margin-top: 3px;
 }
 
 /* Animations */

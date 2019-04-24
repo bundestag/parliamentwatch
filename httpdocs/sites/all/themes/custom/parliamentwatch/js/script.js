@@ -915,11 +915,11 @@
             maximumSelectionLength: 1,
             multiple: true
           });
-        } else if ($(this).parents('.filterbar__secondary').length) {
+        } else if ($(this).parents('.filterbar').length) {
           $(this).select2({
             minimumResultsForSearch: 20,
             placeholder: $(this).siblings('label').text(),
-            dropdownParent: $('.filterbar__secondary__inner')
+            dropdownParent: $(this).closest('div')
           });
         } else {
           $(this).select2({
@@ -933,7 +933,9 @@
           $('.dropdown__list').removeClass('dropdown__list--open');
         });
         $(this).on('select2:select', function (e) {
-          $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          if ($(this).is('.form__item__control--special').length < 0) {
+            $(this).siblings('.form__item__label:not(.sr-only)').addClass('form__item__label--floating');
+          }
         });
       });
     }
@@ -948,7 +950,7 @@
    */
   Drupal.behaviors.floatingLabels = {
     attach: function (context) {
-      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email, .select2-hidden-accessible');
+      var $inputs = $('.form__item__control:not(.form__item__control--special), .form-email');
 
       $inputs.each(function () {
         setFloatingLabel($(this), false);
@@ -1796,8 +1798,8 @@
   Drupal.behaviors.filterBar = {
     attach: function () {
       var $filterbar = $('.filterbar');
+      var $filterBarInner = $('.filterbar__content');
       var $filterBarSwiper = $('.filterbar__secondary');
-      var $filterBarInner = $('.filterbar .filterbar__inner');
       var filterBarActive = false;
 
       function filterBarCreate() {
@@ -1851,25 +1853,12 @@
       }
 
       function filterBarSwiperSize() {
+        var filterBarWidth = $filterBarInner.outerWidth();
         var filterBarOffsetRight = $('.filterbar__view_options').outerWidth();
         var filterBarOffsetLeft = $('.filterbar__primary').outerWidth();
-        var filterBarOffsetRightValue = filterBarOffsetRight;
-        var filterBarOffsetLeftValue = filterBarOffsetLeft;
 
-        windowWidth = window.innerWidth;
-
-        if (windowWidth >= breakpointMMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 20;
-        }
-        else if (windowWidth >= breakpointSMin) {
-          filterBarOffsetRightValue = filterBarOffsetRight + 15;
-        }
-        else {
-          filterBarOffsetRightValue = 0;
-        }
-        $filterBarInner
-          .css('padding-right', filterBarOffsetRightValue + 'px')
-          .css('padding-left', filterBarOffsetLeftValue + 'px');
+        $filterBarSwiper
+          .css('width', filterBarWidth - filterBarOffsetRight - filterBarOffsetLeft + 'px');
       }
 
       if (windowWidth >= breakpointMMin) {
@@ -2115,12 +2104,34 @@
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
       $('.tile-wrapper').addClass('loading-overlay');
-      hideIfEmpty();
 
       function loadResults($form) {
         var path = $form.attr('action');
-        var search = $form.serialize();
         var target = $form.data('ajax-target');
+        var searchArray = $form.serializeArray();
+
+        for (var i = 0; i < searchArray.length; i++) {
+          if (searchArray[i].name === 'deputies_sorting') {
+            var sortBy = searchArray[i].value.split('_')[0];
+            var sortOrder = searchArray[i].value.split('_')[1];
+
+            searchArray.push(
+              {
+                name: "sort_by",
+                value: sortBy
+              },
+              {
+                name: "sort_order",
+                value: sortOrder
+              }
+            );
+
+            searchArray.splice(i, 1);
+            break;
+          }
+        }
+
+        var search = $.param(searchArray);
         var url = path + '?' + search;
         var ajaxUrl = search ? url + '&ajax=' : '?ajax=';
 
@@ -2129,37 +2140,25 @@
         $(target).load(ajaxUrl + ' ' + target + ' > *', function () {
           Drupal.attachBehaviors(target, {url: url});
           removeLoadingAnimation($('.tile-wrapper'));
-          hideIfEmpty();
         });
       }
 
-      function hideIfEmpty() {
-        if (!$('.filterbar__secondary .filterbar__item').length) {
-          $('.filterbar').addClass('filterbar--empty');
-          $('.filterbar__trigger').hide();
-        } else {
-          $('.filterbar').removeClass('filterbar--empty');
-          $('.filterbar__trigger').show();
-        }
-      }
-
       $('form[data-ajax-target] .form__item__control').change(function (event) {
-        if ($(this).is('#edit-keys')) {
-          window.location = '?keys=' + $(this).val();
-        } else {
-          if (!$(this).parents('.filterbar--expanded').length) {
-            var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
-            if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
-              if (dateInputs[0].value === '' || dateInputs[1].value === '') {
-                return;
-              }
-            }
-            loadResults($(this).parents('form'));
-          } else {
-            $('[data-filterbar-submit]').one('click', function (event) {
-              loadResults($(this).parents('form'));
-            });
+        if (!$(this).parents('.filterbar--expanded').length) {
+          if ($(this).is('#edit-keys')) {
+            window.location = '?keys=' + $(this).val();
           }
+          var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
+          if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
+            if (dateInputs[0].value === '' || dateInputs[1].value === '') {
+              return;
+            }
+          }
+          loadResults($(this).parents('form'));
+        } else {
+          $('[data-filterbar-submit]').one('click', function (event) {
+            loadResults($(this).parents('form'));
+          });
         }
       });
 

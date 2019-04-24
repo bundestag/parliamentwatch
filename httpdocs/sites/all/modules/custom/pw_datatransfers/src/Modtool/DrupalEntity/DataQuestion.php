@@ -93,8 +93,8 @@ class DataQuestion extends DataEntityBase {
     $node->body = [
       LANGUAGE_NONE => [
         0 => [
-          'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
-          'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
+          'value' => $modtoolMessage->getText(),
+          'summary' => $modtoolMessage->getSummary(),
           'format' => 'filtered_html',
         ],
       ],
@@ -137,23 +137,10 @@ class DataQuestion extends DataEntityBase {
     ];
 
     // add documents
-    // @todo - documents import implementation
-    $node->field_dialogue_documents[LANGUAGE_NONE] = [];
-    foreach ($modtoolMessage->getDocuments() as $document) {
-      // $node->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-    }
+    $this->setDocuments($node);
 
-    // add tags
-    // @todo - tags import implementation
-    $node->field_dialogue_tags[LANGUAGE_NONE] = [];
-    foreach ($modtoolMessage->getTags() as $tag) {
-//      $term = array_values(taxonomy_get_term_by_name(trim($tag->textContent), 'dialogue_tags'));
-//      if (!empty($term)) {
-//        $node->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-//      }
-    };
-
-    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic()));
+    // set the topic
+    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic(), 'dialogue_topics'));
     if (!empty($topic)) {
       $node->field_dialogue_topic = [
         LANGUAGE_NONE => [
@@ -162,9 +149,6 @@ class DataQuestion extends DataEntityBase {
           ],
         ],
       ];
-    }
-    else {
-      throw new DatatransfersException('The given topic was not found in Drupal.');
     }
 
     // add annotation
@@ -206,7 +190,10 @@ class DataQuestion extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalQuestionId() {
-    return $this->getEntity()->nid;
+    if ($this->getEntity() && isset($this->getEntity()->nid)) {
+      return $this->getEntity()->nid;
+    }
+    return 0;
   }
 
 
