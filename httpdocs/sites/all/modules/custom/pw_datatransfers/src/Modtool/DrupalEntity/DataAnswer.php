@@ -143,7 +143,10 @@ class DataAnswer extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalQuestionId() {
-    return $this->getEntity()->nid;
+    if ($this->getEntity() && isset($this->getEntity()->nid)) {
+      return $this->getEntity()->nid;
+    }
+    return 0;
   }
 
 
@@ -151,7 +154,10 @@ class DataAnswer extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalAnswerId() {
-    return $this->getEntity()->cid;
+    if ($this->getEntity() && isset($this->getEntity()->cid)) {
+      return $this->getEntity()->cid;
+    }
+    return 0;
   }
 
 
