@@ -117,6 +117,129 @@ function pw_dialogues_field_default_fields() {
     ),
   );
 
+  // Exported field: 'comment-comment_node_dialogue-field_dialogue_attachments'.
+  $fields['comment-comment_node_dialogue-field_dialogue_attachments'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_dialogue_attachments',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'private',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'comment_node_dialogue',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'file_default',
+          'weight' => 14,
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'module' => 'file_entity',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+            'text' => '[file:extension]',
+          ),
+          'type' => 'file_download_link',
+          'weight' => '6',
+        ),
+      ),
+      'entity_type' => 'comment',
+      'field_name' => 'field_dialogue_attachments',
+      'label' => 'Attachments',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => 'dialogue-attachments',
+        'file_extensions' => 'gif jpg jpeg png doc docx pdf xls xlsx ppt pptx zip',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'filefield_sources' => array(
+            'filefield_sources' => array(
+              'attach' => 0,
+              'clipboard' => 0,
+              'reference' => 0,
+              'remote' => 0,
+              'upload' => 'upload',
+            ),
+            'source_attach' => array(
+              'absolute' => '0',
+              'attach_mode' => 'move',
+              'path' => 'file_attach',
+            ),
+            'source_imce' => array(
+              'imce_mode' => 0,
+            ),
+            'source_reference' => array(
+              'autocomplete' => '0',
+              'search_all_fields' => '0',
+            ),
+          ),
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '8',
+      ),
+    ),
+  );
+
   // Exported field: 'comment-comment_node_dialogue-field_dialogue_comment_body'.
   $fields['comment-comment_node_dialogue-field_dialogue_comment_body'] = array(
     'field_config' => array(
@@ -483,7 +606,7 @@ function pw_dialogues_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '11',
+          'weight' => '12',
         ),
         'tile' => array(
           'label' => 'above',
@@ -664,7 +787,7 @@ function pw_dialogues_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '12',
+          'weight' => '13',
         ),
         'tile' => array(
           'label' => 'above',
@@ -743,7 +866,7 @@ function pw_dialogues_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '10',
+          'weight' => '11',
         ),
         'tile' => array(
           'label' => 'above',
@@ -832,7 +955,7 @@ function pw_dialogues_field_default_fields() {
           'label' => 'hidden',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '7',
+          'weight' => '8',
         ),
         'tile' => array(
           'label' => 'hidden',
@@ -1230,7 +1353,7 @@ $display_output = rtrim($display_output);',
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '9',
+          'weight' => '10',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1320,7 +1443,7 @@ $display_output = rtrim($display_output);',
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '8',
+          'weight' => '9',
         ),
         'tile' => array(
           'label' => 'above',
@@ -1470,7 +1593,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'text_default',
-          'weight' => '1',
+          'weight' => '0',
         ),
         'print' => array(
           'label' => 'hidden',
@@ -1657,7 +1780,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'text_default',
-          'weight' => '9',
+          'weight' => '8',
         ),
         'print' => array(
           'label' => 'above',
@@ -1709,6 +1832,129 @@ $display_output = rtrim($display_output);',
         ),
         'type' => 'text_textarea_with_summary',
         'weight' => '13',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-dialogue-field_dialogue_attachments'.
+  $fields['node-dialogue-field_dialogue_attachments'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_dialogue_attachments',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'private',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'dialogue',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'file_default',
+          'weight' => 16,
+        ),
+        'full' => array(
+          'label' => 'hidden',
+          'module' => 'file_entity',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+            'text' => '[file:name] herunterladen',
+          ),
+          'type' => 'file_download_link',
+          'weight' => '13',
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_dialogue_attachments',
+      'label' => 'Attachments',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => 'dialogue-attachments',
+        'file_extensions' => 'gif jpg jpeg png doc docx pdf xls xlsx ppt pptx zip',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'filefield_sources' => array(
+            'filefield_sources' => array(
+              'attach' => 0,
+              'clipboard' => 0,
+              'reference' => 0,
+              'remote' => 0,
+              'upload' => 'upload',
+            ),
+            'source_attach' => array(
+              'absolute' => '0',
+              'attach_mode' => 'move',
+              'path' => 'file_attach',
+            ),
+            'source_imce' => array(
+              'imce_mode' => 0,
+            ),
+            'source_reference' => array(
+              'autocomplete' => '0',
+              'search_all_fields' => '0',
+            ),
+          ),
+          'progress_indicator' => 'throbber',
+        ),
+        'type' => 'file_generic',
+        'weight' => '9',
       ),
     ),
   );
@@ -1800,7 +2046,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'list_default',
-          'weight' => '14',
+          'weight' => '12',
         ),
         'print' => array(
           'label' => 'above',
@@ -1942,7 +2188,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'link_default',
-          'weight' => '4',
+          'weight' => '3',
         ),
         'print' => array(
           'label' => 'above',
@@ -2090,7 +2336,7 @@ $display_output = rtrim($display_output);',
             'thousand_separator' => '',
           ),
           'type' => 'number_integer',
-          'weight' => '7',
+          'weight' => '6',
         ),
         'print' => array(
           'label' => 'above',
@@ -2223,7 +2469,7 @@ $display_output = rtrim($display_output);',
             'thousand_separator' => '',
           ),
           'type' => 'number_integer',
-          'weight' => '8',
+          'weight' => '7',
         ),
         'print' => array(
           'label' => 'above',
@@ -2362,7 +2608,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'list_default',
-          'weight' => '6',
+          'weight' => '5',
         ),
         'print' => array(
           'label' => 'above',
@@ -2526,7 +2772,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'entityreference_label',
-          'weight' => '5',
+          'weight' => '4',
         ),
         'print' => array(
           'label' => 'above',
@@ -2708,7 +2954,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'text_default',
-          'weight' => '10',
+          'weight' => '9',
         ),
         'print' => array(
           'label' => 'above',
@@ -2917,7 +3163,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '3',
+          'weight' => '2',
         ),
         'print' => array(
           'label' => 'above',
@@ -3089,7 +3335,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '2',
+          'weight' => '1',
         ),
         'print' => array(
           'label' => 'above',
@@ -3284,7 +3530,7 @@ $display_output = rtrim($display_output);',
             ),
           ),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '13',
+          'weight' => '11',
         ),
         'print' => array(
           'label' => 'above',
@@ -3419,7 +3665,7 @@ $display_output = rtrim($display_output);',
             'thousand_separator' => '',
           ),
           'type' => 'number_integer',
-          'weight' => '12',
+          'weight' => '10',
         ),
         'print' => array(
           'label' => 'above',
@@ -3564,6 +3810,7 @@ $display_output = rtrim($display_output);',
   // Translatables
   // Included for use with string extractors like potx.
   t('Annotation');
+  t('Attachments');
   t('Before Election Date');
   t('Body');
   t('Comment Body');

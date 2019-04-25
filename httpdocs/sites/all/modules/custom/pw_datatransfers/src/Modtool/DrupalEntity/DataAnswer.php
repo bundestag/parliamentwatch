@@ -30,6 +30,8 @@ class DataAnswer extends DataEntityBase {
       $answer->nid = $question->nid;
       $answer->subject = 'Antwort von ' .$this->modtoolMessage->getSenderName();
       $answer->uid = 0;
+      $answer->pid = 0;
+      $answer->cid = 0;
       $this->isNew = TRUE;
       return $answer;
     }
@@ -86,11 +88,11 @@ class DataAnswer extends DataEntityBase {
     if (empty($sender_uid)) {
       throw new DatatransfersException('No user account found for the sender of the answer.');
     }
-    $comment->uid = $sender_uid;
+    $comment->uid = $sender_uid[0];
 
     $comment->field_dialogue_comment_body = [LANGUAGE_NONE => [0 => [
-      'value' => htmlspecialchars(json_decode($modtoolMessage->getText())),
-      'summary' => htmlspecialchars(json_decode($modtoolMessage->getSummary())),
+      'value' => $modtoolMessage->getText(),
+      'summary' => $modtoolMessage->getSummary(),
       'format' => 'filtered_html',
     ]]];
 
@@ -114,20 +116,7 @@ class DataAnswer extends DataEntityBase {
       'value' => (int) $modtoolMessage->getIsStandardAnswer(),
     ]]];
 
-    // @todo - documents import implementieren
-    $comment->field_dialogue_documents[LANGUAGE_NONE] = [];
-//    foreach ($modtoolMessage->getDocuments() as $item) {
-//      $comment->field_dialogue_documents[LANGUAGE_NONE][] = ['url' => trim($item->textContent)];
-//    }
-
-    // @todo - tags import implementieren
-    $comment->field_dialogue_tags[LANGUAGE_NONE] = [];
-//    foreach ($modtoolMessage->getTags() as $item) {
-//      $term = array_values(taxonomy_get_term_by_name(trim($item->textContent), 'dialogue_tags'));
-//      if (!empty($term)) {
-//        $comment->field_dialogue_tags[LANGUAGE_NONE][] = ['tid' => $term[0]->tid];
-//      }
-//    };
+    $this->setDocuments($comment);
 
     $annotation = $modtoolMessage->getAnnotation();
     if (!empty($annotation)) {
@@ -136,14 +125,16 @@ class DataAnswer extends DataEntityBase {
       ]]];
     }
 
-
-    //@todo - check if topics should really be set for comments separated
-//    $topic = array_values(taxonomy_get_term_by_name($xpath->evaluate('string(topic)', $answer_from_modtool), 'dialogue_topics'));
-//    if (!empty($topic)) {
-//      $comment->field_dialogue_topic = [LANGUAGE_NONE => [0 => [
-//        'tid' => $topic[0]->tid,
-//      ]]];
-//    }
+    $topic = array_values(taxonomy_get_term_by_name($modtoolMessage->getTopic(), 'dialogue_topics'));
+    if (!empty($topic)) {
+      $comment->field_dialogue_topic = [
+        LANGUAGE_NONE => [
+          0 => [
+            'tid' => $topic[0]->tid,
+          ],
+        ],
+      ];
+    }
   }
 
 
@@ -152,7 +143,10 @@ class DataAnswer extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalQuestionId() {
-    return $this->getEntity()->nid;
+    if ($this->getEntity() && isset($this->getEntity()->nid)) {
+      return $this->getEntity()->nid;
+    }
+    return 0;
   }
 
 
@@ -160,7 +154,10 @@ class DataAnswer extends DataEntityBase {
    * @inheritdoc
    */
   public function getDrupalAnswerId() {
-    return $this->getEntity()->cid;
+    if ($this->getEntity() && isset($this->getEntity()->cid)) {
+      return $this->getEntity()->cid;
+    }
+    return 0;
   }
 
 

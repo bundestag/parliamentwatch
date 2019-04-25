@@ -37,10 +37,6 @@
     <?php foreach (array_slice($widgets, 0, 1) as $id => $widget): ?>
       <div class="filterbar__primary">
         <div id="<?php print $widget->id; ?>-wrapper" class="views-exposed-widget views-widget-<?php print $id; ?>">
-          <div class="filterbar__item filterbar__item--label">
-            <i class="icon icon-investigation"></i>
-            <?php print t('Filter'); ?>
-          </div>
           <div class="filterbar__item filterbar__item--input">
             <?php if (!empty($widget->operator)): ?>
               <div class="views-operator">

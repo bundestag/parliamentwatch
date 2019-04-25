@@ -82,6 +82,69 @@
   color: $gray;
 }
 
+/* Press Contact */
+
+.press-contact {
+  position: relative;
+  background-color: $beige;
+  margin-left: $space;
+  margin-right: $space;
+  padding: $space;
+
+  @include breakpoint($breakpoint-s-min) {
+    height: 150px;
+    border-top-left-radius: 75px;
+    border-bottom-left-radius: 75px;
+    padding: $space-large;
+  }
+
+  &__image {
+    margin-bottom: $space;
+    @include image-circle(160px, 160px);
+
+    @include breakpoint($breakpoint-s-min) {
+      position: absolute;
+      left: -$space-xsmall-mobile;
+      top: -$space-xsmall-mobile;
+      margin-bottom: 0;
+    }
+
+    img {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  &__content {
+    @include breakpoint($breakpoint-s-min) {
+      padding-left: 150px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 0;
+  }
+
+  &__details {
+    @include clearfix;
+  }
+
+  &__detail {
+    @include breakpoint($breakpoint-xs-min) {
+      float: left;
+
+      &:not(:last-child) {
+        margin-right: $space;
+      }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
 /* Press-Links */
 
 .press-links {

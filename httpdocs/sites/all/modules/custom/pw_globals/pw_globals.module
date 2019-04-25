@@ -6,6 +6,7 @@
  */
 
 use Drupal\pw_globals\PoliticianUserRevision;
+use Drupal\pw_globals\PWUser;
 use Drupal\pw_userarchives\UserArchiveEntry;
 
 include_once 'pw_globals.features.inc';
@@ -1382,6 +1383,44 @@ function pw_globals_custom_theme() {
   $current_path = current_path();
   if (drupal_match_path($current_path, 'node/10446') && isset(drupal_get_query_parameters()['recipient']) && is_numeric(drupal_get_query_parameters()['recipient'])) {
     return $blank_theme_name;
+  }
+}
+
+
+/**
+ * Helper to receive an escaped URL to a file which may have spaces in it's
+ * name. It just escapes the parts of an URL which needs to be escaped.
+ *
+ * @see https://stackoverflow.com/a/8260942
+ *
+ * @param string $file_url
+ * A full URL including http to a file
+ *
+ * @return string
+ * The URL with escaped folders and file name
+ */
+function pw_globals_helper_file($file_url) {
+  $parts = parse_url($file_url);
+  $path_parts = array_map('rawurldecode', explode('/', $parts['path']));
+
+  return
+    $parts['scheme'] . '://' .
+    $parts['host'] .
+    implode('/', array_map('rawurlencode', $path_parts))
+    ;
+}
+
+
+/**
+ * Implements hook_username_alter().
+ *
+ * Implemented to meet the needs from AWT-22 - print full names of authors
+ * in RSS feed
+ */
+function pw_globals_username_alter(&$name, $account) {
+  $pwUser = new PWUser($account->uid);
+  if ($pwUser->isColleague()) {
+    $name = $pwUser->getFullName();
   }
 }
 

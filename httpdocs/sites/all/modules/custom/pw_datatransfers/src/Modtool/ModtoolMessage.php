@@ -116,7 +116,7 @@ class ModtoolMessage {
   }
 
   public function getTopic() {
-    return $this->getData('message_topic');
+    return $this->getData('topic');
   }
 
   public function getParliament() {
@@ -124,7 +124,7 @@ class ModtoolMessage {
   }
 
   public function getSummary() {
-    return $this->getData('summary');
+    return $this->getData('keyworded_text');
   }
 
   public function getDocuments() {
@@ -139,16 +139,6 @@ class ModtoolMessage {
 
   public function getAnnotation() {
     return $this->getData('annotation_text');
-  }
-
-  public function getTags() {
-    $tags = $this->getData('tags');
-
-    if ($tags === NULL) {
-      $tags = [];
-    }
-
-    return $tags;
   }
 
 
@@ -206,14 +196,6 @@ class ModtoolMessage {
       throw new InvalidSourceException('No valid text was found in sent JSON.');
     }
 
-    // validate summary
-    if (!isset($this->jsonData->keyworded_text) || !is_string($this->jsonData->keyworded_text)) {
-      throw new InvalidSourceException('No valid summary text was found in sent JSON.');
-    }
-    else if (isset($this->jsonData->keyworded_text) && empty($this->jsonData->keyworded_text)) {
-      throw new InvalidSourceException('The excerpt cannot be empty.');
-    }
-
     // validate type
     $allowed_types = ['question', 'answer'];
     if (!isset($this->jsonData->type) || !is_string($this->jsonData->type)) {
@@ -257,6 +239,39 @@ class ModtoolMessage {
       throw new InvalidSourceException('The annotation text found in sent JSON is not a valid string.');
     }
 
+    // validate documents
+    if (isset($this->jsonData->documents) && !empty($this->jsonData->documents)) {
+      $info = field_info_instance('node', 'field_dialogue_attachments', 'dialogue');
+      $allowed_extensions = explode(' ', $info["settings"]["file_extensions"]);
+
+      foreach ($this->jsonData->documents as $document_url) {
+        $file_pathinfo = pathinfo($document_url);
+
+        // check for allowed file extensions
+        if (!in_array($file_pathinfo['extension'], $allowed_extensions)) {
+          throw new InvalidSourceException('The file '. $document_url .' has not an allowed file extension. Allowed are the following extensions: '. implode(', ',$allowed_extensions));
+        }
+        $file_temp = $this->loadDocument($document_url);
+        if (!$file_temp) {
+          throw new InvalidSourceException('It was not possible to load the file '. $document_url);
+        }
+      }
+    }
+
+    // validate topic
+    // for questions topic is required
+    if ($this->jsonData->type == 'question' && !isset($this->jsonData->topic) || empty($this->jsonData->topic) || !is_string($this->jsonData->topic) ) {
+      throw new InvalidSourceException('No valid topic was found in sent JSON. Either it is not set, it is empty or it is not a string.');
+    }
+
+    // when a topic is set validate that it exists in Drupal
+    if (isset($this->jsonData->topic) && is_string($this->jsonData->topic)) {
+      $topic_result = array_values(taxonomy_get_term_by_name($this->jsonData->topic, 'dialogue_topics'));
+      if (!$topic_result) {
+        throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term of dialogue topics in Drupal.');
+      }
+    }
+
     $this->validated = TRUE;
  }
 
@@ -280,5 +295,23 @@ class ModtoolMessage {
 
     $d = DateTime::createFromFormat($format, $date_string);
     return ($d && $d->format($format) === $date_string);
+  }
+
+
+  /**
+   * Load the document/ attachment file of a message from Modtool server
+   *
+   * @param string $document_url
+   *
+   * @return false|string
+   */
+  public function loadDocument($document_url) {
+    $opts = array('http' =>
+      array(
+        'header' => "Authorization: Basic ". variable_get('modtool_api_credentials', FALSE)
+      )
+    );
+    $context  = stream_context_create($opts);
+    return file_get_contents(pw_globals_helper_file($document_url), FALSE, $context);
   }
 }
