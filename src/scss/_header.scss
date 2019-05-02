@@ -269,7 +269,7 @@
       color: $darkGray;
     }
   }
-  .dropdown__list__item:nth-child(1) .dropdown__list__item__link:before { content: '\e80f'; }
+  .dropdown__list__item:nth-child(1) .dropdown__list__item__link:before { content: '\54'; }
   .dropdown__list__item:nth-child(2) .dropdown__list__item__link:before { content: '\e810'; }
   .dropdown__list__item:nth-child(3) .dropdown__list__item__link:before { content: '\e80e'; }
   .dropdown__list__item:nth-child(4) .dropdown__list__item__link:before { content: '\e80d'; }
@@ -343,6 +343,10 @@
     }
     .nav__item__link--medienpartner:before {
       content: '\e831';
+    }
+    .nav__item__link--grußwort:before {
+      content: "\e904";
+      font-size: 1.05em;
     }
   }
   .nav__item__link {
