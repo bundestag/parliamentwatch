@@ -407,6 +407,9 @@ class ModtoolActionsController {
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'New '. $this->messageType .' created');
     }
+    elseif ($dataEntity->isDeleted) {
+
+    }
     else {
       drupal_add_http_header('Status', '200 OK');
       $this->setResponseValue('status', 'success');
