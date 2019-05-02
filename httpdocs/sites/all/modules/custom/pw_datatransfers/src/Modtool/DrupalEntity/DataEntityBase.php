@@ -36,6 +36,12 @@ abstract class DataEntityBase implements DataEntityInterface {
 
 
   /**
+   * @var bool
+   * True when the Drupal node/ comment was just deleted
+   */
+  public $isDeleted = FALSE;
+
+  /**
    * DataEntityBase constructor.
    *
    * @param \Drupal\pw_datatransfers\Modtool\ModtoolMessage $modtool_message
@@ -137,4 +143,9 @@ abstract class DataEntityBase implements DataEntityInterface {
   }
 
 
+  /**
+   * Delete the entity from Drupal
+   */
+
+  abstract public function delete();
 }
