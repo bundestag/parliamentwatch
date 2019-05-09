@@ -4913,6 +4913,29 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Inhalt: Before Election Date (field_dialogue_before_election) */
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['id'] = 'field_dialogue_before_election_value';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['table'] = 'field_data_field_dialogue_before_election';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['field'] = 'field_dialogue_before_election_value';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['expose']['operator_id'] = 'field_dialogue_before_election_value_op';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['expose']['label'] = 'Before Election Date';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['expose']['operator'] = 'field_dialogue_before_election_value_op';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['expose']['identifier'] = 'field_dialogue_before_election_value';
+  $handler->display->display_options['filters']['field_dialogue_before_election_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page default Reiter */
   $handler = $view->new_display('page', 'Page default Reiter', 'page_1');
@@ -5160,6 +5183,7 @@ function pw_administration_views_default_views() {
     t('Thema'),
     t('Parlament'),
     t('Veröffentlicht'),
+    t('Before Election Date'),
     t('Page default Reiter'),
     t('Der Default Reiter'),
     t('Menu Punkt'),
