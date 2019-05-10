@@ -171,7 +171,7 @@ class ModtoolMessage {
   /**
    * Validate the transferred JSON data for the message
    *
-   * @todo validation for documents, tags
+   * @todo validation for documents
    * @todo - for answers: check if sender uuid is set
    * @todo - sender and recipient id checken
    *
