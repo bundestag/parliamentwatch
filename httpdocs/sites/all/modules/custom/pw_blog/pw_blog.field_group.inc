@@ -27,6 +27,7 @@ function pw_blog_field_group_info() {
       1 => 'field_politician',
       2 => 'field_topics',
       3 => 'field_blogpost_license',
+      4 => 'field_blog_main_category',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
