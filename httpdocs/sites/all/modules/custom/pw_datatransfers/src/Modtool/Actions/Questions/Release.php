@@ -41,6 +41,7 @@ class Release extends ActionBaseQuestion {
    * @inheritdoc
    */
   public function check() {
+    $this->modtoolMessage->validate();
     $this->checkMessageStatus(ModtoolMessageStatus::RELEASED);
   }
 }
