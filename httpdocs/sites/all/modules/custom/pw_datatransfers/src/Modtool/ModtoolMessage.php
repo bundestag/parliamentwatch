@@ -151,13 +151,8 @@ class ModtoolMessage {
    * @return mixed|null
    * NULL if no $key was found in JSON object
    *
-   * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
   public function getData($key) {
-    if (!$this->validated) {
-      $this->validate();
-    }
-
     if (isset($this->jsonData->{$key})) {
       return $this->jsonData->{$key};
     }
