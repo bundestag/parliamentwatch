@@ -23,8 +23,8 @@ interface ActionInterface {
 
   /**
    * Do any checks before the actual action is running in this method. If a check
-   * fails throw an DataActionException. All checks should validate the Modtool
-   * message if necessary
+   * fails throw an DataActionException. Validate the ModtoolMessage by calling
+   * $this->modtoolMessage->validate() if it is needed to the action.
    *
    * @throws \Drupal\pw_datatransfers\Exception\DataActionException
    */
