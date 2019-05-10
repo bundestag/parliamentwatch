@@ -2103,6 +2103,8 @@
    */
   Drupal.behaviors.ajaxFilterbar = {
     attach: function (context, settings) {
+      var timeout;
+
       $('.tile-wrapper').addClass('loading-overlay');
 
       function loadResults($form) {
@@ -2143,22 +2145,35 @@
         });
       }
 
-      $('form[data-ajax-target] .form__item__control').change(function (event) {
-        if (!$(this).parents('.filterbar--expanded').length) {
-          if ($(this).is('#edit-keys')) {
-            window.location = '?keys=' + $(this).val();
+      function formControlChange(form_control) {
+        if (!form_control.parents('.filterbar--expanded').length) {
+          if (form_control.is('#edit-keys')) {
+            window.location = '?keys=' + form_control.val();
           }
-          var dateInputs = $('#edit-date-0, #edit-date-1', $(this).parents('form'));
-          if (this.id.startsWith('edit-date-') && dateInputs.length == 2) {
+          var dateInputs = $('#edit-date-0, #edit-date-1', form_control.parents('form'));
+          if (form_control.attr('id').startsWith('edit-date-') && dateInputs.length == 2) {
             if (dateInputs[0].value === '' || dateInputs[1].value === '') {
               return;
             }
           }
-          loadResults($(this).parents('form'));
+          loadResults(form_control.parents('form'));
         } else {
           $('[data-filterbar-submit]').one('click', function (event) {
-            loadResults($(this).parents('form'));
+            loadResults(form_control.parents('form'));
           });
+        }
+      }
+
+      $('form[data-ajax-target] .form__item__control').change(function (event) {
+        var form_control = $(this);
+
+        if (form_control.attr('type') == 'date') {
+          clearTimeout(timeout);
+          timeout = setTimeout(function() {
+            formControlChange(form_control);
+          }, 1000);
+        } else {
+          formControlChange(form_control);
         }
       });
 
