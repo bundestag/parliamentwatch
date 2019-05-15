@@ -2145,6 +2145,13 @@
         });
       }
 
+      function formDateRangeSubmit() {
+        if ($('.filterbar .dropdown__list').find('.form__item--date-1').length !== 0) {
+          $('<button type="submit" class="btn">' + Drupal.t("Apply") + '</button>').insertAfter('.filterbar .form__item--date-1')
+        }
+      }
+      formDateRangeSubmit();
+
       function formControlChange(form_control) {
         if (!form_control.parents('.filterbar--expanded').length) {
           if (form_control.is('#edit-keys')) {
@@ -2168,10 +2175,7 @@
         var form_control = $(this);
 
         if (form_control.attr('type') == 'date') {
-          clearTimeout(timeout);
-          timeout = setTimeout(function() {
-            formControlChange(form_control);
-          }, 1000);
+          event.preventDefault();
         } else {
           formControlChange(form_control);
         }
