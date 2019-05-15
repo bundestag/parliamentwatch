@@ -531,12 +531,15 @@ function pw_profiles_page($parliament_term, $role_name) {
     switch ($sort_by) {
       case 'questions':
         $q->sort('number_of_questions', $sort_order);
+        $q->sort('field_user_lname', 'ASC');
         break;
       case 'answers':
         $q->sort('number_of_answers', $sort_order);
+        $q->sort('field_user_lname', 'ASC');
         break;
       case 'party':
         $q->sort('field_user_party:name', $sort_order);
+        $q->sort('field_user_lname', 'ASC');
         break;
       case 'name':
         $q->sort('field_user_lname', $sort_order);
