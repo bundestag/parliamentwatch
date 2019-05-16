@@ -4,6 +4,7 @@ namespace Drupal\pw_datatransfers\Modtool\Actions;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer;
+use Drupal\pw_datatransfers\Modtool\ModtoolMessage;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
@@ -18,13 +19,24 @@ abstract class ActionBaseAnswer implements ActionInterface {
    */
   protected $dataAnswer;
 
+
+  /**
+   * @var \Drupal\pw_datatransfers\Modtool\ModtoolMessage
+   */
+  protected $modtoolMessage;
+
   /**
    * ActionBaseAnswer constructor.
    *
-   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer $dataanswer
+   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataAnswer $data_answer
+   * The DataEntityBase of the answer
+   *
+   * @param \Drupal\pw_datatransfers\Modtool\ModtoolMessage $modtool_message
+   * The ModtoolMessage class for the message received from Modtool
    */
-  public function __construct(DataAnswer $dataanswer) {
-    $this->dataAnswer = $dataanswer;
+  public function __construct(DataAnswer $data_answer, ModtoolMessage $modtool_message) {
+    $this->dataAnswer = $data_answer;
+    $this->modtoolMessage = $modtool_message;
   }
 
 

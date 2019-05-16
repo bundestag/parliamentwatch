@@ -100,6 +100,10 @@ msgstr "Standardantworten ausblenden"
 msgid "Filter profiles"
 msgstr "Profile filtern"
 
+#: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:613
+msgid "Filter questions"
+msgstr "Fragen filtern"
+
 #: sites/all/modules/custom/pw_dialogues/pw_dialogues.module:627
 msgid "Questions and Answers"
 msgstr "Fragen und Antworten"

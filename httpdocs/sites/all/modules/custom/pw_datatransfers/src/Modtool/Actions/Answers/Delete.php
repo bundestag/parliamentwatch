@@ -25,8 +25,7 @@ class Delete extends ActionBaseAnswer {
     if ($answer) {
       $this->dataAnswer->setEntity($answer);
       $this->check();
-
-      comment_delete($answer->cid);
+      $this->dataAnswer->delete();
     }
   }
 

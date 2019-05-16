@@ -221,4 +221,14 @@ class DataQuestion extends DataEntityBase {
 
     return $node;
   }
+
+  /**
+   * @inheritdoc
+   */
+  public function delete() {
+    if (is_object($this->entity) && isset($this->entity->nid)) {
+      node_delete($this->entity->nid);
+      $this->isDeleted = TRUE;
+    }
+  }
 }
