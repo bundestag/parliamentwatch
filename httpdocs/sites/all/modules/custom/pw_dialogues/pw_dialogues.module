@@ -610,7 +610,7 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
 
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Filter profiles'),
+    '#value' => t('Filter questions'),
   );
 
   return $form;
