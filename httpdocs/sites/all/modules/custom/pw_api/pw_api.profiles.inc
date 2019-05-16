@@ -436,7 +436,9 @@ function pw_api_user_to_array($user, $subsets = array()) {
           foreach ($w_dialogue->comments as $key => $answer) {
             $profile['questions']['question_'.$nid]['answers']['answer_'.$key] = array();
             $profile['questions']['question_'.$nid]['answers']['answer_'.$key]['date'] = date("Y-m-d", $answer->created->value());
+            $profile['questions']['question_'.$nid]['answers']['answer_'.$key]['datetime'] = date("Y-m-d H:i:s", $answer->created->value());
             $profile['questions']['question_'.$nid]['answers']['answer_'.$key]['summary'] = $answer->field_dialogue_comment_body->summary->value();
+            $profile['questions']['question_'.$nid]['answers']['answer_'.$key]['is_standard'] = $answer->field_dialogue_is_standard_reply->value();
           }
         }
       }

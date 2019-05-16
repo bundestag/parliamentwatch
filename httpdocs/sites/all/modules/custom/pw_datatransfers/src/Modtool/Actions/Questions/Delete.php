@@ -24,8 +24,7 @@ class Delete extends ActionBaseQuestion {
     if ($question) {
       $this->dataQuestion->setEntity($question);
       $this->check();
-
-      node_delete($question->nid);
+      $this->dataQuestion->delete();
     }
   }
 

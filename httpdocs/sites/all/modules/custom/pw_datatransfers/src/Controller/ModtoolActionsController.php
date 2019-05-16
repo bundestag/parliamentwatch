@@ -228,22 +228,22 @@ class ModtoolActionsController {
   protected function getActionClassQuestions() {
     switch ($this->action) {
       case 'release':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Release($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Release($this->dataClass, $this->modtoolMessage);
         break;
       case 'moderate':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Moderate($this->dataClass, $this->modtoolMessage);
         break;
       case 'hold':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Hold($this->dataClass, $this->modtoolMessage);
         break;
       case 'request':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Request($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Request($this->dataClass, $this->modtoolMessage);
         break;
       case 'unrelease':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Unrelease($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Unrelease($this->dataClass, $this->modtoolMessage);
         break;
       case 'delete':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Questions\Delete($this->dataClass, $this->modtoolMessage);
         break;
     }
 
@@ -267,22 +267,22 @@ class ModtoolActionsController {
     $dataAction = NULL;
     switch ($this->action) {
       case 'release':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Release($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Release($this->dataClass, $this->modtoolMessage);
         break;
       case 'moderate':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Moderate($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Moderate($this->dataClass, $this->modtoolMessage);
         break;
       case 'hold':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Hold($this->dataClass, $this->modtoolMessage);
         break;
       case 'request':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Request($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Request($this->dataClass, $this->modtoolMessage);
         break;
       case 'unrelease':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Unrelease($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Unrelease($this->dataClass, $this->modtoolMessage);
         break;
       case 'delete':
-        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($this->dataClass);
+        $dataAction = new \Drupal\pw_datatransfers\Modtool\Actions\Answers\Delete($this->dataClass, $this->modtoolMessage);
         break;
     }
 
@@ -406,6 +406,11 @@ class ModtoolActionsController {
       drupal_add_http_header('Status', '201 Created');
       $this->setResponseValue('status', 'success');
       $this->setResponseValue('status_text', 'New '. $this->messageType .' created');
+    }
+    elseif ($dataEntity->isDeleted) {
+      drupal_add_http_header('Status', '205 Deleted');
+      $this->setResponseValue('status', 'success');
+      $this->setResponseValue('status_text', 'The '. $this->messageType .' was deleted');
     }
     else {
       drupal_add_http_header('Status', '200 OK');

@@ -176,4 +176,14 @@ class DataAnswer extends DataEntityBase {
 
     return $comment;
   }
+
+  /**
+   * @inheritdoc
+   */
+  public function delete() {
+    if (is_object($this->entity) && isset($this->entity->cid)) {
+      comment_delete($this->entity->cid);
+      $this->isDeleted = TRUE;
+    }
+  }
 }

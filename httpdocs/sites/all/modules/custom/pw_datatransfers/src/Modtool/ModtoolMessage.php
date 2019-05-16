@@ -23,13 +23,6 @@ class ModtoolMessage {
 
 
   /**
-   * @var bool
-   * If the message data was validated. @see $this->validate()
-   */
-  protected $validated = FALSE;
-
-
-  /**
    * @var string|int
    * The dialogue id from the Modtool as defined in the API path
    */
@@ -151,13 +144,8 @@ class ModtoolMessage {
    * @return mixed|null
    * NULL if no $key was found in JSON object
    *
-   * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
   public function getData($key) {
-    if (!$this->validated) {
-      $this->validate();
-    }
-
     if (isset($this->jsonData->{$key})) {
       return $this->jsonData->{$key};
     }
@@ -171,13 +159,13 @@ class ModtoolMessage {
   /**
    * Validate the transferred JSON data for the message
    *
-   * @todo validation for documents, tags
+   * @todo validation for documents
    * @todo - for answers: check if sender uuid is set
    * @todo - sender and recipient id checken
    *
    * @throws \Drupal\pw_datatransfers\Exception\InvalidSourceException
    */
-  protected function validate() {
+  public function validate() {
     // validate message id
     if (!isset($this->jsonData->id) || !is_numeric($this->jsonData->id)) {
       throw new InvalidSourceException('No message id was found in sent JSON.');
@@ -271,8 +259,6 @@ class ModtoolMessage {
         throw new InvalidSourceException('The topic '. $this->jsonData->topic .' found in sent JSON is not a term of dialogue topics in Drupal.');
       }
     }
-
-    $this->validated = TRUE;
  }
 
 

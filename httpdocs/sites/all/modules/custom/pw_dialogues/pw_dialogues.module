@@ -610,7 +610,7 @@ function pw_dialogues_filters_form($form, &$form_state, $facets) {
 
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Filter profiles'),
+    '#value' => t('Filter questions'),
   );
 
   return $form;
@@ -1357,4 +1357,18 @@ function pw_dialogues_views_api() {
     'api' => 3,
     'path' => drupal_get_path('module', 'pw_dialogues') . '/views',
   ];
+}
+
+
+/**
+ * Implements hook_file_entity_access().
+ *
+ * Allow access for all users for downloading files stored in private://dialogue-attachments/
+ */
+function pw_dialogues_file_entity_access($op, $file, $account) {
+  if (is_object($file) && $op == 'download' && mb_substr($file->uri, 0, 31) == 'private://dialogue-attachments/') {
+    return FILE_ENTITY_ACCESS_ALLOW;
+  }
+
+  return FILE_ENTITY_ACCESS_IGNORE;
 }

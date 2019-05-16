@@ -5,6 +5,7 @@ namespace Drupal\pw_datatransfers\Modtool\Actions;
 
 use Drupal\pw_datatransfers\Exception\DataActionException;
 use Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion;
+use Drupal\pw_datatransfers\Modtool\ModtoolMessage;
 use Drupal\pw_datatransfers\Modtool\ModtoolMessageStatus;
 
 
@@ -21,12 +22,23 @@ abstract class ActionBaseQuestion implements ActionInterface {
 
 
   /**
+   * @var \Drupal\pw_datatransfers\Modtool\ModtoolMessage
+   */
+  protected $modtoolMessage;
+
+
+  /**
    * DataActionQuestionBase constructor.
    *
-   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion $dataquestion
+   * @param \Drupal\pw_datatransfers\Modtool\DrupalEntity\DataQuestion $data_question
+   * The DataEntityBase of the question
+   *
+   * @param \Drupal\pw_datatransfers\Modtool\ModtoolMessage $modtool_message
+   * The ModtoolMessage class for the message received from Modtool
    */
-  public function __construct(DataQuestion $dataquestion) {
-    $this->dataQuestion = $dataquestion;
+  public function __construct(DataQuestion $data_question, ModtoolMessage $modtool_message) {
+    $this->dataQuestion = $data_question;
+    $this->modtoolMessage = $modtool_message;
   }
 
 

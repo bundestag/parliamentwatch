@@ -568,6 +568,92 @@ function pw_blog_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-blogpost-field_blog_main_category'.
+  $fields['node-blogpost-field_blog_main_category'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_blog_main_category',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'tid' => array(
+          'columns' => array(
+            'tid' => 'tid',
+          ),
+          'table' => 'taxonomy_term_data',
+        ),
+      ),
+      'indexes' => array(
+        'tid' => array(
+          0 => 'tid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'taxonomy',
+      'settings' => array(
+        'allowed_values' => array(
+          0 => array(
+            'vocabulary' => 'blogcategories',
+            'parent' => '0',
+          ),
+        ),
+      ),
+      'translatable' => '0',
+      'type' => 'taxonomy_term_reference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'blogpost',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Wenn mehr als eine Kategorie ausgewählt werden soll, bitte hier die Haupt-Kategorie festlegen. ',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'taxonomy',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 11,
+        ),
+        'tile' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_blog_main_category',
+      'label' => 'Hauptkategorie',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '8',
+      ),
+    ),
+  );
+
   // Exported field: 'node-blogpost-field_blogpost_categories'.
   $fields['node-blogpost-field_blogpost_categories'] = array(
     'field_config' => array(
@@ -1115,7 +1201,7 @@ function pw_blog_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'entityreference_autocomplete',
-        'weight' => '9',
+        'weight' => '10',
       ),
     ),
   );
@@ -1422,7 +1508,7 @@ function pw_blog_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '8',
+        'weight' => '9',
       ),
     ),
   );
@@ -1433,6 +1519,7 @@ function pw_blog_field_default_fields() {
   t('Body');
   t('Categories');
   t('Der gewählte Block wird automatisch zwischen dem Text und den Kommentaren ausgegeben.');
+  t('Hauptkategorie');
   t('Intro');
   t('Kommentar');
   t('Lizenz anzeigen');
@@ -1440,6 +1527,7 @@ function pw_blog_field_default_fields() {
   t('Teaser image');
   t('Topics');
   t('Wenn aktiviert, wird der Text "Der Text auf dieser Seite steht unter der Lizenz Creative Commons BY-NC-SA 4.0." angezeigt.');
+  t('Wenn mehr als eine Kategorie ausgewählt werden soll, bitte hier die Haupt-Kategorie festlegen. ');
 
   return $fields;
 }
