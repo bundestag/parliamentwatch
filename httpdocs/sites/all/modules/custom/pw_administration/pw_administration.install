@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ */
+
+
+/**
+ * Update politicians to have Bundesland available
+ */
+function pw_administration_update_7000() {
+  $json = file_get_contents( dirname(__FILE__) . '/data/uuids.json');
+  $array = json_decode($json, true);
+
+  $filed_bundesland = field_info_field('field_bundesland');
+  $allowed_values = list_allowed_values($filed_bundesland);
+
+  foreach ($array as $uuid => $bundesland) {
+    $query = db_select('user_archive_cache', 'uac');
+    $query->join('users', 'u', 'u.uid = uac.uid');
+    $query->condition('u.uuid', $uuid);
+    $query->condition('uac.parliament_name', 'Bundestag');
+    $query->fields('uac', ['uid', 'vid']);
+    $record = $query->execute()->fetchAssoc();
+
+    if (!empty($record)) {
+      $user_revision = user_revision_load($record['uid'], $record['vid']);
+      $user_revision->field_bundesland[LANGUAGE_NONE][0]['value'] = array_search($bundesland, $allowed_values);
+      _pw_userarchives_user_revision_edit_save($user_revision);
+    }
+  }
+
+}

@@ -961,7 +961,7 @@ function pw_userarchives_views_api() {
  * @param $revision
  * @param $edits
  */
-function _pw_userarchives_user_revision_edit_save(&$revision, $edits) {
+function _pw_userarchives_user_revision_edit_save(&$revision, $edits = array()) {
   global $user;
 
   // Updates revision object.

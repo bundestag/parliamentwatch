@@ -17,7 +17,7 @@ function pw_administration_menu() {
   $items['admin/abgeordnetenwatch'] = [
     'title' => 'Abgeordnetenwatch',
     'page callback' => 'pw_administration_dashboard_pagecallback',
-    'access callback' => 'pw_administration_dashboard_pagecallback_access',
+    'access callback' => 'pw_administration_pagecallback_access',
     'file' => 'pw_administration.pages.inc',
     'type' => MENU_NORMAL_ITEM,
     'menu_name' => 'management'
@@ -27,13 +27,20 @@ function pw_administration_menu() {
   $items['admin/abgeordnetenwatch/wahlen-parlamente'] = [
     'title' => 'Wahlen & Parlamente',
     'page callback' => 'pw_administration_wahlenparlamente_pagecallback',
-    'access callback' => 'pw_administration_wahlenparlamente_pagecallback_access',
+    'access callback' => 'pw_administration_pagecallback_access',
     'file' => 'pw_administration.pages.inc',
     'type' => MENU_NORMAL_ITEM,
     'menu_name' => 'management'
   ];
 
-
+  $items['admin/abgeordnetenwatch/wahlen-parlamente/zeugnisnoten'] = [
+    'title' => 'Zeugnisnoten',
+    'page callback' => 'pw_administration_zeugnisnoten_pagecallback',
+    'access callback' => 'pw_administration_pagecallback_access',
+    'file' => 'pw_administration.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'management'
+  ];
 
   return $items;
 }
