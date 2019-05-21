@@ -128,7 +128,7 @@ class Zeugnisnoten {
     foreach ($this->politicians as $uid => $politiciandata) {
       $politician = new Politician($politiciandata);
       $politician_wrapper = entity_metadata_wrapper('user', $politiciandata);
-      $info[$politician->getId()];
+      $info[$politician->getId()] = [];
       // name
       $info[$politician->getId()]['fullname'] = $politician->getFullName();
 
