@@ -5171,7 +5171,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -7362,6 +7362,23 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_constituency']['delta_offset'] = '0';
+  /* Feld: Benutzer: Bundesland */
+  $handler->display->display_options['fields']['field_bundesland']['id'] = 'field_bundesland';
+  $handler->display->display_options['fields']['field_bundesland']['table'] = 'field_data_field_bundesland';
+  $handler->display->display_options['fields']['field_bundesland']['field'] = 'field_bundesland';
+  $handler->display->display_options['fields']['field_bundesland']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Taxonomie-Begriff: Name */
   $handler->display->display_options['fields']['name_2']['id'] = 'name_2';
   $handler->display->display_options['fields']['name_2']['table'] = 'taxonomy_term_data';
@@ -7789,6 +7806,29 @@ function pw_administration_views_default_views() {
       'value' => '',
     ),
   );
+  /* Filterkriterium: Benutzer: Bundesland (field_bundesland) */
+  $handler->display->display_options['filters']['field_bundesland_value']['id'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['table'] = 'field_data_field_bundesland';
+  $handler->display->display_options['filters']['field_bundesland_value']['field'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['operator_id'] = 'field_bundesland_value_op';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['label'] = 'Bundesland';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['operator'] = 'field_bundesland_value_op';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['identifier'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -8054,6 +8094,7 @@ function pw_administration_views_default_views() {
     t('UUID'),
     t('Aktuelles/ letztes Parlament'),
     t('Wahlkreis'),
+    t('Bundesland'),
     t('Parlament beigetreten'),
     t('Parlament verlassen'),
     t('Links'),
@@ -8466,6 +8507,24 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['name_3']['field'] = 'name';
   $handler->display->display_options['fields']['name_3']['relationship'] = 'field_user_list_position_tid';
   $handler->display->display_options['fields']['name_3']['label'] = 'Listenposition';
+  /* Feld: Benutzer (Historische Daten): Bundesland */
+  $handler->display->display_options['fields']['field_bundesland-revision_id']['id'] = 'field_bundesland-revision_id';
+  $handler->display->display_options['fields']['field_bundesland-revision_id']['table'] = 'field_revision_field_bundesland';
+  $handler->display->display_options['fields']['field_bundesland-revision_id']['field'] = 'field_bundesland-revision_id';
+  $handler->display->display_options['fields']['field_bundesland-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_bundesland-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Benutzer (Historische Daten): Wahlkreis */
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
   $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
@@ -8868,6 +8927,30 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer (Historische Daten): Bundesland (field_bundesland) */
+  $handler->display->display_options['filters']['field_bundesland_value']['id'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['table'] = 'field_revision_field_bundesland';
+  $handler->display->display_options['filters']['field_bundesland_value']['field'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_bundesland_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['operator_id'] = 'field_bundesland_value_op';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['label'] = 'Bundesland';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['operator'] = 'field_bundesland_value_op';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['identifier'] = 'field_bundesland_value';
+  $handler->display->display_options['filters']['field_bundesland_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -8912,6 +8995,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Liste gewonnen'),
     t('Ja'),
     t('Nein'),
+    t('Bundesland'),
     t('Wahlkreis'),
     t('Wahlkreis gewonnen'),
     t('Wahlkreisergebnis'),
