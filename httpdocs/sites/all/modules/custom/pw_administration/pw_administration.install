@@ -9,6 +9,11 @@
  * Update politicians to have Bundesland available
  */
 function pw_administration_update_7000() {
+  // assure that our new field is existing
+  $feature = features_get_features('pw_profiles');
+  $components = array_keys($feature->info['features']);
+  features_revert(array('pw_profiles' => $components));
+
   $json = file_get_contents( dirname(__FILE__) . '/data/uuids.json');
   $array = json_decode($json, true);
 

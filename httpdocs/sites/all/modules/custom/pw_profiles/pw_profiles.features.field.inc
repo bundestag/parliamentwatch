@@ -464,6 +464,98 @@ function pw_profiles_field_default_fields() {
     ),
   );
 
+  // Exported field: 'user-user-field_bundesland'.
+  $fields['user-user-field_bundesland'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_bundesland',
+      'field_permissions' => array(
+        'type' => '2',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'baden' => 'Baden-Württemberg',
+          'bayern' => 'Bayern',
+          'berlin' => 'Berlin',
+          'brandenburg' => 'Brandenburg',
+          'bremen' => 'Bremen',
+          'hamburg' => 'Hamburg',
+          'hessen' => 'Hessen',
+          'mecklenburg' => 'Mecklenburg-Vorpommern',
+          'niedersachen' => 'Niedersachsen',
+          'nrw' => 'Nordrhein-Westfalen',
+          'rheinland' => 'Rheinland-Pfalz',
+          'saarland' => 'Saarland',
+          'sachsen' => 'Sachsen',
+          'sachsenanhalt' => 'Sachsen-Anhalt',
+          'schleswig' => 'Schleswig-Holstein',
+          'thuringen' => 'Thüringen',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'user',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Benötigt für die Auswertung der Zeugnisnoten',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(
+            'linked_field' => array(
+              'advanced' => array(
+                'class' => '',
+                'rel' => '',
+                'target' => '',
+                'text' => '',
+                'title' => '',
+              ),
+              'destination' => '',
+              'linked' => 0,
+            ),
+          ),
+          'type' => 'list_default',
+          'weight' => 52,
+        ),
+        'full' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'user',
+      'field_name' => 'field_bundesland',
+      'label' => 'Bundesland',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => 0,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '16',
+      ),
+    ),
+  );
+
   // Exported field: 'user-user-field_user_about'.
   $fields['user-user-field_user_about'] = array(
     'field_config' => array(
@@ -1063,7 +1155,7 @@ function pw_profiles_field_default_fields() {
           'display_label' => 1,
         ),
         'type' => 'options_onoff',
-        'weight' => '15',
+        'weight' => '14',
       ),
     ),
   );
@@ -1572,7 +1664,7 @@ function pw_profiles_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '14',
+        'weight' => '13',
       ),
     ),
   );
@@ -2684,7 +2776,7 @@ function pw_profiles_field_default_fields() {
           'display_label' => 1,
         ),
         'type' => 'options_onoff',
-        'weight' => '16',
+        'weight' => '15',
       ),
     ),
   );
@@ -3845,7 +3937,7 @@ function pw_profiles_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '13',
+        'weight' => '12',
       ),
     ),
   );
@@ -4614,8 +4706,10 @@ function pw_profiles_field_default_fields() {
   t('Alt Text');
   t('Ausgeübte Tätigkeit');
   t('Because system user roles are not revisionable, this fields stores a copy of the user role.');
+  t('Benötigt für die Auswertung der Zeugnisnoten');
   t('Berufliche Qualifikation');
   t('Bildergalerie');
+  t('Bundesland');
   t('Data URL');
   t('Die Bildergalerie ermöglicht Ihnen Fotos z.B. aus dem Wahlkampf in Ihrem Profil zu veröffentlichen.');
   t('Die Telefonnummer dient zur einfachen Kontaktaufnahme, wird nicht veröffentlicht.');
