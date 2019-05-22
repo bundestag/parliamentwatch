@@ -46,6 +46,7 @@ class Zeugnisnoten {
 
     if ($this->parliament && $this->DateQuestion && $this->DateAnswer) {
       $this->loadData();
+      $output .= '<b>Ergebnis: '. count($this->politicians) .' Politiker</b>';
       $output .= $this->buildTable();
     }
 
@@ -63,8 +64,8 @@ class Zeugnisnoten {
       'Nachname',
       'Partei',
       'Fragen',
-      'Beantwortet',
-      'Antworten',
+      'Beantwortete Fragen',
+      'Antworten insgesamt',
       'Standard-Antworten',
       'Quote',
       [
@@ -158,14 +159,27 @@ class Zeugnisnoten {
       // fragen
       $info[$politician->getId()]['questions'] = $this->getQuestionCount($politician->getId());
 
-      // beantwortet
+      // beantwortete fragen
       $info[$politician->getId()]['answered_questions']  = $this->getAnswerCount($politician->getId(), 'answered_questions');
 
-      //answers
+      // antworten insgesamt
       $info[$politician->getId()]['answers'] = $this->getAnswerCount($politician->getId(), 'answers');
 
       // standard answers
-      $info[$politician->getId()]['standard'] = $this->getAnswerCount($politician->getId(), 'standard');
+      $count_standard_answers = $this->getAnswerCount($politician->getId(), 'standard');
+      if ($count_standard_answers > 0) {
+        $info[$politician->getId()]['standard'] = l($count_standard_answers, 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
+          ['field_dialogue_is_standard_reply_value' => 1,
+            'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
+            'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
+            'field_parliament_tid' => $this->getParliamentTid()
+          ],
+          'attributes' => ['target' => '_blank']
+        ]);
+      }
+      else {
+        $info[$politician->getId()]['standard'] = 0;
+      }
 
       // quote
       $info[$politician->getId()]['rate'] = $this->calculateRate($politician->getId());
