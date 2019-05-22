@@ -88,8 +88,8 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#default_value' => isset($form_state["input"]['date_answer']) ? $form_state["input"]['date_answer'] : date('Y-m-d', $default_answer_date)
   ];
 
-  $filed_bundesland = field_info_field('field_bundesland');
-  $allowed_values = list_allowed_values($filed_bundesland);
+  $field_bundesland = field_info_field('field_bundesland');
+  $allowed_values = list_allowed_values($field_bundesland);
   $form['bundesland'] = [
     '#type' => 'select',
     '#title' => 'Bundesland',

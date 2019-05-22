@@ -59,6 +59,8 @@ class Zeugnisnoten {
   protected function buildTable() {
     $header = [
       'Name',
+      'Vorname',
+      'Nachname',
       'Partei',
       'Fragen',
       'Beantwortet',
@@ -84,6 +86,12 @@ class Zeugnisnoten {
       // name
       $cell_name['data'] = $info['fullname'];
       $row[] = $cell_name;
+
+      $cell_firstname['data'] = $info['first_name'];
+      $row[] = $cell_firstname;
+
+      $cell_lastname['data'] = $info['last_name'];
+      $row[] = $cell_lastname;
 
       $cell_party['data'] = $info['party'];
       $row[] = $cell_party;
@@ -131,6 +139,11 @@ class Zeugnisnoten {
       $info[$politician->getId()] = [];
       // name
       $info[$politician->getId()]['fullname'] = $politician->getFullName();
+
+      // first name
+      $info[$politician->getId()]['first_name'] = $politician_wrapper->field_user_fname->value();
+      // name
+      $info[$politician->getId()]['last_name'] = $politician_wrapper->field_user_lname->value();
 
 
       // party
