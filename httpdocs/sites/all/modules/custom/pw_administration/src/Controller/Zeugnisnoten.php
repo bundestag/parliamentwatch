@@ -452,56 +452,62 @@ class Zeugnisnoten {
   }
 
   protected function loadAnswers() {
-    $query = db_select('comment', 'c');
-    $query->condition('c.nid', $this->getQuestionNids(), 'IN')
-      ->fields('c', ['cid', 'uid', 'nid']);
+    if (!empty($this->getQuestionNids())) {
+      $query = db_select('comment', 'c');
+      $query->condition('c.nid', $this->getQuestionNids(), 'IN')
+        ->fields('c', ['cid', 'uid', 'nid']);
 
-    $query->join('field_data_field_dialogue_is_standard_reply', 'standard', 'standard.entity_id = c.cid');
-    $query->condition('standard.bundle', 'comment_node_dialogue');
-    $query->fields('standard', ['field_dialogue_is_standard_reply_value']);
+      $query->join('field_data_field_dialogue_is_standard_reply', 'standard', 'standard.entity_id = c.cid');
+      $query->condition('standard.bundle', 'comment_node_dialogue');
+      $query->fields('standard', ['field_dialogue_is_standard_reply_value']);
 
-    $result = $query->execute();
-    $this->answers = $result->fetchAllAssoc('cid');
+      $result = $query->execute();
+      $this->answers = $result->fetchAllAssoc('cid');
+    }
   }
 
 
   protected function loadQuestions() {
-    $query = db_select('node', 'n');
-    $query->condition('n.type', 'dialogue');
-    $query->condition('n.status', NODE_PUBLISHED);
-    $query->condition('n.created', $this->getQuestionDateTimestamp(), '<');
+    if (!empty($this->getPoliticianIds())) {
+      $query = db_select('node', 'n');
+      $query->condition('n.type', 'dialogue');
+      $query->condition('n.status', NODE_PUBLISHED);
+      $query->condition('n.created', $this->getQuestionDateTimestamp(), '<');
 
-    // assure just questions are counted which were asked for the legislature
-    $query->join('field_data_field_dialogue_before_election', 'beforeelection', 'n.nid = beforeelection.entity_id');
-    $query->condition('beforeelection.bundle', 'dialogue');
-    $query->condition('beforeelection.field_dialogue_before_election_value', 0);
+      // assure just questions are counted which were asked for the legislature
+      $query->join('field_data_field_dialogue_before_election', 'beforeelection', 'n.nid = beforeelection.entity_id');
+      $query->condition('beforeelection.bundle', 'dialogue');
+      $query->condition('beforeelection.field_dialogue_before_election_value', 0);
 
-    // just count questions asked related to the parliament
-    $query->join('field_data_field_parliament', 'parliament', 'parliament.entity_id = n.nid');
-    $query->condition('parliament.bundle', 'dialogue');
-    $query->condition('parliament.field_parliament_tid', $this->getParliamentTid());
+      // just count questions asked related to the parliament
+      $query->join('field_data_field_parliament', 'parliament', 'parliament.entity_id = n.nid');
+      $query->condition('parliament.bundle', 'dialogue');
+      $query->condition('parliament.field_parliament_tid', $this->getParliamentTid());
 
-    // get just the questions for the politicians
-    $query->join('field_data_field_dialogue_recipient', 'recipient', 'recipient.entity_id = n.nid');
-    $query->condition('recipient.bundle', 'dialogue');
-    $query->condition('recipient.field_dialogue_recipient_target_id', $this->getPoliticianIds(), 'IN');
-    $query->fields('recipient', ['field_dialogue_recipient_target_id']);
+      // get just the questions for the politicians
+      $query->join('field_data_field_dialogue_recipient', 'recipient', 'recipient.entity_id = n.nid');
+      $query->condition('recipient.bundle', 'dialogue');
+      $query->condition('recipient.field_dialogue_recipient_target_id', $this->getPoliticianIds(), 'IN');
+      $query->fields('recipient', ['field_dialogue_recipient_target_id']);
 
-    $query->fields('n', ['nid']);
+      $query->fields('n', ['nid']);
 
 
-    $result = $query->execute();
-    $this->questions = $result->fetchAllAssoc('nid');
+      $result = $query->execute();
+      $this->questions = $result->fetchAllAssoc('nid');
+    }
   }
 
   protected function loadPoliticians() {
     $query = db_select('user_archive_cache', 'uac');
     $query->fields('uac', array('uid', 'vid'));
-    _pw_uac_add_conditions($query, array('parliament' => $this->getParliamentName(), 'roles' => 'deputy'));
+    $date_retirement = date('Y-m-d');
+    _pw_uac_add_conditions($query, array('parliament' => $this->getParliamentName(), 'roles' => 'deputy', 'date' => $date_retirement));
 
     // add filter by bundesland
     $query->join('field_revision_field_bundesland', 'bundesland', 'uac.uid = bundesland.entity_id AND uac.vid = bundesland.revision_id');
     $query->condition('bundesland.field_bundesland_value', $this->getBundeslandKey());
+    
 
     $query->addExpression('MAX(vid)', 'max_vid');
     $query->groupBy('uac.uid');
