@@ -21,6 +21,8 @@ class Zeugnisnoten {
 
   protected $bundesland;
 
+  protected $outputChecks;
+
   protected $politicians = [];
 
   protected $questions = [];
@@ -31,11 +33,12 @@ class Zeugnisnoten {
 
   protected $answersByPoliticians = [];
 
-  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateAnswer = FALSE, $bundesland = FALSE) {
+  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateAnswer = FALSE, $bundesland = FALSE, $output_checks = 0) {
     $this->parliament = $parliament;
     $this->DateAnswer = $DateAnswer;
     $this->DateQuestion = $DateQuestion;
     $this->bundesland = $bundesland;
+    $this->outputChecks = $output_checks;
   }
 
 
@@ -58,27 +61,44 @@ class Zeugnisnoten {
 
 
   protected function buildTable() {
-    $header = [
-      'Name',
-      'Profil',
-      'Vorname',
-      'Nachname',
-      'Wahlkreis',
-      'Partei',
-      'Fragen',
-      'Check',
-      'Beantwortete Fragen',
-      'Check',
-      'Antworten insgesamt',
-      'Check',
-      'Standard-Antworten',
-      'Check',
-      'Quote',
-      [
-        'data' => 'Note',
-        'colspan' => 2
-      ]
-    ];
+    if ( $this->outputChecks ) {
+      $header = [
+        'Name',
+        'Profil',
+        'Vorname',
+        'Nachname',
+        'Wahlkreis',
+        'Partei',
+        'Fragen',
+        'Check',
+        'Beantwortete Fragen',
+        'Check',
+        'Antworten insgesamt',
+        'Check',
+        'Standard-Antworten',
+        'Check',
+        'Quote',
+        [
+          'data' => 'Note',
+          'colspan' => 2
+        ]
+      ];
+    }
+    else {
+      $header = [
+        'Name',
+        'Wahlkreis',
+        'Partei',
+        'Fragen',
+        'Antworten',
+        'Quote',
+        [
+          'data' => 'Note',
+          'colspan' => 2
+        ]
+      ];
+    }
+
 
     $rows = $this->getRows();
     return theme('table', ['header' => $header, 'rows' => $rows]);
@@ -94,14 +114,16 @@ class Zeugnisnoten {
       $cell_name['data'] = $info['fullname'];
       $row[] = $cell_name;
 
-      $cell_profile['data'] = $info['profile'];
-      $row[] = $cell_profile;
+      if ( $this->outputChecks ) {
+        $cell_profile['data'] = $info['profile'];
+        $row[] = $cell_profile;
 
-      $cell_firstname['data'] = $info['first_name'];
-      $row[] = $cell_firstname;
+        $cell_firstname['data'] = $info['first_name'];
+        $row[] = $cell_firstname;
 
-      $cell_lastname['data'] = $info['last_name'];
-      $row[] = $cell_lastname;
+        $cell_lastname['data'] = $info['last_name'];
+        $row[] = $cell_lastname;
+      }
 
       $cell_constituency['data'] = $info['constituency'];
       $row[] = $cell_constituency;
@@ -115,12 +137,12 @@ class Zeugnisnoten {
       if (!$count_questions) {
         $cell_question_count = [];
         $cell_question_count['data']  = 'Noch keine Fragen erhalten';
-        $cell_question_count['colspan'] = 8;
+        $cell_question_count['colspan'] = $this->outputChecks ? 9 : 3;
         $row[] = $cell_question_count;
 
         $cell_rate = [];
         $cell_rate['data']  = 'k.W.';
-        $cell_rate['colspan'] = 3;
+        $cell_rate['colspan'] = 2;
         $row[] = $cell_rate;
       }
       else {
@@ -128,26 +150,31 @@ class Zeugnisnoten {
         $cell_question_count['data']  = $info['questions'];
         $row[] = $cell_question_count;
 
-        $cell_question_count_check['data']  = $info['questions_check'];
-        $row[] = $cell_question_count_check;
+        if ( $this->outputChecks) {
+          $cell_question_count_check['data']  = $info['questions_check'];
+          $row[] = $cell_question_count_check;
+        }
 
         $cell_answered['data']  = $info['answered_questions'];
         $row[] = $cell_answered;
 
-        $cell_answered_check['data']  = $info['answered_questions_check'];
-        $row[] = $cell_answered_check;
+        if( $this->outputChecks) {
+          $cell_answered_check['data']  = $info['answered_questions_check'];
+          $row[] = $cell_answered_check;
 
-        $cell_answers_count['data']  = $info['answers'];
-        $row[] = $cell_answers_count;
+          $cell_answers_count['data']  = $info['answers'];
+          $row[] = $cell_answers_count;
 
-        $cell_answers_count_check['data']  = $info['answers_check'];
-        $row[] = $cell_answers_count_check;
+          $cell_answers_count_check['data']  = $info['answers_check'];
+          $row[] = $cell_answers_count_check;
 
-        $cell_answers_standard['data']  = $info['standard'];
-        $row[] = $cell_answers_standard;
+          $cell_answers_standard['data']  = $info['standard'];
+          $row[] = $cell_answers_standard;
 
-        $cell_answers_standard_check['data']  = $info['standard_check'];
-        $row[] = $cell_answers_standard_check;
+          $cell_answers_standard_check['data']  = $info['standard_check'];
+          $row[] = $cell_answers_standard_check;
+        }
+
 
         $cell_rate = [];
         $cell_rate['data']  = $info['rate'] .' %';

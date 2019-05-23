@@ -28,6 +28,7 @@ function pw_administration_zeugnisnoten_pagecallback() {
   $date_questions = FALSE;
   $date_answers = FALSE;
   $bundesland = FALSE;
+  $output_checks = 0;
 
   $form = drupal_get_form('pw_administration_zeugnisnoten_form');
   $output .= render($form);
@@ -50,7 +51,11 @@ function pw_administration_zeugnisnoten_pagecallback() {
     $bundesland = $query_params["bundesland"];
   }
 
-  $controller = new \Drupal\pw_administration\Controller\Zeugnisnoten($parliament, $date_questions, $date_answers, $bundesland);
+  if (isset($query_params["output_checks"]) && is_string($query_params["output_checks"])) {
+    $output_checks = $query_params["output_checks"];
+  }
+
+  $controller = new \Drupal\pw_administration\Controller\Zeugnisnoten($parliament, $date_questions, $date_answers, $bundesland, $output_checks);
   $output .= $controller->build();
 
   return $output;
@@ -131,6 +136,22 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#options' => $allowed_values,
     '#default_value' => $default_form_value_bundesland
   ];
+
+
+  $default_form_value_output_checks = 0;
+  if (isset($form_state["input"]['output_checks'])) {
+    $default_form_value_output_checks = $form_state["input"]['output_checks'];
+  }
+  else if (isset($query_params['output_checks'])) {
+    $default_form_value_output_checks = $query_params['output_checks'];
+  }
+  $form['output_checks'] = [
+    '#type' => 'checkbox',
+    '#title' => 'Ausgabe mit internen Checks',
+    '#default_value' => $default_form_value_output_checks,
+    '#return_value' => 1
+  ];
+
 
   $form['action'] = [
     '#type' => 'action'
