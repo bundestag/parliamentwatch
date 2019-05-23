@@ -65,9 +65,13 @@ class Zeugnisnoten {
       'Wahlkreis',
       'Partei',
       'Fragen',
+      'Check',
       'Beantwortete Fragen',
+      'Check',
       'Antworten insgesamt',
+      'Check',
       'Standard-Antworten',
+      'Check',
       'Quote',
       [
         'data' => 'Note',
@@ -105,14 +109,26 @@ class Zeugnisnoten {
       $cell_question_count['data']  = $info['questions'];
       $row[] = $cell_question_count;
 
+      $cell_question_count_check['data']  = $info['questions_check'];
+      $row[] = $cell_question_count_check;
+
       $cell_answered['data']  = $info['answered_questions'];
       $row[] = $cell_answered;
+
+      $cell_answered_check['data']  = $info['answered_questions_check'];
+      $row[] = $cell_answered_check;
 
       $cell_answers_count['data']  = $info['answers'];
       $row[] = $cell_answers_count;
 
+      $cell_answers_count_check['data']  = $info['answers_check'];
+      $row[] = $cell_answers_count_check;
+
       $cell_answers_standard['data']  = $info['standard'];
       $row[] = $cell_answers_standard;
+
+      $cell_answers_standard_check['data']  = $info['standard_check'];
+      $row[] = $cell_answers_standard_check;
 
       $cell_rate['data']  = $info['rate'] .' %';
       $row[] = $cell_rate;
@@ -170,28 +186,58 @@ class Zeugnisnoten {
 
       // fragen
       $info[$politician->getId()]['questions'] = $this->getQuestionCount($politician->getId());
+      // fragen check
+      $info[$politician->getId()]['questions_check'] = l('Link', 'admin/abgeordnetenwatch/fragen', ['query' =>
+        ['field_dialogue_before_election_value' => 0,
+          'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
+          'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
+          'field_parliament_tid' => $this->getParliamentTid(),
+          'status' => 1
+        ],
+        'attributes' => ['target' => '_blank']
+      ]);
 
       // beantwortete fragen
       $info[$politician->getId()]['answered_questions']  = $this->getAnswerCount($politician->getId(), 'answered_questions');
 
+      // beantwortete fragen check
+      $info[$politician->getId()]['answered_questions_check'] = l('Link', 'admin/abgeordnetenwatch/fragen', ['query' =>
+        ['field_dialogue_before_election_value' => 0,
+          'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
+          'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
+          'field_parliament_tid' => $this->getParliamentTid(),
+          'status' => 1,
+          'has_comment' => 1
+        ],
+        'attributes' => ['target' => '_blank']
+      ]);
+
       // antworten insgesamt
       $info[$politician->getId()]['answers'] = $this->getAnswerCount($politician->getId(), 'answers');
 
+      // antworten insgesamt check
+      $info[$politician->getId()]['answers_check'] = l('Link', 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
+        [ 'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
+          'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
+          'field_parliament_tid' => $this->getParliamentTid(),
+          'field_dialogue_before_election_value' => 0
+        ],
+        'attributes' => ['target' => '_blank']
+      ]);
+
       // standard answers
-      $count_standard_answers = $this->getAnswerCount($politician->getId(), 'standard');
-      if ($count_standard_answers > 0) {
-        $info[$politician->getId()]['standard'] = l($count_standard_answers, 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
-          ['field_dialogue_is_standard_reply_value' => 1,
-            'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
-            'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
-            'field_parliament_tid' => $this->getParliamentTid()
-          ],
-          'attributes' => ['target' => '_blank']
-        ]);
-      }
-      else {
-        $info[$politician->getId()]['standard'] = 0;
-      }
+      $info[$politician->getId()]['standard'] = $this->getAnswerCount($politician->getId(), 'standard');
+
+      // standard answers check
+      $info[$politician->getId()]['standard_check'] = l('Link', 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
+        ['field_dialogue_is_standard_reply_value' => 1,
+          'field_user_lname_value' => $politician_wrapper->field_user_lname->value(),
+          'field_user_fname_value' => $politician_wrapper->field_user_fname->value(),
+          'field_parliament_tid' => $this->getParliamentTid(),
+          'field_dialogue_before_election_value' => 0
+        ],
+        'attributes' => ['target' => '_blank']
+      ]);
 
       // quote
       $info[$politician->getId()]['rate'] = $this->calculateRate($politician->getId());
@@ -405,10 +451,10 @@ class Zeugnisnoten {
     if ($rate >= 60) {
       return 3;
     }
-    if ($rate >= 47) {
+    if ($rate >= 45) {
       return 4;
     }
-    if ($rate >= 15) {
+    if ($rate >= 16) {
       return 5;
     }
 
