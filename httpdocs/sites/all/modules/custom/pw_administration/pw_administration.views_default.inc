@@ -248,7 +248,6 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
@@ -262,7 +261,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -376,6 +375,23 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_blogpost_categories']['delta_offset'] = '0';
+  /* Feld: Inhalt: Hauptkategorie */
+  $handler->display->display_options['fields']['field_blog_main_category']['id'] = 'field_blog_main_category';
+  $handler->display->display_options['fields']['field_blog_main_category']['table'] = 'field_data_field_blog_main_category';
+  $handler->display->display_options['fields']['field_blog_main_category']['field'] = 'field_blog_main_category';
+  $handler->display->display_options['fields']['field_blog_main_category']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Inhalt: Topics */
   $handler->display->display_options['fields']['field_topics']['id'] = 'field_topics';
   $handler->display->display_options['fields']['field_topics']['table'] = 'field_data_field_topics';
@@ -465,6 +481,32 @@ function pw_administration_views_default_views() {
     109923392 => 0,
   );
   $handler->display->display_options['filters']['field_blogpost_categories_tid']['vocabulary'] = 'blogcategories';
+  /* Filterkriterium: Inhalt: Hauptkategorie (field_blog_main_category) */
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['id'] = 'field_blog_main_category_tid';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['table'] = 'field_data_field_blog_main_category';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['field'] = 'field_blog_main_category_tid';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['operator'] = 'empty';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['operator_id'] = 'field_blog_main_category_tid_op';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['label'] = 'Hauptkategorie';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['operator'] = 'field_blog_main_category_tid_op';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['identifier'] = 'field_blog_main_category_tid';
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_blog_main_category_tid']['vocabulary'] = 'blogcategories';
   /* Filterkriterium: Inhalt: Topics (field_topics) */
   $handler->display->display_options['filters']['field_topics_tid']['id'] = 'field_topics_tid';
   $handler->display->display_options['filters']['field_topics_tid']['table'] = 'field_data_field_topics';
@@ -489,13 +531,6 @@ function pw_administration_views_default_views() {
     109923392 => 0,
   );
   $handler->display->display_options['filters']['field_topics_tid']['vocabulary'] = 'topics';
-  /* Filterkriterium: Inhalt: Hauptkategorie (field_blog_main_category) */
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['id'] = 'field_blog_main_category_tid';
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['table'] = 'field_data_field_blog_main_category';
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['field'] = 'field_blog_main_category_tid';
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['operator'] = 'empty';
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_blog_main_category_tid']['vocabulary'] = 'blogcategories';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -517,13 +552,14 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('weiter'),
+    t('nächste Seite ›'),
     t('letzte Seite »'),
     t('Bitte auswählen'),
     t('Wert ändern'),
     t('Titel'),
     t('Beitragsdatum'),
     t('Kategorien'),
+    t('Hauptkategorie'),
     t('Themen'),
     t('Veröffentlicht'),
     t('Page'),
@@ -1183,6 +1219,32 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['field_parliament_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator_id'] = 'field_parliament_tid_op';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['label'] = 'Parlament';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['operator'] = 'field_parliament_tid_op';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['identifier'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -1405,6 +1467,7 @@ function pw_administration_views_default_views() {
     t('Frage veröffentlicht'),
     t('Kommentar veröffentlicht'),
     t('Ist Standardantwort'),
+    t('Parlament'),
     t('Page'),
     t('Data export'),
     t('Alle'),
@@ -5135,7 +5198,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -5187,7 +5250,7 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
-  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'textfield';
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
   /* Filterkriterium: Inhalt: Veröffentlicht */
   $handler->display->display_options['filters']['status']['id'] = 'status';
