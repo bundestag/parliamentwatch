@@ -62,6 +62,7 @@ class Zeugnisnoten {
       'Name',
       'Vorname',
       'Nachname',
+      'Wahlkreis',
       'Partei',
       'Fragen',
       'Beantwortete Fragen',
@@ -93,6 +94,9 @@ class Zeugnisnoten {
 
       $cell_lastname['data'] = $info['last_name'];
       $row[] = $cell_lastname;
+
+      $cell_constituency['data'] = $info['constituency'];
+      $row[] = $cell_constituency;
 
       $cell_party['data'] = $info['party'];
       $row[] = $cell_party;
@@ -146,6 +150,14 @@ class Zeugnisnoten {
       // name
       $info[$politician->getId()]['last_name'] = $politician_wrapper->field_user_lname->value();
 
+      // constituency
+      $constituency_nr_name = 'ohne fester Wahlkreis';
+      $constituency = $politician_wrapper->field_user_constituency->value();
+      if ($constituency) {
+        $constituency_wrapper = entity_metadata_wrapper('taxonomy_term', $constituency[0]);
+        $constituency_nr_name = $constituency_wrapper->field_constituency_nr->value() .': '. $constituency_wrapper->name->value();
+      }
+      $info[$politician->getId()]['constituency'] = $constituency_nr_name;
 
       // party
       $party_name = '';
@@ -374,9 +386,13 @@ class Zeugnisnoten {
 
 
   protected function calculateRate($user_id) {
+    $rate = 0;
     $questions = $this->getQuestionCount($user_id);
     $answers = $this->getAnswerCount($user_id, 'answered_questions');
-    return round($answers / $questions * 100, 0);
+    if ($questions > 0 && $answers > 0) {
+      $rate = round($answers / $questions * 100, 0);
+    }
+    return $rate;
   }
 
   protected function getGrade($rate) {
