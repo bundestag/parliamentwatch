@@ -33,7 +33,7 @@ function pw_administration_update_7003() {
     $records = $query->execute()->fetchAllAssoc('vid');
 
      foreach ($records as $record){
-      $user_revision = user_revision_load($record['uid'], $record['vid']);
+      $user_revision = user_revision_load($record->uid, $record->vid);
       $user_revision->field_bundesland[LANGUAGE_NONE][0]['value'] = array_search($bundesland, $allowed_values);
       _pw_userarchives_user_revision_edit_save($user_revision);
     }
