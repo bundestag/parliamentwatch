@@ -105,9 +105,10 @@ class Zeugnisnoten {
   }
 
   protected function getRows() {
-    $data = $this->prepareData();
     $rows = [];
 
+    $data = $this->prepareData();
+    $this->sortData($data);
     foreach ($data as $info) {
       $row = [];
       // name
@@ -193,6 +194,76 @@ class Zeugnisnoten {
     }
 
     return $rows;
+  }
+
+
+  protected function sortData(&$data) {
+    // first we separate the items with 0 questions and create groups of grades
+    $no_questions = [];
+    $grade_arrays = [];
+    foreach ($data as $key => $data_item) {
+      if ($data_item['questions'] == 0) {
+        $no_questions[$key] = $data_item;
+        unset($data[$key]);
+      }
+      else {
+        $grade = $data_item['grade'];
+        $grade_arrays[$grade][$key] = $data_item;
+      }
+    }
+
+
+    // sort the grade arrays by number of answered questions
+    //
+    // - for all grades 1 - 4:
+    //   - sorting by rate DESC
+    //   - if rate is equal: sorting by answered questions DESC
+    //   - if answered question is equal: sorting by last name DESC
+    //
+    // - for all grade 5 - 6:
+    //   - sorting by rate DESC
+    //   - if rate is equal: sorting by questions DESC
+    //   - if questions is equal: sorting by last name DESC
+    foreach ($grade_arrays as $grade => $grade_array) {
+      if ($grade < 5 ) {
+        uasort($grade_arrays[$grade], function ($a, $b) {
+          if ( $a['rate'] == $b['rate']) {
+            if ($a['answered_questions'] == $b['answered_questions']) {
+              return $b['last_name'] - $a['last_name'];
+            }
+            return $b['answered_questions'] - $a['answered_questions'];
+          }
+          return $b['rate'] - $a['rate'];
+        });
+      }
+      else {
+        uasort($grade_arrays[$grade], function ($a, $b) {
+          if ( $a['rate'] == $b['rate']) {
+            if ($a['questions'] == $b['questions']) {
+              return $b['last_name'] - $a['last_name'];
+            }
+            return $a['questions'] - $b['questions'];
+          }
+            return $b['rate'] - $a['rate'];
+        });
+      }
+
+    }
+
+    // sort the grade array by grade
+    ksort($grade_arrays);
+
+    // put all together again in $data
+    $data = [];
+    foreach ($grade_arrays as $grade_array) {
+      foreach ($grade_array as $key => $item) {
+        $data[$key] = $item;
+      }
+    }
+
+
+    // add politicians with no questions again
+    $data += $no_questions;
   }
 
 
