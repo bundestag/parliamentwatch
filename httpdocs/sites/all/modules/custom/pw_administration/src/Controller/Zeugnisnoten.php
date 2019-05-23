@@ -529,7 +529,9 @@ class Zeugnisnoten {
 
   protected function getAnswerDateTimestamp() {
     if ($this->DateAnswer) {
-      return strtotime($this->DateAnswer);
+      $dateTime = new \DateTime($this->DateAnswer, new \DateTimeZone('UTC'));
+      $dateTime->setTime(0,0,1);
+      return $dateTime->getTimestamp();
     }
     else {
       return time();
@@ -539,7 +541,9 @@ class Zeugnisnoten {
 
   protected function getQuestionDateTimestamp() {
     if ($this->DateQuestion) {
-      return strtotime($this->DateQuestion);
+      $dateTime = new \DateTime($this->DateQuestion, new \DateTimeZone('UTC'));
+      $dateTime->setTime(0,0,1);
+      return $dateTime->getTimestamp();
     }
     else {
       return time();
