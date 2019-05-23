@@ -8,11 +8,14 @@
 /**
  * Update politicians to have Bundesland available
  */
-function pw_administration_update_7000() {
+function pw_administration_update_7001() {
   // assure that our new field is existing
-  $feature = features_get_features('pw_profiles');
-  $components = array_keys($feature->info['features']);
-  features_revert(array('pw_profiles' => $components));
+//  $feature = features_get_features('pw_profiles');
+//  $components = array_keys($feature->info['features']);
+//  features_revert(array('pw_profiles' => $components));
+
+  db_truncate('field_data_field_bundesland');
+  db_truncate('field_revision_field_bundesland');
 
   $json = file_get_contents( dirname(__FILE__) . '/data/uuids.json');
   $array = json_decode($json, true);
@@ -25,6 +28,7 @@ function pw_administration_update_7000() {
     $query->join('users', 'u', 'u.uid = uac.uid');
     $query->condition('u.uuid', $uuid);
     $query->condition('uac.parliament_name', 'Bundestag');
+    $query->condition('uac.user_role', 'deputy');
     $query->fields('uac', ['uid', 'vid']);
     $record = $query->execute()->fetchAssoc();
 
