@@ -60,6 +60,7 @@ class Zeugnisnoten {
   protected function buildTable() {
     $header = [
       'Name',
+      'Profil',
       'Vorname',
       'Nachname',
       'Wahlkreis',
@@ -93,6 +94,9 @@ class Zeugnisnoten {
       $cell_name['data'] = $info['fullname'];
       $row[] = $cell_name;
 
+      $cell_profile['data'] = $info['profile'];
+      $row[] = $cell_profile;
+
       $cell_firstname['data'] = $info['first_name'];
       $row[] = $cell_firstname;
 
@@ -106,40 +110,57 @@ class Zeugnisnoten {
       $row[] = $cell_party;
 
       // fragen
-      $cell_question_count['data']  = $info['questions'];
-      $row[] = $cell_question_count;
+      $count_questions = $info['questions'];
+      // if no question was received connect the cells and just place a sentence
+      if (!$count_questions) {
+        $cell_question_count = [];
+        $cell_question_count['data']  = 'Noch keine Fragen erhalten';
+        $cell_question_count['colspan'] = 8;
+        $row[] = $cell_question_count;
 
-      $cell_question_count_check['data']  = $info['questions_check'];
-      $row[] = $cell_question_count_check;
+        $cell_rate = [];
+        $cell_rate['data']  = 'k.W.';
+        $cell_rate['colspan'] = 3;
+        $row[] = $cell_rate;
+      }
+      else {
+        $cell_question_count = [];
+        $cell_question_count['data']  = $info['questions'];
+        $row[] = $cell_question_count;
 
-      $cell_answered['data']  = $info['answered_questions'];
-      $row[] = $cell_answered;
+        $cell_question_count_check['data']  = $info['questions_check'];
+        $row[] = $cell_question_count_check;
 
-      $cell_answered_check['data']  = $info['answered_questions_check'];
-      $row[] = $cell_answered_check;
+        $cell_answered['data']  = $info['answered_questions'];
+        $row[] = $cell_answered;
 
-      $cell_answers_count['data']  = $info['answers'];
-      $row[] = $cell_answers_count;
+        $cell_answered_check['data']  = $info['answered_questions_check'];
+        $row[] = $cell_answered_check;
 
-      $cell_answers_count_check['data']  = $info['answers_check'];
-      $row[] = $cell_answers_count_check;
+        $cell_answers_count['data']  = $info['answers'];
+        $row[] = $cell_answers_count;
 
-      $cell_answers_standard['data']  = $info['standard'];
-      $row[] = $cell_answers_standard;
+        $cell_answers_count_check['data']  = $info['answers_check'];
+        $row[] = $cell_answers_count_check;
 
-      $cell_answers_standard_check['data']  = $info['standard_check'];
-      $row[] = $cell_answers_standard_check;
+        $cell_answers_standard['data']  = $info['standard'];
+        $row[] = $cell_answers_standard;
 
-      $cell_rate['data']  = $info['rate'] .' %';
-      $row[] = $cell_rate;
+        $cell_answers_standard_check['data']  = $info['standard_check'];
+        $row[] = $cell_answers_standard_check;
 
-      $cell_grade['data'] = $info['grade'];
-      $cell_grade['style'] = 'background-color: '. $info['grade_color'];
-      $row[] = $cell_grade;
+        $cell_rate = [];
+        $cell_rate['data']  = $info['rate'] .' %';
+        $row[] = $cell_rate;
 
-      $cell_gradename['data'] = $info['grade_name'];
-      $cell_gradename['style'] = 'background-color: '.  $info['grade_color'];
-      $row[] = $cell_gradename;
+        $cell_grade['data'] = $info['grade'];
+        $cell_grade['style'] = 'background-color: '. $info['grade_color'];
+        $row[] = $cell_grade;
+
+        $cell_gradename['data'] = $info['grade_name'];
+        $cell_gradename['style'] = 'background-color: '.  $info['grade_color'];
+        $row[] = $cell_gradename;
+      }
 
       $rows[] = $row;
     }
@@ -160,6 +181,15 @@ class Zeugnisnoten {
       $info[$politician->getId()] = [];
       // name
       $info[$politician->getId()]['fullname'] = $politician->getFullName();
+
+      // profile link
+      if (!$politiciandata->actual_profile) {
+        $path = 'profile/' . $politiciandata->name . '/archive/' . $politiciandata->vid;
+      }
+      else {
+        $path = 'user/' . $politiciandata->uid;
+      }
+      $info[$politician->getId()]['profile'] = l('Link', $path, ['attributes' => ['target' => '_blank']]);
 
       // first name
       $info[$politician->getId()]['first_name'] = $politician_wrapper->field_user_fname->value();
