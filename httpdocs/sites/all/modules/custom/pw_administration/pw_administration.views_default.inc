@@ -7881,6 +7881,29 @@ function pw_administration_views_default_views() {
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Benutzer: Benutzer UUID */
+  $handler->display->display_options['filters']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['table'] = 'users';
+  $handler->display->display_options['filters']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['uuid']['expose']['operator_id'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['label'] = 'Benutzer UUID';
+  $handler->display->display_options['filters']['uuid']['expose']['operator'] = 'uuid_op';
+  $handler->display->display_options['filters']['uuid']['expose']['identifier'] = 'uuid';
+  $handler->display->display_options['filters']['uuid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
@@ -8158,6 +8181,7 @@ function pw_administration_views_default_views() {
     t('Fraktion'),
     t('Geschlecht'),
     t('Parlament verlassen (field_user_retired)'),
+    t('Benutzer UUID'),
     t('Page'),
     t('Data export'),
     t('Uid'),
