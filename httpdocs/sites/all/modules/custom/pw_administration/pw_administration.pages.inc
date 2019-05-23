@@ -86,7 +86,9 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#multiple' => FALSE,
     '#required' => TRUE,
     '#options' => taxonomy_allowed_values(field_info_field('field_parliament')),
-    '#default_value' => $default_form_value_parliament
+    '#default_value' => $default_form_value_parliament,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
 
@@ -102,7 +104,9 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#type' => 'date_text',
     '#title' => 'Datum, bis zu dem die Fragen eingegangen sein sollen',
     '#date_format' => $format,
-    '#default_value' => $default_form_value_date_question
+    '#default_value' => $default_form_value_date_question,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>',
   ];
 
 
@@ -118,7 +122,9 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#type' => 'date_text',
     '#title' => 'Datum, bis zu dem die Antworten eingegangen sein sollen',
     '#date_format' => $format,
-    '#default_value' => $default_form_value_date_answer
+    '#default_value' => $default_form_value_date_answer,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
   $field_bundesland = field_info_field('field_bundesland');
@@ -134,7 +140,9 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#type' => 'select',
     '#title' => 'Bundesland',
     '#options' => $allowed_values,
-    '#default_value' => $default_form_value_bundesland
+    '#default_value' => $default_form_value_bundesland,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
 
@@ -149,17 +157,23 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#type' => 'checkbox',
     '#title' => 'Ausgabe mit internen Checks',
     '#default_value' => $default_form_value_output_checks,
-    '#return_value' => 1
+    '#return_value' => 1,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
 
   $form['action'] = [
-    '#type' => 'action'
+    '#type' => 'actions'
   ];
 
   $form['action']['submit'] = [
     '#type' => 'submit',
     '#value' => 'Absenden'
+  ];
+
+  $form['#attributes'] = [
+    'class' => 'aw_adminform'
   ];
 
   return $form;
