@@ -183,7 +183,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
               <p>
                 <small>
                   <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
-                  <?php print number_format(floatval(str_replace(',', '.', $user_profile['field_user_election_result'][0]['#markup'])), 1, ',', '.'); ?>&thinsp;%
+                  <?php print $user_profile['field_user_election_result'][0]['#markup']; ?>
                 </small>
               </p>
             <?php endif; ?>
