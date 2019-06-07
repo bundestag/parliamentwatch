@@ -20,13 +20,30 @@
     padding: 1em 1em 0 0;
 }
 
-.views-exposed-widgets {
-    display: flex;
-    flex-wrap: wrap;
+.views-exposed-widgets,
+.aw_adminform > div  {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
+.aw_adminform__item {
+  padding: 1em 1em 0 0;
+}
 
-/* Paragraph-Items */
+.aw_adminform__item .form-item {
+  padding: 0;
+}
+
+.form-item-date-question, .form-item-date-answer {
+  max-width: 180px;
+}
+
+.form-item-date-question input, .form-item-date-answer input {
+  max-width: 170px;
+}
+
+  /* Paragraph-Items */
 
 /* Person */
 .field-name-field-landingpage-contributor > .field-items {

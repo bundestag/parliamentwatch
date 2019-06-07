@@ -28,6 +28,7 @@ function pw_administration_zeugnisnoten_pagecallback() {
   $date_questions = FALSE;
   $date_answers = FALSE;
   $bundesland = FALSE;
+  $output_checks = 0;
 
   $form = drupal_get_form('pw_administration_zeugnisnoten_form');
   $output .= render($form);
@@ -50,7 +51,11 @@ function pw_administration_zeugnisnoten_pagecallback() {
     $bundesland = $query_params["bundesland"];
   }
 
-  $controller = new \Drupal\pw_administration\Controller\Zeugnisnoten($parliament, $date_questions, $date_answers, $bundesland);
+  if (isset($query_params["output_checks"]) && is_string($query_params["output_checks"])) {
+    $output_checks = $query_params["output_checks"];
+  }
+
+  $controller = new \Drupal\pw_administration\Controller\Zeugnisnoten($parliament, $date_questions, $date_answers, $bundesland, $output_checks);
   $output .= $controller->build();
 
   return $output;
@@ -65,45 +70,110 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
   $default_question_date = $date_now - (14 * 24 * 60 * 60); // 14 days
   $default_answer_date = $date_now;
   $form['#method'] = 'get';
+  $query_params = drupal_get_query_parameters();
+
+  $default_form_value_parliament = 26909;
+  if (isset($form_state["input"]['parliament'])) {
+    $default_form_value_parliament = $form_state["input"]['parliament'];
+  }
+  else if (isset($query_params['parliament'])) {
+    $default_form_value_parliament = $query_params['parliament'];
+  }
+
   $form['parliament'] = [
     '#type' => 'select',
     '#title' => 'Parlament',
     '#multiple' => FALSE,
     '#required' => TRUE,
     '#options' => taxonomy_allowed_values(field_info_field('field_parliament')),
-    '#default_value' => isset($form_state["input"]['parliament']) ? $form_state["input"]['parliament'] : 26909
+    '#default_value' => $default_form_value_parliament,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
+
+  $default_form_value_date_question = date('Y-m-d', $default_question_date);
+  if (isset($form_state["input"]['date_question'])) {
+    $default_form_value_date_question = $form_state["input"]['date_question'];
+  }
+  else if (isset($query_params['date_question']) && isset($query_params["date_question"]["date"])) {
+    $date = strtotime($query_params["date_question"]["date"]);
+    $default_form_value_date_question =  date('Y-m-d', $date);
+  }
   $form['date_question'] = [
     '#type' => 'date_text',
     '#title' => 'Datum, bis zu dem die Fragen eingegangen sein sollen',
     '#date_format' => $format,
-    '#default_value' => isset($form_state["input"]['date_question']) ? $form_state["input"]['date_question'] : date('Y-m-d', $default_question_date)
+    '#default_value' => $default_form_value_date_question,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>',
   ];
 
+
+  $default_form_value_date_answer = date('Y-m-d', $default_answer_date);
+  if (isset($form_state["input"]['date_answer'])) {
+    $default_form_value_date_answer = $form_state["input"]['date_answer'];
+  }
+  else if (isset($query_params['date_answer']) && isset($query_params["date_answer"]["date"])) {
+    $date = strtotime($query_params["date_answer"]["date"]);
+    $default_form_value_date_answer = date('Y-m-d', $date);
+  }
   $form['date_answer'] = [
     '#type' => 'date_text',
     '#title' => 'Datum, bis zu dem die Antworten eingegangen sein sollen',
     '#date_format' => $format,
-    '#default_value' => isset($form_state["input"]['date_answer']) ? $form_state["input"]['date_answer'] : date('Y-m-d', $default_answer_date)
+    '#default_value' => $default_form_value_date_answer,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
-  $filed_bundesland = field_info_field('field_bundesland');
-  $allowed_values = list_allowed_values($filed_bundesland);
+  $field_bundesland = field_info_field('field_bundesland');
+  $allowed_values = list_allowed_values($field_bundesland);
+  $default_form_value_bundesland = NULL;
+  if (isset($form_state["input"]['bundesland'])) {
+    $default_form_value_bundesland = $form_state["input"]['bundesland'];
+  }
+  else if (isset($query_params['bundesland'])) {
+    $default_form_value_bundesland = $query_params['bundesland'];
+  }
   $form['bundesland'] = [
     '#type' => 'select',
     '#title' => 'Bundesland',
     '#options' => $allowed_values,
-    '#default_value' => isset($form_state["input"]['bundesland']) ? $form_state["input"]['bundesland'] : NULL
+    '#default_value' => $default_form_value_bundesland,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
   ];
 
+
+  $default_form_value_output_checks = 0;
+  if (isset($form_state["input"]['output_checks'])) {
+    $default_form_value_output_checks = $form_state["input"]['output_checks'];
+  }
+  else if (isset($query_params['output_checks'])) {
+    $default_form_value_output_checks = $query_params['output_checks'];
+  }
+  $form['output_checks'] = [
+    '#type' => 'checkbox',
+    '#title' => 'Ausgabe mit internen Checks',
+    '#default_value' => $default_form_value_output_checks,
+    '#return_value' => 1,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div>'
+  ];
+
+
   $form['action'] = [
-    '#type' => 'action'
+    '#type' => 'actions'
   ];
 
   $form['action']['submit'] = [
     '#type' => 'submit',
     '#value' => 'Absenden'
+  ];
+
+  $form['#attributes'] = [
+    'class' => 'aw_adminform'
   ];
 
   return $form;

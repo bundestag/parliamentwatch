@@ -47,6 +47,16 @@ function pw_profiles_user_default_permissions() {
     'module' => 'user_revision',
   );
 
+  // Exported permission: create field_bundesland.
+  $permissions['create field_bundesland'] = array(
+    'name' => 'create field_bundesland',
+    'roles' => array(
+      0 => 'administrator',
+      1 => 'anonymous user',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: create field_user_about.
   $permissions['create field_user_about'] = array(
     'name' => 'create field_user_about',
@@ -435,6 +445,16 @@ function pw_profiles_user_default_permissions() {
     'module' => 'user_revision',
   );
 
+  // Exported permission: edit field_bundesland.
+  $permissions['edit field_bundesland'] = array(
+    'name' => 'edit field_bundesland',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: edit field_user_about.
   $permissions['edit field_user_about'] = array(
     'name' => 'edit field_user_about',
@@ -797,6 +817,16 @@ function pw_profiles_user_default_permissions() {
     'name' => 'edit field_user_roles_for_view_mode_s',
     'roles' => array(
       0 => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
+  // Exported permission: edit own field_bundesland.
+  $permissions['edit own field_bundesland'] = array(
+    'name' => 'edit own field_bundesland',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
     ),
     'module' => 'field_permissions',
   );
@@ -1296,6 +1326,16 @@ function pw_profiles_user_default_permissions() {
     'module' => 'filter',
   );
 
+  // Exported permission: view field_bundesland.
+  $permissions['view field_bundesland'] = array(
+    'name' => 'view field_bundesland',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'field_permissions',
+  );
+
   // Exported permission: view field_user_about.
   $permissions['view field_user_about'] = array(
     'name' => 'view field_user_about',
@@ -1767,6 +1807,16 @@ function pw_profiles_user_default_permissions() {
       3 => 'authenticated user',
     ),
     'module' => 'file_entity',
+  );
+
+  // Exported permission: view own field_bundesland.
+  $permissions['view own field_bundesland'] = array(
+    'name' => 'view own field_bundesland',
+    'roles' => array(
+      0 => 'Content Manager',
+      1 => 'administrator',
+    ),
+    'module' => 'field_permissions',
   );
 
   // Exported permission: view own field_user_about.
