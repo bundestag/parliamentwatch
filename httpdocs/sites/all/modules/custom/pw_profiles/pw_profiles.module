@@ -365,8 +365,11 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
       $account->content['field_user_constituency']['#title'] = t('Constituency', [], ['context' => 'Bayern']);
     }
-    if (strpos(pw_profiles_parliament($account)->name, 'EU') === 0) {
+    elseif (strpos(pw_profiles_parliament($account)->name, 'EU') === 0) {
       $account->content['field_user_constituency']['#title'] = t('Constituency', [], ['context' => 'EU']);
+    }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
+      $account->content['field_user_constituency']['#title'] = t('Constituency', [], ['context' => 'Bremen']);
     }
   }
 
@@ -385,6 +388,10 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
       $constituency_context = '';
       $list_context = 'Baden-Württemberg';
     }
+    elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
+      $constituency_context = 'Bremen';
+      $list_context = '';
+    }
     else {
       $constituency_context = '';
       $list_context = '';
@@ -392,11 +399,12 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
 
     $account->content['field_user_election_result'][0]['#title'] = t('Constituency result', [], ['context' => $constituency_context]);
 
+    $election_result = number_format(floatval(str_replace(',', '.', $account->content['field_user_election_result']['#items'][0]['value'])), 1, ',', '.');
     if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']], ['context' => $constituency_context]);
+      $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $election_result], ['context' => $constituency_context]);
     }
     else {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $account->content['field_user_election_result']['#items'][0]['value']]);
+      $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $election_result]);
     }
   }
 }

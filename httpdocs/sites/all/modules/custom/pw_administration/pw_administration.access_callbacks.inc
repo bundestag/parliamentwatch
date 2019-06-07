@@ -11,7 +11,7 @@ use Drupal\pw_globals\PWUser;
 /**
  * Access callback for Abgeordnetenwatch admin dashboard
  */
-function pw_administration_dashboard_pagecallback_access() {
+function pw_administration_pagecallback_access() {
   $pwUser = new PWUser();
 
   if ($pwUser->hasRole(PWUser::ROLE_ADMINISTRATOR) ||
@@ -22,18 +22,3 @@ function pw_administration_dashboard_pagecallback_access() {
   return FALSE;
 }
 
-
-
-/**
- * Access callback for Wahlen & Parlamente
- */
-function pw_administration_wahlenparlamente_pagecallback_access() {
-  $pwUser = new PWUser();
-
-  if ($pwUser->hasRole(PWUser::ROLE_ADMINISTRATOR) ||
-    $pwUser->hasRole(PWUser::ROLE_CONTENT_MANAGER) ) {
-    return TRUE;
-  }
-
-  return FALSE;
-}
