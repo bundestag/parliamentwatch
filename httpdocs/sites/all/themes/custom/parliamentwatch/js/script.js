@@ -957,14 +957,14 @@
       });
 
       $inputs.on('focus input change', function () {
-        setFloatingLabel($(this));
+        setFloatingLabel($(this), true);
       });
 
       $inputs.on('blur', function () {
         setFloatingLabel($(this), false);
       });
 
-      function setFloatingLabel($input, floating = true) {
+      function setFloatingLabel($input, floating) {
         var $label = $input.siblings('.form__item__label:not(.sr-only)');
         var modifier = 'form__item__label--floating';
 
