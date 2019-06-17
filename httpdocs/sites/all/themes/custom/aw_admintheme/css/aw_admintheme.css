@@ -35,12 +35,20 @@
   padding: 0;
 }
 
-.form-item-date-question, .form-item-date-answer {
-  max-width: 180px;
+.date-element {
+  max-width: 190px;
 }
 
-.form-item-date-question input, .form-item-date-answer input {
-  max-width: 170px;
+.date-element .form-type-select[class*=hour] {
+    margin: 0;
+}
+
+.date-element  .form-type-select label {
+    font-weight: normal;
+}
+
+.flexbox-linebreak {
+    width: 100%;
 }
 
   /* Paragraph-Items */
