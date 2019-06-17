@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\pw_administration\Controller\Zeugnisnoten;
+
 /**
  * @file
  * Page callback for the PW Administration module
@@ -75,12 +77,12 @@ function pw_administration_zeugnisnoten_pagecallback() {
 function pw_administration_zeugnisnoten_form($form, &$form_state) {
   $form = [];
 
-  $format = 'd.M.Y H:i';
-  $date_now = time();
-  $default_question_date = $date_now - (15 * 24 * 60 * 60) ; // 15 days
-  $default_question_date_kulanz = $date_now - (15 * 24 * 60 * 60) ; // 15 days
-  $default_answer_date = $date_now - (1 * 24 * 60 * 60); // 1 day
-  $default_answer_date_kulanz = $date_now - (1 * 24 * 60 * 60); // 1 day
+  $format = 'd.m.Y H:i';
+
+  $default_question_date = Zeugnisnoten::getDefaultQuestionTime();
+  $default_question_date_kulanz = Zeugnisnoten::getDefaultQuestionKulanzTime();
+  $default_answer_date = Zeugnisnoten::getDefaultAnswerTime();
+  $default_answer_date_kulanz = Zeugnisnoten::getDefaultAnswerKulanzTime();
   $form['#method'] = 'get';
   $query_params = drupal_get_query_parameters();
 
@@ -140,14 +142,12 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#suffix' => '</div><div class="flexbox-linebreak"></div>'
   ];
 
-
-  $default_form_value_date_question = date('Y-m-d', $default_question_date);
+  $default_form_value_date_question = $default_question_date;
   if (isset($form_state["input"]['date_question'])) {
     $default_form_value_date_question = $form_state["input"]['date_question'];
   }
-  else if (isset($query_params['date_question']) && isset($query_params["date_question"]["date"])) {
-    $date = strtotime($query_params["date_question"]["date"]);
-    $default_form_value_date_question =  date('Y-m-d H:i', $date);
+  else if (isset($query_params['date_question']) && !empty($query_params["date_question"])) {
+    $default_form_value_date_question = $query_params["date_question"];
   }
   $form['date_question'] = [
     '#type' => 'date_select',
@@ -158,54 +158,52 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#suffix' => '</div>',
   ];
 
-  $default_form_value_date_question_kulanz = date('Y-m-d', $default_question_date_kulanz);
+
+  $default_form_value_date_question_kulanz = $default_question_date_kulanz;
   if (isset($form_state["input"]['date_question_kulanz'])) {
     $default_form_value_date_question_kulanz = $form_state["input"]['date_question_kulanz'];
   }
-  else if (isset($query_params['date_question_kulanz']) && isset($query_params["date_question_kulanz"]["date"])) {
-    $date = strtotime($query_params["date_question_kulanz"]["date"]);
-    $default_form_value_date_question_kulanz = date('Y-m-d H:i', $date);
+  else if (isset($query_params['date_question_kulanz']) && !empty($query_params["date_question_kulanz"])) {
+    $default_form_value_date_question_kulanz = $query_params['date_question_kulanz'];
   }
   $form['date_question_kulanz'] = [
     '#type' => 'date_select',
     '#title' => 'Stichtag Fragen Kulanz',
     '#date_format' => $format,
-    '#default_value' => $default_form_value_date_question_kulanz,
+    '#default_value' =>  $default_form_value_date_question_kulanz,
     '#prefix' => '<div class="aw_adminform__item date-element date_question_kulanz">',
     '#suffix' => '</div>',
   ];
 
-  $default_form_value_date_answer = date('Y-m-d', $default_answer_date);
+  $default_form_value_date_answer = $default_answer_date;
   if (isset($form_state["input"]['date_answer'])) {
     $default_form_value_date_answer = $form_state["input"]['date_answer'];
   }
-  else if (isset($query_params['date_answer']) && isset($query_params["date_answer"]["date"])) {
-    $date = strtotime($query_params["date_answer"]["date"]);
-    $default_form_value_date_answer = date('Y-m-d H:i', $date);
+  else if (isset($query_params['date_answer']) && !empty($query_params["date_answer"])) {
+    $default_form_value_date_answer = $query_params["date_answer"];
   }
   $form['date_answer'] = [
     '#type' => 'date_select',
     '#title' => 'Stichtag Antworten',
     '#date_format' => $format,
-    '#default_value' => $default_form_value_date_answer,
+    '#default_value' =>  $default_form_value_date_answer,
     '#prefix' => '<div class="aw_adminform__item date-element date_answer">',
     '#suffix' => '</div>'
   ];
 
 
-  $default_form_value_date_answer_kulanz = date('Y-m-d', $default_answer_date_kulanz);
+  $default_form_value_date_answer_kulanz =$default_answer_date_kulanz;
   if (isset($form_state["input"]['date_answer_kulanz'])) {
     $default_form_value_date_answer_kulanz = $form_state["input"]['date_answer_kulanz'];
   }
-  else if (isset($query_params['date_answer_kulanz']) && isset($query_params["date_answer_kulanz"]["date"])) {
-    $date = strtotime($query_params["date_answer_kulanz"]["date"]);
-    $default_form_value_date_answer_kulanz = date('Y-m-d H:i', $date);
+  else if (isset($query_params['date_answer_kulanz']) && !empty($query_params["date_answer_kulanz"])) {
+    $default_form_value_date_answer_kulanz = $query_params["date_answer_kulanz"];
   }
   $form['date_answer_kulanz'] = [
     '#type' => 'date_select',
     '#title' => 'Stichtag Antworten Kulanz',
     '#date_format' => $format,
-    '#default_value' => $default_form_value_date_answer_kulanz,
+    '#default_value' =>  $default_form_value_date_answer_kulanz,
     '#prefix' => '<div class="aw_adminform__item date-element date_answer_kulanz">',
     '#suffix' => '</div><div class="flexbox-linebreak"></div>'
   ];

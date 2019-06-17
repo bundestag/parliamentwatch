@@ -635,4 +635,76 @@ class Zeugnisnoten {
 
     return 'white';
   }
+
+
+  /**
+   * Get the default question time timestamp
+   *
+   * = today - 15 days at 23:59
+   */
+  public static function getDefaultQuestionTime() {
+    $date_now = time();
+    $default_question_date = $date_now - (15 * 24 * 60 * 60);
+
+    $day = date('Y-m-d', $default_question_date);
+
+    $default_question_date_time = $day .' 23:59';
+    return self::getDateArrayFromTimestamp(strtotime($default_question_date_time));
+  }
+
+  /**
+   * Get the default question kulanz time timestamp
+   *
+   * = today - 14 days at 23:59
+   */
+  public static function getDefaultQuestionKulanzTime() {
+    $date_now = time();
+    $default_question_kulanz_date = $date_now - (14 * 24 * 60 * 60);
+
+    $day = date('Y-m-d', $default_question_kulanz_date);
+
+    $default_question_kulanz_date_time = $day .' 23:59';
+    return self::getDateArrayFromTimestamp(strtotime($default_question_kulanz_date_time));
+  }
+
+  /**
+   * Get the default answer time timestamp
+   *
+   * = today - 1 day at 12:00
+   */
+  public static function getDefaultAnswerTime() {
+    $date_now = time();
+    $default_answer_date = $date_now - (1 * 24 * 60 * 60);
+
+    $day = date('Y-m-d', $default_answer_date);
+
+    $default_answer_date_time = $day .' 12:00';
+    return self::getDateArrayFromTimestamp(strtotime($default_answer_date_time));
+  }
+
+  /**
+   * Get the default answer kulanz time timestamp
+   *
+   * = today - 1 day at 23:59
+   */
+  public static function getDefaultAnswerKulanzTime() {
+    $date_now = time();
+    $default_answer_date = $date_now - (1 * 24 * 60 * 60);
+
+    $day = date('Y-m-d', $default_answer_date);
+
+    $default_answer_date_time = $day .' 23:59';
+    return self::getDateArrayFromTimestamp(strtotime($default_answer_date_time));
+  }
+
+
+  public static function getDateArrayFromTimestamp($timestamp) {
+    return [
+      'day' => date('d', $timestamp),
+      'month' => date('m', $timestamp),
+      'year' => date('Y', $timestamp),
+      'hour' => date('H', $timestamp),
+      'minute' => date('i', $timestamp)
+    ];
+  }
 }
