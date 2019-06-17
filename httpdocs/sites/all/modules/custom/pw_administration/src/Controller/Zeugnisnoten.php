@@ -906,7 +906,7 @@ class Zeugnisnoten {
    */
   public static function getDefaultQuestionTime() {
     $date_now = time();
-    $default_question_date = $date_now - (15 * 24 * 60 * 60);
+    $default_question_date = $date_now - (14 * 24 * 60 * 60);
 
     $day = date('Y-m-d', $default_question_date);
 
@@ -921,7 +921,7 @@ class Zeugnisnoten {
    */
   public static function getDefaultQuestionKulanzTime() {
     $date_now = time();
-    $default_question_kulanz_date = $date_now - (14 * 24 * 60 * 60);
+    $default_question_kulanz_date = $date_now - (13 * 24 * 60 * 60);
 
     $day = date('Y-m-d', $default_question_kulanz_date);
 
@@ -936,7 +936,7 @@ class Zeugnisnoten {
    */
   public static function getDefaultAnswerTime() {
     $date_now = time();
-    $default_answer_date = $date_now - (1 * 24 * 60 * 60);
+    $default_answer_date = $date_now;
 
     $day = date('Y-m-d', $default_answer_date);
 
@@ -951,7 +951,7 @@ class Zeugnisnoten {
    */
   public static function getDefaultAnswerKulanzTime() {
     $date_now = time();
-    $default_answer_date = $date_now - (1 * 24 * 60 * 60);
+    $default_answer_date = $date_now;
 
     $day = date('Y-m-d', $default_answer_date);
 
