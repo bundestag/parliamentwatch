@@ -707,4 +707,10 @@ class Zeugnisnoten {
       'minute' => date('i', $timestamp)
     ];
   }
+
+
+  public static function turnDateArrayToTimestamp(array $date_array) {
+    $date_string = $date_array['year'] .'-'. $date_array['month'] .'-'. $date_array['day'] .' '. $date_array['hour'] .':'. $date_array['minute'];
+    return strtotime($date_string);
+  }
 }

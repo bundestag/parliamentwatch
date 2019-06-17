@@ -43,20 +43,20 @@ function pw_administration_zeugnisnoten_pagecallback() {
     $parliament = $query_params["parliament"];
   }
 
-  if (isset($query_params["date_question"]) && isset($query_params["date_question"]["date"])) {
-    $date_questions = $query_params["date_question"]["date"];
+  if (isset($query_params["date_question"]) && !empty($query_params["date_question"])) {
+    $date_questions = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question"]);
   }
 
-  if (isset($query_params["date_question_kulanz"]) && isset($query_params["date_question_kulanz"]["date"])) {
-    $date_questions = $query_params["date_question_kulanz"]["date"];
+  if (isset($query_params["date_question_kulanz"]) && !empty($query_params["date_question_kulanz"])) {
+    $date_answers = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question_kulanz"]);
   }
 
-  if (isset($query_params["date_answer"]) && isset($query_params["date_answer"]["date"])) {
-    $date_answers = $query_params["date_answer"]["date"];
+  if (isset($query_params["date_answer"]) && !empty($query_params["date_answer"])) {
+    $date_answers_kulanz = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer"]);
   }
 
-  if (isset($query_params["date_answer_kulanz"]) && isset($query_params["date_answer_kulanz"]["date"])) {
-    $date_answers = $query_params["date_answer_kulanz"]["date"];
+  if (isset($query_params["date_answer_kulanz"]) && !empty($query_params["date_answer_kulanz"])) {
+    $date_questions = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer_kulanz"]);
   }
 
   if (isset($query_params["bundesland"]) && is_string($query_params["bundesland"])) {
