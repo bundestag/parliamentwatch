@@ -136,6 +136,9 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
   else if (isset($query_params['bundesland'])) {
     $default_form_value_bundesland = $query_params['bundesland'];
   }
+
+  // add "all" option to Bundesland
+  $allowed_values = array('all' => 'Alle') + $allowed_values;
   $form['bundesland'] = [
     '#type' => 'select',
     '#title' => 'Bundesland',
@@ -179,6 +182,3 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
   return $form;
 }
 
-function pw_administration_zeugnisnoten_form_submit($form, &$form_state) {
-  drupal_set_message('submitted');
-}

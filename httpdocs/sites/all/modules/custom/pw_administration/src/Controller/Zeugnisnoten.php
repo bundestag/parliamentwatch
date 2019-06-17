@@ -501,9 +501,10 @@ class Zeugnisnoten {
     _pw_uac_add_conditions($query, array('parliament' => $this->getParliamentName(), 'roles' => 'deputy', 'date' => $date_retirement));
 
     // add filter by bundesland
-    $query->join('field_revision_field_bundesland', 'bundesland', 'uac.uid = bundesland.entity_id AND uac.vid = bundesland.revision_id');
+    if ($this->getBundeslandKey() !== 'all') {
+      $query->join('field_revision_field_bundesland', 'bundesland', 'uac.uid = bundesland.entity_id AND uac.vid = bundesland.revision_id');
     $query->condition('bundesland.field_bundesland_value', $this->getBundeslandKey());
-    
+    }
 
     $query->addExpression('MAX(vid)', 'max_vid');
     $query->groupBy('uac.uid');
