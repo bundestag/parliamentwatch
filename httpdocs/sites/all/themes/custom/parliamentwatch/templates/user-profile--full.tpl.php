@@ -196,7 +196,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
               <?php if ($user_profile['field_user_list_won']['#items'][0]['value'] == 1): ?>
                 <p>
                   <small>
-                    <?php print t('drafted via list'); ?>
+                    <?php print $user_profile['field_user_list'][0]['#markup_subline']; ?>
                   </small>
                 </p>
               <?php endif; ?>
