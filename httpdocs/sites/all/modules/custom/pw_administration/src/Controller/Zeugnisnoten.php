@@ -17,7 +17,11 @@ class Zeugnisnoten {
 
   protected $DateQuestion;
 
+  protected $DateQuestionKulanz;
+
   protected $DateAnswer;
+
+  protected $DateAnswerKulanz;
 
   protected $bundesland;
 
@@ -33,10 +37,12 @@ class Zeugnisnoten {
 
   protected $answersByPoliticians = [];
 
-  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateAnswer = FALSE, $bundesland = FALSE, $output_checks = 0) {
+  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateQuestionKulanz = FALSE, $DateAnswer = FALSE, $DateAnswerKulanz = FALSE, $bundesland = FALSE, $output_checks = 0) {
     $this->parliament = $parliament;
-    $this->DateAnswer = $DateAnswer;
     $this->DateQuestion = $DateQuestion;
+    $this->DateQuestionKulanz = $DateQuestionKulanz;
+    $this->DateAnswer = $DateAnswer;
+    $this->DateAnswerKulanz = $DateAnswerKulanz;
     $this->bundesland = $bundesland;
     $this->outputChecks = $output_checks;
   }
@@ -468,7 +474,7 @@ class Zeugnisnoten {
       $query = db_select('node', 'n');
       $query->condition('n.type', 'dialogue');
       $query->condition('n.status', NODE_PUBLISHED);
-      $query->condition('n.created', $this->getQuestionDateTimestamp(), '<');
+      $query->condition('n.created', $this->getQuestionDateTimestamp(), '<=');
 
       // assure just questions are counted which were asked for the legislature
       $query->join('field_data_field_dialogue_before_election', 'beforeelection', 'n.nid = beforeelection.entity_id');
