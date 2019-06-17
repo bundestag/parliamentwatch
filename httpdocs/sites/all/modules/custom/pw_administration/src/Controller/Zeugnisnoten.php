@@ -63,10 +63,9 @@ class Zeugnisnoten {
   protected function buildTable() {
     if ( $this->outputChecks ) {
       $header = [
-        'Name',
-        'Profil',
-        'Vorname',
         'Nachname',
+        'Vorname',
+        'Profil',
         'Wahlkreis',
         'Partei',
         'Fragen',
@@ -86,7 +85,8 @@ class Zeugnisnoten {
     }
     else {
       $header = [
-        'Name',
+        'Nachname',
+        'Vorname',
         'Wahlkreis',
         'Partei',
         'Fragen',
@@ -111,19 +111,15 @@ class Zeugnisnoten {
     $this->sortData($data);
     foreach ($data as $info) {
       $row = [];
-      // name
-      $cell_name['data'] = $info['fullname'];
-      $row[] = $cell_name;
+      $cell_lastname['data'] = $info['last_name'];
+      $row[] = $cell_lastname;
+
+      $cell_firstname['data'] = $info['first_name'];
+      $row[] = $cell_firstname;
 
       if ( $this->outputChecks ) {
         $cell_profile['data'] = $info['profile'];
         $row[] = $cell_profile;
-
-        $cell_firstname['data'] = $info['first_name'];
-        $row[] = $cell_firstname;
-
-        $cell_lastname['data'] = $info['last_name'];
-        $row[] = $cell_lastname;
       }
 
       $cell_constituency['data'] = $info['constituency'];
