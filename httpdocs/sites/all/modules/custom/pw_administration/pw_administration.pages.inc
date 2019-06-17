@@ -130,7 +130,7 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#suffix' => '</div>'
   ];
 
-  $default_form_value_output_checks = 1;
+  $default_form_value_output_checks = 0;
   if (isset($form_state["input"]['output_checks'])) {
     $default_form_value_output_checks = $form_state["input"]['output_checks'];
   }

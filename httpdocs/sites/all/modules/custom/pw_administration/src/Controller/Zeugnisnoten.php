@@ -68,6 +68,7 @@ class Zeugnisnoten {
       $this->loadData();
       $output .= '<b>Ergebnis: '. count($this->politicians) .' Politikerinnen</b>';
       $output .= $this->buildTable();
+      $output .= $this->buildTotalTable();
     }
 
     return $output;
@@ -75,6 +76,49 @@ class Zeugnisnoten {
 
 
 
+  protected function buildTotalTable() {
+    $rows = [];
+
+    $totalAnsweredQuestions = $this->countTotalAnsweredQuestions();
+    $totalQuestions = count($this->getQuestionNids());
+    $totalRate = round($totalAnsweredQuestions / $totalQuestions * 100, 0);
+
+    $header = [
+      'Fragen',
+      'Beantwortete Fragen',
+      'Quote',
+      [
+        'data' => 'Note',
+        'colspan' => 2
+      ]
+    ];
+
+    $row = [];
+
+    $cell_questions = [];
+    $cell_questions['data']  = $totalQuestions;
+    $row[] = $cell_questions;
+
+    $cell_answered_questions = [];
+    $cell_answered_questions['data']  = $totalAnsweredQuestions;
+    $row[] = $cell_answered_questions;
+
+    $cell_rate = [];
+    $cell_rate['data']  = $totalRate .' %';
+    $row[] = $cell_rate;
+
+    $cell_grade['data'] = $this->getGrade($totalRate);
+    $cell_grade['style'] = 'background-color: '. $this->getGradeColor($cell_grade['data']);
+    $row[] = $cell_grade;
+
+    $cell_gradename['data'] = $this->getGradeName($cell_grade['data']);
+    $cell_gradename['style'] = 'background-color: '.  $this->getGradeColor($cell_grade['data']);
+    $row[] = $cell_gradename;
+
+    $rows[] = $row;
+
+    return theme('table', ['header' => $header, 'rows' => $rows, 'caption' => 'Gesamt Ergebnis', 'attributes' => ['style' => 'width: auto;']]);
+  }
 
 
   protected function buildTable() {
@@ -524,6 +568,7 @@ class Zeugnisnoten {
     return 0;
   }
 
+
   protected function getAnswerKulanzCount($user_uid, $value) {
     if (isset($this->answersByPoliticiansKulanz[$user_uid][$value])) {
       return count($this->answersByPoliticiansKulanz[$user_uid][$value]);
@@ -567,6 +612,21 @@ class Zeugnisnoten {
         $this->answersByPoliticians[$answer->uid]['answered_questions'][$answer->nid]= $answer;
       }
     }
+  }
+
+
+  /**
+   * Get the total of all answered questions
+   *
+   * @return int
+   */
+  protected function countTotalAnsweredQuestions() {
+    $count = 0;
+    foreach ($this->getPoliticianIds() as $politician_id) {
+      $count += $this->getAnswerCount($politician_id, 'answered_questions');
+    }
+
+    return $count;
   }
 
   protected function countAnswersKulanzByPolitician() {
@@ -650,7 +710,7 @@ class Zeugnisnoten {
    * Collect the questions without Kulanz
    */
   protected function collectQuestions() {
-    if ($this->outputChecks && $this->getQuestionDateTimestamp()) {
+    if ($this->getQuestionDateTimestamp()) {
       $this->questions = $this->loadQuestions($this->getQuestionDateTimestamp());
     }
   }
