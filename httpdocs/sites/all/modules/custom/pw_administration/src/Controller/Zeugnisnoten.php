@@ -85,7 +85,7 @@ class Zeugnisnoten {
 
     $header = [
       'Fragen',
-      'Beantwortete Fragen',
+      'Antworten',
       'Quote',
       [
         'data' => 'Note',
@@ -225,7 +225,7 @@ class Zeugnisnoten {
       // if no question was received connect the cells and just place a sentence
       if (!$count_questions) {
         $cell_question_count = [];
-        $cell_question_count['data']  = 'Noch keine Fragen erhalten';
+        $cell_question_count['data']  = '<i>Noch keine Fragen erhalten</i>';
         $colspan = 3;
         if ($this->outputChecks && !$this->outputKulanz) {
           $colspan = 9;
@@ -237,7 +237,7 @@ class Zeugnisnoten {
         $row[] = $cell_question_count;
 
         $cell_rate = [];
-        $cell_rate['data']  = 'k.W.';
+        $cell_rate['data']  = '<i>keine Wertung</i>';
         $cell_rate['colspan'] = 2;
         if ($this->outputChecks && $this->outputKulanz) {
           $cell_rate['colspan'] = 6;
