@@ -27,17 +27,27 @@ class Zeugnisnoten {
 
   protected $outputChecks;
 
+  protected $outputKulanz;
+
   protected $politicians = [];
 
   protected $questions = [];
 
+  protected $questionsKulanz = [];
+
   protected $answers = [];
+
+  protected $answersKulanz = [];
 
   protected $questionsByPolitician = [];
 
+  protected $questionsByPoliticianKulanz = [];
+
   protected $answersByPoliticians = [];
 
-  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateQuestionKulanz = FALSE, $DateAnswer = FALSE, $DateAnswerKulanz = FALSE, $bundesland = FALSE, $output_checks = 0) {
+  protected $answersByPoliticiansKulanz = [];
+
+  public function __construct($parliament = FALSE, $DateQuestion = FALSE, $DateQuestionKulanz = FALSE, $DateAnswer = FALSE, $DateAnswerKulanz = FALSE, $bundesland = FALSE, $output_checks = 0, $output_kulanz = 0) {
     $this->parliament = $parliament;
     $this->DateQuestion = $DateQuestion;
     $this->DateQuestionKulanz = $DateQuestionKulanz;
@@ -45,6 +55,7 @@ class Zeugnisnoten {
     $this->DateAnswerKulanz = $DateAnswerKulanz;
     $this->bundesland = $bundesland;
     $this->outputChecks = $output_checks;
+    $this->outputKulanz = $output_kulanz;
   }
 
 
@@ -67,7 +78,7 @@ class Zeugnisnoten {
 
 
   protected function buildTable() {
-    if ( $this->outputChecks ) {
+    if ( $this->outputChecks && !$this->outputKulanz) {
       $header = [
         'Nachname',
         'Vorname',
@@ -85,6 +96,37 @@ class Zeugnisnoten {
         'Quote',
         [
           'data' => 'Note',
+          'colspan' => 2
+        ]
+      ];
+    }
+    else if ($this->outputChecks && $this->outputKulanz) {
+      $header = [
+        'Nachname',
+        'Vorname',
+        'Profil',
+        'Wahlkreis',
+        'Partei',
+        'Fragen',
+        'Fragen Kulanz',
+        'Check',
+        'Beantwortete Fragen',
+        'Beantwortet Kulanz',
+        'Check',
+        'Antworten insgesamt',
+        'Antworten Kulanz',
+        'Check',
+        'Standard-Antworten',
+        'Standard-Antworten Kulanz',
+        'Check',
+        'Quote',
+        [
+          'data' => 'Note',
+          'colspan' => 2
+        ],
+        'Quote Kulanz',
+        [
+          'data' => 'Note Kulanz',
           'colspan' => 2
         ]
       ];
@@ -140,12 +182,22 @@ class Zeugnisnoten {
       if (!$count_questions) {
         $cell_question_count = [];
         $cell_question_count['data']  = 'Noch keine Fragen erhalten';
-        $cell_question_count['colspan'] = $this->outputChecks ? 9 : 3;
+        $colspan = 3;
+        if ($this->outputChecks && !$this->outputKulanz) {
+          $colspan = 9;
+        }
+        if ($this->outputChecks && $this->outputKulanz) {
+          $colspan = 12;
+        }
+        $cell_question_count['colspan'] = $colspan;
         $row[] = $cell_question_count;
 
         $cell_rate = [];
         $cell_rate['data']  = 'k.W.';
         $cell_rate['colspan'] = 2;
+        if ($this->outputChecks && $this->outputKulanz) {
+          $cell_rate['colspan'] = 6;
+        }
         $row[] = $cell_rate;
       }
       else {
@@ -153,7 +205,15 @@ class Zeugnisnoten {
         $cell_question_count['data']  = $info['questions'];
         $row[] = $cell_question_count;
 
+
         if ( $this->outputChecks) {
+
+          if ($this->outputKulanz) {
+            $cell_question_kulanz_count = [];
+            $cell_question_kulanz_count['data']  = $info['questions_kulanz'];
+            $row[] = $cell_question_kulanz_count;
+          }
+
           $cell_question_count_check['data']  = $info['questions_check'];
           $row[] = $cell_question_count_check;
         }
@@ -162,17 +222,33 @@ class Zeugnisnoten {
         $row[] = $cell_answered;
 
         if( $this->outputChecks) {
+
+          if ($this->outputKulanz) {
+            $cell_answered_kulanz['data']  = $info['answered_questions_kulanz'];
+            $row[] = $cell_answered_kulanz;
+          }
+
           $cell_answered_check['data']  = $info['answered_questions_check'];
           $row[] = $cell_answered_check;
 
           $cell_answers_count['data']  = $info['answers'];
           $row[] = $cell_answers_count;
 
+          if ($this->outputKulanz) {
+            $cell_answers_kulanz_count['data']  = $info['answers_kulanz'];
+            $row[] = $cell_answers_kulanz_count;
+          }
+
           $cell_answers_count_check['data']  = $info['answers_check'];
           $row[] = $cell_answers_count_check;
 
           $cell_answers_standard['data']  = $info['standard'];
           $row[] = $cell_answers_standard;
+
+          if ($this->outputKulanz) {
+            $cell_answers_standard_kulanz['data']  = $info['standard_kulanz'];
+            $row[] = $cell_answers_standard_kulanz;
+          }
 
           $cell_answers_standard_check['data']  = $info['standard_check'];
           $row[] = $cell_answers_standard_check;
@@ -190,6 +266,19 @@ class Zeugnisnoten {
         $cell_gradename['data'] = $info['grade_name'];
         $cell_gradename['style'] = 'background-color: '.  $info['grade_color'];
         $row[] = $cell_gradename;
+        if( $this->outputChecks && $this->outputKulanz) {
+          $cell_rate_kulanz = [];
+          $cell_rate_kulanz['data']  = $info['rate_kulanz'] .' %';
+          $row[] = $cell_rate_kulanz;
+
+          $cell_grade_kulanz['data'] = $info['grade_kulanz'];
+          $cell_grade_kulanz['style'] = 'background-color: '. $info['grade_kulanz_color'];
+          $row[] = $cell_grade_kulanz;
+
+          $cell_gradename_kulanz['data'] = $info['grade_kulanz_name'];
+          $cell_gradename_kulanz['style'] = 'background-color: '.  $info['grade_kulanz_color'];
+          $row[] = $cell_gradename_kulanz;
+        }
       }
 
       $rows[] = $row;
@@ -316,6 +405,8 @@ class Zeugnisnoten {
 
       // fragen
       $info[$politician->getId()]['questions'] = $this->getQuestionCount($politician->getId());
+      // fragen Kulanz
+      $info[$politician->getId()]['questions_kulanz'] = $this->getQuestionKulanzCount($politician->getId());
       // fragen check
       $info[$politician->getId()]['questions_check'] = l('Link', 'admin/abgeordnetenwatch/fragen', ['query' =>
         ['field_dialogue_before_election_value' => 0,
@@ -329,6 +420,8 @@ class Zeugnisnoten {
 
       // beantwortete fragen
       $info[$politician->getId()]['answered_questions']  = $this->getAnswerCount($politician->getId(), 'answered_questions');
+      // beantwortete fragen Kulanz
+      $info[$politician->getId()]['answered_questions_kulanz']  = $this->getAnswerKulanzCount($politician->getId(), 'answered_questions');
 
       // beantwortete fragen check
       $info[$politician->getId()]['answered_questions_check'] = l('Link', 'admin/abgeordnetenwatch/fragen', ['query' =>
@@ -344,6 +437,8 @@ class Zeugnisnoten {
 
       // antworten insgesamt
       $info[$politician->getId()]['answers'] = $this->getAnswerCount($politician->getId(), 'answers');
+      // antworten insgesamt Kulanz
+      $info[$politician->getId()]['answers_kulanz'] = $this->getAnswerKulanzCount($politician->getId(), 'answers');
 
       // antworten insgesamt check
       $info[$politician->getId()]['answers_check'] = l('Link', 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
@@ -357,6 +452,8 @@ class Zeugnisnoten {
 
       // standard answers
       $info[$politician->getId()]['standard'] = $this->getAnswerCount($politician->getId(), 'standard');
+      // standard answers Kulanz
+      $info[$politician->getId()]['standard_kulanz'] = $this->getAnswerKulanzCount($politician->getId(), 'standard');
 
       // standard answers check
       $info[$politician->getId()]['standard_check'] = l('Link', 'admin/abgeordnetenwatch/fragen/antworten', ['query' =>
@@ -372,13 +469,21 @@ class Zeugnisnoten {
       // quote
       $info[$politician->getId()]['rate'] = $this->calculateRate($politician->getId());
 
+      // quote Kulanz
+      $info[$politician->getId()]['rate_kulanz'] = $this->calculateKulanzRate($politician->getId());
+
       // note
       $info[$politician->getId()]['grade'] = $this->getGrade($info[$politician->getId()]['rate']);
       $info[$politician->getId()]['grade_color'] = $this->getGradeColor($info[$politician->getId()]['grade']);
 
+      // note Kulanz
+      $info[$politician->getId()]['grade_kulanz'] = $this->getGrade($info[$politician->getId()]['rate_kulanz']);
+      $info[$politician->getId()]['grade_kulanz_color'] = $this->getGradeColor($info[$politician->getId()]['grade_kulanz']);
+
       // grade name
       $info[$politician->getId()]['grade_name'] = $this->getGradeName($info[$politician->getId()]['grade']);
-
+      // grade name Kulanz
+      $info[$politician->getId()]['grade_kulanz_name'] = $this->getGradeName($info[$politician->getId()]['grade_kulanz']);
     }
 
     return $info;
@@ -391,7 +496,12 @@ class Zeugnisnoten {
     }
     return 0;
   }
-
+  protected function getQuestionKulanzCount($user_uid) {
+    if (isset($this->questionsByPoliticianKulanz[$user_uid])) {
+      return $this->questionsByPoliticianKulanz[$user_uid];
+    }
+    return 0;
+  }
 
   /**
    * Get the count of answered questions, answers or standard answers
@@ -414,7 +524,12 @@ class Zeugnisnoten {
     return 0;
   }
 
-
+  protected function getAnswerKulanzCount($user_uid, $value) {
+    if (isset($this->answersByPoliticiansKulanz[$user_uid][$value])) {
+      return count($this->answersByPoliticiansKulanz[$user_uid][$value]);
+    }
+    return 0;
+  }
   protected function countQuestionsByPolitician() {
     foreach ($this->questions as $question) {
       if (isset($this->questionsByPolitician[$question->field_dialogue_recipient_target_id])) {
@@ -422,6 +537,17 @@ class Zeugnisnoten {
       }
       else {
         $this->questionsByPolitician[$question->field_dialogue_recipient_target_id] = 1;
+      }
+    }
+  }
+
+  protected function countQuestionsKulanzByPolitician() {
+    foreach ($this->questionsKulanz as $question) {
+      if (isset($this->questionsByPoliticianKulanz[$question->field_dialogue_recipient_target_id])) {
+        $this->questionsByPoliticianKulanz[$question->field_dialogue_recipient_target_id] += 1;
+      }
+      else {
+        $this->questionsByPoliticianKulanz[$question->field_dialogue_recipient_target_id] = 1;
       }
     }
   }
@@ -443,20 +569,42 @@ class Zeugnisnoten {
     }
   }
 
+  protected function countAnswersKulanzByPolitician() {
+    foreach ($this->answersKulanz as $answer) {
+      if ($answer->field_dialogue_is_standard_reply_value) {
+        $this->answersByPoliticiansKulanz[$answer->uid]['standard'][$answer->cid] = $answer;
+      }
+      else {
+        $this->answersByPoliticiansKulanz[$answer->uid]['answers'][$answer->cid] = $answer;
 
-  protected function loadData() {
-    $this->loadPoliticians();
-    $this->loadQuestions();
-    $this->loadAnswers();
-
-    $this->countQuestionsByPolitician();
-    $this->countAnswersByPolitician();
+        // additionally add the question to the array of answered questions
+        $this->answersByPoliticiansKulanz[$answer->uid]['answered_questions'][$answer->nid]= $answer;
+      }
+    }
   }
 
+  protected function loadData() {
+    $this->politicians = $this->loadPoliticians();
+    $this->collectQuestions();
+    $this->collectQuestionsKulanz();
+    $this->answers = $this->loadAnswers();
+    $this->answersKulanz = $this->loadAnswersKulanz();
+
+    $this->countQuestionsByPolitician();
+    $this->countQuestionsKulanzByPolitician();
+    $this->countAnswersByPolitician();
+    $this->countAnswersKulanzByPolitician();
+  }
+
+
+  /**
+   * @return array
+   */
   protected function loadAnswers() {
-    if (!empty($this->getQuestionNids())) {
+    if (!empty($this->getQuestionNids()) && $this->getAnswerDateTimestamp()) {
       $query = db_select('comment', 'c');
       $query->condition('c.nid', $this->getQuestionNids(), 'IN')
+        ->condition('c.created', $this->getAnswerDateTimestamp() ,'<=')
         ->fields('c', ['cid', 'uid', 'nid']);
 
       $query->join('field_data_field_dialogue_is_standard_reply', 'standard', 'standard.entity_id = c.cid');
@@ -464,17 +612,63 @@ class Zeugnisnoten {
       $query->fields('standard', ['field_dialogue_is_standard_reply_value']);
 
       $result = $query->execute();
-      $this->answers = $result->fetchAllAssoc('cid');
+      return $result->fetchAllAssoc('cid');
+    }
+
+    return [];
+  }
+
+  protected function loadAnswersKulanz() {
+    if ($this->outputKulanz && !empty($this->getQuestionKulanzNids()) && $this->getAnswerKulanzDateTimestamp()) {
+      $query = db_select('comment', 'c');
+      $query->condition('c.nid', $this->getQuestionKulanzNids(), 'IN')
+        ->condition('c.created', $this->getAnswerKulanzDateTimestamp() ,'<=')
+        ->fields('c', ['cid', 'uid', 'nid']);
+
+      $query->join('field_data_field_dialogue_is_standard_reply', 'standard', 'standard.entity_id = c.cid');
+      $query->condition('standard.bundle', 'comment_node_dialogue');
+      $query->fields('standard', ['field_dialogue_is_standard_reply_value']);
+
+      $result = $query->execute();
+      return $result->fetchAllAssoc('cid');
+    }
+
+    return [];
+  }
+
+  /**
+   * Collect the questions with Kulanz
+   */
+  protected function collectQuestionsKulanz() {
+    if ($this->outputChecks && $this->outputKulanz && $this->getQuestionKulanzDateTimestamp()) {
+      $this->questionsKulanz = $this->loadQuestions($this->getQuestionKulanzDateTimestamp());
     }
   }
 
 
-  protected function loadQuestions() {
+  /**
+   * Collect the questions without Kulanz
+   */
+  protected function collectQuestions() {
+    if ($this->outputChecks && $this->getQuestionDateTimestamp()) {
+      $this->questions = $this->loadQuestions($this->getQuestionDateTimestamp());
+    }
+  }
+
+  /**
+   * Load questions sent until the timestamp date
+   *
+   * @param string $timestamp
+   * The time until the questions should be included
+   *
+   * @return array
+   */
+  protected function loadQuestions($timestamp) {
     if (!empty($this->getPoliticianIds())) {
       $query = db_select('node', 'n');
       $query->condition('n.type', 'dialogue');
       $query->condition('n.status', NODE_PUBLISHED);
-      $query->condition('n.created', $this->getQuestionDateTimestamp(), '<=');
+      $query->condition('n.created', $timestamp, '<=');
 
       // assure just questions are counted which were asked for the legislature
       $query->join('field_data_field_dialogue_before_election', 'beforeelection', 'n.nid = beforeelection.entity_id');
@@ -496,8 +690,10 @@ class Zeugnisnoten {
 
 
       $result = $query->execute();
-      $this->questions = $result->fetchAllAssoc('nid');
+      return $result->fetchAllAssoc('nid');
     }
+
+    return [];
   }
 
   protected function loadPoliticians() {
@@ -515,7 +711,7 @@ class Zeugnisnoten {
     $query->addExpression('MAX(vid)', 'max_vid');
     $query->groupBy('uac.uid');
     $result = $query->execute()->fetchCol(2);
-    $this->politicians = pw_userarchives_politician_load_multiple($result);
+    return pw_userarchives_politician_load_multiple($result);
   }
 
   protected function getParliamentTid() {
@@ -537,26 +733,19 @@ class Zeugnisnoten {
 
 
   protected function getAnswerDateTimestamp() {
-    if ($this->DateAnswer) {
-      $dateTime = new \DateTime($this->DateAnswer, new \DateTimeZone('UTC'));
-      $dateTime->setTime(0,0,1);
-      return $dateTime->getTimestamp();
-    }
-    else {
-      return time();
-    }
+    return $this->DateAnswer;
   }
 
+  protected function getAnswerKulanzDateTimestamp() {
+    return $this->DateAnswerKulanz;
+  }
 
   protected function getQuestionDateTimestamp() {
-    if ($this->DateQuestion) {
-      $dateTime = new \DateTime($this->DateQuestion, new \DateTimeZone('UTC'));
-      $dateTime->setTime(0,0,1);
-      return $dateTime->getTimestamp();
-    }
-    else {
-      return time();
-    }
+    return $this->DateQuestion;
+  }
+
+  protected function getQuestionKulanzDateTimestamp() {
+    return $this->DateQuestionKulanz;
   }
 
   protected function getPoliticianIds() {
@@ -571,11 +760,24 @@ class Zeugnisnoten {
     return array_keys($this->questions);
   }
 
+  protected function getQuestionKulanzNids() {
+    return array_keys($this->questionsKulanz);
+  }
 
   protected function calculateRate($user_id) {
     $rate = 0;
     $questions = $this->getQuestionCount($user_id);
     $answers = $this->getAnswerCount($user_id, 'answered_questions');
+    if ($questions > 0 && $answers > 0) {
+      $rate = round($answers / $questions * 100, 0);
+    }
+    return $rate;
+  }
+
+  protected function calculateKulanzRate($user_id) {
+    $rate = 0;
+    $questions = $this->getQuestionKulanzCount($user_id);
+    $answers = $this->getAnswerKulanzCount($user_id, 'answered_questions');
     if ($questions > 0 && $answers > 0) {
       $rate = round($answers / $questions * 100, 0);
     }

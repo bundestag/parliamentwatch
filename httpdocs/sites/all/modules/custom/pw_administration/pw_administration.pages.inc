@@ -27,12 +27,13 @@ function pw_administration_wahlenparlamente_pagecallback() {
 function pw_administration_zeugnisnoten_pagecallback() {
   $output = '';
   $parliament = FALSE;
-  $date_questions = FALSE;
-  $date_questions_kulanz = FALSE;
-  $date_answers = FALSE;
-  $date_answers_kulanz = FALSE;
+  $date_question = FALSE;
+  $date_question_kulanz = FALSE;
+  $date_answer = FALSE;
+  $date_answer_kulanz = FALSE;
   $bundesland = FALSE;
   $output_checks = 0;
+  $output_kulanz = 0;
 
   $form = drupal_get_form('pw_administration_zeugnisnoten_form');
   $output .= render($form);
@@ -44,19 +45,19 @@ function pw_administration_zeugnisnoten_pagecallback() {
   }
 
   if (isset($query_params["date_question"]) && !empty($query_params["date_question"])) {
-    $date_questions = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question"]);
+    $date_question = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question"]);
   }
 
   if (isset($query_params["date_question_kulanz"]) && !empty($query_params["date_question_kulanz"])) {
-    $date_answers = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question_kulanz"]);
+    $date_question_kulanz = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_question_kulanz"]);
   }
 
   if (isset($query_params["date_answer"]) && !empty($query_params["date_answer"])) {
-    $date_answers_kulanz = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer"]);
+    $date_answer = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer"]);
   }
 
   if (isset($query_params["date_answer_kulanz"]) && !empty($query_params["date_answer_kulanz"])) {
-    $date_questions = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer_kulanz"]);
+    $date_answer_kulanz = Zeugnisnoten::turnDateArrayToTimestamp($query_params["date_answer_kulanz"]);
   }
 
   if (isset($query_params["bundesland"]) && is_string($query_params["bundesland"])) {
@@ -67,7 +68,10 @@ function pw_administration_zeugnisnoten_pagecallback() {
     $output_checks = $query_params["output_checks"];
   }
 
-  $controller = new \Drupal\pw_administration\Controller\Zeugnisnoten($parliament, $date_questions, $date_questions_kulanz, $date_answers, $date_answers_kulanz, $bundesland, $output_checks);
+  if (isset($query_params["output_kulanz"]) && is_string($query_params["output_kulanz"])) {
+    $output_kulanz = $query_params["output_kulanz"];
+  }
+  $controller = new Zeugnisnoten($parliament, $date_question, $date_question_kulanz, $date_answer, $date_answer_kulanz, $bundesland, $output_checks, $output_kulanz);
   $output .= $controller->build();
 
   return $output;
@@ -139,7 +143,26 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
     '#default_value' => $default_form_value_output_checks,
     '#return_value' => 1,
     '#prefix' => '<div class="aw_adminform__item">',
-    '#suffix' => '</div><div class="flexbox-linebreak"></div>'
+    '#suffix' => '</div>'
+  ];
+
+  $default_form_value_output_kulanz = 0;
+  if (isset($form_state["input"]['output_kulanz'])) {
+    $default_form_value_output_kulanz = $form_state["input"]['output_kulanz'];
+  }
+  else if (isset($query_params['output_kulanz'])) {
+    $default_form_value_output_kulanz = $query_params['output_kulanz'];
+  }
+  $form['output_kulanz'] = [
+    '#type' => 'checkbox',
+    '#title' => 'Ausgabe mit Kulanz',
+    '#default_value' => $default_form_value_output_kulanz,
+    '#return_value' => 1,
+    '#prefix' => '<div class="aw_adminform__item">',
+    '#suffix' => '</div><div class="flexbox-linebreak"></div>',
+    '#states' => [
+      'visible' => ['#edit-output-checks' => ['checked' => TRUE]]
+    ]
   ];
 
   $default_form_value_date_question = $default_question_date;
