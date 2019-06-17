@@ -49,7 +49,7 @@ class Zeugnisnoten {
 
     if ($this->parliament && $this->DateQuestion && $this->DateAnswer) {
       $this->loadData();
-      $output .= '<b>Ergebnis: '. count($this->politicians) .' Politiker</b>';
+      $output .= '<b>Ergebnis: '. count($this->politicians) .' Politikerinnen</b>';
       $output .= $this->buildTable();
     }
 
