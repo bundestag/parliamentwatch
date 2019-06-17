@@ -291,7 +291,7 @@ class Zeugnisnoten {
       $info[$politician->getId()]['last_name'] = $politician_wrapper->field_user_lname->value();
 
       // constituency
-      $constituency_nr_name = 'ohne fester Wahlkreis';
+      $constituency_nr_name = 'ohne festen Wahlkreis';
       $constituency = $politician_wrapper->field_user_constituency->value();
       if ($constituency) {
         $constituency_wrapper = entity_metadata_wrapper('taxonomy_term', $constituency[0]);
