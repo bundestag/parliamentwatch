@@ -67,8 +67,8 @@ function pw_administration_zeugnisnoten_form($form, &$form_state) {
 
   $format = 'd.m.Y';
   $date_now = time();
-  $default_question_date = $date_now - (14 * 24 * 60 * 60); // 14 days
-  $default_answer_date = $date_now;
+  $default_question_date = $date_now - (15 * 24 * 60 * 60); // 15 days
+  $default_answer_date = $date_now - (1 * 24 * 60 * 60); // 1 day
   $form['#method'] = 'get';
   $query_params = drupal_get_query_parameters();
 
