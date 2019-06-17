@@ -373,39 +373,45 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     }
   }
 
-  if (isset($account->content['field_user_list'])) {
-    if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
-      $account->content['field_user_list']['#title'] = t('List', [], ['context' => 'Bayern']);
-    }
+  if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
+	  $constituency_context = 'Bayern';
+	  $list_context = 'Bayern';
+  }
+  elseif (strpos(pw_profiles_parliament($account)->name, 'Baden-Württemberg') === 0) {
+	  $constituency_context = '';
+	  $list_context = 'Baden-Württemberg';
+  }
+  elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
+    $constituency_context = 'Bremen';
+    $list_context = 'Bremen';
+  }
+  else {
+    $constituency_context = '';
+    $list_context = '';
   }
 
-  if (isset($account->content['field_user_election_result'])) {
-    if (strpos(pw_profiles_parliament($account)->name, 'Bayern') === 0) {
-      $constituency_context = 'Bayern';
-      $list_context = 'Bayern';
-    }
-    elseif (strpos(pw_profiles_parliament($account)->name, 'Baden-Württemberg') === 0) {
-      $constituency_context = '';
-      $list_context = 'Baden-Württemberg';
-    }
-    elseif (strpos(pw_profiles_parliament($account)->name, 'Bremen') === 0) {
-      $constituency_context = 'Bremen';
-      $list_context = '';
-    }
-    else {
-      $constituency_context = '';
-      $list_context = '';
-    }
+  $election_result = number_format(floatval(str_replace(',', '.', $account->content['field_user_election_result']['#items'][0]['value'])), 1, ',', '.');
 
-    $account->content['field_user_election_result'][0]['#title'] = t('Constituency result', [], ['context' => $constituency_context]);
+  if (isset($account->content['field_user_list_won'])) {
+    $account->content['field_user_list'][0]['#markup_subline'] = t('via list', [], ['context' => $list_context]);
+  }
 
-    $election_result = number_format(floatval(str_replace(',', '.', $account->content['field_user_election_result']['#items'][0]['value'])), 1, ',', '.');
-    if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $election_result], ['context' => $constituency_context]);
-    }
+  if (isset($account->content['field_user_list'])) {
+    $account->content['field_user_list']['#title'] = t('List', [], ['context' => $list_context]);
+  }
+
+  $account->content['field_user_election_result'][0]['#title'] = t('Constituency result', [], ['context' => $constituency_context]);
+
+  if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
+  	if (isset($account->content['field_user_election_result'])) {
+  	  $account->content['field_user_election_result'][0]['#markup'] = t('@result % (via constituency)', ['@result' => $election_result], ['context' => $constituency_context]);
+  	}
     else {
-      $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $election_result]);
+      $account->content['field_user_election_result'][0]['#markup'] = t('via constituency', [], ['context' => $constituency_context]);
     }
+  }
+  elseif (isset($account->content['field_user_election_result'])) {
+    $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $election_result]);
   }
 }
 
