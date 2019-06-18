@@ -434,7 +434,7 @@ function pw_dialogues_page($parliament_term, $role_name, $uid = NULL) {
 
   if (isset($filters['date'])) {
     $q->condition('created', $filters['date'][0], '>=');
-    $q->condition('created', $filters['date'][1], '<');
+    $q->condition('created', $filters['date'][1], '<=');
   }
 
   if (isset($filters['answered'])) {
