@@ -364,7 +364,7 @@ class Zeugnisnoten {
         uasort($grade_arrays[$grade], function ($a, $b) {
           if ( $a['rate'] == $b['rate']) {
             if ($a['answered_questions'] == $b['answered_questions']) {
-              return $b['last_name'] - $a['last_name'];
+              return strcmp($a['last_name'], $b['last_name']);
             }
             return $b['answered_questions'] - $a['answered_questions'];
           }
@@ -375,7 +375,7 @@ class Zeugnisnoten {
         uasort($grade_arrays[$grade], function ($a, $b) {
           if ( $a['rate'] == $b['rate']) {
             if ($a['questions'] == $b['questions']) {
-              return $b['last_name'] - $a['last_name'];
+              return strcmp($a['last_name'], $b['last_name']);
             }
             return $a['questions'] - $b['questions'];
           }
