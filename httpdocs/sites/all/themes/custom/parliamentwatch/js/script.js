@@ -2466,7 +2466,7 @@
             dynatable.paginationLinks.buildLink = PaginationLinks.buildLink;
             var Sorts = Drupal.dynatable.Sorts(dynatable, dynatable.settings);
             dynatable.sorts.functions.string = Sorts.functions.string;
-            if (Object.values(dynatable.settings.dataset.sorts).length == 0) {
+            if (Object.keys(dynatable.settings.dataset.sorts).length == 0) {
               dynatable.sorts.add('field_vote', 1);
             }
             var SortsHeaders = Drupal.dynatable.SortsHeaders(dynatable, dynatable.settings);
