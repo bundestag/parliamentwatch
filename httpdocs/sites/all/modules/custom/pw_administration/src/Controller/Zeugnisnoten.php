@@ -117,7 +117,7 @@ class Zeugnisnoten {
 
     $rows[] = $row;
 
-    return theme('table', ['header' => $header, 'rows' => $rows, 'caption' => 'Gesamt Ergebnis', 'attributes' => ['style' => 'width: auto;']]);
+    return theme('table', ['header' => $header, 'rows' => $rows, 'caption' => '<b>Gesamtergebnis</b>', 'attributes' => ['style' => 'width: auto;']]);
   }
 
 
