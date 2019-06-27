@@ -572,14 +572,14 @@ msgid "via constituency"
 msgstr "eingezogen über den Wahlkreis"
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
-msgctxt "Baden-Württemberg 2011-2016"
+msgctxt "Sachsen"
 msgid "via constituency"
 msgstr "eingezogen über den Wahlkreis"
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
-msgctxt "Sachsen"
+msgctxt "Bremen"
 msgid "via constituency"
-msgstr "eingezogen über den Wahlkreis"
+msgstr "über Personenwahl eingezogen"
 
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:630
 msgid "Candidates @parliament"
