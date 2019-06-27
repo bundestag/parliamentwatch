@@ -562,6 +562,25 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
+msgid "via constituency"
+msgstr "eingezogen über den Wahlkreis"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
+msgctxt "Baden-Württemberg"
+msgid "via constituency"
+msgstr "eingezogen über den Wahlkreis"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
+msgctxt "Baden-Württemberg 2011-2016"
+msgid "via constituency"
+msgstr "eingezogen über den Wahlkreis"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:426
+msgctxt "Sachsen"
+msgid "via constituency"
+msgstr "eingezogen über den Wahlkreis"
+
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:630
 msgid "Candidates @parliament"
 msgstr "Kandidierende @parliament"
