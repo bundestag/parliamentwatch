@@ -408,6 +408,7 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     $account->content['field_user_election_result'][0]['#title'] = t('Constituency result', [], ['context' => $constituency_context]);
 
     if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
+
       if (isset($account->content['field_user_election_result']) && $election_result) {
         if ($list_context == 'Bremen') {
           $account->content['field_user_election_result'][0]['#markup'] = $election_result .' % (über Personenwahl eingezogen)';
@@ -428,6 +429,10 @@ function pw_profiles_user_view($account, $view_mode, $langcode) {
     }
     elseif (isset($account->content['field_user_election_result'])) {
       $account->content['field_user_election_result'][0]['#markup'] = t('@result %', ['@result' => $election_result]);
+    }
+  } else {
+    if ($account->content['field_user_constituency_won']['#items'][0]['value'] == 1) {
+      $account->content['field_user_election_result'][0]['#markup'] = t('(via constituency)', [], ['context' => $constituency_context]);
     }
   }
 
