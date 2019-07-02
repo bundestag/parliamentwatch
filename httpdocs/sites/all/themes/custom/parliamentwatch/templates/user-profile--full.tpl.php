@@ -179,7 +179,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
             <p>
               <?php print $user_profile['field_user_constituency'][0]['#markup']; ?>
             </p>
-            <?php if (isset($field_user_election_result)): ?>
+            <?php if (isset($user_profile['field_user_election_result'])): ?>
               <p>
                 <small>
                   <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
