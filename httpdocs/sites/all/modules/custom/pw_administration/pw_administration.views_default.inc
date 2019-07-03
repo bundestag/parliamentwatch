@@ -261,7 +261,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -552,7 +552,7 @@ function pw_administration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Bitte auswählen'),
     t('Wert ändern'),
@@ -8694,6 +8694,12 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['nothing']['alter']['text'] = 'Alle Revisionen';
   $handler->display->display_options['fields']['nothing']['alter']['make_link'] = TRUE;
   $handler->display->display_options['fields']['nothing']['alter']['path'] = 'user/[uid]/revisions';
+  /* Feld: Benutzer: E-Mail */
+  $handler->display->display_options['fields']['mail']['id'] = 'mail';
+  $handler->display->display_options['fields']['mail']['table'] = 'users';
+  $handler->display->display_options['fields']['mail']['field'] = 'mail';
+  $handler->display->display_options['fields']['mail']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['mail']['link_to_user'] = '0';
   /* Feld: Global: Dropdown links */
   $handler->display->display_options['fields']['ctools_dropdown']['id'] = 'ctools_dropdown';
   $handler->display->display_options['fields']['ctools_dropdown']['table'] = 'views';
@@ -9104,11 +9110,11 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Bearbeiten'),
     t('Links'),
     t('Alle Revisionen'),
+    t('E-Mail'),
     t('Aktionen'),
     t('Alle'),
     t('%1 - Kandidaten & Abgeordnete'),
     t('UUID'),
-    t('E-Mail'),
     t('Page'),
     t('Data export'),
   );
