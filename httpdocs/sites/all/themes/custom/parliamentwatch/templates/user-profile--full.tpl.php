@@ -182,7 +182,9 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
             <?php if (isset($user_profile['field_user_election_result'])): ?>
               <p>
                 <small>
-                  <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
+                  <?php if (!empty($user_profile['field_user_election_result'][0]['#title'])): ?>
+                    <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
+                  <?php endif; ?>
                   <?php print $user_profile['field_user_election_result'][0]['#markup']; ?>
                 </small>
               </p>

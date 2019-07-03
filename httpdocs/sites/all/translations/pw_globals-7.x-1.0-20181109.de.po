@@ -581,6 +581,15 @@ msgctxt "Bremen"
 msgid "via constituency"
 msgstr "über Personenwahl eingezogen"
 
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:435
+msgid "(via constituency)"
+msgstr "(eingezogen über den Wahlkreis)"
+
+#: sites/all/modules/custom/pw_profiles/pw_profiles.module:435
+msgctxt "Bremen"
+msgid "(via constituency)"
+msgstr "(über Personenwahl eingezogen)"
+
 #: sites/all/modules/custom/pw_profiles/pw_profiles.module:630
 msgid "Candidates @parliament"
 msgstr "Kandidierende @parliament"
