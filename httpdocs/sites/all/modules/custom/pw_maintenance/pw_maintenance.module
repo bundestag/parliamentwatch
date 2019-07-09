@@ -42,7 +42,7 @@ function pw_maintenance_menu() {
     'title' => 'User Revision Delete',
     'description' => 'Delete all revisions of a user for a specfic parliament',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('pw_maintenance_user_revision_delete'),
+    'page arguments' => array('pw_maintenance_user_revision_delete_form'),
     'access arguments' => array('administer site configuration'),
     'type' => MENU_LOCAL_TASK,
     'file' => 'pw_maintenance.admin.inc',
