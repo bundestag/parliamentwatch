@@ -882,22 +882,28 @@ function pw_delete_old_user_revisions($uid) {
 }
 
 /**
- * Chaecks and resets user revision to actual (newest) profile
- * @param $uid
+ * Checks and resets user revision to actual (newest) profile
+ *
+ * @param int|string|object $account_data
  */
-function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
+function pw_reset_actuale_profile($account_data, $exclude_vids=array()) {
 
-  // load current profile
-  $user = user_load($uid, TRUE);
-
-  if (!$user) {
-    return;
+  if (is_object($account_data) && isset($account_data->uid)) {
+    $account = $account_data;
   }
+  else if (is_numeric($account_data)) {
+    $account = user_load($account_data, TRUE);
+  }
+  else {
+    global $user;
+    $account = $user;
+  }
+
 
   // load newest profile which is open for questions
   $query = db_select('user_archive_cache', 'uac');
   $query->addField('uac', 'vid');
-  $query->condition('uac.uid', $uid);
+  $query->condition('uac.uid', $account->uid);
   if(!empty($exclude_vids)){
     $query->condition('uac.vid', $exclude_vids, 'NOT IN');
   }
@@ -913,10 +919,10 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
   $latest_revision_vid = $result['vid'];
 
   // check if current vid is newest
-  if ($user->vid != $latest_revision_vid) {
+  if ($account->vid != $latest_revision_vid) {
 
     // load full revision
-    $user_revision = user_revision_load($uid, $latest_revision_vid);
+    $user_revision = user_revision_load($account_data, $latest_revision_vid);
 
     // retrieve roles and add them to user object
     $role_tids = _pw_array_flatten($user_revision->field_user_roles_for_view_mode_s, FALSE);
@@ -936,9 +942,9 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
 
     // recorrect user archive cache
     db_delete('user_archive_cache')
-      ->condition('uid', $uid)
+      ->condition('uid', $account->uid)
       ->execute();
-    pw_userarchives_update_by_user($uid, FALSE);
+    pw_userarchives_update_by_user($account, FALSE);
   }
 }
 
