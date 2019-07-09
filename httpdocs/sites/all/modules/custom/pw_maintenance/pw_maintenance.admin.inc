@@ -386,6 +386,7 @@ function pw_maintenance_user_revision_delete_form_submit($form, &$form_state) {
     // the if clause shouldn't be necessary
     if($user->vid != $vid){
       $user_revision = user_revision_load($user->uid, $vid);
+      $user_revision->abort_update = TRUE;
       user_revision_delete($user_revision);
     }
   }
