@@ -215,7 +215,9 @@ function pw_userarchives_user_delete($account) {
  * @param $revision
  */
 function pw_userarchives_user_revision_delete($revision) {
-  pw_userarchives_update_by_user($revision);
+  if (!isset($revision->do_not_update_archive) || $revision->do_not_update_archive === FALSE) {
+    pw_userarchives_update_by_user($revision);
+  }
 }
 
 
