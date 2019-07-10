@@ -299,7 +299,7 @@ function pw_maintenance_user_merge_submit($form, &$form_state) {
 /**
  * Form builder.
  */
-function pw_maintenance_user_revision_delete($form, &$form_state) {
+function pw_maintenance_user_revision_delete_form($form, &$form_state) {
 
   // after submitting the form, the user object appears instead of the form array
   if(is_object($form) && isset($form->vid)){
@@ -336,16 +336,13 @@ function pw_maintenance_user_revision_delete($form, &$form_state) {
     '#value' => 'Delete Revisions',
   );
 
-  // add custom submit handler
-  $form['#submit'][] = 'pw_maintenance_user_revision_delete_submit';
-
   return $form;
 }
 
 /**
  * Form submit handler.
  */
-function pw_maintenance_user_revision_delete_submit($form, &$form_state) {
+function pw_maintenance_user_revision_delete_form_submit($form, &$form_state) {
 
   // store selected values in vars
   variable_set('pw_maintenance_user_revision_delete_user', $form['pw_maintenance_user_revision_delete_user']['#value']);
@@ -389,6 +386,7 @@ function pw_maintenance_user_revision_delete_submit($form, &$form_state) {
     // the if clause shouldn't be necessary
     if($user->vid != $vid){
       $user_revision = user_revision_load($user->uid, $vid);
+      $user_revision->abort_update = TRUE;
       user_revision_delete($user_revision);
     }
   }
