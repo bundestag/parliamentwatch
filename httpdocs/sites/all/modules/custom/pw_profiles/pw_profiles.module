@@ -476,18 +476,19 @@ function pw_profiles_theme() {
 /**
  * Entity URI callback; returns path to current or archived profile.
  *
- * @param object $user
- *   The user object
+ * @param object $account_revision
+ *   The user revision object
  *
  * @return array
  *   The path to a representation of the user revision
  */
-function pw_profiles_user_uri($user) {
-  if (isset($user->actual_profile) && $user->actual_profile == 0) {
-    $path = 'profile/' . $user->name . '/archive/' . $user->vid;
+function pw_profiles_user_uri($account_revision) {
+  if (isset($account_revision->actual_profile) && $account_revision->actual_profile == 0) {
+    $current_user = user_load($account_revision->uid);
+    $path = 'profile/' . $current_user->name . '/archive/' . $account_revision->vid;
   }
   else {
-    $path = 'user/' . $user->uid;
+    $path = 'user/' . $account_revision->uid;
   }
   return array(
     'path' => $path,
