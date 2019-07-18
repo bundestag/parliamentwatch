@@ -5223,7 +5223,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -7084,6 +7084,7 @@ function pw_administration_views_default_views() {
     'uid' => 'uid',
     'field_user_lname' => 'field_user_lname',
     'field_user_fname' => 'field_user_fname',
+    'access' => 'access',
     'mail' => 'mail',
     'name' => 'name',
     'rid' => 'rid',
@@ -7091,6 +7092,7 @@ function pw_administration_views_default_views() {
     'name_4' => 'name_4',
     'name_1' => 'name_1',
     'field_user_constituency' => 'field_user_constituency',
+    'field_bundesland' => 'field_bundesland',
     'name_2' => 'name_2',
     'name_3' => 'name_3',
     'field_user_joined' => 'field_user_joined',
@@ -7101,7 +7103,7 @@ function pw_administration_views_default_views() {
     'cancel_node' => 'cancel_node',
     'ctools_dropdown' => 'ctools_dropdown',
   );
-  $handler->display->display_options['style_options']['default'] = 'field_user_lname';
+  $handler->display->display_options['style_options']['default'] = 'access';
   $handler->display->display_options['style_options']['info'] = array(
     'views_bulk_operations' => array(
       'align' => '',
@@ -7125,6 +7127,13 @@ function pw_administration_views_default_views() {
     'field_user_fname' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'access' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -7170,6 +7179,13 @@ function pw_administration_views_default_views() {
       'empty_column' => 0,
     ),
     'field_user_constituency' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_bundesland' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -7362,6 +7378,12 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Benutzer: Letzter Zugriff */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['date_format'] = 'date_and_time';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
   /* Feld: Benutzer: E-Mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
@@ -8163,6 +8185,7 @@ function pw_administration_views_default_views() {
     t('Change value'),
     t('Name'),
     t('Vorname'),
+    t('Letzter Zugriff'),
     t('E-Mail'),
     t('Benutzername'),
     t('Rollen'),
@@ -8240,6 +8263,7 @@ function pw_administration_views_default_views() {
     'name_2' => 'name_2',
     'field_user_list_won-revision_id' => 'field_user_list_won-revision_id',
     'name_3' => 'name_3',
+    'field_bundesland-revision_id' => 'field_bundesland-revision_id',
     'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
     'field_user_constituency_won-revision_id' => 'field_user_constituency_won-revision_id',
     'field_user_election_result-revision_id' => 'field_user_election_result-revision_id',
@@ -8248,10 +8272,11 @@ function pw_administration_views_default_views() {
     'name' => 'name',
     'edit_revision' => 'edit_revision',
     'nothing' => 'nothing',
+    'mail' => 'mail',
     'ctools_dropdown' => 'ctools_dropdown',
-    'question_form_open_1' => 'question_form_open_1',
+    'access' => 'access',
   );
-  $handler->display->display_options['style_options']['default'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['style_options']['default'] = 'access';
   $handler->display->display_options['style_options']['info'] = array(
     'uid' => array(
       'sortable' => 0,
@@ -8330,6 +8355,13 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'field_bundesland-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'field_user_constituency-revision_id' => array(
       'align' => '',
       'separator' => '',
@@ -8378,12 +8410,21 @@ function pw_administration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'mail' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'ctools_dropdown' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'question_form_open_1' => array(
+    'access' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -8482,6 +8523,13 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
       ),
     ),
   );
+  /* Feld: Benutzer: Letzter Zugriff */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['access']['date_format'] = 'date_and_time';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
   /* Feld: PW User archive: Benutzerrolle */
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
@@ -9093,6 +9141,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Uid'),
     t('Nachname'),
     t('Vorname'),
+    t('Letzter Zugriff'),
     t('Profil für'),
     t('Parlament beigetreten'),
     t('Parlament verlassen'),
