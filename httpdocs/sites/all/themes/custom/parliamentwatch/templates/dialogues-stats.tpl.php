@@ -87,6 +87,14 @@
         </div>
         <?php endif; ?>
         <?php foreach ($answer_ratio_by_party['not_in_previous_parliament'] as $party => $data): ?>
+          <?php
+          if(floor($data->percentage) == $data->percentage) {
+            $percantage = number_format($data->percentage,0,',','');
+          }
+          else {
+            $percantage = number_format($data->percentage,2,',','');
+          }
+          ?>
         <div class="qa-stats-behavior__item" data-expander-item>
           <div class="qa-stats-behavior__item__party">
             <?php if ($before_election): ?>
