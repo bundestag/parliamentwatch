@@ -78,7 +78,7 @@
             <?php endif; ?>
           </div>
           <div class="vertical-bar" data-value="<?php print $data->percentage; ?>"><span></span></div>
-          <div class="qa-stats-behavior__item__info"><?php print format_plural($data->count_questions, '@count_answers of 1 question answered (@percentage %)', '@count_answers of @count questions answered (@percentage %)', ['@count_answers' => $data->count_answers, '@percentage' => $data->percentage]); ?></div>
+          <div class="qa-stats-behavior__item__info"><?php print format_plural($data->count_questions, '@count_answers of 1 question answered (@percentage %)', '@count_answers of @count questions answered (@percentage %)', ['@count_answers' => $data->count_answers, '@percentage' => $percantage]); ?></div>
         </div>
         <?php endforeach; ?>
         <?php if (!empty($answer_ratio_by_party['not_in_previous_parliament'])): ?>
@@ -87,6 +87,14 @@
         </div>
         <?php endif; ?>
         <?php foreach ($answer_ratio_by_party['not_in_previous_parliament'] as $party => $data): ?>
+          <?php
+          if(floor($data->percentage) == $data->percentage) {
+            $percantage = number_format($data->percentage,0,',','');
+          }
+          else {
+            $percantage = number_format($data->percentage,2,',','');
+          }
+          ?>
         <div class="qa-stats-behavior__item" data-expander-item>
           <div class="qa-stats-behavior__item__party">
             <?php if ($before_election): ?>
@@ -96,7 +104,7 @@
             <?php endif; ?>
           </div>
           <div class="vertical-bar" data-value="<?php print $data->percentage; ?>"><span></span></div>
-          <div class="qa-stats-behavior__item__info"><?php print format_plural($data->count_questions, '@count_answers of 1 question answered (@percentage %)', '@count_answers of @count questions answered (@percentage %)', ['@count_answers' => $data->count_answers, '@percentage' => $data->percentage]); ?></div>
+          <div class="qa-stats-behavior__item__info"><?php print format_plural($data->count_questions, '@count_answers of 1 question answered (@percentage %)', '@count_answers of @count questions answered (@percentage %)', ['@count_answers' => $data->count_answers, '@percentage' => $percantage]); ?></div>
         </div>
         <?php endforeach; ?>
       </div>
