@@ -123,7 +123,7 @@
       <h3><?php print t('Share this poll with your friends') ?></h3>
       <ul class="share__links">
         <li class="share__links__item share__links__item--facebook"><a class="share__links__item__link" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>"><i class="icon icon-facebook"></i> <span>teilen</span></a></li>
-        <li class="share__links__item share__links__item--twitter"><a class="share__links__item__link" target="_blank" href="https://twitter.com/home?status=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>"><i class="icon icon-twitter"></i> <span>tweet</span></a></li>
+        <li class="share__links__item share__links__item--twitter"><a class="share__links__item__link" target="_blank" href="https://twitter.com/intent/tweet?url=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>"><i class="icon icon-twitter"></i> <span>tweet</span></a></li>
         <li class="share__links__item share__links__item--whatsapp"><a class="share__links__item__link" href="whatsapp://send?text=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>"><i class="icon icon-whatsapp"></i> <span>WhatsApp</span></a></li>
         <li class="share__links__item share__links__item--mail"><a class="share__links__item__link" href="mailto:?&body=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>"><i class="icon icon-mail"></i> <span>e-mail</span></a></li>
       </ul>
