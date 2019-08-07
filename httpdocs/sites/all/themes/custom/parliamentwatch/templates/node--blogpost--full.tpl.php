@@ -125,7 +125,7 @@
         </a>
       </li>
       <li class="share__links__item share__links__item--twitter">
-        <a class="share__links__item__link" href="https://twitter.com/home?status=https://www.abgeordnetenwatch.de<?php print $node_url; ?>" target="_blank">
+        <a class="share__links__item__link" href="https://twitter.com/intent/tweet?url=https://www.abgeordnetenwatch.de<?php print $node_url; ?>" target="_blank">
           <i class="icon icon-twitter"></i> <span>tweet</span>
         </a>
       </li>
