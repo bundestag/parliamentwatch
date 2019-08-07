@@ -94,7 +94,7 @@
     <div class="tile__share__trigger"><i class="icon icon-share"></i> <?php print t('share') ?></div>
     <ul class="tile__share__list">
       <li class="tile__share__list__item tile__share__list__item--facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>" target="_blank"><i class="icon icon-facebook"></i> <?php print t('facebook') ?></a></li>
-      <li class="tile__share__list__item tile__share__list__item--twitter"><a href="https://twitter.com/home?status=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>" target="_blank"><i class="icon icon-twitter"></i> <?php print t('twitter') ?></a></li>
+      <li class="tile__share__list__item tile__share__list__item--twitter"><a href="https://twitter.com/intent/tweet?url=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>" target="_blank"><i class="icon icon-twitter"></i> <?php print t('twitter') ?></a></li>
       <li class="tile__share__list__item tile__share__list__item--whatsapp"><a href="whatsapp://send" target="_blank" data-text="<?php print t('Take a look at this question:');?>" data-href="<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>" target="_blank"><i class="icon icon-whatsapp"></i> <?php print t('whatsapp') ?></a></li>
       <li class="tile__share__list__item tile__share__list__item--mail"><a href="mailto:?&subject=abgeordnetenwatch.de&body=<?php print drupal_encode_path(url($node_url,array('absolute'=>TRUE))); ?>" target="_blank"><i class="icon icon-mail"></i> <?php print t('E-Mail') ?></a></li>
     </ul>
