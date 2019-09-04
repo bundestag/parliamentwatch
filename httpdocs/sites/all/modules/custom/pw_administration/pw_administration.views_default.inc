@@ -3350,14 +3350,14 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'name';
   $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['name']['link_to_taxonomy'] = TRUE;
   /* Feld: Taxonomie-Begriff: Number */
   $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
   $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
   $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'Wahlkreis-Nr.';
+  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'number';
   $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -3412,6 +3412,7 @@ function pw_administration_views_default_views() {
   $handler->display->display_options['fields']['field_constituency_area_codes']['id'] = 'field_constituency_area_codes';
   $handler->display->display_options['fields']['field_constituency_area_codes']['table'] = 'field_data_field_constituency_area_codes';
   $handler->display->display_options['fields']['field_constituency_area_codes']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['label'] = 'area_code';
   $handler->display->display_options['fields']['field_constituency_area_codes']['type'] = 'taxonomy_term_reference_plain';
   $handler->display->display_options['fields']['field_constituency_area_codes']['settings'] = array(
     'linked_field' => array(
@@ -3426,25 +3427,8 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  $handler->display->display_options['fields']['field_constituency_area_codes']['group_rows'] = FALSE;
   $handler->display->display_options['fields']['field_constituency_area_codes']['delta_offset'] = '0';
-  /* Feld: Taxonomie-Begriff: AC Descriptor */
-  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['id'] = 'field_constituency_ac_descriptor';
-  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['table'] = 'field_data_field_constituency_ac_descriptor';
-  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['field'] = 'field_constituency_ac_descriptor';
-  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['label'] = 'Area Code Descriptor';
-  $handler->display->display_options['fields']['field_constituency_ac_descriptor']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: Taxonomie-Begriff: Street */
   $handler->display->display_options['fields']['field_constituency_street']['id'] = 'field_constituency_street';
   $handler->display->display_options['fields']['field_constituency_street']['table'] = 'field_data_field_constituency_street';
@@ -3463,6 +3447,11 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_constituency_street']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Area code descriptor */
+  $handler->display->display_options['fields']['area_code_descriptor']['id'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['area_code_descriptor']['field'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['label'] = 'taxonomy_term_data';
   $handler->display->display_options['defaults']['arguments'] = FALSE;
   /* Kontextfilter: Feld: Parliament (field_parliament) */
   $handler->display->display_options['arguments']['field_parliament_tid']['id'] = 'field_parliament_tid';
@@ -3520,9 +3509,11 @@ function pw_administration_views_default_views() {
     t('Page'),
     t('Data export'),
     t('ID'),
-    t('Area Codes'),
-    t('Area Code Descriptor'),
+    t('name'),
+    t('number'),
+    t('area_code'),
     t('Street'),
+    t('taxonomy_term_data'),
   );
   $export['pw_administration_constituencies'] = $view;
 
@@ -5223,7 +5214,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
