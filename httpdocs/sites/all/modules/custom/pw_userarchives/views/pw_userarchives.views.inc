@@ -100,20 +100,6 @@ function pw_userarchives_views_data() {
     )
   );
 
-  $data['user_archive_cache']['user_role'] = array(
-    'title' => t('Deputy/ candidate'),
-    'field' => array(
-      'handler' => 'views_handler_field',
-      'click sortable' => TRUE,
-    ),
-    'sort' => array(
-      'handler' => 'views_handler_sort',
-    ),
-    'filter' => array(
-      'handler' => 'views_handler_filter_string',
-    )
-  );
-
   $data['user_archive_cache']['fraction_name'] = array(
     'title' => t('Fraction name'),
     'help' => t('The fraction name.'),
