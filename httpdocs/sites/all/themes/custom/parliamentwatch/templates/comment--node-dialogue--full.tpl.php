@@ -69,17 +69,6 @@
     <?php endif; ?>
     <span>
       <?php print format_date($comment->created, $type = 'custom', $format = 'd. M. Y - H:i'); ?><br>
-      <?php
-      // we hide the time to answer as we do not have the time when the answer
-      // was really sent to the modtool
-      // @see AWT-1062
-      /**
-      <small>
-        <?php print t('Response time') ?>:
-        <?php print format_interval($comment->created - $node->created); ?>
-      </small>
-       **/
-      ?>
     </span>
   </p>
   <?php print render($content['field_dialogue_comment_body']); ?>
