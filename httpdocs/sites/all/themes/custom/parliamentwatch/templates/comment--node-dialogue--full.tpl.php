@@ -69,10 +69,6 @@
     <?php endif; ?>
     <span>
       <?php print format_date($comment->created, $type = 'custom', $format = 'd. M. Y - H:i'); ?><br>
-      <small>
-        <?php print t('Response time') ?>:
-        <?php print format_interval($comment->created - $node->created); ?>
-      </small>
     </span>
   </p>
   <?php print render($content['field_dialogue_comment_body']); ?>
