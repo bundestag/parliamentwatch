@@ -5,6 +5,10 @@ package = Features
 php = 5.2.4
 version = 7.x-1.0-20181109
 project = pw_globals
+
+files[] = views/views_handler_field_area_code_descriptor.inc
+
+
 dependencies[] = date
 dependencies[] = entityreference
 dependencies[] = features

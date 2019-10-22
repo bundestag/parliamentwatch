@@ -2,7 +2,7 @@
   $(document).ready( function(){
     var pymChild = new pym.Child({id: 'awpym', polling: 1000});
     var questionButton = $('a[href="#question-form-anchor"]');
-    if (questionButton) {
+    if (questionButton.length > 0) {
       pymChild.scrollParentToChildEl("main-content");
       questionButton.click(function(event){
         event.preventDefault();

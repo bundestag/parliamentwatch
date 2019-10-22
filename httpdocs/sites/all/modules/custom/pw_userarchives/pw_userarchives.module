@@ -191,6 +191,10 @@ function pw_userarchives_user_insert(&$edit, $account, $category) {
  * Implements hook_user_update().
  */
 function pw_userarchives_user_update(&$edit, $account, $category) {
+  // custom abort flag to prevent circular updates
+  if(isset($account->abort_update) && $account->abort_update){
+    return;
+  }
   pw_userarchives_update_by_user($account);
   $account->user_archive_run = TRUE;
 }
@@ -215,6 +219,10 @@ function pw_userarchives_user_delete($account) {
  * @param $revision
  */
 function pw_userarchives_user_revision_delete($revision) {
+  // custom abort flag to prevent circular updates
+  if(isset($revision->abort_update) && $revision->abort_update){
+    return;
+  }
   pw_userarchives_update_by_user($revision);
 }
 
@@ -223,9 +231,11 @@ function pw_userarchives_user_revision_delete($revision) {
  * Implements hook_pw_user_revision_edit().
  */
 function pw_userarchives_pw_user_revision_edit($revision) {
-  if (!isset( $revision->user_archive_run) || !$revision->user_archive_run) {
-    pw_userarchives_update_by_user($revision);
+  // custom abort flag to prevent circular updates
+  if(isset($revision->abort_update) && $revision->abort_update){
+    return;
   }
+  pw_userarchives_update_by_user($revision);
 }
 
 /**
@@ -882,41 +892,64 @@ function pw_delete_old_user_revisions($uid) {
 }
 
 /**
- * Chaecks and resets user revision to actual (newest) profile
- * @param $uid
+ * Checks and resets user revision to actual (newest) profile
+ *
+ * @param int|string|object $account_data
  */
-function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
+function pw_reset_actuale_profile($account_data, $exclude_vids=array()) {
+  $latest_revision_vid = NULL;
 
-  // load current profile
-  $user = user_load($uid, TRUE);
-
-  if (!$user) {
-    return;
+  if (is_object($account_data) && isset($account_data->uid)) {
+    $account = $account_data;
+  }
+  else if (is_numeric($account_data)) {
+    $account = user_load($account_data, TRUE);
+  }
+  else {
+    global $user;
+    $account = $user;
   }
 
-  // load newest profile which is open for questions
+
+  // load profile with open question forms and use the one for deputy
+  // if there are two mandates the order is not set here. Maybe id?
   $query = db_select('user_archive_cache', 'uac');
   $query->addField('uac', 'vid');
-  $query->condition('uac.uid', $uid);
+  $query->condition('uac.uid', $account->uid);
   if(!empty($exclude_vids)){
     $query->condition('uac.vid', $exclude_vids, 'NOT IN');
   }
-
-  // put the profiles open for question above those closed for questions
-  $query->orderBy('uac.question_form_open', 'DESC');
-  // then put the candidacy profiles above the deputy profiles
+  $query->condition('uac.question_form_open', 1);
   $query->orderBy('uac.user_role=\'deputy\'', 'ASC');
-  // lastly if there are two or more deputy/ candidacy profiles open for questions
-  // put the profile with the highest vid above the others
-  $query->orderBy('uac.vid', 'DESC');
   $result = $query->execute()->fetchAssoc();
-  $latest_revision_vid = $result['vid'];
+  if (!empty($result)) {
+    $latest_revision_vid = $result['vid'];
+  }
+
+  // when we have no latest revision so far there are no profiles open for
+  // questions. Then we use the old logic
+  if ($latest_revision_vid === NULL) {
+    $query = db_select('user_archive_cache', 'uac');
+    $query->addField('uac', 'vid');
+    $query->condition('uac.uid', $account->uid);
+    if(!empty($exclude_vids)){
+      $query->condition('uac.vid', $exclude_vids, 'NOT IN');
+    }
+    // put the candidacy profiles above the deputy profiles
+    $query->orderBy('uac.user_role=\'deputy\'', 'ASC');
+    // lastly if there are two or more deputy/ candidacy profiles open for questions
+    // put the profile with the highest vid above the others
+    $query->orderBy('uac.vid', 'DESC');
+    $result = $query->execute()->fetchAssoc();
+    $latest_revision_vid = $result['vid'];
+  }
+
 
   // check if current vid is newest
-  if ($user->vid != $latest_revision_vid) {
+  if ($latest_revision_vid !== NULL && $account->vid != $latest_revision_vid) {
 
     // load full revision
-    $user_revision = user_revision_load($uid, $latest_revision_vid);
+    $user_revision = user_revision_load($account_data, $latest_revision_vid);
 
     // retrieve roles and add them to user object
     $role_tids = _pw_array_flatten($user_revision->field_user_roles_for_view_mode_s, FALSE);
@@ -934,11 +967,7 @@ function pw_reset_actuale_profile($uid, $exclude_vids=array()) {
     user_save($user_revision, (array) $user_revision);
     watchdog('user', 'reverted %title revision %revision.', array('%title' => $user_revision->name, '%revision' => $user_revision->vid));
 
-    // recorrect user archive cache
-    db_delete('user_archive_cache')
-      ->condition('uid', $uid)
-      ->execute();
-    pw_userarchives_update_by_user($uid, FALSE);
+    pw_userarchives_update_by_user($account, FALSE);
   }
 }
 

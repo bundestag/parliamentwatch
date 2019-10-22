@@ -37,5 +37,6 @@ features[views_view][] = pw_administration_term_nodes_tagged_by
 features[views_view][] = pw_administration_users
 features[views_view][] = pw_administration_votings
 features[views_view][] = pw_administration_votings_by_poll
+features[views_view][] = pw_statistik_fragen
 files[] = views/pw_administration_views_handler_area_create_new.inc
-mtime = 1558619831
+mtime = 1568106629

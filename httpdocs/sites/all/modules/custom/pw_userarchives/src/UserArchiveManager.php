@@ -76,7 +76,7 @@ class UserArchiveManager {
       $this->insertNewArchiveEntries($entriesToArchive, $existingArchiveEntries);
 
       if ($reset_actual_profile) {
-        pw_reset_actuale_profile($this->politician->getId());
+        pw_reset_actuale_profile($this->politician->getPwUser()->getAccount());
       }
 
       $this->updateSearchAPI();

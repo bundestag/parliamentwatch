@@ -107,6 +107,9 @@
   > p {
     @include grid-column(12);
     margin-bottom: $space-large;
+    @include breakpoint($breakpoint-m-min) {
+      padding-right: 400px;
+    }
   }
   .constituency-selection__item {
     @include grid-column(12);

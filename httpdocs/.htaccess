@@ -93,6 +93,8 @@ DirectoryIndex index.php index.html index.htm
   RewriteCond %{REMOTE_ADDR} !=89.238.74.203
   RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
 
+Redirect 301 /thüringen/profile /thueringen/profile
+
   # CUSTOM: redirect profiles
   # profiles
   RewriteRule alexander_schmidt-102-50711[-\.] /profile/alexander-schmidt/archive/57148 [L,R=301]

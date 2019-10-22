@@ -182,7 +182,9 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
             <?php if (isset($user_profile['field_user_election_result'])): ?>
               <p>
                 <small>
-                  <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
+                  <?php if (!empty($user_profile['field_user_election_result'][0]['#title'])): ?>
+                    <?php print $user_profile['field_user_election_result'][0]['#title']; ?>:
+                  <?php endif; ?>
                   <?php print $user_profile['field_user_election_result'][0]['#markup']; ?>
                 </small>
               </p>
@@ -312,7 +314,7 @@ if (isset($user_profile["field_user_parliament"]["#items"][0]["tid"])) {
         </a>
       </li>
       <li class="share__links__item share__links__item--twitter">
-        <a class="share__links__item__link" href="https://twitter.com/home?status=<?php print drupal_encode_path(url($user_url,array('absolute'=>TRUE))); ?>" target="_blank">
+        <a class="share__links__item__link" href="https://twitter.com/intent/tweet?url=<?php print drupal_encode_path(url($user_url,array('absolute'=>TRUE))); ?>" target="_blank">
           <i class="icon icon-twitter"></i> <span>tweet</span>
         </a>
       </li>

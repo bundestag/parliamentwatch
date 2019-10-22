@@ -95,6 +95,9 @@ function pw_userarchives_views_data() {
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+    )
   );
 
   $data['user_archive_cache']['fraction_name'] = array(
