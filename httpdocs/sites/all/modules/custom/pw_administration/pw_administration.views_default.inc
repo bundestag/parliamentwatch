@@ -3447,7 +3447,7 @@ function pw_administration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_constituency_street']['delta_offset'] = '0';
-  /* Feld: Beschädigte/fehlende Behandlungsroutine */
+  /* Feld: Taxonomie-Begriff: Area code descriptor */
   $handler->display->display_options['fields']['area_code_descriptor']['id'] = 'area_code_descriptor';
   $handler->display->display_options['fields']['area_code_descriptor']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['area_code_descriptor']['field'] = 'area_code_descriptor';
@@ -8527,7 +8527,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['access']['relationship'] = 'vid';
   $handler->display->display_options['fields']['access']['date_format'] = 'date_and_time';
   $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
-  /* Feld: PW User archive: Deputy/ candidate */
+  /* Feld: PW User archive: Benutzerrolle */
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
@@ -8778,7 +8778,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['arguments']['field_user_parliament_tid']['validate_options']['vocabularies'] = array(
     'parliaments' => 'parliaments',
   );
-  /* Filterkriterium: PW User archive: Deputy/ candidate */
+  /* Filterkriterium: PW User archive: Benutzerrolle */
   $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
@@ -9165,7 +9165,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['access']['relationship'] = 'vid';
   $handler->display->display_options['fields']['access']['date_format'] = 'date_and_time';
   $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
-  /* Feld: PW User archive: Deputy/ candidate */
+  /* Feld: PW User archive: Benutzerrolle */
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
@@ -15144,10 +15144,11 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['parliament_name']['id'] = 'parliament_name';
   $handler->display->display_options['fields']['parliament_name']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['parliament_name']['field'] = 'parliament_name';
-  /* Feld: PW User archive: Deputy/ candidate */
+  /* Feld: PW User archive: Benutzerrolle */
   $handler->display->display_options['fields']['user_role']['id'] = 'user_role';
   $handler->display->display_options['fields']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['fields']['user_role']['label'] = 'Deputy/ candidate';
   /* Feld: PW User archive: Number of answers */
   $handler->display->display_options['fields']['number_of_answers']['id'] = 'number_of_answers';
   $handler->display->display_options['fields']['number_of_answers']['table'] = 'user_archive_cache';
@@ -15231,14 +15232,13 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     109923392 => 0,
   );
   $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: PW User archive: Deputy/ candidate */
+  /* Filterkriterium: PW User archive: Benutzerrolle */
   $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
   $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['exposed'] = TRUE;
   $handler->display->display_options['filters']['user_role']['expose']['operator_id'] = 'user_role_op';
-  $handler->display->display_options['filters']['user_role']['expose']['label'] = 'Deputy/ candidate';
-  $handler->display->display_options['filters']['user_role']['expose']['description'] = 'Bitte "deputy" oder "candidate" eingeben';
+  $handler->display->display_options['filters']['user_role']['expose']['label'] = 'Kandidatur/ Mandat';
   $handler->display->display_options['filters']['user_role']['expose']['operator'] = 'user_role_op';
   $handler->display->display_options['filters']['user_role']['expose']['identifier'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['expose']['remember_roles'] = array(
@@ -15309,7 +15309,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Fraktion'),
     t('Question form open'),
     t('Parlament'),
-    t('Bitte "deputy" oder "candidate" eingeben'),
+    t('Kandidatur/ Mandat'),
     t('Page'),
     t('Data export'),
   );
