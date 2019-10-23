@@ -18,4 +18,11 @@ function pw_d8_migration_views_data_alter(&$data) {
       'handler' => 'views_handler_field_mandate_won'
     )
   );
+  $data['user_revision']['fraction_membership_start'] = array(
+    'title' => t('Fraction membership start'),
+    'help' => t('Turns the D7 data into a D8 valid_from data for new FractionMembership entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_fraction_membership_start'
+    )
+  );
 }

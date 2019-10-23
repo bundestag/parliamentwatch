@@ -7,6 +7,7 @@ version = 7.x-1.0
 project = pw_d8_migration
 
 files[] = views/views_handler_field_mandate_won.inc
+files[] = views/views_handler_field_fraction_membership_start.inc
 
 dependencies[] = views
 dependencies[] = views_data_export
