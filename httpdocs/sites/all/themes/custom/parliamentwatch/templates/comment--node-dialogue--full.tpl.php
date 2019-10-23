@@ -67,9 +67,6 @@
     <?php else: ?>
       <?php print t('Addition by <strong>@name</strong>', ['@name' => render($content['field_dialogue_sender_fullname'])]); ?>
     <?php endif; ?>
-    <span>
-      <?php print format_date($comment->created, $type = 'custom', $format = 'd. M. Y - H:i'); ?><br>
-    </span>
   </p>
   <?php print render($content['field_dialogue_comment_body']); ?>
   <?php if ($content['field_dialogue_is_standard_reply']['#items'][0]['value'] == 1): ?>
