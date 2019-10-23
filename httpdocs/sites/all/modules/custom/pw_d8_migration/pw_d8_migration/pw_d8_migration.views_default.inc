@@ -322,7 +322,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
-  /* Feld: Inhalt: Politician */
+  /* Feld: Inhalt: Politicians */
   $handler->display->display_options['fields']['field_politician']['id'] = 'field_politician';
   $handler->display->display_options['fields']['field_politician']['table'] = 'field_data_field_politician';
   $handler->display->display_options['fields']['field_politician']['field'] = 'field_politician';
@@ -2522,7 +2522,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
-  /* Feld: Inhalt: Politician */
+  /* Feld: Inhalt: Politicians */
   $handler->display->display_options['fields']['field_politician']['id'] = 'field_politician';
   $handler->display->display_options['fields']['field_politician']['table'] = 'field_data_field_politician';
   $handler->display->display_options['fields']['field_politician']['field'] = 'field_politician';
@@ -3143,6 +3143,165 @@ function pw_d8_migration_views_default_views() {
     t('Data export'),
   );
   $export['export_parliament_periods'] = $view;
+
+  $view = new view();
+  $view->name = 'export_parliaments';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'export_parliaments';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_parliaments';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'tid' => 'tid',
+    'name' => 'name',
+    'field_parliament_election' => 'field_parliament_election',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'tid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament_election' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'tid';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  /* Feld: Taxonomie-Begriff: Election */
+  $handler->display->display_options['fields']['field_parliament_election']['id'] = 'field_parliament_election';
+  $handler->display->display_options['fields']['field_parliament_election']['table'] = 'field_data_field_parliament_election';
+  $handler->display->display_options['fields']['field_parliament_election']['field'] = 'field_parliament_election';
+  $handler->display->display_options['fields']['field_parliament_election']['label'] = 'election_date';
+  $handler->display->display_options['fields']['field_parliament_election']['settings'] = array(
+    'format_type' => 'custom',
+    'custom_date_format' => 'Y-m-d',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
+  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'parliaments' => 'parliaments',
+  );
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/parliaments.csv';
+  $translatables['export_parliaments'] = array(
+    t('Master'),
+    t('export_parliaments'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('uuid'),
+    t('tid'),
+    t('.'),
+    t('name'),
+    t('election_date'),
+    t('Data export'),
+  );
+  $export['export_parliaments'] = $view;
 
   $view = new view();
   $view->name = 'export_parties';
