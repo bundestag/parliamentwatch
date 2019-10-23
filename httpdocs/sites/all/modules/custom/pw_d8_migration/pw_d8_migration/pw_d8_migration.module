@@ -5,3 +5,45 @@
  */
 
 include_once 'pw_d8_migration.features.inc';
+
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function pw_d8_migration_views_data_alter(&$data) {
+  $data['user_revision']['mandate_won'] = array(
+    'title' => t('Mandate won'),
+    'help' => t('Turns the D7 data into a D8 mandate_won data for new CandidacyMandate entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_mandate_won'
+    )
+  );
+  $data['user_revision']['fraction_membership_start'] = array(
+    'title' => t('Fraction membership start'),
+    'help' => t('Turns the D7 data into a D8 valid_from data for new FractionMembership entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_fraction_membership_start'
+    )
+  );
+  $data['user_revision']['fraction_membership_until'] = array(
+    'title' => t('Fraction membership end date'),
+    'help' => t('Turns the D7 data into a D8 valid_until data for new FractionMembership entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_fraction_membership_until'
+    )
+  );
+  $data['user_revision']['candidacy_mandate_start_date'] = array(
+    'title' => t('CandidacyMandate start date'),
+    'help' => t('Turns the D7 data into a D8 start_date data for new CandidacyMandate entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_candidacy_mandate_start_date'
+    )
+  );
+  $data['user_revision']['candidacy_mandate_end_date'] = array(
+    'title' => t('CandidacyMandate end date'),
+    'help' => t('Turns the D7 data into a D8 end_date data for new CandidacyMandate entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_candidacy_mandate_end_date'
+    )
+  );
+}
