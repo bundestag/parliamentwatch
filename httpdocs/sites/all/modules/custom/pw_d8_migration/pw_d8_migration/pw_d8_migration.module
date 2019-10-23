@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the PW D8 Migration feature.
+ */
+
+include_once 'pw_d8_migration.features.inc';
