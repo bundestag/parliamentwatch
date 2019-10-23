@@ -5,6 +5,9 @@ package = Features
 php = 5.2.4
 version = 7.x-1.0
 project = pw_d8_migration
+
+files[] = views/views_handler_field_mandate_won.inc
+
 dependencies[] = views
 dependencies[] = views_data_export
 features[ctools][] = views:views_default:3.0

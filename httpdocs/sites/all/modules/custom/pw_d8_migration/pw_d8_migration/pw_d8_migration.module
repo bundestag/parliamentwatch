@@ -5,3 +5,17 @@
  */
 
 include_once 'pw_d8_migration.features.inc';
+
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function pw_d8_migration_views_data_alter(&$data) {
+  $data['user_revision']['mandate_won'] = array(
+    'title' => t('Mandate won'),
+    'help' => t('Turns the D7 data into a D8 mandate_won data for new CandidacyMandate entity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_mandate_won'
+    )
+  );
+}
