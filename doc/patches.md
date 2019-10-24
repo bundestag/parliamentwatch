@@ -5,6 +5,11 @@ Problem: https://www.drupal.org/project/feeds/issues/2918931
 
 Patch: custom-patches/feeds.patch
 
+## Rules
+Problem: https://www.drupal.org/project/rules/issues/2923477
+
+Patch: https://www.drupal.org/files/issues/php7_2_compatibility-2923477-5.patch
+
 ## UUID module
 Problem: Within the module a uuid.feeds.inc file is placed in our project which cannot be found in the original module. To avoid any other problems during Feeds imports and with next updates of the UUID module we add this file as a patch.
 
