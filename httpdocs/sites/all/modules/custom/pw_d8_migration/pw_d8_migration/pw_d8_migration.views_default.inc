@@ -2271,6 +2271,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['table'] = 'field_revision_field_user_retired_reason';
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['field'] = 'field_user_retired_reason-revision_id';
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['label'] = 'reason_end';
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
@@ -2359,7 +2360,6 @@ function pw_d8_migration_views_default_views() {
     t('fraction_membership_valid_until'),
     t('candidacy_mandate_start_date'),
     t('CandidacyMandate end date'),
-    t('Grund für Ausscheiden aus dem Parlament'),
     t('Data export'),
   );
   $export['export_mandates_fraction_memberships'] = $view;
