@@ -3875,6 +3875,7 @@ function pw_administration_views_default_views() {
     'page' => 'page',
     'pw_kc_position' => 'pw_kc_position',
     'pw_kc_thesis' => 'pw_kc_thesis',
+    'landingpage' => 'landingpage',
     'newsletter' => 'newsletter',
     'partners' => 'partners',
     'pw_petition' => 'pw_petition',
@@ -5214,7 +5215,7 @@ function pw_administration_views_default_views() {
   );
   $handler->display->display_options['filters']['field_user_party_tid']['type'] = 'textfield';
   $handler->display->display_options['filters']['field_user_party_tid']['vocabulary'] = 'party';
-  /* Filterkriterium: Feld: Topic (field_dialogue_topic) */
+  /* Filterkriterium: Feld: Dialogue Topic (field_dialogue_topic) */
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['id'] = 'field_dialogue_topic_tid';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['table'] = 'field_data_field_dialogue_topic';
   $handler->display->display_options['filters']['field_dialogue_topic_tid']['field'] = 'field_dialogue_topic_tid';
@@ -10952,6 +10953,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     'field_sidejob_income_interval' => 'field_sidejob_income_interval',
     'sidejobs_income' => 'sidejobs_income',
     'changed' => 'changed',
+    'created' => 'created',
     'view_user' => 'view_user',
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
@@ -11052,6 +11054,13 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
       'empty_column' => 0,
     ),
     'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
       'sortable' => 1,
       'default_sort_order' => 'desc',
       'align' => '',
@@ -11399,6 +11408,13 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['fields']['changed']['label'] = 'Letztes Update';
   $handler->display->display_options['fields']['changed']['date_format'] = 'date_only_short';
   $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Beitragsdatum */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Erstellt';
+  $handler->display->display_options['fields']['created']['date_format'] = 'short';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Feld: Benutzer: Link */
   $handler->display->display_options['fields']['view_user']['id'] = 'view_user';
   $handler->display->display_options['fields']['view_user']['table'] = 'users';
@@ -11629,6 +11645,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['field_user_party_tid']['table'] = 'field_data_field_user_party';
   $handler->display->display_options['filters']['field_user_party_tid']['field'] = 'field_user_party_tid';
   $handler->display->display_options['filters']['field_user_party_tid']['relationship'] = 'field_politician_target_id';
+  $handler->display->display_options['filters']['field_user_party_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_party_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_party_tid']['expose']['operator_id'] = 'field_user_party_tid_op';
   $handler->display->display_options['filters']['field_user_party_tid']['expose']['label'] = 'Partei';
@@ -11654,6 +11671,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['changed']['id'] = 'changed';
   $handler->display->display_options['filters']['changed']['table'] = 'node';
   $handler->display->display_options['filters']['changed']['field'] = 'changed';
+  $handler->display->display_options['filters']['changed']['group'] = 1;
   $handler->display->display_options['filters']['changed']['exposed'] = TRUE;
   $handler->display->display_options['filters']['changed']['expose']['operator_id'] = 'changed_op';
   $handler->display->display_options['filters']['changed']['expose']['label'] = 'Letztes Update';
@@ -11674,10 +11692,36 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     52344559 => 0,
     109923392 => 0,
   );
+  /* Filterkriterium: Inhalt: Beitragsdatum */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'node';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['group'] = 1;
+  $handler->display->display_options['filters']['created']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['label'] = 'Erstellt';
+  $handler->display->display_options['filters']['created']['expose']['use_operator'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
   /* Filterkriterium: Inhalt: Classification (field_sidejob_classification) */
   $handler->display->display_options['filters']['field_sidejob_classification_value']['id'] = 'field_sidejob_classification_value';
   $handler->display->display_options['filters']['field_sidejob_classification_value']['table'] = 'field_data_field_sidejob_classification';
   $handler->display->display_options['filters']['field_sidejob_classification_value']['field'] = 'field_sidejob_classification_value';
+  $handler->display->display_options['filters']['field_sidejob_classification_value']['group'] = 1;
   $handler->display->display_options['filters']['field_sidejob_classification_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['operator_id'] = 'field_sidejob_classification_value_op';
   $handler->display->display_options['filters']['field_sidejob_classification_value']['expose']['label'] = 'Classification';
@@ -11702,6 +11746,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['id'] = 'field_sidejob_income_interval_value';
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['table'] = 'field_data_field_sidejob_income_interval';
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['field'] = 'field_sidejob_income_interval_value';
+  $handler->display->display_options['filters']['field_sidejob_income_interval_value']['group'] = 1;
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['operator_id'] = 'field_sidejob_income_interval_value_op';
   $handler->display->display_options['filters']['field_sidejob_income_interval_value']['expose']['label'] = 'Intervall';
@@ -11726,6 +11771,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['table'] = 'field_data_field_sidejob_organization';
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['field'] = 'field_sidejob_organization_tid';
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['value'] = '';
+  $handler->display->display_options['filters']['field_sidejob_organization_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['operator_id'] = 'field_sidejob_organization_tid_op';
   $handler->display->display_options['filters']['field_sidejob_organization_tid']['expose']['label'] = 'Organisation';
@@ -12068,6 +12114,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Intervall'),
     t('Sidejob income'),
     t('Letztes Update'),
+    t('Erstellt'),
     t('Profil'),
     t('[edit_node] [delete_node] '),
     t('Bearbeiten'),
@@ -14429,7 +14476,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     ),
     'action::node_publish_action' => array(
       'selected' => 1,
-      'postpone_processing' => 1,
+      'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'skip_permission_check' => 0,
       'override_label' => 0,
