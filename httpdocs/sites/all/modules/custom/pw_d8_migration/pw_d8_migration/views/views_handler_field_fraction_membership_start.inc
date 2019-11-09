@@ -27,17 +27,19 @@ class views_handler_field_fraction_membership_start extends views_handler_field 
     $fraction = $politicianUserRevision->getFraction();
     $parliament = $politicianUserRevision->getParliament();
     $joined_date = date('Y-m-d', $politicianUserRevision->getJoinedDate());
-    $query = db_select('user_archive_cache', 'uac')
-      ->condition('uid', $politicianUserRevision->getUid())
-      ->condition('user_retired', $joined_date, '<=')
-      ->condition('user_role', PoliticianUserRevision::DEPUTY_ROLE_STRING)
-      ->condition('parliament_name', $parliament->getName())
-      ->condition('fraction_name', $fraction->getName(), '!=')
-      ->fields('uac')
-      ->execute();
-    $result = $query->fetchAssoc();
-    if (!empty($result)) {
-      return TRUE;
+    if ($fraction && $parliament) {
+      $query = db_select('user_archive_cache', 'uac')
+        ->condition('uid', $politicianUserRevision->getUid())
+        ->condition('user_retired', $joined_date, '<=')
+        ->condition('user_role', PoliticianUserRevision::DEPUTY_ROLE_STRING)
+        ->condition('parliament_name', $parliament->getName())
+        ->condition('fraction_name', $fraction->getName(), '!=')
+        ->fields('uac')
+        ->execute();
+      $result = $query->fetchAssoc();
+      if (!empty($result)) {
+        return TRUE;
+      }
     }
 
     return FALSE;
