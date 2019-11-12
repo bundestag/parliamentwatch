@@ -868,7 +868,967 @@ function pw_d8_migration_views_default_views() {
   $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
   $view->tag = 'default';
   $view->base_table = 'user_archive_cache';
-  $view->human_name = 'Export Candidacies';
+  $view->human_name = 'export_candidacies';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_candidacies';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
+    'vid' => 'vid',
+    'field_user_parliament-revision_id' => 'field_user_parliament-revision_id',
+    'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
+    'field_user_party-revision_id' => 'field_user_party-revision_id',
+    'field_user_list-revision_id_1' => 'field_user_list-revision_id_1',
+    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
+    'field_user_political_goals-revision_id' => 'field_user_political_goals-revision_id',
+    'field_user_retired_reason-revision_id' => 'field_user_retired_reason-revision_id',
+    'candidacy_mandate_start_date' => 'candidacy_mandate_start_date',
+    'candidacy_mandate_end_date' => 'candidacy_mandate_end_date',
+    'user_name' => 'user_name',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'vid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_parliament-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_constituency-revision_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_party-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list-revision_id_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list_position-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_political_goals-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_retired_reason-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_start_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_end_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'user_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: PW User archive: User revision */
+  $handler->display->display_options['relationships']['vid']['id'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['relationships']['vid']['field'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['label'] = 'User revision';
+  $handler->display->display_options['relationships']['vid']['required'] = TRUE;
+  /* Beziehung: Benutzer (Historische Daten): Wahlkreis (field_user_constituency) */
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['label'] = 'Wahlkreis';
+  /* Feld: Benutzer: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['uid']['label'] = 'uid';
+  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
+  /* Feld: PW User archive: Vid */
+  $handler->display->display_options['fields']['vid']['id'] = 'vid';
+  $handler->display->display_options['fields']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['vid']['field'] = 'vid';
+  $handler->display->display_options['fields']['vid']['label'] = 'candidacy_id';
+  $handler->display->display_options['fields']['vid']['link_to_user'] = FALSE;
+  /* Feld: Benutzer (Historische Daten): Parlament */
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['field'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['text'] = '[field_user_parliament-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Wahlkreis */
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['label'] = 'constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['text'] = '[field_user_constituency-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Partei */
+  $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['field'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['label'] = 'party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['text'] = '[field_user_party-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Liste */
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['id'] = 'field_user_list-revision_id_1';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['table'] = 'field_revision_field_user_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['field'] = 'field_user_list-revision_id';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['label'] = 'electoral_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['text'] = '[field_user_list-revision_id_1-tid]';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Listenposition */
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['id'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['table'] = 'field_revision_field_user_list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['field'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['label'] = 'list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Politische Ziele */
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['id'] = 'field_user_political_goals-revision_id';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['table'] = 'field_revision_field_user_political_goals';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['field'] = 'field_user_political_goals-revision_id';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['label'] = 'politicial_goals';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Grund für Ausscheiden aus dem Parlament */
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['id'] = 'field_user_retired_reason-revision_id';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['table'] = 'field_revision_field_user_retired_reason';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['field'] = 'field_user_retired_reason-revision_id';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['label'] = 'reason_end';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: User revision: CandidacyMandate start date */
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['id'] = 'candidacy_mandate_start_date';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['field'] = 'candidacy_mandate_start_date';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['label'] = 'start_date';
+  /* Feld: User revision: CandidacyMandate end date */
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['id'] = 'candidacy_mandate_end_date';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['field'] = 'candidacy_mandate_end_date';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['label'] = 'end_date';
+  /* Feld: PW User archive: Benutzername */
+  $handler->display->display_options['fields']['user_name']['id'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['user_name']['field'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['user_name']['link_to_user'] = FALSE;
+  /* Sortierkriterien: PW User archive: Vid */
+  $handler->display->display_options['sorts']['vid']['id'] = 'vid';
+  $handler->display->display_options['sorts']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['sorts']['vid']['field'] = 'vid';
+  /* Filterkriterium: PW User archive: Benutzerrolle */
+  $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
+  $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['value'] = array(
+    'candidate' => 'candidate',
+  );
+  /* Filterkriterium: Benutzer (Historische Daten): Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['filename'] = '';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['path'] = 'export/candidacies.csv';
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '300';
+  $translatables['export_candidacies'] = array(
+    t('Master'),
+    t('export_candidacies'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('User revision'),
+    t('Wahlkreis'),
+    t('uid'),
+    t('candidacy_id'),
+    t('parliament_period'),
+    t('[field_user_parliament-revision_id-tid]'),
+    t('constituency'),
+    t('[field_user_constituency-revision_id-tid]'),
+    t('party'),
+    t('[field_user_party-revision_id-tid]'),
+    t('electoral_list'),
+    t('[field_user_list-revision_id_1-tid]'),
+    t('list_position'),
+    t('politicial_goals'),
+    t('reason_end'),
+    t('start_date'),
+    t('end_date'),
+    t('Benutzername'),
+    t('Data export'),
+  );
+  $export['export_candidacies'] = $view;
+
+  $view = new view();
+  $view->name = 'export_candidacies2';
+  $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
+  $view->tag = 'default';
+  $view->base_table = 'user_archive_cache';
+  $view->human_name = 'export_candidacies';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_candidacies';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
+    'vid' => 'vid',
+    'user_name' => 'user_name',
+    'parliament_name' => 'parliament_name',
+    'field_user_fname-revision_id' => 'field_user_fname-revision_id',
+    'field_user_lname-revision_id' => 'field_user_lname-revision_id',
+    'field_user_list-revision_id' => 'field_user_list-revision_id',
+    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
+    'field_user_political_goals-revision_id' => 'field_user_political_goals-revision_id',
+    'name' => 'name',
+    'field_constituency_nr' => 'field_constituency_nr',
+    'mandate_won' => 'mandate_won',
+    'field_user_died-revision_id' => 'field_user_died-revision_id',
+    'candidacy_mandate_start_date' => 'candidacy_mandate_start_date',
+    'candidacy_mandate_end_date' => 'candidacy_mandate_end_date',
+    'field_user_retired_reason-revision_id_1' => 'field_user_retired_reason-revision_id_1',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'vid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'user_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'parliament_name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fname-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lname-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list_position-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_political_goals-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_nr' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mandate_won' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_died-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_start_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_end_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_retired_reason-revision_id_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: PW User archive: User revision */
+  $handler->display->display_options['relationships']['vid']['id'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['relationships']['vid']['field'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['label'] = 'User revision';
+  $handler->display->display_options['relationships']['vid']['required'] = TRUE;
+  /* Beziehung: Benutzer (Historische Daten): Wahlkreis (field_user_constituency) */
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['label'] = 'Wahlkreis';
+  /* Feld: Benutzer: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['uid']['label'] = 'uid';
+  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
+  /* Feld: PW User archive: Vid */
+  $handler->display->display_options['fields']['vid']['id'] = 'vid';
+  $handler->display->display_options['fields']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['vid']['field'] = 'vid';
+  $handler->display->display_options['fields']['vid']['label'] = 'candidacy_id';
+  $handler->display->display_options['fields']['vid']['link_to_user'] = FALSE;
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['relationship'] = 'field_user_constituency_tid';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_parliament']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_parliament']['alter']['text'] = '[field_parliament-tid]';
+  $handler->display->display_options['fields']['field_parliament']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Wahlkreis */
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['label'] = 'constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['text'] = '[field_user_constituency-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Partei */
+  $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['field'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['label'] = 'party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_party-revision_id']['alter']['text'] = '[field_user_party-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Liste */
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['id'] = 'field_user_list-revision_id_1';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['table'] = 'field_revision_field_user_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['field'] = 'field_user_list-revision_id';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['label'] = 'electoral_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['text'] = '[field_user_list-revision_id_1-tid]';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Listenposition */
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['id'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['table'] = 'field_revision_field_user_list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['field'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['label'] = 'list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Politische Ziele */
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['id'] = 'field_user_political_goals-revision_id';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['table'] = 'field_revision_field_user_political_goals';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['field'] = 'field_user_political_goals-revision_id';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['label'] = 'politicial_goals';
+  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Grund für Ausscheiden aus dem Parlament */
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['id'] = 'field_user_retired_reason-revision_id';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['table'] = 'field_revision_field_user_retired_reason';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['field'] = 'field_user_retired_reason-revision_id';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['label'] = 'reason_end';
+  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: User revision: CandidacyMandate end date */
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['id'] = 'candidacy_mandate_end_date';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['field'] = 'candidacy_mandate_end_date';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['label'] = 'end_date';
+  /* Feld: User revision: CandidacyMandate start date */
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['id'] = 'candidacy_mandate_start_date';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['field'] = 'candidacy_mandate_start_date';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['label'] = 'start_date';
+  /* Feld: PW User archive: Benutzername */
+  $handler->display->display_options['fields']['user_name']['id'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['user_name']['field'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['user_name']['link_to_user'] = FALSE;
+  /* Sortierkriterien: PW User archive: Vid */
+  $handler->display->display_options['sorts']['vid']['id'] = 'vid';
+  $handler->display->display_options['sorts']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['sorts']['vid']['field'] = 'vid';
+  /* Filterkriterium: PW User archive: Benutzerrolle */
+  $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
+  $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['value'] = array(
+    'candidate' => 'candidate',
+  );
+  /* Filterkriterium: Benutzer (Historische Daten): Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['filename'] = '';
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 0;
+  $handler->display->display_options['path'] = 'export/candidacies.csv';
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '300';
+  $translatables['export_candidacies2'] = array(
+    t('Master'),
+    t('export_candidacies'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('User revision'),
+    t('Wahlkreis'),
+    t('uid'),
+    t('candidacy_id'),
+    t('parliament_period'),
+    t('[field_parliament-tid]'),
+    t('constituency'),
+    t('[field_user_constituency-revision_id-tid]'),
+    t('party'),
+    t('[field_user_party-revision_id-tid]'),
+    t('electoral_list'),
+    t('[field_user_list-revision_id_1-tid]'),
+    t('list_position'),
+    t('politicial_goals'),
+    t('reason_end'),
+    t('end_date'),
+    t('start_date'),
+    t('Benutzername'),
+    t('Data export'),
+  );
+  $export['export_candidacies2'] = $view;
+
+  $view = new view();
+  $view->name = 'export_candidacies_old';
+  $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
+  $view->tag = 'default';
+  $view->base_table = 'user_archive_cache';
+  $view->human_name = 'export_candidacies_old';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -893,7 +1853,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
@@ -1153,7 +2113,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['path'] = 'export_candidacies';
   $handler->display->display_options['use_batch'] = 'batch';
   $handler->display->display_options['segment_size'] = '100';
-  $translatables['export_candidacies'] = array(
+  $translatables['export_candidacies_old'] = array(
     t('Master'),
     t('mehr'),
     t('Anwenden'),
@@ -1166,7 +2126,7 @@ function pw_d8_migration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('User revision'),
     t('Wahlkreis'),
@@ -1188,7 +2148,7 @@ function pw_d8_migration_views_default_views() {
     t('CandidacyMandate end date'),
     t('Data export'),
   );
-  $export['export_candidacies'] = $view;
+  $export['export_candidacies_old'] = $view;
 
   $view = new view();
   $view->name = 'export_committees_memberships';
@@ -2021,6 +2981,993 @@ function pw_d8_migration_views_default_views() {
   $export['export_committees_memberships'] = $view;
 
   $view = new view();
+  $view->name = 'export_constituencies';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'export_constituencies';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_constituencies';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'tid' => 'tid',
+    'field_parliament' => 'field_parliament',
+    'name' => 'name',
+    'field_constituency_nr' => 'field_constituency_nr',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'tid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_nr' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'tid';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_parliament']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_parliament']['alter']['text'] = '[field_parliament-tid]';
+  $handler->display->display_options['fields']['field_parliament']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'name';
+  /* Feld: Taxonomie-Begriff: Number */
+  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
+  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'number';
+  $handler->display->display_options['fields']['field_constituency_nr']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
+  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'constituency' => 'constituency',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/constituencies.csv';
+  $handler->display->display_options['sitename_title'] = 0;
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_constituencies'] = array(
+    t('Master'),
+    t('export_constituencies'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('uuid'),
+    t('tid'),
+    t('.'),
+    t('parliament_period'),
+    t('[field_parliament-tid]'),
+    t('name'),
+    t('number'),
+    t('Data export'),
+  );
+  $export['export_constituencies'] = $view;
+
+  $view = new view();
+  $view->name = 'export_constituency_areacodes';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'export_constituency_areacodes';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_constituency_areacodes';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_constituency_area_codes_1' => 'field_constituency_area_codes_1',
+    'uuid' => 'uuid',
+    'tid' => 'tid',
+    'field_constituency_area_codes' => 'field_constituency_area_codes',
+    'area_code_descriptor' => 'area_code_descriptor',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_constituency_area_codes_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'tid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_area_codes' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'area_code_descriptor' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: Taxonomie-Begriff: Area Codes (field_constituency_area_codes) */
+  $handler->display->display_options['relationships']['field_constituency_area_codes_tid']['id'] = 'field_constituency_area_codes_tid';
+  $handler->display->display_options['relationships']['field_constituency_area_codes_tid']['table'] = 'field_data_field_constituency_area_codes';
+  $handler->display->display_options['relationships']['field_constituency_area_codes_tid']['field'] = 'field_constituency_area_codes_tid';
+  /* Feld: Taxonomie-Begriff: Area Codes */
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['id'] = 'field_constituency_area_codes_1';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['table'] = 'field_data_field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['label'] = 'tid';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['alter']['text'] = '[field_constituency_area_codes_1-tid]';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_constituency_area_codes_1']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'field_constituency_area_codes_tid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'constituency_id';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Taxonomie-Begriff: Area Codes */
+  $handler->display->display_options['fields']['field_constituency_area_codes']['id'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['table'] = 'field_data_field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['field'] = 'field_constituency_area_codes';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['label'] = 'area_code';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_constituency_area_codes']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_constituency_area_codes']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_constituency_area_codes']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Area code descriptor */
+  $handler->display->display_options['fields']['area_code_descriptor']['id'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['area_code_descriptor']['field'] = 'area_code_descriptor';
+  $handler->display->display_options['fields']['area_code_descriptor']['label'] = 'descriptor';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'fake_id';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[field_constituency_area_codes_1]-[tid]';
+  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['relationship'] = 'field_constituency_area_codes_tid';
+  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'constituency' => 'constituency',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
+  /* Filterkriterium: Taxonomie-Begriff: Area Codes (field_constituency_area_codes) */
+  $handler->display->display_options['filters']['field_constituency_area_codes_tid']['id'] = 'field_constituency_area_codes_tid';
+  $handler->display->display_options['filters']['field_constituency_area_codes_tid']['table'] = 'field_data_field_constituency_area_codes';
+  $handler->display->display_options['filters']['field_constituency_area_codes_tid']['field'] = 'field_constituency_area_codes_tid';
+  $handler->display->display_options['filters']['field_constituency_area_codes_tid']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_constituency_area_codes_tid']['vocabulary'] = 'area_codex';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/constituency_areacodes.csv';
+  $handler->display->display_options['sitename_title'] = 0;
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_constituency_areacodes'] = array(
+    t('Master'),
+    t('export_constituency_areacodes'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('Begriff aus field_constituency_area_codes'),
+    t('tid'),
+    t('[field_constituency_area_codes_1-tid]'),
+    t('uuid'),
+    t('constituency_id'),
+    t('.'),
+    t('area_code'),
+    t('descriptor'),
+    t('fake_id'),
+    t('[field_constituency_area_codes_1]-[tid]'),
+    t('Data export'),
+  );
+  $export['export_constituency_areacodes'] = $view;
+
+  $view = new view();
+  $view->name = 'export_constituency_streets';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'export_constituency_streets';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_constituency_streets';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'tid' => 'tid',
+    'field_constituency_street' => 'field_constituency_street',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'tid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_street' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'constituency_id';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Taxonomie-Begriff: Street */
+  $handler->display->display_options['fields']['field_constituency_street']['id'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['table'] = 'field_data_field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['field'] = 'field_constituency_street';
+  $handler->display->display_options['fields']['field_constituency_street']['label'] = 'street';
+  $handler->display->display_options['fields']['field_constituency_street']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_constituency_street']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_constituency_street']['delta_offset'] = '0';
+  /* Feld: Global: Benutzerdefinierter Text */
+  $handler->display->display_options['fields']['nothing']['id'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['table'] = 'views';
+  $handler->display->display_options['fields']['nothing']['field'] = 'nothing';
+  $handler->display->display_options['fields']['nothing']['label'] = 'fake_id';
+  $handler->display->display_options['fields']['nothing']['alter']['text'] = '[tid]|[field_constituency_street]';
+  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
+  /* Sortierkriterien: Taxonomie-Begriff: Street (field_constituency_street) */
+  $handler->display->display_options['sorts']['field_constituency_street_value']['id'] = 'field_constituency_street_value';
+  $handler->display->display_options['sorts']['field_constituency_street_value']['table'] = 'field_data_field_constituency_street';
+  $handler->display->display_options['sorts']['field_constituency_street_value']['field'] = 'field_constituency_street_value';
+  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'constituency' => 'constituency',
+  );
+  $handler->display->display_options['filters']['machine_name']['group'] = 1;
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['group'] = 1;
+  $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
+  /* Filterkriterium: Taxonomie-Begriff: Street (field_constituency_street) */
+  $handler->display->display_options['filters']['field_constituency_street_value']['id'] = 'field_constituency_street_value';
+  $handler->display->display_options['filters']['field_constituency_street_value']['table'] = 'field_data_field_constituency_street';
+  $handler->display->display_options['filters']['field_constituency_street_value']['field'] = 'field_constituency_street_value';
+  $handler->display->display_options['filters']['field_constituency_street_value']['operator'] = 'not empty';
+  $handler->display->display_options['filters']['field_constituency_street_value']['group'] = 1;
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/constituency_streets.csv';
+  $handler->display->display_options['sitename_title'] = 0;
+  $translatables['export_constituency_streets'] = array(
+    t('Master'),
+    t('export_constituency_streets'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('constituency_id'),
+    t('.'),
+    t('street'),
+    t('fake_id'),
+    t('[tid]|[field_constituency_street]'),
+    t('Data export'),
+  );
+  $export['export_constituency_streets'] = $view;
+
+  $view = new view();
+  $view->name = 'export_electoral_lists';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'taxonomy_term_data';
+  $view->human_name = 'export_electoral_lists';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_electoral_lists';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'tid' => 'tid',
+    'name' => 'name',
+    'field_parliament_election' => 'field_parliament_election',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'tid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament_election' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['fields']['tid']['id'] = 'tid';
+  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['tid']['field'] = 'tid';
+  $handler->display->display_options['fields']['tid']['label'] = 'tid';
+  $handler->display->display_options['fields']['tid']['separator'] = '';
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_parliament']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_parliament']['alter']['text'] = '[field_parliament-tid]';
+  $handler->display->display_options['fields']['field_parliament']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Taxonomie-Begriff: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['label'] = 'name';
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
+  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
+  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
+  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
+  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
+  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
+  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
+  $handler->display->display_options['filters']['machine_name']['value'] = array(
+    'election_list' => 'election_list',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/electoral_lists.csv';
+  $translatables['export_electoral_lists'] = array(
+    t('Master'),
+    t('export_electoral_lists'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('uuid'),
+    t('tid'),
+    t('.'),
+    t('parliament_period'),
+    t('[field_parliament-tid]'),
+    t('name'),
+    t('Data export'),
+  );
+  $export['export_electoral_lists'] = $view;
+
+  $view = new view();
   $view->name = 'export_file';
   $view->description = '';
   $view->tag = 'default';
@@ -2349,13 +4296,14 @@ function pw_d8_migration_views_default_views() {
   $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
   $view->tag = 'default';
   $view->base_table = 'user_archive_cache';
-  $view->human_name = 'Export Mandates/ fraction memberships';
+  $view->human_name = 'export_mandates_fraction_memberships';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_mandates_fraction_memberships';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
   $handler->display->display_options['access']['type'] = 'perm';
@@ -2369,15 +4317,149 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
-  $handler->display->display_options['style_plugin'] = 'default';
-  $handler->display->display_options['row_plugin'] = 'fields';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uid' => 'uid',
+    'vid' => 'vid',
+    'user_name' => 'user_name',
+    'parliament_name' => 'parliament_name',
+    'field_user_fname-revision_id' => 'field_user_fname-revision_id',
+    'field_user_lname-revision_id' => 'field_user_lname-revision_id',
+    'field_user_list-revision_id' => 'field_user_list-revision_id',
+    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
+    'field_user_political_goals-revision_id' => 'field_user_political_goals-revision_id',
+    'name' => 'name',
+    'field_constituency_nr' => 'field_constituency_nr',
+    'mandate_won' => 'mandate_won',
+    'field_user_died-revision_id' => 'field_user_died-revision_id',
+    'candidacy_mandate_start_date' => 'candidacy_mandate_start_date',
+    'candidacy_mandate_end_date' => 'candidacy_mandate_end_date',
+    'field_user_retired_reason-revision_id_1' => 'field_user_retired_reason-revision_id_1',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'vid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'user_name' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'parliament_name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fname-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lname-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list_position-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_political_goals-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_constituency_nr' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mandate_won' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_died-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_start_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'candidacy_mandate_end_date' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_retired_reason-revision_id_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
   /* Beziehung: PW User archive: User revision */
   $handler->display->display_options['relationships']['vid']['id'] = 'vid';
   $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
@@ -2395,37 +4477,24 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['uid']['table'] = 'users';
   $handler->display->display_options['fields']['uid']['field'] = 'uid';
   $handler->display->display_options['fields']['uid']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['uid']['label'] = 'user_uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'uid';
   $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
   /* Feld: PW User archive: Vid */
   $handler->display->display_options['fields']['vid']['id'] = 'vid';
   $handler->display->display_options['fields']['vid']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['vid']['field'] = 'vid';
-  $handler->display->display_options['fields']['vid']['label'] = 'user_vid';
+  $handler->display->display_options['fields']['vid']['label'] = 'mandate_id';
   $handler->display->display_options['fields']['vid']['link_to_user'] = FALSE;
-  /* Feld: PW User archive: Benutzername */
-  $handler->display->display_options['fields']['user_name']['id'] = 'user_name';
-  $handler->display->display_options['fields']['user_name']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['user_name']['field'] = 'user_name';
-  $handler->display->display_options['fields']['user_name']['label'] = 'username';
-  $handler->display->display_options['fields']['user_name']['link_to_user'] = FALSE;
-  /* Feld: PW User archive: Parliament name */
-  $handler->display->display_options['fields']['parliament_name']['id'] = 'parliament_name';
-  $handler->display->display_options['fields']['parliament_name']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['parliament_name']['field'] = 'parliament_name';
-  $handler->display->display_options['fields']['parliament_name']['label'] = 'parliament_name';
-  /* Feld: Benutzer (Historische Daten): First Name */
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['id'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['table'] = 'field_revision_field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
-  /* Feld: Benutzer (Historische Daten): Grund für Ausscheiden aus dem Parlament */
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['id'] = 'field_user_retired_reason-revision_id';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['table'] = 'field_revision_field_user_retired_reason';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['field'] = 'field_user_retired_reason-revision_id';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['label'] = 'reason_end';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id']['settings'] = array(
+  /* Feld: Benutzer (Historische Daten): Parlament */
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['field'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['text'] = '[field_user_parliament-revision_id-tid] ';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -2438,13 +4507,16 @@ function pw_d8_migration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Benutzer (Historische Daten): Last name */
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['id'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['table'] = 'field_revision_field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'last_name';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
+  /* Feld: Benutzer (Historische Daten): Wahlkreis */
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['label'] = 'constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['text'] = '[field_user_constituency-revision_id-tid]';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -2457,14 +4529,17 @@ function pw_d8_migration_views_default_views() {
       ),
     ),
   );
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
   /* Feld: Benutzer (Historische Daten): Liste */
-  $handler->display->display_options['fields']['field_user_list-revision_id']['id'] = 'field_user_list-revision_id';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['table'] = 'field_revision_field_user_list';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['field'] = 'field_user_list-revision_id';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['label'] = 'elecotral_list';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list-revision_id']['settings'] = array(
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['id'] = 'field_user_list-revision_id_1';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['table'] = 'field_revision_field_user_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['field'] = 'field_user_list-revision_id';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['label'] = 'electoral_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['text'] = '[field_user_list-revision_id_1-tid]';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['settings'] = array(
     'linked_field' => array(
       'linked' => 0,
       'destination' => '',
@@ -2516,55 +4591,12 @@ function pw_d8_migration_views_default_views() {
       ),
     ),
   );
-  /* Feld: Taxonomie-Begriff: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['relationship'] = 'field_user_constituency_tid';
-  /* Feld: Taxonomie-Begriff: Number */
-  $handler->display->display_options['fields']['field_constituency_nr']['id'] = 'field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['table'] = 'field_data_field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['field'] = 'field_constituency_nr';
-  $handler->display->display_options['fields']['field_constituency_nr']['relationship'] = 'field_user_constituency_tid';
-  $handler->display->display_options['fields']['field_constituency_nr']['label'] = 'constituency_number';
-  $handler->display->display_options['fields']['field_constituency_nr']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: User revision: Mandate won */
   $handler->display->display_options['fields']['mandate_won']['id'] = 'mandate_won';
   $handler->display->display_options['fields']['mandate_won']['table'] = 'user_revision';
   $handler->display->display_options['fields']['mandate_won']['field'] = 'mandate_won';
   $handler->display->display_options['fields']['mandate_won']['relationship'] = 'vid';
   $handler->display->display_options['fields']['mandate_won']['label'] = 'mandate_won';
-  /* Feld: Benutzer (Historische Daten): Verstorben */
-  $handler->display->display_options['fields']['field_user_died-revision_id']['id'] = 'field_user_died-revision_id';
-  $handler->display->display_options['fields']['field_user_died-revision_id']['table'] = 'field_revision_field_user_died';
-  $handler->display->display_options['fields']['field_user_died-revision_id']['field'] = 'field_user_died-revision_id';
-  $handler->display->display_options['fields']['field_user_died-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_died-revision_id']['label'] = 'deceased';
-  $handler->display->display_options['fields']['field_user_died-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
   /* Feld: PW User archive: Fraction name */
   $handler->display->display_options['fields']['fraction_name']['id'] = 'fraction_name';
   $handler->display->display_options['fields']['fraction_name']['table'] = 'user_archive_cache';
@@ -2587,12 +4619,13 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['candidacy_mandate_start_date']['table'] = 'user_revision';
   $handler->display->display_options['fields']['candidacy_mandate_start_date']['field'] = 'candidacy_mandate_start_date';
   $handler->display->display_options['fields']['candidacy_mandate_start_date']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['label'] = 'candidacy_mandate_start_date';
+  $handler->display->display_options['fields']['candidacy_mandate_start_date']['label'] = 'start_date';
   /* Feld: User revision: CandidacyMandate end date */
   $handler->display->display_options['fields']['candidacy_mandate_end_date']['id'] = 'candidacy_mandate_end_date';
   $handler->display->display_options['fields']['candidacy_mandate_end_date']['table'] = 'user_revision';
   $handler->display->display_options['fields']['candidacy_mandate_end_date']['field'] = 'candidacy_mandate_end_date';
   $handler->display->display_options['fields']['candidacy_mandate_end_date']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['candidacy_mandate_end_date']['label'] = 'end_date';
   /* Feld: Benutzer (Historische Daten): Grund für Ausscheiden aus dem Parlament */
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['id'] = 'field_user_retired_reason-revision_id_1';
   $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['table'] = 'field_revision_field_user_retired_reason';
@@ -2612,11 +4645,31 @@ function pw_d8_migration_views_default_views() {
       ),
     ),
   );
-  /* Sortierkriterien: Benutzer: Uid */
-  $handler->display->display_options['sorts']['uid']['id'] = 'uid';
-  $handler->display->display_options['sorts']['uid']['table'] = 'users';
-  $handler->display->display_options['sorts']['uid']['field'] = 'uid';
-  $handler->display->display_options['sorts']['uid']['relationship'] = 'vid';
+  /* Feld: PW User archive: Benutzername */
+  $handler->display->display_options['fields']['user_name']['id'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['user_name']['field'] = 'user_name';
+  $handler->display->display_options['fields']['user_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['user_name']['link_to_user'] = FALSE;
+  /* Feld: Benutzer (Historische Daten): Wahlkreisergebnis */
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['id'] = 'field_user_election_result-revision_id';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['table'] = 'field_revision_field_user_election_result';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['field'] = 'field_user_election_result-revision_id';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['label'] = 'constituency_result';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Sortierkriterien: PW User archive: Vid */
   $handler->display->display_options['sorts']['vid']['id'] = 'vid';
   $handler->display->display_options['sorts']['vid']['table'] = 'user_archive_cache';
@@ -2628,19 +4681,82 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['user_role']['value'] = array(
     'deputy' => 'deputy',
   );
-  /* Filterkriterium: PW User archive: Parliament name */
-  $handler->display->display_options['filters']['parliament_name']['id'] = 'parliament_name';
-  $handler->display->display_options['filters']['parliament_name']['table'] = 'user_archive_cache';
-  $handler->display->display_options['filters']['parliament_name']['field'] = 'parliament_name';
-  $handler->display->display_options['filters']['parliament_name']['value'] = 'Bundestag';
+  /* Filterkriterium: Benutzer (Historische Daten): Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['style_options']['provide_file'] = 1;
-  $handler->display->display_options['style_options']['filename'] = 'export_mandates_fraction_memberships.csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['filename'] = '';
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['quote'] = 1;
   $handler->display->display_options['style_options']['trim'] = 0;
@@ -2648,11 +4764,12 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['style_options']['newline_token'] = '1';
   $handler->display->display_options['style_options']['header'] = 1;
   $handler->display->display_options['style_options']['keep_html'] = 0;
-  $handler->display->display_options['path'] = 'export_mandates_fraction_memberships';
+  $handler->display->display_options['path'] = 'export/mandates_fraction_memberships.csv';
   $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['segment_size'] = '100';
+  $handler->display->display_options['segment_size'] = '300';
   $translatables['export_mandates_fraction_memberships'] = array(
     t('Master'),
+    t('export_mandates_fraction_memberships'),
     t('mehr'),
     t('Anwenden'),
     t('Zurücksetzen'),
@@ -2664,29 +4781,30 @@ function pw_d8_migration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
     t('User revision'),
     t('Wahlkreis'),
-    t('user_uid'),
-    t('user_vid'),
-    t('username'),
-    t('parliament_name'),
-    t('First Name'),
-    t('reason_end'),
-    t('last_name'),
-    t('elecotral_list'),
+    t('uid'),
+    t('mandate_id'),
+    t('parliament_period'),
+    t('[field_user_parliament-revision_id-tid] '),
+    t('constituency'),
+    t('[field_user_constituency-revision_id-tid]'),
+    t('electoral_list'),
+    t('[field_user_list-revision_id_1-tid]'),
     t('list_position'),
     t('politicial_goals'),
-    t('Name'),
-    t('constituency_number'),
     t('mandate_won'),
-    t('deceased'),
     t('fraction_name'),
     t('fraction_membership_valid_from'),
     t('fraction_membership_valid_until'),
-    t('candidacy_mandate_start_date'),
-    t('CandidacyMandate end date'),
+    t('start_date'),
+    t('end_date'),
+    t('reason_end'),
+    t('Benutzername'),
+    t('constituency_result'),
     t('Data export'),
   );
   $export['export_mandates_fraction_memberships'] = $view;
@@ -4804,6 +6922,287 @@ function pw_d8_migration_views_default_views() {
   $export['export_polls_comment'] = $view;
 
   $view = new view();
+  $view->name = 'export_press_releases';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'export_press_releases';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_press_releases';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'mini';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'nid' => 'nid',
+    'uid' => 'uid',
+    'path' => 'path',
+    'created' => 'created',
+    'title' => 'title',
+    'status' => 'status',
+    'field_press_release_body_1' => 'field_press_release_body_1',
+    'field_press_release_body' => 'field_press_release_body',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'path' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_press_release_body_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_press_release_body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Inhalt: Beitrags-ID */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'nid';
+  /* Feld: Inhalt: Benutzer-ID des Autors */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'node';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'uid';
+  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
+  /* Feld: Inhalt: Pfad */
+  $handler->display->display_options['fields']['path']['id'] = 'path';
+  $handler->display->display_options['fields']['path']['table'] = 'node';
+  $handler->display->display_options['fields']['path']['field'] = 'path';
+  $handler->display->display_options['fields']['path']['label'] = 'alias';
+  /* Feld: Inhalt: Beitragsdatum */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'node';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'created';
+  $handler->display->display_options['fields']['created']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Titel */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Feld: Inhalt: Veröffentlicht */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'node';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  $handler->display->display_options['fields']['status']['type'] = 'boolean';
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Feld: Inhalt: Body */
+  $handler->display->display_options['fields']['field_press_release_body_1']['id'] = 'field_press_release_body_1';
+  $handler->display->display_options['fields']['field_press_release_body_1']['table'] = 'field_data_field_press_release_body';
+  $handler->display->display_options['fields']['field_press_release_body_1']['field'] = 'field_press_release_body';
+  $handler->display->display_options['fields']['field_press_release_body_1']['label'] = 'teaser';
+  $handler->display->display_options['fields']['field_press_release_body_1']['alter']['max_length'] = '150';
+  $handler->display->display_options['fields']['field_press_release_body_1']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['field_press_release_body_1']['alter']['html'] = TRUE;
+  $handler->display->display_options['fields']['field_press_release_body_1']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Body */
+  $handler->display->display_options['fields']['field_press_release_body']['id'] = 'field_press_release_body';
+  $handler->display->display_options['fields']['field_press_release_body']['table'] = 'field_data_field_press_release_body';
+  $handler->display->display_options['fields']['field_press_release_body']['field'] = 'field_press_release_body';
+  $handler->display->display_options['fields']['field_press_release_body']['label'] = 'body';
+  $handler->display->display_options['fields']['field_press_release_body']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Date */
+  $handler->display->display_options['fields']['field_press_release_date']['id'] = 'field_press_release_date';
+  $handler->display->display_options['fields']['field_press_release_date']['table'] = 'field_data_field_press_release_date';
+  $handler->display->display_options['fields']['field_press_release_date']['field'] = 'field_press_release_date';
+  $handler->display->display_options['fields']['field_press_release_date']['label'] = 'Datum';
+  $handler->display->display_options['fields']['field_press_release_date']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['field_press_release_date']['settings'] = array(
+    'format_type' => 'custom',
+    'custom_date_format' => 'Y-m-d',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Inhalt: Beitrags-ID */
+  $handler->display->display_options['sorts']['nid']['id'] = 'nid';
+  $handler->display->display_options['sorts']['nid']['table'] = 'node';
+  $handler->display->display_options['sorts']['nid']['field'] = 'nid';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'press_release' => 'press_release',
+  );
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_replacement'] = '';
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 1;
+  $handler->display->display_options['path'] = 'export/press_releases.csv';
+  $translatables['export_press_releases'] = array(
+    t('Master'),
+    t('export_press_releases'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('uuid'),
+    t('nid'),
+    t('uid'),
+    t('alias'),
+    t('created'),
+    t('Titel'),
+    t('Status'),
+    t('teaser'),
+    t('body'),
+    t('Datum'),
+    t('Data export'),
+  );
+  $export['export_press_releases'] = $view;
+
+  $view = new view();
   $view->name = 'export_press_review';
   $view->description = '';
   $view->tag = 'default';
@@ -5515,6 +7914,329 @@ function pw_d8_migration_views_default_views() {
   $export['export_user_politician'] = $view;
 
   $view = new view();
+  $view->name = 'export_user_politician_2';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'users';
+  $view->human_name = 'export_user_politician';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_gallery_images';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'uid' => 'uid',
+    'status' => 'status',
+    'name_1' => 'name_1',
+    'mail' => 'mail',
+    'rid' => 'rid',
+    'field_user_party-revision_id' => 'field_user_party-revision_id',
+    'fid' => 'fid',
+    'field_file_image_alt_text' => 'field_file_image_alt_text',
+    'field_file_image_title_text' => 'field_file_image_title_text',
+    'field_user_picture_copyright' => 'field_user_picture_copyright',
+    'field_image_copyright' => 'field_image_copyright',
+    'field_user_fname' => 'field_user_fname',
+    'field_user_lname' => 'field_user_lname',
+    'field_user_links_more' => 'field_user_links_more',
+    'field_user_links_more-revision_id' => 'field_user_links_more-revision_id',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'name_1' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'mail' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'rid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_party-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'fid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_file_image_alt_text' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_file_image_title_text' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_picture_copyright' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_image_copyright' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_lname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_links_more' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_links_more-revision_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: Benutzer: Bildergalerie (field_user_image_gallery:fid) */
+  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['id'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['table'] = 'field_data_field_user_image_gallery';
+  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['field'] = 'field_user_image_gallery_fid';
+  /* Feld: Benutzer: Bildergalerie */
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['id'] = 'field_user_image_gallery_1';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['table'] = 'field_data_field_user_image_gallery';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['field'] = 'field_user_image_gallery';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['label'] = 'image_id';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['text'] = '[field_user_image_gallery_1-fid]';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['settings'] = array(
+    'image_style' => '',
+    'image_link' => '',
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['group_column'] = 'entity_id';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['group_rows'] = FALSE;
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['separator'] = ',';
+  /* Feld: Benutzer: Uid */
+  $handler->display->display_options['fields']['uid']['id'] = 'uid';
+  $handler->display->display_options['fields']['uid']['table'] = 'users';
+  $handler->display->display_options['fields']['uid']['field'] = 'uid';
+  $handler->display->display_options['fields']['uid']['label'] = 'uid';
+  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
+  /* Feld: Datei: copyright */
+  $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
+  $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
+  $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Datei: Alt Text */
+  $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'alt';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Datei: Title Text */
+  $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
+  $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
+  $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'Titel';
+  $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Benutzer: Uid */
+  $handler->display->display_options['sorts']['uid']['id'] = 'uid';
+  $handler->display->display_options['sorts']['uid']['table'] = 'users';
+  $handler->display->display_options['sorts']['uid']['field'] = 'uid';
+  /* Filterkriterium: Benutzer: Rollen */
+  $handler->display->display_options['filters']['rid']['id'] = 'rid';
+  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
+  $handler->display->display_options['filters']['rid']['field'] = 'rid';
+  $handler->display->display_options['filters']['rid']['value'] = array(
+    181527986 => '181527986',
+  );
+  $handler->display->display_options['filters']['rid']['group'] = 1;
+  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
+  /* Filterkriterium: Benutzer: Bildergalerie (field_user_image_gallery:fid) */
+  $handler->display->display_options['filters']['field_user_image_gallery_fid']['id'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['filters']['field_user_image_gallery_fid']['table'] = 'field_data_field_user_image_gallery';
+  $handler->display->display_options['filters']['field_user_image_gallery_fid']['field'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['filters']['field_user_image_gallery_fid']['operator'] = 'not empty';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['defaults']['header'] = FALSE;
+  $handler->display->display_options['path'] = 'export/gallery_images.csv';
+  $handler->display->display_options['sitename_title'] = 0;
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_user_politician_2'] = array(
+    t('Master'),
+    t('export_gallery_images'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('Bild von field_user_image_gallery'),
+    t('image_id'),
+    t('[field_user_image_gallery_1-fid]'),
+    t('uid'),
+    t('copyright'),
+    t('alt'),
+    t('Titel'),
+    t('Data export'),
+  );
+  $export['export_user_politician_2'] = $view;
+
+  $view = new view();
   $view->name = 'export_votes';
   $view->description = '';
   $view->tag = 'default';
@@ -5743,6 +8465,428 @@ function pw_d8_migration_views_default_views() {
     t('Data export'),
   );
   $export['export_votes'] = $view;
+
+  $view = new view();
+  $view->name = 'mandates_no_fractions';
+  $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
+  $view->tag = 'default';
+  $view->base_table = 'user_archive_cache';
+  $view->human_name = 'mandates_no_fractions';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'mandates_no_fractions';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'field_user_lname-revision_id' => 'field_user_lname-revision_id',
+    'field_user_fname-revision_id' => 'field_user_fname-revision_id',
+    'uuid' => 'uuid',
+    'field_user_parliament-revision_id' => 'field_user_parliament-revision_id',
+    'field_user_party-revision_id' => 'field_user_party-revision_id',
+    'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
+    'field_user_list-revision_id_1' => 'field_user_list-revision_id_1',
+    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
+    'field_user_election_result-revision_id' => 'field_user_election_result-revision_id',
+    'edit_revision' => 'edit_revision',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['style_options']['info'] = array(
+    'field_user_lname-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fname-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uuid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_parliament-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_party-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_constituency-revision_id' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list-revision_id_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_list_position-revision_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_election_result-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_revision' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: PW User archive: User revision */
+  $handler->display->display_options['relationships']['vid']['id'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['relationships']['vid']['field'] = 'vid';
+  $handler->display->display_options['relationships']['vid']['label'] = 'User revision';
+  $handler->display->display_options['relationships']['vid']['required'] = TRUE;
+  /* Beziehung: Benutzer (Historische Daten): Wahlkreis (field_user_constituency) */
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['relationship'] = 'vid';
+  $handler->display->display_options['relationships']['field_user_constituency_tid']['label'] = 'Wahlkreis';
+  /* Feld: Benutzer (Historische Daten): Last name */
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['id'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['table'] = 'field_revision_field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
+  $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): First Name */
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['id'] = 'field_user_fname-revision_id';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['table'] = 'field_revision_field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
+  $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
+  /* Feld: Benutzer: Benutzer UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'users';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
+  /* Feld: Benutzer (Historische Daten): Parlament */
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['field'] = 'field_user_parliament-revision_id';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['text'] = '[field_user_parliament-revision_id-tid] ';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_parliament-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Partei */
+  $handler->display->display_options['fields']['field_user_party-revision_id']['id'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['table'] = 'field_revision_field_user_party';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['field'] = 'field_user_party-revision_id';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_party-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Wahlkreis */
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['label'] = 'constituency';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
+  /* Feld: Benutzer (Historische Daten): Liste */
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['id'] = 'field_user_list-revision_id_1';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['table'] = 'field_revision_field_user_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['field'] = 'field_user_list-revision_id';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['label'] = 'electoral_list';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list-revision_id_1']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Listenposition */
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['id'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['table'] = 'field_revision_field_user_list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['field'] = 'field_user_list_position-revision_id';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['label'] = 'list_position';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_list_position-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer (Historische Daten): Wahlkreisergebnis */
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['id'] = 'field_user_election_result-revision_id';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['table'] = 'field_revision_field_user_election_result';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['field'] = 'field_user_election_result-revision_id';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['label'] = 'constituency_result';
+  $handler->display->display_options['fields']['field_user_election_result-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: User revision: ‚Bearbeiten‘-Link */
+  $handler->display->display_options['fields']['edit_revision']['id'] = 'edit_revision';
+  $handler->display->display_options['fields']['edit_revision']['table'] = 'user_revision';
+  $handler->display->display_options['fields']['edit_revision']['field'] = 'edit_revision';
+  $handler->display->display_options['fields']['edit_revision']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['edit_revision']['label'] = 'Aktionen';
+  /* Sortierkriterien: PW User archive: Vid */
+  $handler->display->display_options['sorts']['vid']['id'] = 'vid';
+  $handler->display->display_options['sorts']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['sorts']['vid']['field'] = 'vid';
+  /* Filterkriterium: PW User archive: Benutzerrolle */
+  $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
+  $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
+  $handler->display->display_options['filters']['user_role']['value'] = array(
+    'deputy' => 'deputy',
+  );
+  /* Filterkriterium: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
+  $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['operator'] = 'empty';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
+  /* Filterkriterium: Benutzer (Historische Daten): Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator_id'] = 'field_user_parliament_tid_op';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['label'] = 'Parlament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator'] = 'field_user_parliament_tid_op';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['identifier'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
+  /* Filterkriterium: Benutzer (Historische Daten): First Name (field_user_fname) */
+  $handler->display->display_options['filters']['field_user_fname_value']['id'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['table'] = 'field_revision_field_user_fname';
+  $handler->display->display_options['filters']['field_user_fname_value']['field'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_fname_value']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_user_fname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator_id'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['label'] = 'Vorname';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['operator'] = 'field_user_fname_value_op';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['identifier'] = 'field_user_fname_value';
+  $handler->display->display_options['filters']['field_user_fname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: Benutzer (Historische Daten): Last name (field_user_lname) */
+  $handler->display->display_options['filters']['field_user_lname_value']['id'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['table'] = 'field_revision_field_user_lname';
+  $handler->display->display_options['filters']['field_user_lname_value']['field'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['relationship'] = 'vid';
+  $handler->display->display_options['filters']['field_user_lname_value']['operator'] = 'allwords';
+  $handler->display->display_options['filters']['field_user_lname_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator_id'] = 'field_user_lname_value_op';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['label'] = 'Nachname';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['operator'] = 'field_user_lname_value_op';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['identifier'] = 'field_user_lname_value';
+  $handler->display->display_options['filters']['field_user_lname_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+
+  /* Display: Seite */
+  $handler = $view->new_display('page', 'Seite', 'page_1');
+  $handler->display->display_options['path'] = 'admin/abgeordnetenwatch/wahlen-parlamente/politicians/mandate-ohne-fraktionen';
+  $translatables['mandates_no_fractions'] = array(
+    t('Master'),
+    t('mandates_no_fractions'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('User revision'),
+    t('Wahlkreis'),
+    t('Nachname'),
+    t('First Name'),
+    t('UUID'),
+    t('Parlament'),
+    t('[field_user_parliament-revision_id-tid] '),
+    t('Partei'),
+    t('constituency'),
+    t('electoral_list'),
+    t('list_position'),
+    t('constituency_result'),
+    t('Aktionen'),
+    t('Vorname'),
+    t('Seite'),
+  );
+  $export['mandates_no_fractions'] = $view;
 
   return $export;
 }
