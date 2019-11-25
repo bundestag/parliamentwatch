@@ -6604,6 +6604,23 @@ function pw_administration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Taxonomie-Begriff: Drupal8 Identifier */
+  $handler->display->display_options['fields']['field_drupal8_identifier']['id'] = 'field_drupal8_identifier';
+  $handler->display->display_options['fields']['field_drupal8_identifier']['table'] = 'field_data_field_drupal8_identifier';
+  $handler->display->display_options['fields']['field_drupal8_identifier']['field'] = 'field_drupal8_identifier';
+  $handler->display->display_options['fields']['field_drupal8_identifier']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Taxonomie-Begriff: Valid Date */
   $handler->display->display_options['fields']['field_parliament_valid']['id'] = 'field_parliament_valid';
   $handler->display->display_options['fields']['field_parliament_valid']['table'] = 'field_data_field_parliament_valid';
@@ -6803,6 +6820,7 @@ function pw_administration_views_default_views() {
     t('.'),
     t('Name'),
     t('Wahl'),
+    t('Drupal8 Identifier'),
     t('Valid Date1 (Wahlperiode)'),
     t('Valid Date 2 (Legislatur)'),
     t('Politiker'),
@@ -15264,6 +15282,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['label'] = 'Parlament';
   $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['operator'] = 'field_user_parliament_tid_op';
   $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['identifier'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['multiple'] = TRUE;
   $handler->display->display_options['filters']['field_user_parliament_tid']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
@@ -15289,6 +15308,30 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
   $handler->display->display_options['filters']['user_role']['expose']['operator'] = 'user_role_op';
   $handler->display->display_options['filters']['user_role']['expose']['identifier'] = 'user_role';
   $handler->display->display_options['filters']['user_role']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    30037204 => 0,
+    51622513 => 0,
+    181527986 => 0,
+    140336230 => 0,
+    185431326 => 0,
+    178386088 => 0,
+    29859578 => 0,
+    127500594 => 0,
+    52344559 => 0,
+    109923392 => 0,
+  );
+  /* Filterkriterium: PW User archive: Question form open */
+  $handler->display->display_options['filters']['question_form_open']['id'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['table'] = 'user_archive_cache';
+  $handler->display->display_options['filters']['question_form_open']['field'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['value'] = 'All';
+  $handler->display->display_options['filters']['question_form_open']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['question_form_open']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['question_form_open']['expose']['label'] = 'Frageformular offen';
+  $handler->display->display_options['filters']['question_form_open']['expose']['operator'] = 'question_form_open_op';
+  $handler->display->display_options['filters']['question_form_open']['expose']['identifier'] = 'question_form_open';
+  $handler->display->display_options['filters']['question_form_open']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     30037204 => 0,
@@ -15357,6 +15400,7 @@ Diese Übersicht listet die Profile für Kandidaturen wie für Mandate auf. Wenn
     t('Question form open'),
     t('Parlament'),
     t('Kandidatur/ Mandat'),
+    t('Frageformular offen'),
     t('Page'),
     t('Data export'),
   );
