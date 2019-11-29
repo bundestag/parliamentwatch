@@ -120,6 +120,23 @@ M445.2,31H445l0.1-0.1V31z"/>
     <?php print render($page['content_extra']); ?>
   </main>
 
+  <div class="tolerance">
+    <div class="container-regular clearfix">
+      <div class="tolerance__image">
+        <img src="/sites/all/themes/custom/parliamentwatch/images/aw_tolerance_logo.png" alt="Logo für Vielfalt, Weltoffenheit und Toleranz von abgeordnetenwatch.de">
+      </div>
+      <div class="tolerance__text">
+        <p>Dieses Logo steht für Vielfalt, Weltoffenheit und Toleranz. abgeordnetenwatch.de setzt sich durch
+          Bürgerbeteiligung und Transparenz für eine selbstbestimmte Gesellschaft ein, in der jede:r gleich viel wert
+          ist. Diese Haltung spiegelt sich neben unserem <a href="/ueber-uns/mehr/moderations-codex">Codex für die Moderation</a> von Anfragen auch in
+          unserem <a href="/ueber-uns/umwelt-sozial-gender-profil">Sozial-, Umwelt- und Gleichstellungsprofil</a> wider.</p>
+      </div>
+      <div class="tolerance__button">
+        <a href="/ueber-uns/umwelt-sozial-gender-profil" class="btn btn--mobile-block">Mehr Informationen</a>
+      </div>
+    </div>
+  </div>
+
   <footer id="footer">
     <div class="footer__maincol">
       <div class="footer__maincol__col">
