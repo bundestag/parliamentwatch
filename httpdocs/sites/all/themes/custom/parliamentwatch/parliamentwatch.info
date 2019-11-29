@@ -15,6 +15,7 @@ regions[content_extra] = Content extra
 regions[footer] = Footer
 
 stylesheets[screen][] = css/theme.min.css
+stylesheets[all][] = css-tolerance/tolerance.css
 
 scripts[] = js/contrib/typeahead.bundle.min.js
 scripts[] = js/contrib/d3.min.js
