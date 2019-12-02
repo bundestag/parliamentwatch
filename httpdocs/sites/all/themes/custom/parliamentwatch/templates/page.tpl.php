@@ -173,6 +173,7 @@ M445.2,31H445l0.1-0.1V31z"/>
         <a href="https://www.facebook.com/abgeordnetenwatch.de/" class="footer__bottom__social__item footer__bottom__social__item--facebook" target="_blank"><i class="icon icon-facebook"></i><span class="sr-only">facebook</span></a>
         <a href="https://twitter.com/a_watch" class="footer__bottom__social__item footer__bottom__social__item--twitter" target="_blank"><i class="icon icon-twitter"></i><span class="sr-only">twitter</span></a>
         <a href="https://www.youtube.com/user/abgeordnetenwatchDE" class="footer__bottom__social__item footer__bottom__social__item--youtube" target="_blank"><i class="icon icon-youtube-play"></i><span class="sr-only">youtube</span></a>
+        <a href="https://www.instagram.com/abgeordnetenwatch" class="footer__bottom__social__item footer__bottom__social__item--instagram" target="_blank"><i class="icon icon-instagram"></i><span class="sr-only">instagram</span></a>
       </div>
       <?php if ($logo): ?>
         <a class="footer__logo" href="<?php print $front_page; ?>" title="<?php print t('Back to home'); ?>" rel="home">

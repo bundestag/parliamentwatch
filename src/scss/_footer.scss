@@ -140,6 +140,11 @@
         background: #ff0004;
       }
     }
+    &.footer__bottom__social__item--instagram {
+      &:hover {
+        background: #f00275;
+      }
+    }
   }
 }
 .footer__logo {
