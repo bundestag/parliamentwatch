@@ -29,20 +29,28 @@
   svg {
     padding-bottom: 1px;
     overflow: hidden;
-    width: 220px;
-    height: 30px;
+    width: 234px;
+    height: 28px;
     will-change: width;
     transition: width 300ms ease;
     @include breakpoint($breakpoint-xs-min) {
       width: 250px;
-      height: 32px;
+      height: 30px;
     }
     @include breakpoint($breakpoint-s-min) {
+      width: 310px;
+      height: 37px;
+    }
+    @include breakpoint($breakpoint-m-min) {
       width: 270px;
-      height: 36px;
+      height: 32px;
+    }
+    @include breakpoint($breakpoint-l-min) {
+      width: 310px;
+      height: 37px;
     }
     @include breakpoint($breakpoint-xl-min) {
-      width: 310px;
+      width: 340px;
       height: 41px;
     }
   }
