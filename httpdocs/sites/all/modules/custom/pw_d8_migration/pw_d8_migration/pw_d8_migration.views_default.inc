@@ -322,6 +322,14 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Inhalt: Politicians */
   $handler->display->display_options['fields']['field_politician']['id'] = 'field_politician';
   $handler->display->display_options['fields']['field_politician']['table'] = 'field_data_field_politician';
@@ -608,6 +616,7 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('alias'),
     t('created'),
+    t('changed'),
     t('politicians'),
     t('Titel'),
     t('Status'),
@@ -5368,6 +5377,14 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Inhalt: Politicians */
   $handler->display->display_options['fields']['field_politician']['id'] = 'field_politician';
   $handler->display->display_options['fields']['field_politician']['table'] = 'field_data_field_politician';
@@ -5651,6 +5668,7 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('alias'),
     t('created'),
+    t('changed'),
     t('politicians'),
     t('Titel'),
     t('Status'),
@@ -7268,6 +7286,14 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Sortierkriterien: Inhalt: Beitrags-ID */
   $handler->display->display_options['sorts']['nid']['id'] = 'nid';
   $handler->display->display_options['sorts']['nid']['table'] = 'node';
@@ -7284,7 +7310,66 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
@@ -7342,6 +7427,7 @@ function pw_d8_migration_views_default_views() {
     t('committees'),
     t('parliament_period'),
     t('[field_parliament-tid]'),
+    t('changed'),
     t('Data export'),
   );
   $export['export_polls'] = $view;
@@ -7725,6 +7811,14 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Inhalt: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -7853,6 +7947,7 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('alias'),
     t('created'),
+    t('changed'),
     t('Titel'),
     t('Status'),
     t('teaser'),
@@ -8777,6 +8872,14 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Inhalt: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -8976,6 +9079,7 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('alias'),
     t('created'),
+    t('changed'),
     t('Titel'),
     t('fullname'),
     t('Status'),
@@ -9139,6 +9243,22 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = 'username';
   $handler->display->display_options['fields']['name']['link_to_user'] = FALSE;
   $handler->display->display_options['fields']['name']['link_to_user_revision'] = 0;
+  /* Feld: Benutzer: Letzte Anmeldung */
+  $handler->display->display_options['fields']['login']['id'] = 'login';
+  $handler->display->display_options['fields']['login']['table'] = 'users';
+  $handler->display->display_options['fields']['login']['field'] = 'login';
+  $handler->display->display_options['fields']['login']['label'] = 'access';
+  $handler->display->display_options['fields']['login']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['login']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['login']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Letzter Zugriff */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['label'] = 'login';
+  $handler->display->display_options['fields']['access']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['access']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
   /* Feld: Benutzer: E-Mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
@@ -9185,6 +9305,8 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('Status'),
     t('username'),
+    t('access'),
+    t('login'),
     t('email'),
     t('roles'),
     t('Data export'),
@@ -9399,6 +9521,22 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['name_1']['label'] = 'username';
   $handler->display->display_options['fields']['name_1']['link_to_user'] = FALSE;
   $handler->display->display_options['fields']['name_1']['link_to_user_revision'] = 0;
+  /* Feld: Benutzer: Letzter Zugriff */
+  $handler->display->display_options['fields']['access']['id'] = 'access';
+  $handler->display->display_options['fields']['access']['table'] = 'users';
+  $handler->display->display_options['fields']['access']['field'] = 'access';
+  $handler->display->display_options['fields']['access']['label'] = 'access';
+  $handler->display->display_options['fields']['access']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['access']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['access']['second_date_format'] = 'long';
+  /* Feld: Benutzer: Letzte Anmeldung */
+  $handler->display->display_options['fields']['login']['id'] = 'login';
+  $handler->display->display_options['fields']['login']['table'] = 'users';
+  $handler->display->display_options['fields']['login']['field'] = 'login';
+  $handler->display->display_options['fields']['login']['label'] = 'login';
+  $handler->display->display_options['fields']['login']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['login']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['login']['second_date_format'] = 'long';
   /* Feld: Benutzer: E-Mail */
   $handler->display->display_options['fields']['mail']['id'] = 'mail';
   $handler->display->display_options['fields']['mail']['table'] = 'users';
@@ -9431,6 +9569,28 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_gender']['group_column'] = 'entity_id';
+  /* Feld: Benutzer: Verstorben */
+  $handler->display->display_options['fields']['field_user_died']['id'] = 'field_user_died';
+  $handler->display->display_options['fields']['field_user_died']['table'] = 'field_data_field_user_died';
+  $handler->display->display_options['fields']['field_user_died']['field'] = 'field_user_died';
+  $handler->display->display_options['fields']['field_user_died']['label'] = 'deceased';
+  $handler->display->display_options['fields']['field_user_died']['empty'] = '0';
+  $handler->display->display_options['fields']['field_user_died']['hide_alter_empty'] = FALSE;
+  $handler->display->display_options['fields']['field_user_died']['type'] = 'list_key';
+  $handler->display->display_options['fields']['field_user_died']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_died']['group_column'] = 'entity_id';
   /* Feld: Benutzer: Partei */
   $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
   $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
@@ -9773,7 +9933,66 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
   $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
   $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_user_parliament_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
@@ -9813,9 +10032,12 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('Status'),
     t('username'),
+    t('access'),
+    t('login'),
     t('email'),
     t('roles'),
     t('sex'),
+    t('deceased'),
     t('party'),
     t('[field_user_party-tid]'),
     t('social_links'),
@@ -10357,7 +10579,66 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    18030 => '18030',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
