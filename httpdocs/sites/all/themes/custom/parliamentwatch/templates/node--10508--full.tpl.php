@@ -140,29 +140,6 @@
           </div>
         </div>
         <div class="sidebar__box__accordion__item">
-          <h4 class="sidebar__box__accordion__item__title">BitCoin</h4>
-          <div class="sidebar__box__accordion__item__content">
-            <p>Wir akzeptieren auch Bitcoin.</p>
-            <form class="bitpay-donate" action="https://bitpay.com/checkout" method="post" target="_blank">
-              <input name="action" type="hidden" value="checkout">
-              <div class="form__item">
-                <input class="bitpay-donate-field-email form__item__control" name="orderID" type="email" placeholder="E-Mail-Adresse (optional)" maxlength="50" autocapitalize="off" autocorrect="off">
-              </div>
-              <div class="form__item form__item--multi">
-                <input class="bitpay-donate-field-price form__item__control" name="price" type="number" value="10.00" placeholder="Amount" maxlength="10" min="0.01" step="0.01"/>
-                <div class="bitpay-donate-field-currency--wrapper">
-                  <select class="bitpay-donate-field-currency form__item__control" name="currency" value="">
-                    <option selected="selected" value="EUR">EUR</option>
-                    <option value="BTC">BTC</option>
-                  </select>
-                </div>
-                <input type="hidden" name="data" value="XpHSKMYmf8hIJ0y8nnXP3XQRMZ6Jow2QNMVtQVioiydg/NTfh4MaccKgzCg2pgjV53kPxdn0GhHc45siohgZKavCjksVGGSgZAM06az5q6c67XL0aA/ko2me5XNbGgtUq10Uy6qkwYKfcX32qWIUyeF9PebhftFpCN4KPsp5RPTtA23zzYV1SY3FH7xRbMm6cSwyUS/zRhrQ+m4Om/gCCdZx+0gzPoLWdO3Twhv/gMzyxuI9cPUlhL95EE8jsUE+1aVy3uVYvCGOpKTfqSEqFXNnUDTcfmZJZZRBmI0c8afITghTOJNUnTnkMEYEUSQH7186L39ObaqABqNG4o8Xsg==">
-              </div>
-              <p><input class="bitpay-donate-button" name="submit" src="https://bitpay.com/img/donate-button.svg" onerror="this.onerror=null; this.src='https://bitpay.com/img/donate-button-md.png'" width="126" height="48" type="image" alt="BitPay, the easy way to donate with bitcoins." border="0"></p>
-            </form>
-          </div>
-        </div>
-        <div class="sidebar__box__accordion__item">
           <h4 class="sidebar__box__accordion__item__title">Spenden per Post</h4>
           <div class="sidebar__box__accordion__item__content">
             <p>Alternativ zu einer Online-Spende können Sie auch einen Antrag herunterladen (<a href="/sites/abgeordnetenwatch.de/files/spendenformular_print.pdf" target="_blank">PDF</a>), ausdrucken und uns per Post oder Fax senden.</p>
