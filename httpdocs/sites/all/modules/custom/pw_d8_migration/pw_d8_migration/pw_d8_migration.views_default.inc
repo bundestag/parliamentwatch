@@ -253,6 +253,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_blog_categories';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -1169,6 +1171,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_candidacies';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2557,6 +2561,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituencies';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2812,6 +2818,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituency_areacodes';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -3096,6 +3104,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituency_streets';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -3317,6 +3327,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_electoral_lists';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -3742,6 +3754,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_mandates_fraction_memberships';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -5669,6 +5683,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_organizations';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -5799,6 +5815,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'parliament_periods';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -6212,6 +6230,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_parties';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7359,6 +7379,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_polls_comment';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7594,6 +7616,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_press_releases';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7884,6 +7908,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_press_review';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -8089,6 +8115,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_questions';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -8588,6 +8616,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_sidejobs';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -9185,6 +9215,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_testimonials';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -9608,6 +9640,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_topics';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -10769,6 +10803,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_votes';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -11366,7 +11402,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
   $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
   $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
   $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
@@ -11488,7 +11524,7 @@ function pw_d8_migration_views_default_views() {
     t('Versatz'),
     t('« erste Seite'),
     t('‹ vorherige Seite'),
-    t('nächste Seite ›'),
+    t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
     t('vote_count'),
