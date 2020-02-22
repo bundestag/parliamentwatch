@@ -1761,7 +1761,9 @@ function pw_profiles_user_default_permissions() {
   // Exported permission: view field_user_public_mail.
   $permissions['view field_user_public_mail'] = array(
     'name' => 'view field_user_public_mail',
-    'roles' => array(),
+    'roles' => array(
+      0 => 'administrator',
+    ),
     'module' => 'field_permissions',
   );
 

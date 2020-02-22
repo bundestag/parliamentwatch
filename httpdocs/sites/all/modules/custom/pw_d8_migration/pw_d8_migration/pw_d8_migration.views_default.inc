@@ -11,6 +11,234 @@ function pw_d8_migration_views_default_views() {
   $export = array();
 
   $view = new view();
+  $view->name = 'export_answers';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'comment';
+  $view->human_name = 'export_answers';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_answers';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'cid' => 'cid',
+    'pid' => 'pid',
+    'nid' => 'nid',
+    'status' => 'status',
+    'hostname' => 'hostname',
+    'created' => 'created',
+    'comment_body' => 'comment_body',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'cid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'pid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'hostname' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'created' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'comment_body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: Kommentar: Inhalt */
+  $handler->display->display_options['relationships']['nid']['id'] = 'nid';
+  $handler->display->display_options['relationships']['nid']['table'] = 'comment';
+  $handler->display->display_options['relationships']['nid']['field'] = 'nid';
+  $handler->display->display_options['relationships']['nid']['required'] = TRUE;
+  /* Feld: Kommentar: Kommentar UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'comment';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Kommentar: ID */
+  $handler->display->display_options['fields']['cid']['id'] = 'cid';
+  $handler->display->display_options['fields']['cid']['table'] = 'comment';
+  $handler->display->display_options['fields']['cid']['field'] = 'cid';
+  $handler->display->display_options['fields']['cid']['label'] = 'cid';
+  $handler->display->display_options['fields']['cid']['link_to_comment'] = FALSE;
+  /* Feld: Feld: Message ID */
+  $handler->display->display_options['fields']['field_dialogue_message_id']['id'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['table'] = 'field_data_field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['field'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['label'] = 'message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Kommentar: Bestätigt */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'comment';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  $handler->display->display_options['fields']['status']['empty'] = '0';
+  $handler->display->display_options['fields']['status']['type'] = 'boolean';
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Feld: Kommentar: Comment Body */
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['id'] = 'field_dialogue_comment_body';
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['table'] = 'field_data_field_dialogue_comment_body';
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['field'] = 'field_dialogue_comment_body';
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['label'] = 'summary';
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['alter']['text'] = '[field_dialogue_comment_body-summary]';
+  $handler->display->display_options['fields']['field_dialogue_comment_body']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Kommentar: ID */
+  $handler->display->display_options['sorts']['cid']['id'] = 'cid';
+  $handler->display->display_options['sorts']['cid']['table'] = 'comment';
+  $handler->display->display_options['sorts']['cid']['field'] = 'cid';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['relationship'] = 'nid';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dialogue' => 'dialogue',
+  );
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 1;
+  $handler->display->display_options['style_options']['newline_replacement'] = '';
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 1;
+  $handler->display->display_options['path'] = 'export/answers_d7.csv';
+  $handler->display->display_options['sitename_title'] = 0;
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_answers'] = array(
+    t('Master'),
+    t('export_answers'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('Inhalt'),
+    t('uuid'),
+    t('cid'),
+    t('message_id'),
+    t('Status'),
+    t('summary'),
+    t('[field_dialogue_comment_body-summary]'),
+    t('Data export'),
+  );
+  $export['export_answers'] = $view;
+
+  $view = new view();
   $view->name = 'export_blog_categories';
   $view->description = '';
   $view->tag = 'default';
@@ -25,6 +253,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_blog_categories';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -122,7 +352,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_blogpost';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -151,6 +382,7 @@ function pw_d8_migration_views_default_views() {
     'uid' => 'uid',
     'path' => 'path',
     'created' => 'created',
+    'changed' => 'changed',
     'field_politician' => 'field_politician',
     'title' => 'title',
     'status' => 'status',
@@ -159,6 +391,7 @@ function pw_d8_migration_views_default_views() {
     'field_blogpost_categories' => 'field_blogpost_categories',
     'field_blog_main_category' => 'field_blog_main_category',
     'fid' => 'fid',
+    'uri' => 'uri',
     'field_file_image_alt_text' => 'field_file_image_alt_text',
     'field_file_image_title_text' => 'field_file_image_title_text',
     'field_image_copyright' => 'field_image_copyright',
@@ -192,6 +425,13 @@ function pw_d8_migration_views_default_views() {
       'empty_column' => 0,
     ),
     'created' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -248,9 +488,16 @@ function pw_d8_migration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_file_image_alt_text' => array(
+    'uri' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_file_image_alt_text' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -288,10 +535,10 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['node_to_file']['id'] = 'node_to_file';
-  $handler->display->display_options['relationships']['node_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['node_to_file']['field'] = 'node_to_file';
+  /* Beziehung: Inhalt: Teaser image (field_teaser_image:fid) */
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['id'] = 'field_teaser_image_fid';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['table'] = 'field_data_field_teaser_image';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['field'] = 'field_teaser_image_fid';
   /* Feld: Inhalt: Inhalt UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'node';
@@ -457,18 +704,24 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_blog_main_category']['group_column'] = 'entity_id';
-  /* Feld: MAX(Datei: Datei-ID) */
+  /* Feld: Datei: Datei-ID */
   $handler->display->display_options['fields']['fid']['id'] = 'fid';
   $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
-  $handler->display->display_options['fields']['fid']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['fid']['group_type'] = 'max';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_teaser_image_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'teaser_image_alt';
   $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
@@ -489,7 +742,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'teaser_image_title';
   $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
@@ -510,7 +763,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_image_copyright']['label'] = 'teaser_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
     'linked_field' => array(
@@ -526,6 +779,27 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_image_copyright']['group_column'] = 'entity_id';
+  /* Feld: Inhalt: Block Referenz */
+  $handler->display->display_options['fields']['field_blockreference']['id'] = 'field_blockreference';
+  $handler->display->display_options['fields']['field_blockreference']['table'] = 'field_data_field_blockreference';
+  $handler->display->display_options['fields']['field_blockreference']['field'] = 'field_blockreference';
+  $handler->display->display_options['fields']['field_blockreference']['label'] = 'form_teaser';
+  $handler->display->display_options['fields']['field_blockreference']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_blockreference']['alter']['text'] = '[field_blockreference-moddelta]';
+  $handler->display->display_options['fields']['field_blockreference']['settings'] = array(
+    'show_empty_blocks' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: Inhalt: Intro */
   $handler->display->display_options['fields']['field_blogpost_intro']['id'] = 'field_blogpost_intro';
   $handler->display->display_options['fields']['field_blogpost_intro']['table'] = 'field_data_field_blogpost_intro';
@@ -610,7 +884,7 @@ function pw_d8_migration_views_default_views() {
     t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
-    t('Datei'),
+    t('Bild von field_teaser_image'),
     t('uuid'),
     t('nid'),
     t('uid'),
@@ -628,9 +902,12 @@ function pw_d8_migration_views_default_views() {
     t('blog_category_main'),
     t('[field_blog_main_category-tid]'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_title'),
     t('teaser_image_copyright'),
+    t('form_teaser'),
+    t('[field_blockreference-moddelta]'),
     t('teaser'),
     t('body'),
     t('Data export'),
@@ -652,6 +929,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_blogpost_comment';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -892,6 +1171,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_candidacies';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -1248,10 +1529,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -1359,7 +1641,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_committees_memberships';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -1505,10 +1788,10 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['node_to_file']['id'] = 'node_to_file';
-  $handler->display->display_options['relationships']['node_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['node_to_file']['field'] = 'node_to_file';
+  /* Beziehung: Inhalt: Teaser image (field_teaser_image:fid) */
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['id'] = 'field_teaser_image_fid';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['table'] = 'field_data_field_teaser_image';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['field'] = 'field_teaser_image_fid';
   /* Feld: Inhalt: Inhalt UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'node';
@@ -1584,18 +1867,23 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_topics']['group_column'] = 'entity_id';
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_topics']['separator'] = ',';
-  /* Feld: MAX(Datei: Datei-ID) */
+  /* Feld: Datei: Datei-ID */
   $handler->display->display_options['fields']['fid']['id'] = 'fid';
   $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
-  $handler->display->display_options['fields']['fid']['relationship'] = 'node_to_file';
-  $handler->display->display_options['fields']['fid']['group_type'] = 'max';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_teaser_image_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'teaser_image_alt';
   $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
@@ -1616,7 +1904,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'teaser_image_title';
   $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
@@ -1637,7 +1925,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_image_copyright']['label'] = 'teaser_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
     'linked_field' => array(
@@ -2132,10 +2420,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -2203,7 +2492,7 @@ function pw_d8_migration_views_default_views() {
     t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
-    t('Datei'),
+    t('Bild von field_teaser_image'),
     t('uuid'),
     t('nid'),
     t('uid'),
@@ -2215,6 +2504,7 @@ function pw_d8_migration_views_default_views() {
     t('topics'),
     t('[field_topics-tid]'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_title'),
     t('teaser_image_copyright'),
@@ -2271,6 +2561,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituencies';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2411,7 +2703,67 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
@@ -2466,6 +2818,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituency_areacodes';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2624,7 +2978,67 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
@@ -2690,6 +3104,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_constituency_streets';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2791,7 +3207,67 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['group'] = 1;
   $handler->display->display_options['filters']['field_parliament_tid']['type'] = 'select';
@@ -2851,6 +3327,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_electoral_lists';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -2969,7 +3447,67 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
 
@@ -3202,631 +3740,6 @@ function pw_d8_migration_views_default_views() {
   $export['export_file'] = $view;
 
   $view = new view();
-  $view->name = 'export_fractions';
-  $view->description = '';
-  $view->tag = 'default';
-  $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'export_fractions';
-  $view->core = 7;
-  $view->api_version = '3.0';
-  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-
-  /* Display: Master */
-  $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'export_fractions';
-  $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'bypass node access';
-  $handler->display->display_options['cache']['type'] = 'none';
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
-  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
-  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
-  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'mini';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
-  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
-  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
-  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
-  $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['columns'] = array(
-    'uuid' => 'uuid',
-    'tid' => 'tid',
-    'name' => 'name',
-  );
-  $handler->display->display_options['style_options']['default'] = '-1';
-  $handler->display->display_options['style_options']['info'] = array(
-    'uuid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'tid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-  );
-  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
-  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
-  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
-  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
-  /* Feld: Taxonomie-Begriff: Begriff-ID */
-  $handler->display->display_options['fields']['tid']['id'] = 'tid';
-  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['tid']['field'] = 'tid';
-  $handler->display->display_options['fields']['tid']['label'] = 'tid';
-  $handler->display->display_options['fields']['tid']['separator'] = '';
-  /* Feld: Taxonomie-Begriff: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['label'] = 'name';
-  $handler->display->display_options['fields']['name']['alter']['path'] = 'taxonomy/term/[tid]/edit';
-  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
-  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
-  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
-  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
-  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
-  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
-  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
-  $handler->display->display_options['filters']['machine_name']['value'] = array(
-    'fraction' => 'fraction',
-  );
-  $handler->display->display_options['filters']['machine_name']['group'] = 1;
-
-  /* Display: Data export */
-  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['path'] = 'export/fractions.csv';
-  $handler->display->display_options['sitename_title'] = 0;
-  $translatables['export_fractions'] = array(
-    t('Master'),
-    t('export_fractions'),
-    t('mehr'),
-    t('Anwenden'),
-    t('Zurücksetzen'),
-    t('Sortieren nach'),
-    t('Aufsteigend'),
-    t('Absteigend'),
-    t('Elemente pro Seite'),
-    t('- Alle -'),
-    t('Versatz'),
-    t('« erste Seite'),
-    t('‹ vorherige Seite'),
-    t('weiter'),
-    t('letzte Seite »'),
-    t('uuid'),
-    t('tid'),
-    t('.'),
-    t('name'),
-    t('Data export'),
-  );
-  $export['export_fractions'] = $view;
-
-  $view = new view();
-  $view->name = 'export_mandates_bundestag';
-  $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
-  $view->tag = 'default';
-  $view->base_table = 'user_archive_cache';
-  $view->human_name = 'export_mandates Bundestag';
-  $view->core = 7;
-  $view->api_version = '3.0';
-  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-
-  /* Display: Master */
-  $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'export_mandates_fraction_memberships';
-  $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'bypass node access';
-  $handler->display->display_options['cache']['type'] = 'none';
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
-  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
-  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
-  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['quantity'] = '9';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
-  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
-  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
-  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
-  $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['columns'] = array(
-    'uid' => 'uid',
-    'vid' => 'vid',
-    'field_user_parliament-revision_id' => 'field_user_parliament-revision_id',
-    'field_user_constituency-revision_id' => 'field_user_constituency-revision_id',
-    'field_user_list-revision_id_1' => 'field_user_list-revision_id_1',
-    'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
-    'field_user_political_goals-revision_id' => 'field_user_political_goals-revision_id',
-    'mandate_won' => 'mandate_won',
-    'fraction_name' => 'fraction_name',
-    'fraction_membership_start' => 'fraction_membership_start',
-    'fraction_membership_until' => 'fraction_membership_until',
-    'candidacy_mandate_start_date' => 'candidacy_mandate_start_date',
-    'candidacy_mandate_end_date' => 'candidacy_mandate_end_date',
-    'field_user_retired_reason-revision_id_1' => 'field_user_retired_reason-revision_id_1',
-    'user_name' => 'user_name',
-    'field_user_election_result-revision_id' => 'field_user_election_result-revision_id',
-  );
-  $handler->display->display_options['style_options']['default'] = '-1';
-  $handler->display->display_options['style_options']['info'] = array(
-    'uid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'vid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_parliament-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_constituency-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_list-revision_id_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_list_position-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_political_goals-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'mandate_won' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'fraction_name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'fraction_membership_start' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'fraction_membership_until' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'candidacy_mandate_start_date' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'candidacy_mandate_end_date' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_retired_reason-revision_id_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'user_name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_election_result-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-  );
-  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
-  $handler->display->display_options['header']['result']['id'] = 'result';
-  $handler->display->display_options['header']['result']['table'] = 'views';
-  $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: PW User archive: User revision */
-  $handler->display->display_options['relationships']['vid']['id'] = 'vid';
-  $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
-  $handler->display->display_options['relationships']['vid']['field'] = 'vid';
-  $handler->display->display_options['relationships']['vid']['label'] = 'User revision';
-  $handler->display->display_options['relationships']['vid']['required'] = TRUE;
-  /* Beziehung: Benutzer (Historische Daten): Wahlkreis (field_user_constituency) */
-  $handler->display->display_options['relationships']['field_user_constituency_tid']['id'] = 'field_user_constituency_tid';
-  $handler->display->display_options['relationships']['field_user_constituency_tid']['table'] = 'field_revision_field_user_constituency';
-  $handler->display->display_options['relationships']['field_user_constituency_tid']['field'] = 'field_user_constituency_tid';
-  $handler->display->display_options['relationships']['field_user_constituency_tid']['relationship'] = 'vid';
-  $handler->display->display_options['relationships']['field_user_constituency_tid']['label'] = 'Wahlkreis';
-  /* Feld: Benutzer: Uid */
-  $handler->display->display_options['fields']['uid']['id'] = 'uid';
-  $handler->display->display_options['fields']['uid']['table'] = 'users';
-  $handler->display->display_options['fields']['uid']['field'] = 'uid';
-  $handler->display->display_options['fields']['uid']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['uid']['label'] = 'uid';
-  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
-  /* Feld: Benutzer (Historische Daten): Last name */
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['id'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['table'] = 'field_revision_field_user_lname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['field'] = 'field_user_lname-revision_id';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['label'] = 'Nachname';
-  $handler->display->display_options['fields']['field_user_lname-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer (Historische Daten): First Name */
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['id'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['table'] = 'field_revision_field_user_fname';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['field'] = 'field_user_fname-revision_id';
-  $handler->display->display_options['fields']['field_user_fname-revision_id']['relationship'] = 'vid';
-  /* Feld: PW User archive: Vid */
-  $handler->display->display_options['fields']['vid']['id'] = 'vid';
-  $handler->display->display_options['fields']['vid']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['vid']['field'] = 'vid';
-  $handler->display->display_options['fields']['vid']['label'] = 'mandate_id';
-  $handler->display->display_options['fields']['vid']['link_to_user'] = FALSE;
-  /* Feld: Benutzer (Historische Daten): Parlament */
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['id'] = 'field_user_parliament-revision_id';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['table'] = 'field_revision_field_user_parliament';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['field'] = 'field_user_parliament-revision_id';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['label'] = 'parliament_period';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['alter']['text'] = '[field_user_parliament-revision_id-tid]';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_parliament-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer (Historische Daten): Wahlkreis */
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['id'] = 'field_user_constituency-revision_id';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['table'] = 'field_revision_field_user_constituency';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['field'] = 'field_user_constituency-revision_id';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['label'] = 'constituency';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['alter']['text'] = '[field_user_constituency-revision_id-tid]';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['group_rows'] = FALSE;
-  $handler->display->display_options['fields']['field_user_constituency-revision_id']['delta_offset'] = '0';
-  /* Feld: Benutzer (Historische Daten): Liste */
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['id'] = 'field_user_list-revision_id_1';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['table'] = 'field_revision_field_user_list';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['field'] = 'field_user_list-revision_id';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['label'] = 'electoral_list';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['alter']['text'] = '[field_user_list-revision_id_1-tid]';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list-revision_id_1']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer (Historische Daten): Listenposition */
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['id'] = 'field_user_list_position-revision_id';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['table'] = 'field_revision_field_user_list_position';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['field'] = 'field_user_list_position-revision_id';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['label'] = 'list_position';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_user_list_position-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Benutzer (Historische Daten): Politische Ziele */
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['id'] = 'field_user_political_goals-revision_id';
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['table'] = 'field_revision_field_user_political_goals';
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['field'] = 'field_user_political_goals-revision_id';
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['label'] = 'politicial_goals';
-  $handler->display->display_options['fields']['field_user_political_goals-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: User revision: Mandate won */
-  $handler->display->display_options['fields']['mandate_won']['id'] = 'mandate_won';
-  $handler->display->display_options['fields']['mandate_won']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['mandate_won']['field'] = 'mandate_won';
-  $handler->display->display_options['fields']['mandate_won']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['mandate_won']['label'] = 'mandate_won';
-  /* Feld: PW User archive: Fraction name */
-  $handler->display->display_options['fields']['fraction_name']['id'] = 'fraction_name';
-  $handler->display->display_options['fields']['fraction_name']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['fraction_name']['field'] = 'fraction_name';
-  $handler->display->display_options['fields']['fraction_name']['label'] = 'fraction_name';
-  /* Feld: User revision: Fraction membership start */
-  $handler->display->display_options['fields']['fraction_membership_start']['id'] = 'fraction_membership_start';
-  $handler->display->display_options['fields']['fraction_membership_start']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['fraction_membership_start']['field'] = 'fraction_membership_start';
-  $handler->display->display_options['fields']['fraction_membership_start']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['fraction_membership_start']['label'] = 'fraction_membership_valid_from';
-  /* Feld: User revision: Fraction membership end date */
-  $handler->display->display_options['fields']['fraction_membership_until']['id'] = 'fraction_membership_until';
-  $handler->display->display_options['fields']['fraction_membership_until']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['fraction_membership_until']['field'] = 'fraction_membership_until';
-  $handler->display->display_options['fields']['fraction_membership_until']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['fraction_membership_until']['label'] = 'fraction_membership_valid_until';
-  /* Feld: User revision: CandidacyMandate start date */
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['id'] = 'candidacy_mandate_start_date';
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['field'] = 'candidacy_mandate_start_date';
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['candidacy_mandate_start_date']['label'] = 'start_date';
-  /* Feld: User revision: CandidacyMandate end date */
-  $handler->display->display_options['fields']['candidacy_mandate_end_date']['id'] = 'candidacy_mandate_end_date';
-  $handler->display->display_options['fields']['candidacy_mandate_end_date']['table'] = 'user_revision';
-  $handler->display->display_options['fields']['candidacy_mandate_end_date']['field'] = 'candidacy_mandate_end_date';
-  $handler->display->display_options['fields']['candidacy_mandate_end_date']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['candidacy_mandate_end_date']['label'] = 'end_date';
-  /* Feld: Benutzer (Historische Daten): Grund für Ausscheiden aus dem Parlament */
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['id'] = 'field_user_retired_reason-revision_id_1';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['table'] = 'field_revision_field_user_retired_reason';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['field'] = 'field_user_retired_reason-revision_id';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['label'] = 'reason_end';
-  $handler->display->display_options['fields']['field_user_retired_reason-revision_id_1']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: PW User archive: Benutzername */
-  $handler->display->display_options['fields']['user_name']['id'] = 'user_name';
-  $handler->display->display_options['fields']['user_name']['table'] = 'user_archive_cache';
-  $handler->display->display_options['fields']['user_name']['field'] = 'user_name';
-  $handler->display->display_options['fields']['user_name']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['user_name']['link_to_user'] = FALSE;
-  /* Feld: Benutzer (Historische Daten): Wahlkreisergebnis */
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['id'] = 'field_user_election_result-revision_id';
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['table'] = 'field_revision_field_user_election_result';
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['field'] = 'field_user_election_result-revision_id';
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['relationship'] = 'vid';
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['label'] = 'constituency_result';
-  $handler->display->display_options['fields']['field_user_election_result-revision_id']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Sortierkriterien: PW User archive: Vid */
-  $handler->display->display_options['sorts']['vid']['id'] = 'vid';
-  $handler->display->display_options['sorts']['vid']['table'] = 'user_archive_cache';
-  $handler->display->display_options['sorts']['vid']['field'] = 'vid';
-  /* Filterkriterium: PW User archive: Benutzerrolle */
-  $handler->display->display_options['filters']['user_role']['id'] = 'user_role';
-  $handler->display->display_options['filters']['user_role']['table'] = 'user_archive_cache';
-  $handler->display->display_options['filters']['user_role']['field'] = 'user_role';
-  $handler->display->display_options['filters']['user_role']['value'] = array(
-    'deputy' => 'deputy',
-  );
-  /* Filterkriterium: Benutzer (Historische Daten): Parlament (field_user_parliament) */
-  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_revision_field_user_parliament';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
-    26909 => '26909',
-  );
-  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
-  $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['operator'] = 'not empty';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
-  /* Filterkriterium: Benutzer: Benutzer-ID */
-  $handler->display->display_options['filters']['uid_raw']['id'] = 'uid_raw';
-  $handler->display->display_options['filters']['uid_raw']['table'] = 'users';
-  $handler->display->display_options['filters']['uid_raw']['field'] = 'uid_raw';
-  $handler->display->display_options['filters']['uid_raw']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['uid_raw']['value']['value'] = '146180';
-
-  /* Display: Data export */
-  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['style_options']['provide_file'] = 0;
-  $handler->display->display_options['style_options']['filename'] = '';
-  $handler->display->display_options['style_options']['parent_sort'] = 0;
-  $handler->display->display_options['style_options']['quote'] = 1;
-  $handler->display->display_options['style_options']['trim'] = 0;
-  $handler->display->display_options['style_options']['replace_newlines'] = 0;
-  $handler->display->display_options['style_options']['newline_token'] = '1';
-  $handler->display->display_options['style_options']['header'] = 1;
-  $handler->display->display_options['style_options']['keep_html'] = 1;
-  $handler->display->display_options['path'] = 'export/mandates_fraction_memberships_bundestag.csv';
-  $handler->display->display_options['use_batch'] = 'batch';
-  $handler->display->display_options['segment_size'] = '40';
-  $translatables['export_mandates_bundestag'] = array(
-    t('Master'),
-    t('export_mandates_fraction_memberships'),
-    t('mehr'),
-    t('Anwenden'),
-    t('Zurücksetzen'),
-    t('Sortieren nach'),
-    t('Aufsteigend'),
-    t('Absteigend'),
-    t('Elemente pro Seite'),
-    t('- Alle -'),
-    t('Versatz'),
-    t('« erste Seite'),
-    t('‹ vorherige Seite'),
-    t('weiter'),
-    t('letzte Seite »'),
-    t('Displaying @start - @end of @total'),
-    t('User revision'),
-    t('Wahlkreis'),
-    t('uid'),
-    t('Nachname'),
-    t('First Name'),
-    t('mandate_id'),
-    t('parliament_period'),
-    t('[field_user_parliament-revision_id-tid]'),
-    t('constituency'),
-    t('[field_user_constituency-revision_id-tid]'),
-    t('electoral_list'),
-    t('[field_user_list-revision_id_1-tid]'),
-    t('list_position'),
-    t('politicial_goals'),
-    t('mandate_won'),
-    t('fraction_name'),
-    t('fraction_membership_valid_from'),
-    t('fraction_membership_valid_until'),
-    t('start_date'),
-    t('end_date'),
-    t('reason_end'),
-    t('Benutzername'),
-    t('constituency_result'),
-    t('Data export'),
-  );
-  $export['export_mandates_bundestag'] = $view;
-
-  $view = new view();
   $view->name = 'export_mandates_fraction_memberships';
   $view->description = 'Jede Zeile ist eine Fraktionsmitgliedschaft, ein Mandat kann dadurch mehrfach vorkommen';
   $view->tag = 'default';
@@ -3841,6 +3754,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_mandates_fraction_memberships';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -3852,7 +3767,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '30';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['quantity'] = '9';
@@ -3873,6 +3788,7 @@ function pw_d8_migration_views_default_views() {
     'field_user_list_position-revision_id' => 'field_user_list_position-revision_id',
     'field_user_political_goals-revision_id' => 'field_user_political_goals-revision_id',
     'mandate_won' => 'mandate_won',
+    'field_user_fraction-revision_id' => 'field_user_fraction-revision_id',
     'fraction_name' => 'fraction_name',
     'fraction_membership_start' => 'fraction_membership_start',
     'fraction_membership_until' => 'fraction_membership_until',
@@ -3934,6 +3850,13 @@ function pw_d8_migration_views_default_views() {
       'empty_column' => 0,
     ),
     'mandate_won' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_fraction-revision_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -4129,11 +4052,32 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['mandate_won']['field'] = 'mandate_won';
   $handler->display->display_options['fields']['mandate_won']['relationship'] = 'vid';
   $handler->display->display_options['fields']['mandate_won']['label'] = 'mandate_won';
+  /* Feld: Benutzer (Historische Daten): Fraktion */
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['id'] = 'field_user_fraction-revision_id';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['table'] = 'field_revision_field_user_fraction';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['field'] = 'field_user_fraction-revision_id';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['relationship'] = 'vid';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['label'] = 'fraction_name';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_user_fraction-revision_id']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Feld: PW User archive: Fraction name */
   $handler->display->display_options['fields']['fraction_name']['id'] = 'fraction_name';
   $handler->display->display_options['fields']['fraction_name']['table'] = 'user_archive_cache';
   $handler->display->display_options['fields']['fraction_name']['field'] = 'fraction_name';
   $handler->display->display_options['fields']['fraction_name']['label'] = 'fraction_name';
+  $handler->display->display_options['fields']['fraction_name']['exclude'] = TRUE;
   /* Feld: User revision: Fraction membership start */
   $handler->display->display_options['fields']['fraction_membership_start']['id'] = 'fraction_membership_start';
   $handler->display->display_options['fields']['fraction_membership_start']['table'] = 'user_revision';
@@ -4243,10 +4187,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -4281,14 +4226,6 @@ function pw_d8_migration_views_default_views() {
     17179 => '17179',
   );
   $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
-  /* Filterkriterium: Benutzer (Historische Daten): Fraktion (field_user_fraction) */
-  $handler->display->display_options['filters']['field_user_fraction_tid']['id'] = 'field_user_fraction_tid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['table'] = 'field_revision_field_user_fraction';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['field'] = 'field_user_fraction_tid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['relationship'] = 'vid';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['operator'] = 'not empty';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['type'] = 'select';
-  $handler->display->display_options['filters']['field_user_fraction_tid']['vocabulary'] = 'fraction';
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -4364,6 +4301,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_newsletter_paragraphs_donation';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -4470,6 +4409,12 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
   $handler->display->display_options['fields']['fid']['relationship'] = 'field_pg_content_img_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_pg_content_img_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
@@ -4638,6 +4583,7 @@ function pw_d8_migration_views_default_views() {
     t('.'),
     t('Titel'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_copyright'),
     t('body'),
@@ -4664,6 +4610,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_newsletter_paragraphs_testimonial';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -4736,10 +4684,6 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Seitenabschnittselement: Bild (field_pg_content_img:fid) */
-  $handler->display->display_options['relationships']['field_pg_content_img_fid']['id'] = 'field_pg_content_img_fid';
-  $handler->display->display_options['relationships']['field_pg_content_img_fid']['table'] = 'field_data_field_pg_content_img';
-  $handler->display->display_options['relationships']['field_pg_content_img_fid']['field'] = 'field_pg_content_img_fid';
   /* Feld: Seitenabschnittselement: Seitenabschnittselement ID */
   $handler->display->display_options['fields']['item_id']['id'] = 'item_id';
   $handler->display->display_options['fields']['item_id']['table'] = 'paragraphs_item';
@@ -4854,7 +4798,6 @@ function pw_d8_migration_views_default_views() {
     t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
-    t('Bild von field_pg_content_img'),
     t('pid'),
     t('.'),
     t('target_group'),
@@ -4879,6 +4822,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_newsletter_paragraphs_text';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -4947,6 +4892,10 @@ function pw_d8_migration_views_default_views() {
       'empty_column' => 0,
     ),
   );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
   /* Beziehung: Seitenabschnittselement: Bild (field_pg_content_img:fid) */
   $handler->display->display_options['relationships']['field_pg_content_img_fid']['id'] = 'field_pg_content_img_fid';
   $handler->display->display_options['relationships']['field_pg_content_img_fid']['table'] = 'field_data_field_pg_content_img';
@@ -4981,6 +4930,12 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
   $handler->display->display_options['fields']['fid']['relationship'] = 'field_pg_content_img_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_pg_content_img_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
@@ -5111,7 +5066,6 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['bundle']['field'] = 'bundle';
   $handler->display->display_options['filters']['bundle']['value'] = array(
     'paragraphs_pw_content' => 'paragraphs_pw_content',
-    'paragraphs_pw_donate' => 'paragraphs_pw_donate',
   );
 
   /* Display: Data export */
@@ -5144,11 +5098,13 @@ function pw_d8_migration_views_default_views() {
     t('‹ vorherige Seite'),
     t('weiter'),
     t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
     t('Bild von field_pg_content_img'),
     t('pid'),
     t('.'),
     t('Titel'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_copyright'),
     t('body'),
@@ -5175,7 +5131,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_newsletters';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -5204,12 +5161,14 @@ function pw_d8_migration_views_default_views() {
     'uid' => 'uid',
     'path' => 'path',
     'created' => 'created',
+    'changed' => 'changed',
     'field_politician' => 'field_politician',
     'title' => 'title',
     'status' => 'status',
     'field_show' => 'field_show',
     'field_piwik_campaign' => 'field_piwik_campaign',
     'fid' => 'fid',
+    'uri' => 'uri',
     'field_file_image_alt_text' => 'field_file_image_alt_text',
     'field_file_image_title_text' => 'field_file_image_title_text',
     'field_image_copyright' => 'field_image_copyright',
@@ -5251,6 +5210,13 @@ function pw_d8_migration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'changed' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'field_politician' => array(
       'align' => '',
       'separator' => '',
@@ -5285,6 +5251,13 @@ function pw_d8_migration_views_default_views() {
       'empty_column' => 0,
     ),
     'fid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'uri' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
       'align' => '',
@@ -5343,10 +5316,10 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['node_to_file']['id'] = 'node_to_file';
-  $handler->display->display_options['relationships']['node_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['node_to_file']['field'] = 'node_to_file';
+  /* Beziehung: Inhalt: Teaser image (field_teaser_image:fid) */
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['id'] = 'field_teaser_image_fid';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['table'] = 'field_data_field_teaser_image';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['field'] = 'field_teaser_image_fid';
   /* Feld: Inhalt: Inhalt UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'node';
@@ -5463,18 +5436,23 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_piwik_campaign']['group_column'] = 'entity_id';
-  /* Feld: MAX(Datei: Datei-ID) */
+  /* Feld: Datei: Datei-ID */
   $handler->display->display_options['fields']['fid']['id'] = 'fid';
   $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
-  $handler->display->display_options['fields']['fid']['relationship'] = 'node_to_file';
-  $handler->display->display_options['fields']['fid']['group_type'] = 'max';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_teaser_image_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'teaser_image_alt';
   $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
@@ -5495,7 +5473,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'teaser_image_title';
   $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
@@ -5516,7 +5494,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_image_copyright']['label'] = 'teaser_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
     'linked_field' => array(
@@ -5662,7 +5640,7 @@ function pw_d8_migration_views_default_views() {
     t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
-    t('Datei'),
+    t('Bild von field_teaser_image'),
     t('uuid'),
     t('nid'),
     t('uid'),
@@ -5675,6 +5653,7 @@ function pw_d8_migration_views_default_views() {
     t('show_archive'),
     t('campaign'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_title'),
     t('teaser_image_copyright'),
@@ -5704,6 +5683,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_organizations';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -5834,6 +5815,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'parliament_periods';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -6151,10 +6134,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -6232,165 +6216,6 @@ function pw_d8_migration_views_default_views() {
   $export['export_parliament_periods'] = $view;
 
   $view = new view();
-  $view->name = 'export_parliaments';
-  $view->description = '';
-  $view->tag = 'default';
-  $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'export_parliaments';
-  $view->core = 7;
-  $view->api_version = '3.0';
-  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-
-  /* Display: Master */
-  $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'export_parliaments';
-  $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'bypass node access';
-  $handler->display->display_options['cache']['type'] = 'none';
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
-  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
-  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
-  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
-  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
-  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
-  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
-  $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['columns'] = array(
-    'uuid' => 'uuid',
-    'tid' => 'tid',
-    'name' => 'name',
-    'field_parliament_election' => 'field_parliament_election',
-  );
-  $handler->display->display_options['style_options']['default'] = '-1';
-  $handler->display->display_options['style_options']['info'] = array(
-    'uuid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'tid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'name' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_parliament_election' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-  );
-  /* Feld: Taxonomie-Begriff: Taxonomie-Begriff UUID */
-  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
-  $handler->display->display_options['fields']['uuid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
-  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
-  /* Feld: Taxonomie-Begriff: Begriff-ID */
-  $handler->display->display_options['fields']['tid']['id'] = 'tid';
-  $handler->display->display_options['fields']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['tid']['field'] = 'tid';
-  $handler->display->display_options['fields']['tid']['label'] = 'tid';
-  $handler->display->display_options['fields']['tid']['separator'] = '';
-  /* Feld: Taxonomie-Begriff: Name */
-  $handler->display->display_options['fields']['name']['id'] = 'name';
-  $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['label'] = 'name';
-  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = FALSE;
-  $handler->display->display_options['fields']['name']['element_label_colon'] = FALSE;
-  /* Feld: Taxonomie-Begriff: Election */
-  $handler->display->display_options['fields']['field_parliament_election']['id'] = 'field_parliament_election';
-  $handler->display->display_options['fields']['field_parliament_election']['table'] = 'field_data_field_parliament_election';
-  $handler->display->display_options['fields']['field_parliament_election']['field'] = 'field_parliament_election';
-  $handler->display->display_options['fields']['field_parliament_election']['label'] = 'election_date';
-  $handler->display->display_options['fields']['field_parliament_election']['settings'] = array(
-    'format_type' => 'custom',
-    'custom_date_format' => 'Y-m-d',
-    'fromto' => 'both',
-    'multiple_number' => '',
-    'multiple_from' => '',
-    'multiple_to' => '',
-    'show_remaining_days' => 0,
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Sortierkriterien: Taxonomie-Begriff: Begriff-ID */
-  $handler->display->display_options['sorts']['tid']['id'] = 'tid';
-  $handler->display->display_options['sorts']['tid']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['sorts']['tid']['field'] = 'tid';
-  /* Filterkriterium: Taxonomie-Vokabular: Systemname */
-  $handler->display->display_options['filters']['machine_name']['id'] = 'machine_name';
-  $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
-  $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
-  $handler->display->display_options['filters']['machine_name']['value'] = array(
-    'parliaments' => 'parliaments',
-  );
-
-  /* Display: Data export */
-  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['path'] = 'export/parliaments.csv';
-  $translatables['export_parliaments'] = array(
-    t('Master'),
-    t('export_parliaments'),
-    t('mehr'),
-    t('Anwenden'),
-    t('Zurücksetzen'),
-    t('Sortieren nach'),
-    t('Aufsteigend'),
-    t('Absteigend'),
-    t('Elemente pro Seite'),
-    t('- Alle -'),
-    t('Versatz'),
-    t('« erste Seite'),
-    t('‹ vorherige Seite'),
-    t('weiter'),
-    t('letzte Seite »'),
-    t('uuid'),
-    t('tid'),
-    t('.'),
-    t('name'),
-    t('election_date'),
-    t('Data export'),
-  );
-  $export['export_parliaments'] = $view;
-
-  $view = new view();
   $view->name = 'export_parties';
   $view->description = '';
   $view->tag = 'default';
@@ -6405,6 +6230,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_parties';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -6534,6 +6361,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_gallery_images';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -6698,7 +6527,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_user_image_gallery_1']['id'] = 'field_user_image_gallery_1';
   $handler->display->display_options['fields']['field_user_image_gallery_1']['table'] = 'field_data_field_user_image_gallery';
   $handler->display->display_options['fields']['field_user_image_gallery_1']['field'] = 'field_user_image_gallery';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['label'] = 'image_id';
+  $handler->display->display_options['fields']['field_user_image_gallery_1']['label'] = 'fid';
   $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['text'] = '[field_user_image_gallery_1-fid]';
   $handler->display->display_options['fields']['field_user_image_gallery_1']['click_sort_column'] = 'fid';
@@ -6721,6 +6550,19 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_user_image_gallery_1']['group_rows'] = FALSE;
   $handler->display->display_options['fields']['field_user_image_gallery_1']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_user_image_gallery_1']['separator'] = ',';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'path';
+  /* Feld: Datei: Name */
+  $handler->display->display_options['fields']['filename']['id'] = 'filename';
+  $handler->display->display_options['fields']['filename']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['filename']['field'] = 'filename';
+  $handler->display->display_options['fields']['filename']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['filename']['label'] = 'name';
+  $handler->display->display_options['fields']['filename']['link_to_file'] = FALSE;
   /* Feld: Benutzer: Uid */
   $handler->display->display_options['fields']['uid']['id'] = 'uid';
   $handler->display->display_options['fields']['uid']['table'] = 'users';
@@ -6785,6 +6627,12 @@ function pw_d8_migration_views_default_views() {
       ),
     ),
   );
+  /* Feld: Datei: Datei UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['relationship'] = 'field_user_image_gallery_fid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
   /* Sortierkriterien: Benutzer: Uid */
   $handler->display->display_options['sorts']['uid']['id'] = 'uid';
   $handler->display->display_options['sorts']['uid']['table'] = 'users';
@@ -6803,11 +6651,79 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_user_image_gallery_fid']['table'] = 'field_data_field_user_image_gallery';
   $handler->display->display_options['filters']['field_user_image_gallery_fid']['field'] = 'field_user_image_gallery_fid';
   $handler->display->display_options['filters']['field_user_image_gallery_fid']['operator'] = 'not empty';
+  /* Filterkriterium: Benutzer: Parlament (field_user_parliament) */
+  $handler->display->display_options['filters']['field_user_parliament_tid']['id'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['table'] = 'field_data_field_user_parliament';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['field'] = 'field_user_parliament_tid';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_user_parliament_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_user_parliament_tid']['vocabulary'] = 'parliaments';
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   $handler->display->display_options['defaults']['header'] = FALSE;
@@ -6832,12 +6748,15 @@ function pw_d8_migration_views_default_views() {
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
     t('Bild von field_user_image_gallery'),
-    t('image_id'),
+    t('fid'),
     t('[field_user_image_gallery_1-fid]'),
+    t('path'),
+    t('name'),
     t('uid'),
     t('copyright'),
     t('alt'),
     t('Titel'),
+    t('uuid'),
     t('Data export'),
   );
   $export['export_politician_gallery_images'] = $view;
@@ -6857,7 +6776,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_polls';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7011,10 +6931,14 @@ function pw_d8_migration_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['node_to_file']['id'] = 'node_to_file';
-  $handler->display->display_options['relationships']['node_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['node_to_file']['field'] = 'node_to_file';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: Inhalt: Teaser image (field_teaser_image:fid) */
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['id'] = 'field_teaser_image_fid';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['table'] = 'field_data_field_teaser_image';
+  $handler->display->display_options['relationships']['field_teaser_image_fid']['field'] = 'field_teaser_image_fid';
   /* Feld: Inhalt: Inhalt UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'node';
@@ -7109,18 +7033,23 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_topics']['group_column'] = 'entity_id';
   $handler->display->display_options['fields']['field_topics']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_topics']['separator'] = ',';
-  /* Feld: MAX(Datei: Datei-ID) */
+  /* Feld: Datei: Datei-ID */
   $handler->display->display_options['fields']['fid']['id'] = 'fid';
   $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
-  $handler->display->display_options['fields']['fid']['relationship'] = 'node_to_file';
-  $handler->display->display_options['fields']['fid']['group_type'] = 'max';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'teaser_image';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_teaser_image_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'teaser_image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'teaser_image_alt';
   $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
@@ -7141,7 +7070,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'teaser_image_title';
   $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
@@ -7162,7 +7091,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_teaser_image_fid';
   $handler->display->display_options['fields']['field_image_copyright']['label'] = 'teaser_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
     'linked_field' => array(
@@ -7334,10 +7263,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -7404,7 +7334,8 @@ function pw_d8_migration_views_default_views() {
     t('‹ vorherige Seite'),
     t('weiter'),
     t('letzte Seite »'),
-    t('Datei'),
+    t('Displaying @start - @end of @total'),
+    t('Bild von field_teaser_image'),
     t('uuid'),
     t('nid'),
     t('uid'),
@@ -7416,6 +7347,7 @@ function pw_d8_migration_views_default_views() {
     t('topics'),
     t('[field_topics-tid]'),
     t('teaser_image'),
+    t('teaser_image_path'),
     t('teaser_image_alt'),
     t('teaser_image_title'),
     t('teaser_image_copyright'),
@@ -7447,6 +7379,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_polls_comment';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7627,7 +7561,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['quote'] = 1;
   $handler->display->display_options['style_options']['trim'] = 0;
-  $handler->display->display_options['style_options']['replace_newlines'] = 1;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
   $handler->display->display_options['style_options']['newline_replacement'] = '';
   $handler->display->display_options['style_options']['newline_token'] = '1';
   $handler->display->display_options['style_options']['header'] = 1;
@@ -7682,6 +7616,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_press_releases';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7972,6 +7908,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_press_review';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -7982,13 +7920,27 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
   $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
   $handler->display->display_options['style_plugin'] = 'table';
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['node_to_file']['id'] = 'node_to_file';
-  $handler->display->display_options['relationships']['node_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['node_to_file']['field'] = 'node_to_file';
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Beziehung: Inhalt: Attachment (field_press_article_attachment:fid) */
+  $handler->display->display_options['relationships']['field_press_article_attachment_fid']['id'] = 'field_press_article_attachment_fid';
+  $handler->display->display_options['relationships']['field_press_article_attachment_fid']['table'] = 'field_data_field_press_article_attachment';
+  $handler->display->display_options['relationships']['field_press_article_attachment_fid']['field'] = 'field_press_article_attachment_fid';
   /* Feld: Inhalt: Inhalt UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'node';
@@ -8013,27 +7965,18 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['status']['label'] = 'Status';
   $handler->display->display_options['fields']['status']['type'] = 'boolean';
   $handler->display->display_options['fields']['status']['not'] = 0;
-  /* Feld: Inhalt: Attachment */
-  $handler->display->display_options['fields']['field_press_article_attachment']['id'] = 'field_press_article_attachment';
-  $handler->display->display_options['fields']['field_press_article_attachment']['table'] = 'field_data_field_press_article_attachment';
-  $handler->display->display_options['fields']['field_press_article_attachment']['field'] = 'field_press_article_attachment';
-  $handler->display->display_options['fields']['field_press_article_attachment']['label'] = 'attachment';
-  $handler->display->display_options['fields']['field_press_article_attachment']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_press_article_attachment']['alter']['text'] = '[field_press_article_attachment-fid]';
-  $handler->display->display_options['fields']['field_press_article_attachment']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_press_article_attachment']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
+  /* Feld: Datei: Datei-ID */
+  $handler->display->display_options['fields']['fid']['id'] = 'fid';
+  $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['fid']['field'] = 'fid';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_press_article_attachment_fid';
+  $handler->display->display_options['fields']['fid']['label'] = 'attachment';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_press_article_attachment_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'attachment_path';
   /* Feld: Inhalt: Date of publication */
   $handler->display->display_options['fields']['field_press_article_date']['id'] = 'field_press_article_date';
   $handler->display->display_options['fields']['field_press_article_date']['table'] = 'field_data_field_press_article_date';
@@ -8135,19 +8078,528 @@ function pw_d8_migration_views_default_views() {
     t('Sortieren nach'),
     t('Aufsteigend'),
     t('Absteigend'),
-    t('Datei'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('Datei von field_press_article_attachment'),
     t('uuid'),
     t('nid'),
     t('Titel'),
     t('Status'),
     t('attachment'),
-    t('[field_press_article_attachment-fid]'),
+    t('attachment_path'),
     t('publishing_date'),
     t('link_uri'),
     t('publisher'),
     t('Data export'),
   );
   $export['export_press_review'] = $view;
+
+  $view = new view();
+  $view->name = 'export_questions';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'export_questions';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_questions';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'nid' => 'nid',
+    'field_dialogue_message_id' => 'field_dialogue_message_id',
+    'status' => 'status',
+    'body' => 'body',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_dialogue_message_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Inhalt: Beitrags-ID */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'nid';
+  /* Feld: Feld: Message ID */
+  $handler->display->display_options['fields']['field_dialogue_message_id']['id'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['table'] = 'field_data_field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['field'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['label'] = 'message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Veröffentlicht */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'node';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Status';
+  $handler->display->display_options['fields']['status']['empty'] = '0';
+  $handler->display->display_options['fields']['status']['type'] = 'boolean';
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Feld: Inhalt: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = 'summary';
+  $handler->display->display_options['fields']['body']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['text'] = '[body-summary]';
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Sortierkriterien: Inhalt: Beitrags-ID */
+  $handler->display->display_options['sorts']['nid']['id'] = 'nid';
+  $handler->display->display_options['sorts']['nid']['table'] = 'node';
+  $handler->display->display_options['sorts']['nid']['field'] = 'nid';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dialogue' => 'dialogue',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid_1']['id'] = 'field_parliament_tid_1';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid_1']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 1;
+  $handler->display->display_options['path'] = 'export/questions_d7.csv';
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_questions'] = array(
+    t('Master'),
+    t('export_questions'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('uuid'),
+    t('nid'),
+    t('message_id'),
+    t('Status'),
+    t('summary'),
+    t('[body-summary]'),
+    t('Data export'),
+  );
+  $export['export_questions'] = $view;
+
+  $view = new view();
+  $view->name = 'export_questions_alias';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'export_questions_alias';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_questions_alias';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'nid' => 'nid',
+    'field_dialogue_message_id' => 'field_dialogue_message_id',
+    'status' => 'status',
+    'body' => 'body',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_dialogue_message_id' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'body' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Feld: Message ID */
+  $handler->display->display_options['fields']['field_dialogue_message_id']['id'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['table'] = 'field_data_field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['field'] = 'field_dialogue_message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['label'] = 'message_id';
+  $handler->display->display_options['fields']['field_dialogue_message_id']['settings'] = array(
+    'thousand_separator' => '',
+    'prefix_suffix' => 1,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Pfad */
+  $handler->display->display_options['fields']['path']['id'] = 'path';
+  $handler->display->display_options['fields']['path']['table'] = 'node';
+  $handler->display->display_options['fields']['path']['field'] = 'path';
+  $handler->display->display_options['fields']['path']['label'] = 'alias';
+  /* Sortierkriterien: Inhalt: Beitrags-ID */
+  $handler->display->display_options['sorts']['nid']['id'] = 'nid';
+  $handler->display->display_options['sorts']['nid']['table'] = 'node';
+  $handler->display->display_options['sorts']['nid']['field'] = 'nid';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'dialogue' => 'dialogue',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid_1']['id'] = 'field_parliament_tid_1';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid_1']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
+    26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid_1']['vocabulary'] = 'parliaments';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 1;
+  $handler->display->display_options['path'] = 'export/questions_alias.csv';
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_questions_alias'] = array(
+    t('Master'),
+    t('export_questions_alias'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('message_id'),
+    t('alias'),
+    t('Data export'),
+  );
+  $export['export_questions_alias'] = $view;
 
   $view = new view();
   $view->name = 'export_sidejobs';
@@ -8164,6 +8616,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_sidejobs';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -8357,6 +8811,14 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
   $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
+  /* Feld: Inhalt: Aktualisierungszeitpunkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['label'] = 'changed';
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['changed']['second_date_format'] = 'long';
   /* Feld: Inhalt: Job */
   $handler->display->display_options['fields']['field_job']['id'] = 'field_job';
   $handler->display->display_options['fields']['field_job']['table'] = 'field_data_field_job';
@@ -8616,7 +9078,67 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_parliament_tid_1']['table'] = 'field_data_field_parliament';
   $handler->display->display_options['filters']['field_parliament_tid_1']['field'] = 'field_parliament_tid';
   $handler->display->display_options['filters']['field_parliament_tid_1']['value'] = array(
+    21316 => '21316',
+    16239 => '16239',
+    16267 => '16267',
+    29821 => '29821',
+    16249 => '16249',
+    16285 => '16285',
+    23273 => '23273',
+    16242 => '16242',
+    16234 => '16234',
+    31595 => '31595',
+    16258 => '16258',
+    17180 => '17180',
+    30473 => '30473',
+    16244 => '16244',
+    16272 => '16272',
+    18064 => '18064',
     26909 => '26909',
+    16238 => '16238',
+    16259 => '16259',
+    16283 => '16283',
+    30438 => '30438',
+    16236 => '16236',
+    16251 => '16251',
+    16117 => '16117',
+    32277 => '32277',
+    16235 => '16235',
+    16247 => '16247',
+    16265 => '16265',
+    18030 => '18030',
+    29951 => '29951',
+    16245 => '16245',
+    16250 => '16250',
+    16284 => '16284',
+    23275 => '23275',
+    16243 => '16243',
+    16273 => '16273',
+    27498 => '27498',
+    16246 => '16246',
+    16282 => '16282',
+    23615 => '23615',
+    16237 => '16237',
+    16264 => '16264',
+    16280 => '16280',
+    21393 => '21393',
+    16240 => '16240',
+    16271 => '16271',
+    27976 => '27976',
+    16256 => '16256',
+    16278 => '16278',
+    31503 => '31503',
+    16260 => '16260',
+    17178 => '17178',
+    28303 => '28303',
+    16241 => '16241',
+    16266 => '16266',
+    23616 => '23616',
+    16261 => '16261',
+    16279 => '16279',
+    31786 => '31786',
+    16257 => '16257',
+    17179 => '17179',
   );
   $handler->display->display_options['filters']['field_parliament_tid_1']['vocabulary'] = 'parliaments';
 
@@ -8629,8 +9151,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['quote'] = 1;
   $handler->display->display_options['style_options']['trim'] = 0;
-  $handler->display->display_options['style_options']['replace_newlines'] = 1;
-  $handler->display->display_options['style_options']['newline_replacement'] = '';
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
   $handler->display->display_options['style_options']['newline_token'] = '1';
   $handler->display->display_options['style_options']['header'] = 1;
   $handler->display->display_options['style_options']['keep_html'] = 1;
@@ -8656,6 +9177,7 @@ function pw_d8_migration_views_default_views() {
     t('nid'),
     t('uid'),
     t('created'),
+    t('changed'),
     t('job_title'),
     t('job_category'),
     t('[field_sidejob_job_category-tid]'),
@@ -8693,6 +9215,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_testimonials';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -8950,6 +9474,12 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['fid']['relationship'] = 'node_to_file';
   $handler->display->display_options['fields']['fid']['group_type'] = 'max';
   $handler->display->display_options['fields']['fid']['label'] = 'Bild';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'node_to_file';
+  $handler->display->display_options['fields']['uri']['label'] = 'image_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
@@ -9086,6 +9616,7 @@ function pw_d8_migration_views_default_views() {
     t('month'),
     t('[field_testimonial_month]-01'),
     t('Bild'),
+    t('image_path'),
     t('image_alt'),
     t('image_title'),
     t('image_copyright'),
@@ -9109,6 +9640,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_topics';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -9206,6 +9739,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_user_administrative';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -9243,6 +9778,15 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['name']['label'] = 'username';
   $handler->display->display_options['fields']['name']['link_to_user'] = FALSE;
   $handler->display->display_options['fields']['name']['link_to_user_revision'] = 0;
+  /* Feld: Benutzer: Erstellungsdatum */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'created';
+  $handler->display->display_options['fields']['created']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Feld: Benutzer: Letzte Anmeldung */
   $handler->display->display_options['fields']['login']['id'] = 'login';
   $handler->display->display_options['fields']['login']['table'] = 'users';
@@ -9271,6 +9815,44 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['rid']['field'] = 'rid';
   $handler->display->display_options['fields']['rid']['label'] = 'roles';
   $handler->display->display_options['fields']['rid']['separator'] = ',';
+  /* Feld: Benutzer: First Name */
+  $handler->display->display_options['fields']['field_user_fname']['id'] = 'field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['table'] = 'field_data_field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['field'] = 'field_user_fname';
+  $handler->display->display_options['fields']['field_user_fname']['label'] = 'first_name';
+  $handler->display->display_options['fields']['field_user_fname']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_user_fname']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Benutzer: Last name */
+  $handler->display->display_options['fields']['field_user_lname']['id'] = 'field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['table'] = 'field_data_field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['field'] = 'field_user_lname';
+  $handler->display->display_options['fields']['field_user_lname']['label'] = 'last_name';
+  $handler->display->display_options['fields']['field_user_lname']['type'] = 'text_plain';
+  $handler->display->display_options['fields']['field_user_lname']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
   /* Sortierkriterien: Benutzer: Uid */
   $handler->display->display_options['sorts']['uid']['id'] = 'uid';
   $handler->display->display_options['sorts']['uid']['table'] = 'users';
@@ -9305,10 +9887,13 @@ function pw_d8_migration_views_default_views() {
     t('uid'),
     t('Status'),
     t('username'),
+    t('created'),
     t('access'),
     t('login'),
     t('email'),
     t('roles'),
+    t('first_name'),
+    t('last_name'),
     t('Data export'),
   );
   $export['export_user_administrative'] = $view;
@@ -9329,6 +9914,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
   $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -9357,9 +9944,15 @@ function pw_d8_migration_views_default_views() {
     'uid' => 'uid',
     'status' => 'status',
     'name_1' => 'name_1',
+    'access' => 'access',
+    'login' => 'login',
     'mail' => 'mail',
     'rid' => 'rid',
-    'field_user_party-revision_id' => 'field_user_party-revision_id',
+    'field_user_gender' => 'field_user_gender',
+    'field_user_died' => 'field_user_died',
+    'field_user_retired' => 'field_user_retired',
+    'field_user_party' => 'field_user_party',
+    'field_user_links_more' => 'field_user_links_more',
     'fid' => 'fid',
     'field_file_image_alt_text' => 'field_file_image_alt_text',
     'field_file_image_title_text' => 'field_file_image_title_text',
@@ -9367,8 +9960,13 @@ function pw_d8_migration_views_default_views() {
     'field_image_copyright' => 'field_image_copyright',
     'field_user_fname' => 'field_user_fname',
     'field_user_lname' => 'field_user_lname',
-    'field_user_links_more' => 'field_user_links_more',
-    'field_user_links_more-revision_id' => 'field_user_links_more-revision_id',
+    'field_user_about' => 'field_user_about',
+    'field_user_education' => 'field_user_education',
+    'field_user_job_skills' => 'field_user_job_skills',
+    'field_user_birthday' => 'field_user_birthday',
+    'field_user_image_gallery_1' => 'field_user_image_gallery_1',
+    'field_user_phone' => 'field_user_phone',
+    'field_user_mobile' => 'field_user_mobile',
   );
   $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
@@ -9400,6 +9998,20 @@ function pw_d8_migration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'access' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'login' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'mail' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
@@ -9412,9 +10024,35 @@ function pw_d8_migration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_party-revision_id' => array(
+    'field_user_gender' => array(
       'sortable' => 0,
       'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_died' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_retired' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_party' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_links_more' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -9468,12 +10106,49 @@ function pw_d8_migration_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_links_more' => array(
+    'field_user_about' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
-    'field_user_links_more-revision_id' => array(
+    'field_user_education' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_job_skills' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_birthday' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_image_gallery_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_phone' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_user_mobile' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -9483,10 +10158,6 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['header']['result']['id'] = 'result';
   $handler->display->display_options['header']['result']['table'] = 'views';
   $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Dateiverwendung: Datei */
-  $handler->display->display_options['relationships']['user_to_file']['id'] = 'user_to_file';
-  $handler->display->display_options['relationships']['user_to_file']['table'] = 'file_usage';
-  $handler->display->display_options['relationships']['user_to_file']['field'] = 'user_to_file';
   /* Beziehung: PW User archive: User revision */
   $handler->display->display_options['relationships']['vid']['id'] = 'vid';
   $handler->display->display_options['relationships']['vid']['table'] = 'user_archive_cache';
@@ -9496,6 +10167,10 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['relationships']['field_user_parliament_tid_1']['table'] = 'field_revision_field_user_parliament';
   $handler->display->display_options['relationships']['field_user_parliament_tid_1']['field'] = 'field_user_parliament_tid';
   $handler->display->display_options['relationships']['field_user_parliament_tid_1']['relationship'] = 'vid';
+  /* Beziehung: Benutzer: Profile picture (field_user_picture:fid) */
+  $handler->display->display_options['relationships']['field_user_picture_fid']['id'] = 'field_user_picture_fid';
+  $handler->display->display_options['relationships']['field_user_picture_fid']['table'] = 'field_data_field_user_picture';
+  $handler->display->display_options['relationships']['field_user_picture_fid']['field'] = 'field_user_picture_fid';
   /* Feld: Benutzer: Benutzer UUID */
   $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
   $handler->display->display_options['fields']['uuid']['table'] = 'users';
@@ -9521,6 +10196,15 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['name_1']['label'] = 'username';
   $handler->display->display_options['fields']['name_1']['link_to_user'] = FALSE;
   $handler->display->display_options['fields']['name_1']['link_to_user_revision'] = 0;
+  /* Feld: Benutzer: Erstellungsdatum */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'users';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'created';
+  $handler->display->display_options['fields']['created']['alter']['strip_tags'] = TRUE;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'U';
+  $handler->display->display_options['fields']['created']['second_date_format'] = 'long';
   /* Feld: Benutzer: Letzter Zugriff */
   $handler->display->display_options['fields']['access']['id'] = 'access';
   $handler->display->display_options['fields']['access']['table'] = 'users';
@@ -9591,6 +10275,33 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_died']['group_column'] = 'entity_id';
+  /* Feld: Benutzer: Parlament verlassen */
+  $handler->display->display_options['fields']['field_user_retired']['id'] = 'field_user_retired';
+  $handler->display->display_options['fields']['field_user_retired']['table'] = 'field_data_field_user_retired';
+  $handler->display->display_options['fields']['field_user_retired']['field'] = 'field_user_retired';
+  $handler->display->display_options['fields']['field_user_retired']['label'] = 'left_parliament';
+  $handler->display->display_options['fields']['field_user_retired']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_user_retired']['settings'] = array(
+    'format_type' => 'custom',
+    'custom_date_format' => 'Y-m-d',
+    'fromto' => 'both',
+    'multiple_number' => '',
+    'multiple_from' => '',
+    'multiple_to' => '',
+    'show_remaining_days' => 0,
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_user_retired']['group_column'] = 'entity_id';
   /* Feld: Benutzer: Partei */
   $handler->display->display_options['fields']['field_user_party']['id'] = 'field_user_party';
   $handler->display->display_options['fields']['field_user_party']['table'] = 'field_data_field_user_party';
@@ -9637,18 +10348,23 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_user_links_more']['group_column'] = 'entity_id';
   $handler->display->display_options['fields']['field_user_links_more']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_user_links_more']['separator'] = ',';
-  /* Feld: MAX(Datei: Datei-ID) */
+  /* Feld: Datei: Datei-ID */
   $handler->display->display_options['fields']['fid']['id'] = 'fid';
   $handler->display->display_options['fields']['fid']['table'] = 'file_managed';
   $handler->display->display_options['fields']['fid']['field'] = 'fid';
-  $handler->display->display_options['fields']['fid']['relationship'] = 'user_to_file';
-  $handler->display->display_options['fields']['fid']['group_type'] = 'max';
+  $handler->display->display_options['fields']['fid']['relationship'] = 'field_user_picture_fid';
   $handler->display->display_options['fields']['fid']['label'] = 'picture';
+  /* Feld: Datei: Pfad */
+  $handler->display->display_options['fields']['uri']['id'] = 'uri';
+  $handler->display->display_options['fields']['uri']['table'] = 'file_managed';
+  $handler->display->display_options['fields']['uri']['field'] = 'uri';
+  $handler->display->display_options['fields']['uri']['relationship'] = 'field_user_picture_fid';
+  $handler->display->display_options['fields']['uri']['label'] = 'picture_path';
   /* Feld: Datei: Alt Text */
   $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
   $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'user_to_file';
+  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_user_picture_fid';
   $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'picture_alt';
   $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
     'linked_field' => array(
@@ -9668,7 +10384,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
   $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'user_to_file';
+  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_user_picture_fid';
   $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'picture_title';
   $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
   $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
@@ -9709,7 +10425,7 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'user_to_file';
+  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_user_picture_fid';
   $handler->display->display_options['fields']['field_image_copyright']['label'] = 'picture_copyright';
   $handler->display->display_options['fields']['field_image_copyright']['empty'] = '[field_user_picture_copyright]';
   $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
@@ -9914,6 +10630,12 @@ function pw_d8_migration_views_default_views() {
     ),
   );
   $handler->display->display_options['fields']['field_user_mobile']['group_column'] = 'entity_id';
+  /* Feld: MAX(PW User archive: Vid) */
+  $handler->display->display_options['fields']['vid']['id'] = 'vid';
+  $handler->display->display_options['fields']['vid']['table'] = 'user_archive_cache';
+  $handler->display->display_options['fields']['vid']['field'] = 'vid';
+  $handler->display->display_options['fields']['vid']['group_type'] = 'max';
+  $handler->display->display_options['fields']['vid']['exclude'] = TRUE;
   /* Sortierkriterien: Benutzer: Uid */
   $handler->display->display_options['sorts']['uid']['id'] = 'uid';
   $handler->display->display_options['sorts']['uid']['table'] = 'users';
@@ -9957,10 +10679,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -10025,24 +10748,27 @@ function pw_d8_migration_views_default_views() {
     t('weiter'),
     t('letzte Seite »'),
     t('Displaying @start - @end of @total'),
-    t('Datei'),
     t('Get the user revision from an user archive entry.'),
     t('Begriff aus field_user_parliament'),
+    t('Bild von field_user_picture'),
     t('uuid'),
     t('uid'),
     t('Status'),
     t('username'),
+    t('created'),
     t('access'),
     t('login'),
     t('email'),
     t('roles'),
     t('sex'),
     t('deceased'),
+    t('left_parliament'),
     t('party'),
     t('[field_user_party-tid]'),
     t('social_links'),
     t('[field_user_links_more-url]|[field_user_links_more-title]'),
     t('picture'),
+    t('picture_path'),
     t('picture_alt'),
     t('picture_title'),
     t('picture_copyright'),
@@ -10057,332 +10783,10 @@ function pw_d8_migration_views_default_views() {
     t('[field_user_image_gallery_1-fid]'),
     t('phone'),
     t('phone_mobile'),
+    t('Vid'),
     t('Data export'),
   );
   $export['export_user_politician'] = $view;
-
-  $view = new view();
-  $view->name = 'export_user_politician_2';
-  $view->description = '';
-  $view->tag = 'default';
-  $view->base_table = 'users';
-  $view->human_name = 'export_user_politician';
-  $view->core = 7;
-  $view->api_version = '3.0';
-  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-
-  /* Display: Master */
-  $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'export_gallery_images';
-  $handler->display->display_options['use_more_always'] = FALSE;
-  $handler->display->display_options['use_more_text'] = 'mehr';
-  $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'bypass node access';
-  $handler->display->display_options['cache']['type'] = 'none';
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['distinct'] = TRUE;
-  $handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
-  $handler->display->display_options['exposed_form']['type'] = 'basic';
-  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
-  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
-  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
-  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
-  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-  $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
-  $handler->display->display_options['pager']['options']['offset'] = '';
-  $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['quantity'] = '9';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
-  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
-  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
-  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
-  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
-  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
-  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
-  $handler->display->display_options['style_plugin'] = 'table';
-  $handler->display->display_options['style_options']['columns'] = array(
-    'uuid' => 'uuid',
-    'uid' => 'uid',
-    'status' => 'status',
-    'name_1' => 'name_1',
-    'mail' => 'mail',
-    'rid' => 'rid',
-    'field_user_party-revision_id' => 'field_user_party-revision_id',
-    'fid' => 'fid',
-    'field_file_image_alt_text' => 'field_file_image_alt_text',
-    'field_file_image_title_text' => 'field_file_image_title_text',
-    'field_user_picture_copyright' => 'field_user_picture_copyright',
-    'field_image_copyright' => 'field_image_copyright',
-    'field_user_fname' => 'field_user_fname',
-    'field_user_lname' => 'field_user_lname',
-    'field_user_links_more' => 'field_user_links_more',
-    'field_user_links_more-revision_id' => 'field_user_links_more-revision_id',
-  );
-  $handler->display->display_options['style_options']['default'] = '-1';
-  $handler->display->display_options['style_options']['info'] = array(
-    'uuid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'uid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'status' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'name_1' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'mail' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'rid' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_party-revision_id' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'fid' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_file_image_alt_text' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_file_image_title_text' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_picture_copyright' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_image_copyright' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'desc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_fname' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_lname' => array(
-      'sortable' => 0,
-      'default_sort_order' => 'asc',
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_links_more' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-    'field_user_links_more-revision_id' => array(
-      'align' => '',
-      'separator' => '',
-      'empty_column' => 0,
-    ),
-  );
-  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
-  $handler->display->display_options['header']['result']['id'] = 'result';
-  $handler->display->display_options['header']['result']['table'] = 'views';
-  $handler->display->display_options['header']['result']['field'] = 'result';
-  /* Beziehung: Benutzer: Bildergalerie (field_user_image_gallery:fid) */
-  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['id'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['table'] = 'field_data_field_user_image_gallery';
-  $handler->display->display_options['relationships']['field_user_image_gallery_fid']['field'] = 'field_user_image_gallery_fid';
-  /* Feld: Benutzer: Bildergalerie */
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['id'] = 'field_user_image_gallery_1';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['table'] = 'field_data_field_user_image_gallery';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['field'] = 'field_user_image_gallery';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['label'] = 'image_id';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['alter']['text'] = '[field_user_image_gallery_1-fid]';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['click_sort_column'] = 'fid';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['settings'] = array(
-    'image_style' => '',
-    'image_link' => '',
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['group_column'] = 'entity_id';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['group_rows'] = FALSE;
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_user_image_gallery_1']['separator'] = ',';
-  /* Feld: Benutzer: Uid */
-  $handler->display->display_options['fields']['uid']['id'] = 'uid';
-  $handler->display->display_options['fields']['uid']['table'] = 'users';
-  $handler->display->display_options['fields']['uid']['field'] = 'uid';
-  $handler->display->display_options['fields']['uid']['label'] = 'uid';
-  $handler->display->display_options['fields']['uid']['link_to_user'] = FALSE;
-  /* Feld: Datei: copyright */
-  $handler->display->display_options['fields']['field_image_copyright']['id'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['table'] = 'field_data_field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['field'] = 'field_image_copyright';
-  $handler->display->display_options['fields']['field_image_copyright']['relationship'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['fields']['field_image_copyright']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Datei: Alt Text */
-  $handler->display->display_options['fields']['field_file_image_alt_text']['id'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['table'] = 'field_data_field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['field'] = 'field_file_image_alt_text';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['relationship'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['label'] = 'alt';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['type'] = 'text_plain';
-  $handler->display->display_options['fields']['field_file_image_alt_text']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Feld: Datei: Title Text */
-  $handler->display->display_options['fields']['field_file_image_title_text']['id'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['table'] = 'field_data_field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['field'] = 'field_file_image_title_text';
-  $handler->display->display_options['fields']['field_file_image_title_text']['relationship'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['fields']['field_file_image_title_text']['label'] = 'Titel';
-  $handler->display->display_options['fields']['field_file_image_title_text']['type'] = 'text_plain';
-  $handler->display->display_options['fields']['field_file_image_title_text']['settings'] = array(
-    'linked_field' => array(
-      'linked' => 0,
-      'destination' => '',
-      'advanced' => array(
-        'title' => '',
-        'target' => '',
-        'class' => '',
-        'rel' => '',
-        'text' => '',
-      ),
-    ),
-  );
-  /* Sortierkriterien: Benutzer: Uid */
-  $handler->display->display_options['sorts']['uid']['id'] = 'uid';
-  $handler->display->display_options['sorts']['uid']['table'] = 'users';
-  $handler->display->display_options['sorts']['uid']['field'] = 'uid';
-  /* Filterkriterium: Benutzer: Rollen */
-  $handler->display->display_options['filters']['rid']['id'] = 'rid';
-  $handler->display->display_options['filters']['rid']['table'] = 'users_roles';
-  $handler->display->display_options['filters']['rid']['field'] = 'rid';
-  $handler->display->display_options['filters']['rid']['value'] = array(
-    181527986 => '181527986',
-  );
-  $handler->display->display_options['filters']['rid']['group'] = 1;
-  $handler->display->display_options['filters']['rid']['reduce_duplicates'] = TRUE;
-  /* Filterkriterium: Benutzer: Bildergalerie (field_user_image_gallery:fid) */
-  $handler->display->display_options['filters']['field_user_image_gallery_fid']['id'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['filters']['field_user_image_gallery_fid']['table'] = 'field_data_field_user_image_gallery';
-  $handler->display->display_options['filters']['field_user_image_gallery_fid']['field'] = 'field_user_image_gallery_fid';
-  $handler->display->display_options['filters']['field_user_image_gallery_fid']['operator'] = 'not empty';
-
-  /* Display: Data export */
-  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
-  $handler->display->display_options['pager']['type'] = 'some';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
-  $handler->display->display_options['defaults']['header'] = FALSE;
-  $handler->display->display_options['path'] = 'export/gallery_images.csv';
-  $handler->display->display_options['sitename_title'] = 0;
-  $handler->display->display_options['segment_size'] = '500';
-  $translatables['export_user_politician_2'] = array(
-    t('Master'),
-    t('export_gallery_images'),
-    t('mehr'),
-    t('Anwenden'),
-    t('Zurücksetzen'),
-    t('Sortieren nach'),
-    t('Aufsteigend'),
-    t('Absteigend'),
-    t('Elemente pro Seite'),
-    t('- Alle -'),
-    t('Versatz'),
-    t('« erste Seite'),
-    t('‹ vorherige Seite'),
-    t('weiter'),
-    t('letzte Seite »'),
-    t('Displaying @start - @end of @total'),
-    t('Bild von field_user_image_gallery'),
-    t('image_id'),
-    t('[field_user_image_gallery_1-fid]'),
-    t('uid'),
-    t('copyright'),
-    t('alt'),
-    t('Titel'),
-    t('Data export'),
-  );
-  $export['export_user_politician_2'] = $view;
 
   $view = new view();
   $view->name = 'export_votes';
@@ -10399,6 +10803,8 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['title'] = 'export_votes';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['access']['perm'] = 'bypass node access';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -10603,10 +11009,11 @@ function pw_d8_migration_views_default_views() {
     16236 => '16236',
     16251 => '16251',
     16117 => '16117',
-    18030 => '18030',
+    32277 => '32277',
     16235 => '16235',
     16247 => '16247',
     16265 => '16265',
+    18030 => '18030',
     29951 => '29951',
     16245 => '16245',
     16250 => '16250',
@@ -10647,6 +11054,13 @@ function pw_d8_migration_views_default_views() {
   $handler->display->display_options['filters']['field_vote_user_target_id']['table'] = 'field_data_field_vote_user';
   $handler->display->display_options['filters']['field_vote_user_target_id']['field'] = 'field_vote_user_target_id';
   $handler->display->display_options['filters']['field_vote_user_target_id']['operator'] = 'not empty';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'vote' => 'vote',
+  );
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -10691,6 +11105,433 @@ function pw_d8_migration_views_default_views() {
     t('Data export'),
   );
   $export['export_votes'] = $view;
+
+  $view = new view();
+  $view->name = 'export_votes_problem';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'export_votes_problem';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_votes';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['field_language'] = 'und';
+  $handler->display->display_options['field_language_add_to_query'] = 0;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'mini';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'uuid' => 'uuid',
+    'nid' => 'nid',
+    'field_vote_node' => 'field_vote_node',
+    'field_vote_user' => 'field_vote_user',
+    'field_parliament' => 'field_parliament',
+    'field_vote' => 'field_vote',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'uuid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_vote_node' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_vote_user' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_parliament' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_vote' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: Inhalt: Inhalt UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'uuid';
+  /* Feld: Inhalt: Beitrags-ID */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['label'] = 'nid';
+  /* Feld: Inhalt: Abstimmung */
+  $handler->display->display_options['fields']['field_vote_node']['id'] = 'field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['table'] = 'field_data_field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['field'] = 'field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['label'] = 'poll';
+  $handler->display->display_options['fields']['field_vote_node']['type'] = 'entityreference_entity_id';
+  $handler->display->display_options['fields']['field_vote_node']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: Politician Reference */
+  $handler->display->display_options['fields']['field_vote_user']['id'] = 'field_vote_user';
+  $handler->display->display_options['fields']['field_vote_user']['table'] = 'field_data_field_vote_user';
+  $handler->display->display_options['fields']['field_vote_user']['field'] = 'field_vote_user';
+  $handler->display->display_options['fields']['field_vote_user']['label'] = 'politician';
+  $handler->display->display_options['fields']['field_vote_user']['type'] = 'entityreference_entity_id';
+  $handler->display->display_options['fields']['field_vote_user']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Feld: Parliament */
+  $handler->display->display_options['fields']['field_parliament']['id'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['field'] = 'field_parliament';
+  $handler->display->display_options['fields']['field_parliament']['label'] = 'parliament_period';
+  $handler->display->display_options['fields']['field_parliament']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['field_parliament']['alter']['text'] = '[field_parliament-tid]';
+  $handler->display->display_options['fields']['field_parliament']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_parliament']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  $handler->display->display_options['fields']['field_parliament']['delta_offset'] = '0';
+  /* Feld: Inhalt: Vote */
+  $handler->display->display_options['fields']['field_vote']['id'] = 'field_vote';
+  $handler->display->display_options['fields']['field_vote']['table'] = 'field_data_field_vote';
+  $handler->display->display_options['fields']['field_vote']['field'] = 'field_vote';
+  $handler->display->display_options['fields']['field_vote']['label'] = 'vote';
+  $handler->display->display_options['fields']['field_vote']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_vote']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Feld: Inhalt: ‚Bearbeiten‘-Link */
+  $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
+  $handler->display->display_options['fields']['edit_node']['field'] = 'edit_node';
+  $handler->display->display_options['fields']['edit_node']['label'] = 'Bearbeiten';
+  /* Sortierkriterien: Inhalt: Beitrags-ID */
+  $handler->display->display_options['sorts']['nid']['id'] = 'nid';
+  $handler->display->display_options['sorts']['nid']['table'] = 'node';
+  $handler->display->display_options['sorts']['nid']['field'] = 'nid';
+  /* Filterkriterium: Inhalt: Abstimmung (field_vote_node) */
+  $handler->display->display_options['filters']['field_vote_node_target_id']['id'] = 'field_vote_node_target_id';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['table'] = 'field_data_field_vote_node';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['field'] = 'field_vote_node_target_id';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['operator'] = 'not empty';
+  /* Filterkriterium: Inhalt: Politician Reference (field_vote_user) */
+  $handler->display->display_options['filters']['field_vote_user_target_id']['id'] = 'field_vote_user_target_id';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['table'] = 'field_data_field_vote_user';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['field'] = 'field_vote_user_target_id';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['operator'] = 'not empty';
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'vote' => 'vote',
+  );
+  /* Filterkriterium: Inhalt: Beitrags-ID */
+  $handler->display->display_options['filters']['nid']['id'] = 'nid';
+  $handler->display->display_options['filters']['nid']['table'] = 'node';
+  $handler->display->display_options['filters']['nid']['field'] = 'nid';
+  $handler->display->display_options['filters']['nid']['operator'] = 'between';
+  $handler->display->display_options['filters']['nid']['value']['min'] = '107823';
+  $handler->display->display_options['filters']['nid']['value']['max'] = '107918';
+  $handler->display->display_options['filters']['nid']['value']['value'] = '107851';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['newline_token'] = '1';
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['style_options']['keep_html'] = 1;
+  $handler->display->display_options['path'] = 'export/votes_problem.csv';
+  $handler->display->display_options['use_batch'] = 'batch';
+  $handler->display->display_options['segment_size'] = '500';
+  $translatables['export_votes_problem'] = array(
+    t('Master'),
+    t('export_votes'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('uuid'),
+    t('nid'),
+    t('poll'),
+    t('politician'),
+    t('parliament_period'),
+    t('[field_parliament-tid]'),
+    t('vote'),
+    t('Bearbeiten'),
+    t('Data export'),
+  );
+  $export['export_votes_problem'] = $view;
+
+  $view = new view();
+  $view->name = 'export_votes_test';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'export_votes_test';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'export_votes_test';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['use_more_text'] = 'mehr';
+  $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['access']['perm'] = 'bypass node access';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Anwenden';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Zurücksetzen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortieren nach';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '100';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elemente pro Seite';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Versatz';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« erste Seite';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ vorherige Seite';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'weiter';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'nid' => 'nid',
+    'field_vote_node' => 'field_vote_node',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_vote_node' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Kopfzeile: Global: Ergebnis-Zusammenfassung */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  /* Feld: COUNT(Inhalt: Beitrags-ID) */
+  $handler->display->display_options['fields']['nid']['id'] = 'nid';
+  $handler->display->display_options['fields']['nid']['table'] = 'node';
+  $handler->display->display_options['fields']['nid']['field'] = 'nid';
+  $handler->display->display_options['fields']['nid']['group_type'] = 'count';
+  $handler->display->display_options['fields']['nid']['label'] = 'vote_count';
+  /* Feld: Inhalt: Abstimmung */
+  $handler->display->display_options['fields']['field_vote_node']['id'] = 'field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['table'] = 'field_data_field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['field'] = 'field_vote_node';
+  $handler->display->display_options['fields']['field_vote_node']['label'] = 'poll_old';
+  $handler->display->display_options['fields']['field_vote_node']['type'] = 'entityreference_entity_id';
+  $handler->display->display_options['fields']['field_vote_node']['settings'] = array(
+    'linked_field' => array(
+      'linked' => 0,
+      'destination' => '',
+      'advanced' => array(
+        'title' => '',
+        'target' => '',
+        'class' => '',
+        'rel' => '',
+        'text' => '',
+      ),
+    ),
+  );
+  /* Filterkriterium: Inhalt: Typ */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'vote' => 'vote',
+  );
+  /* Filterkriterium: Feld: Parliament (field_parliament) */
+  $handler->display->display_options['filters']['field_parliament_tid']['id'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['table'] = 'field_data_field_parliament';
+  $handler->display->display_options['filters']['field_parliament_tid']['field'] = 'field_parliament_tid';
+  $handler->display->display_options['filters']['field_parliament_tid']['operator'] = 'not';
+  $handler->display->display_options['filters']['field_parliament_tid']['value'] = array(
+    16255 => '16255',
+    16275 => '16275',
+    17625 => '17625',
+    16262 => '16262',
+    16270 => '16270',
+    16277 => '16277',
+    16986 => '16986',
+    17361 => '17361',
+    16253 => '16253',
+    19683 => '19683',
+    16281 => '16281',
+    23617 => '23617',
+    17360 => '17360',
+    16268 => '16268',
+    16248 => '16248',
+    16254 => '16254',
+    16252 => '16252',
+    16269 => '16269',
+    16276 => '16276',
+    16263 => '16263',
+    16987 => '16987',
+    16274 => '16274',
+    16985 => '16985',
+  );
+  $handler->display->display_options['filters']['field_parliament_tid']['vocabulary'] = 'parliaments';
+  /* Filterkriterium: Inhalt: Abstimmung (field_vote_node) */
+  $handler->display->display_options['filters']['field_vote_node_target_id']['id'] = 'field_vote_node_target_id';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['table'] = 'field_data_field_vote_node';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['field'] = 'field_vote_node_target_id';
+  $handler->display->display_options['filters']['field_vote_node_target_id']['operator'] = 'not empty';
+  /* Filterkriterium: Inhalt: Politician Reference (field_vote_user) */
+  $handler->display->display_options['filters']['field_vote_user_target_id']['id'] = 'field_vote_user_target_id';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['table'] = 'field_data_field_vote_user';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['field'] = 'field_vote_user_target_id';
+  $handler->display->display_options['filters']['field_vote_user_target_id']['operator'] = 'not empty';
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['path'] = 'export/votes_test.csv';
+  $translatables['export_votes_test'] = array(
+    t('Master'),
+    t('export_votes_test'),
+    t('mehr'),
+    t('Anwenden'),
+    t('Zurücksetzen'),
+    t('Sortieren nach'),
+    t('Aufsteigend'),
+    t('Absteigend'),
+    t('Elemente pro Seite'),
+    t('- Alle -'),
+    t('Versatz'),
+    t('« erste Seite'),
+    t('‹ vorherige Seite'),
+    t('weiter'),
+    t('letzte Seite »'),
+    t('Displaying @start - @end of @total'),
+    t('vote_count'),
+    t('poll_old'),
+    t('Data export'),
+  );
+  $export['export_votes_test'] = $view;
 
   $view = new view();
   $view->name = 'mandates_no_fractions';
