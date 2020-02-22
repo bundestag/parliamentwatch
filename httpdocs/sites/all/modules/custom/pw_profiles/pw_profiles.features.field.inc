@@ -4228,7 +4228,6 @@ function pw_profiles_field_default_fields() {
             ),
           ),
         ),
-        'exclude_cv' => FALSE,
         'linkit' => array(
           'button_text' => 'Search',
           'enable' => 0,
