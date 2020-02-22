@@ -1,0 +1,147 @@
+/**
+* Maintenance page
+*/
+
+.maintenance {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 48px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  main {
+    flex: 100% 0 0;
+  }
+
+  footer {
+    flex: 100% 0 0;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+
+    .svg-container {
+      max-width: 297px;
+    }
+  }
+}
+
+.maintenance__image {
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.maintenance__image__parlament {
+  position: relative;
+  z-index: 9;
+}
+.maintenance__image__cog {
+  position: absolute;
+  left: 50%;
+  top: 1%;
+  width: 25%;
+  transform: translate(-50%,0);
+
+  svg {
+    animation: spin 7s linear infinite;
+  }
+}
+
+.maintenance__image__crane-left {
+  position: absolute;
+  width: 21%;
+  top: -40%;
+  left: 11%;
+  > svg {
+    position: relative;
+    z-index: 5;
+  }
+}
+.maintenance__image__crane-left__rope {
+  position: absolute;
+  width: 10%;
+  right: 5%;
+  top: 5%;
+  animation: crane_left_rope 5s linear infinite;
+}
+
+.maintenance__image__crane-right {
+  position: absolute;
+  width: 16%;
+  top: -21%;
+  right: 11%;
+  > svg {
+    position: relative;
+    z-index: 5;
+  }
+}
+.maintenance__image__crane-right__rope {
+  position: absolute;
+  width: 10%;
+  left: 5%;
+  top: 5%;
+  animation: crane_right_rope 6s linear infinite;
+}
+
+@keyframes crane_left_rope {
+  0% {
+    right: 5%;
+    top: 5%;
+  }
+
+  25% {
+    top: 5%;
+    right: 35%;
+  }
+
+  50% {
+    top: 25%;
+    right: 35%;
+  }
+
+  75% {
+    top: 5%;
+    right: 35%;
+  }
+
+  100% {
+    right: 5%;
+    top: 5%;
+  }
+}
+
+@keyframes crane_right_rope {
+  0% {
+    top: 25%;
+    left: 5%;
+  }
+
+  25% {
+    top: 5%;
+    left: 5%;
+  }
+
+  50% {
+    top: 5%;
+    left: 35%;
+  }
+
+  75% {
+    top: 5%;
+    left: 5%;
+  }
+
+  100% {
+    top: 25%;
+    left: 5%;
+  }
+}
