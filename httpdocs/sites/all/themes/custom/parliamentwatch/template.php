@@ -260,7 +260,12 @@ function parliamentwatch_preprocess_block(&$variables) {
     if ($term) {
       $today = new DateTime();
       $election_date = new DateTime($term->field_parliament_election[LANGUAGE_NONE][0]['value'], new DateTimeZone($term->field_parliament_election[LANGUAGE_NONE][0]['timezone']));
-      if ($today < $election_date) {
+      // @todo quick and dirty solution: Hamburg just ended the election
+      // but the legislature did not start yet
+      if ($term->tid == '32277') {
+        $variables['overview_url'] = url('dialogues/' . $term->tid . '/candidates');
+      }
+      else if ($today < $election_date) {
         $variables['overview_url'] = url('dialogues/' . $term->tid . '/candidates');
       }
       else {
