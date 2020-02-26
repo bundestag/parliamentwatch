@@ -46,6 +46,11 @@
     margin-bottom: $space-large;
   }
 }
+.modal__content__content {
+  @include breakpoint($breakpoint-m-min) {
+    @include grid-column(12);
+  }
+}
 .modal__footer {
   padding: $space;
   background: $brightGray;
