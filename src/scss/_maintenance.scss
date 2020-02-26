@@ -2,6 +2,11 @@
 * Maintenance page
 */
 
+.maintenance-section {
+  position: relative;
+  min-height: 100vh;
+}
+
 .maintenance {
   max-width: 600px;
   margin: 0 auto;
@@ -24,13 +29,16 @@
     flex: 100% 0 0;
     justify-content: center;
     display: flex;
+    flex-wrap: wrap;
     position: absolute;
     bottom: 20px;
     left: 20px;
     right: 20px;
 
     .svg-container {
+      flex: 100% 0 0;
       max-width: 297px;
+      max-height: 38px;
     }
   }
 }
@@ -90,6 +98,37 @@
   left: 5%;
   top: 5%;
   animation: crane_right_rope 6s linear infinite;
+}
+
+.maintenance__footer-links {
+  flex: 100% 0 0;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+
+  button {
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    text-align: center;
+    background: transparent;
+    color: $mediumGray;
+
+  }
+}
+
+.maintenance-impressum {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: $brightGray;
+
+  .js & {
+    display: none;
+  }
+}
+
+.modal .js-maintenance-impressum h2 {
+  display: none;
 }
 
 @keyframes crane_left_rope {

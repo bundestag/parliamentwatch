@@ -155,6 +155,13 @@ function parliamentwatch_preprocess_page(&$variables) {
 }
 
 /**
+ * Implements template_preprocess_maintenance_page().
+ */
+function parliamentwatch_preprocess_maintenance_page(&$variables) {
+  drupal_add_library('system', 'jquery.cookie');
+}
+
+/**
  * Implements hook_preprocess_region().
  */
 function parliamentwatch_preprocess_region(&$variables) {
